@@ -15,6 +15,7 @@ Auth::routes();
 Route::get('/', 'GuestController@index')->name('index');
 
 Route::get('pdf', 'GuestController@pdf');
+Route::get('cek-email', 'GuestController@email')->name('email');
 
 Route::namespace('User')->group(function(){
 	Route::get('/home', 'DashboardController@index')->name('home');

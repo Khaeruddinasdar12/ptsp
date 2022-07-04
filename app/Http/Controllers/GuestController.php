@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use PDF;
 class GuestController extends Controller
 {
-	public function index(){
+	public function index()
+    {
 		return view('guest.index');
 	}
 
@@ -20,7 +21,20 @@ class GuestController extends Controller
         	'nama'=>'Khaeruddin Asdar',
         ]);
      
-        return $pdf->stream();
+        return $pdf->stream('sert.pdf');
 	}
+
+    public function email()
+    {
+        $data_send = array(
+            'no_tiket' => 'SIP3592995235',
+            'name' => 'Khaeruddin Asdar',
+            'status' => 'TIDAK DISETUJUI',
+            'pesan' => 'Silakan Melakukan Perbaikan Berkas Pada Aplikasi',
+            'keterangan' => 'Perbaikan',
+            'class' => 'danger',
+        );
+        return view('email', $data_send);
+    }
 }
 
