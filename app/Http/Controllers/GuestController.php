@@ -20,7 +20,8 @@ class GuestController extends Controller
         $pdf = PDF::loadView('pdf', [
         	'nama'=>'Khaeruddin Asdar',
         ]);
-     
+        
+        // $pdf->set_paper("legal");
         return $pdf->stream('sert.pdf');
 	}
 

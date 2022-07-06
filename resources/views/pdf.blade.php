@@ -3,15 +3,8 @@
     <title>Contoh Surat Pernyataan</title>
     <meta charset="utf-8">
     <style>
-        *{
-            box-sizing: border-box;
-        }
         body{
             font-family: arial;
-            background-image: url( {{asset('cert/bg.png')}} );
-            background-size: 500px 600px;
-            background-position: center;
-            background-repeat: no-repeat;
         }
         p{
             margin: .5rem;
@@ -23,15 +16,21 @@
             color: red;
         }
 
-        /*.bg{
-                position: absolute;
-                width: 35rem;
-                height: 37rem;
-                z-index: -1;
-                opacity: .5;
-                top: 45%;
-                left: 25%;
-        }*/
+        .bg{
+            /* display: flex; */
+            /* justify-content: center; */
+            position: absolute;
+            width: 35rem;
+            height: 37rem;
+            z-index: -1;
+            opacity: .5;
+            /* top: 45%; */
+            /* left: 25%; */
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
 
         #judul{
             text-align:center;
@@ -42,6 +41,7 @@
         }
 
         #halaman{
+            position: relative;
             font-family: serif;
             width: auto; 
             height: auto; 
@@ -122,25 +122,6 @@
             align-items: center;
             width: 50%;
         }
-
-        .footer .text {
-            width: 90%;
-            float: left;
-        }
-
-        .footer .text p{
-            font-size: smaller;
-        }
-
-        .footer .image {
-            width: 10%;
-            float: left;
-        }
-
-        .footer .image img {
-            width: 50px;
-            float: right;
-        }
     </style>
 
 </head>
@@ -149,9 +130,10 @@
     <div class="border2">
     <div class="border1">
     <div id=halaman>
+        <img class="bg" src="{{ public_path('cert/bg.png') }}" alt="">
         <div class="kop1">
         <div class="kop">
-            <img src="{{asset('cert/logo.jpg') }}" alt="" srcset="">
+            <img src="{{ public_path('cert/logo.jpg') }}" alt="" srcset="">
             <div class="text">
                 <h3 id=judul>PEMERINTAH KOTA MAKASSAR</h3>
                 <h3 id=judul>DINAS PENANAMAN MODAL DAN PELAYANAN TERPADU SATU PINTU</h3>
@@ -164,7 +146,7 @@
         <br>
         <div class="suratIzin">
             <h3 id="judul">SURAT IZIN KERJA (SIK)</h3>
-            <p>Nomor: data_no_izin</p>
+            <p>Nomor: ${data_no_izin}</p>
         </div>
         
         <p >Berdasarkan  dan
@@ -176,63 +158,63 @@
         bertanda tangan di bawah ini, Kepala Dinas Penanaman Modal dan Pelayanan Terpadu
         Satu Pintu Kota Makassar memberikan Surat Izin Kerja, Kepada :</p>
         
-        <u><h4 class="data_nama">{{ $nama }}</h4></u>
+        <h4 class="data_nama">${data_nama}</h4>
 
         <table>
             <tr>
                 <td style="width: 30%;">Jenis Praktek : </td>
                 <td style="width: 5%;">:</td>
-                <td style="width: 65%;">data_keterangan data_perihal_rekomendasi</td>
+                <td style="width: 65%;">${data_keterangan} ${data_perihal_rekomendasi}</td>
             </tr>
             <tr>
                 <td style="width: 30%;">Tempat, tanggal lahir</td>
                 <td style="width: 5%;">:</td>
-                <td style="width: 65%;">data_tempat_lahir / data_tgl_lahir</td>
+                <td style="width: 65%;">${data_tempat_lahir} / ${data_tgl_lahir}</td>
             </tr>
             <tr>
                 <td style="width: 30%; vertical-align: top;">Alamat</td>
                 <td style="width: 5%; vertical-align: top;">:</td>
-                <td style="width: 65%;">data_alamat</td>
+                <td style="width: 65%;">${data_alamat}</td>
             </tr>
             <tr>
-                <td style="width: 30%;">Tempat Praktik yang ke-data_izin_praktik_ke</td>
+                <td style="width: 30%;">Tempat Praktik yang ke-${data_izin_praktik_ke}</td>
                 <td style="width: 5%;">:</td>
-                <td style="width: 65%;">data_nama_sarana_praktik,</td>
+                <td style="width: 65%;">${data_nama_sarana_praktik},</td>
             </tr>
             <tr>
                 <td style="width: 30%;">Kelurahan</td>
                 <td style="width: 5%;">:</td>
-                <td style="width: 65%;">data_kelurahan</td>
+                <td style="width: 65%;">${data_kelurahan}</td>
             </tr>
             <tr>
                 <td style="width: 30%;">Kecamatan</td>
                 <td style="width: 5%;">:</td>
-                <td style="width: 65%;">data_kecamatan</td>
+                <td style="width: 65%;">${data_kecamatan}</td>
             </tr>
             <tr>
                 <td style="width: 30%;">No. STR</td>
                 <td style="width: 5%;">:</td>
-                <td style="width: 65%;">data_no_str</td>
+                <td style="width: 65%;">${data_no_str}</td>
             </tr>
             <tr>
                 <td style="width: 30%;">SIP berlaku sampai</td>
                 <td style="width: 5%;">:</td>
-                <td style="width: 65%;">data_tgl_masa_berlaku</td>
+                <td style="width: 65%;">${data_tgl_masa_berlaku}</td>
             </tr>
             <tr>
                 <td style="width: 30%;">No. Rekomendasi OP</td>
                 <td style="width: 5%;">:</td>
-                <td style="width: 65%;">data_no_rekomendasi_op</td>
+                <td style="width: 65%;">${data_no_rekomendasi_op}</td>
             </tr>
             <tr>
                 <td style="width: 30%;">No. Rekomendasi Dinkes</td>
                 <td style="width: 5%;">:</td>
-                <td style="width: 65%;">data_no_rekom_dinkes</td>
+                <td style="width: 65%;">${data_no_rekom_dinkes}</td>
             </tr>
             <tr class="merah">
                 <td style="width: 30%;">Untuk Praktik sebagai</td>
                 <td style="width: 5%;">:</td>
-                <td style="width: 65%;">data_keterangan} data_perihal_rekomendasi</td>
+                <td style="width: 65%;">${data_keterangan} ${data_perihal_rekomendasi}</td>
             </tr>
         </table>
 
@@ -240,12 +222,12 @@
         <br>
         <div class="penetapan">
             <div class="penetapan1">
-                <p>qr_info_qrcode ${foto_photo_img</p>
+                <p>${qr_info_qrcode} ${foto_photo_img}</p>
             </div>
             <div class="penetapan2">
                 <p>Ditetapkan di Makassar</p>
-                <p>Pada tanggal: data_tgl_selesai</p>
-                <img src="{{ asset('cert/foto2.jpg') }}" alt="">
+                <p>Pada tanggal: ${data_tgl_selesai}</p>
+                <img src="{{ public_path('cert/foto2.jpg') }}" alt="">
             </div>
            
         </div>
@@ -279,16 +261,11 @@
 
 
 
-        <div class="footer" style="display: flex;">
-            <div class="text">
-                <p>Dokumen ini telah ditandatangani secara elektronik menggunakan sertifikat elektronik yang diterbitkan oleh Balai
-                Sertifikasi Elektronik (BSrE) Badan Siber dan Sandi Negara. Untuk memastikan keaslian tanda tangan elektronik,
-                silakan unggah dokumen pada laman https://tte.kominfo.go.id/verifyPDF
-                </p>
-            </div>
-            <div class="image">
-                <img src="{{asset('cert/kunci.png') }}" alt="">
-            </div>
+        <div style="display: flex;">
+            <p>Dokumen ini telah ditandatangani secara elektronik menggunakan sertifikat elektronik yang diterbitkan oleh Balai
+            Sertifikasi Elektronik (BSrE) Badan Siber dan Sandi Negara. Untuk memastikan keaslian tanda tangan elektronik,
+            silakan unggah dokumen pada laman https://tte.kominfo.go.id/verifyPDF</p>
+            <img src="{{ public_path('cert/kunci.png') }}" alt="" width="100rem" height="50rem">
         </div>
 
     </div>
