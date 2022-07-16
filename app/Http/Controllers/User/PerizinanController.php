@@ -28,6 +28,13 @@ class PerizinanController extends Controller
 		$data = Perizinan::where('user_id', $user_id)->where('status','2')->paginate(10);
 		return view('user.perizinan.ditolak', ['data' => $data]);
 	}
+	
+	public function terbit()
+	{
+		$user_id = Auth::user()->id;
+		$data = Perizinan::where('user_id', $user_id)->where('status','1')->paginate(10);
+		return view('user.perizinan.terbit', ['data' => $data]);
+	}
 
 	public function show($no_tiket)
 	{		

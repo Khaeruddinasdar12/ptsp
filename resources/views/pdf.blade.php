@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-    <title>Contoh Surat Pernyataan</title>
+    <title>Sertifikat Surat Izin Praktik</title>
     <meta charset="utf-8">
     <style>
         body{
@@ -39,6 +39,11 @@
         .merah{
             color: red;
         }
+        .clearfix:after {
+  content:"";
+  display:block;
+  clear:both;
+ }
 
         #halaman{
             position: relative;
@@ -73,17 +78,22 @@
             padding-bottom: 5px;
         }
         .kop1{
-            border-bottom: 1px solid #EB8D56;
+            /*border-bottom: 1px solid #EB8D56;*/
             padding-bottom: .2rem;
         }
         .kop{
+            
+            display: -webkit-box;
             display: flex;
             justify-content: center;
             padding-bottom: 1rem;
-            border-bottom: 3px solid #EB8D56;
+            /*border-bottom: 3px solid #EB8D56;*/
         }
         .kop img{
+            
+            float: left;
             width: 8em;
+            height: 7em;
             margin-right: 3rem;
             /* height: 6em; */
         }
@@ -115,12 +125,16 @@
             text-align: center;
         }
         .penetapan{
-            display: flex;
+            /*display: flex;*/
         }
         .penetapan .penetapan1{
-            display: flex;
+            /*display: flex;*/
+            float: left
             align-items: center;
             width: 50%;
+        }
+        .penetapan .penetapan2{
+            float: right;
         }
     </style>
 
@@ -132,7 +146,7 @@
     <div id=halaman>
         <img class="bg" src="{{ public_path('cert/bg.png') }}" alt="">
         <div class="kop1">
-        <div class="kop">
+        <div class="kop" >
             <img src="{{ public_path('cert/logo.jpg') }}" alt="" srcset="">
             <div class="text">
                 <h3 id=judul>PEMERINTAH KOTA MAKASSAR</h3>
@@ -142,11 +156,17 @@
             </div>
         </div>
         </div>
+        <!--<br>-->
+                <hr style="border:0px;
+	border-bottom: 1px solid #EB8D56;
+    height:3px;
+  border-top: 3px solid  #EB8D56;">
+                <!--<hr style="border:none; border-bottom: 3px solid #EB8D56; margin:0;">-->
         <br>
-        <br>
+        <!--<br>-->
         <div class="suratIzin">
             <h3 id="judul">SURAT IZIN KERJA (SIK)</h3>
-            <p>Nomor: ${data_no_izin}</p>
+            <p>Nomor: {{$no_surat}}</p>
         </div>
         
         <p >Berdasarkan  dan
@@ -158,43 +178,43 @@
         bertanda tangan di bawah ini, Kepala Dinas Penanaman Modal dan Pelayanan Terpadu
         Satu Pintu Kota Makassar memberikan Surat Izin Kerja, Kepada :</p>
         
-        <h4 class="data_nama">${data_nama}</h4>
+        <h4 class="data_nama"><u>{{$nama}}</u></h4>
 
         <table>
             <tr>
                 <td style="width: 30%;">Jenis Praktek : </td>
                 <td style="width: 5%;">:</td>
-                <td style="width: 65%;">${data_keterangan} ${data_perihal_rekomendasi}</td>
+                <td style="width: 65%;">{{$jenis_izin}}</td>
             </tr>
             <tr>
                 <td style="width: 30%;">Tempat, tanggal lahir</td>
                 <td style="width: 5%;">:</td>
-                <td style="width: 65%;">${data_tempat_lahir} / ${data_tgl_lahir}</td>
+                <td style="width: 65%;">{{$tempat_lahir}}, {{$tanggal_lahir}}</td>
             </tr>
             <tr>
                 <td style="width: 30%; vertical-align: top;">Alamat</td>
                 <td style="width: 5%; vertical-align: top;">:</td>
-                <td style="width: 65%;">${data_alamat}</td>
+                <td style="width: 65%;">{{$alamat}}</td>
             </tr>
             <tr>
-                <td style="width: 30%;">Tempat Praktik yang ke-${data_izin_praktik_ke}</td>
+                <td style="width: 30%;">Tempat Praktik yang ke-1</td>
                 <td style="width: 5%;">:</td>
                 <td style="width: 65%;">${data_nama_sarana_praktik},</td>
             </tr>
             <tr>
                 <td style="width: 30%;">Kelurahan</td>
                 <td style="width: 5%;">:</td>
-                <td style="width: 65%;">${data_kelurahan}</td>
+                <td style="width: 65%;">{{$kelurahan1}}</td>
             </tr>
             <tr>
                 <td style="width: 30%;">Kecamatan</td>
                 <td style="width: 5%;">:</td>
-                <td style="width: 65%;">${data_kecamatan}</td>
+                <td style="width: 65%;">{{$kecamatan1}}</td>
             </tr>
             <tr>
                 <td style="width: 30%;">No. STR</td>
                 <td style="width: 5%;">:</td>
-                <td style="width: 65%;">${data_no_str}</td>
+                <td style="width: 65%;">{{$no_str}}</td>
             </tr>
             <tr>
                 <td style="width: 30%;">SIP berlaku sampai</td>
@@ -209,12 +229,12 @@
             <tr>
                 <td style="width: 30%;">No. Rekomendasi Dinkes</td>
                 <td style="width: 5%;">:</td>
-                <td style="width: 65%;">${data_no_rekom_dinkes}</td>
+                <td style="width: 65%;">{{$no_rekomendasi}}</td>
             </tr>
             <tr class="merah">
                 <td style="width: 30%;">Untuk Praktik sebagai</td>
                 <td style="width: 5%;">:</td>
-                <td style="width: 65%;">${data_keterangan} ${data_perihal_rekomendasi}</td>
+                <td style="width: 65%;">{{$jenis_izin}}</td>
             </tr>
         </table>
 
@@ -222,11 +242,12 @@
         <br>
         <div class="penetapan">
             <div class="penetapan1">
-                <p>${qr_info_qrcode} ${foto_photo_img}</p>
+                <img src="{{ public_path('cert/qr-code.png') }}" alt="">
+                <img src="{{ public_path('cert/wa-foto.jpg') }}" alt="">
             </div>
             <div class="penetapan2">
                 <p>Ditetapkan di Makassar</p>
-                <p>Pada tanggal: ${data_tgl_selesai}</p>
+                <p>Pada tanggal: {{$penetapan}}</p>
                 <img src="{{ public_path('cert/foto2.jpg') }}" alt="">
             </div>
            
@@ -244,14 +265,13 @@
             <br>
             <h4>A. ZULKIFLY</h4> 
         </div> -->
-
-        <div>
+        <br>
+        <br>
             <p><strong>Tembusan :</strong></p>
             <ol>
                 <li>Dinas Kesehatan Kota Makassar</li>
                 <li>Pertinggal,-</li>
             </ol>
-        </div>
 
         <br>
         <br>
@@ -260,15 +280,15 @@
         <hr style="border: 2px solid ">
 
 
-
-        <div style="display: flex;">
-            <p>Dokumen ini telah ditandatangani secara elektronik menggunakan sertifikat elektronik yang diterbitkan oleh Balai
+       <div style="display: block" class="clearfix">
+            <p style="    width: 85%; float: left;">Dokumen ini telah ditandatangani secara elektronik menggunakan sertifikat elektronik yang diterbitkan oleh Balai
             Sertifikasi Elektronik (BSrE) Badan Siber dan Sandi Negara. Untuk memastikan keaslian tanda tangan elektronik,
             silakan unggah dokumen pada laman https://tte.kominfo.go.id/verifyPDF</p>
-            <img src="{{ public_path('cert/kunci.png') }}" alt="" width="100rem" height="50rem">
+            <img src="{{ public_path('cert/kunci.png') }}" alt="" width="100rem" height="50rem" style=" float: right; width: 50px;
+    margin: 1rem;;
+    height: 50px;" />
+    
         </div>
-
-    </div>
     </div>
     </div>
 </body>

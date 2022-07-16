@@ -87,8 +87,8 @@
                 <li class="kt-menu__item kt-menu__item--submenu {{ (request()->is('perizinan/sedang-ditinjau') ? 'kt-menu__item--active' : '') }}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                   <a href="{{route('perizinan.ditinjau')}}" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">Sedang Ditinjau</span></a>
                 </li>
-                <li class="kt-menu__item kt-menu__item--submenu {{ (request()->is('admin/kelas') || request()->is('admin/kelas/*') ? 'kt-menu__item--active' : '') }}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                  <a href="" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">Diterima</span></a>
+                <li class="kt-menu__item kt-menu__item--submenu {{ (request()->is('perizinan/telah-terbit') ? 'kt-menu__item--active' : '') }}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                  <a href="{{route('perizinan.terbit')}}" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">Diterima</span></a>
                 </li>
                 <li class="kt-menu__item kt-menu__item--submenu {{ (request()->is('perizinan/ditolak')  ? 'kt-menu__item--active' : '') }}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                   <a href="{{route('perizinan.ditolak')}}" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">Ditolak</span></a>

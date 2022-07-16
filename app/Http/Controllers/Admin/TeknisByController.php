@@ -59,7 +59,7 @@ class TeknisByController extends Controller
 		$data->teknis_by = Auth::guard('admin')->user()->id;
 		$data->updated_at = Carbon::now();
 
-		$no_rekomendasi = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 6);
+		$no_rekomendasi = strtoupper(substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 6));
 		$sip->no_rekomendasi = 'Rek-'.$no_rekomendasi;
 		$sip->save();
 		$data->save();

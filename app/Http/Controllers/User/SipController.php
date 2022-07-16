@@ -79,7 +79,7 @@ class SipController extends Controller
 		$izin->user_id = Auth::user()->id;
 		$izin->jenis_izin = 'sip';
 		$izin->status = '0';
-		$no_tiket = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 6);
+		$no_tiket = strtoupper(substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 6));
 		$izin->no_tiket = 'SIP-'.$no_tiket;
 		// return $no_tiket;
 		

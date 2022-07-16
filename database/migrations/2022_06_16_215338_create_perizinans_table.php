@@ -23,6 +23,7 @@ class CreatePerizinansTable extends Migration
             $table->bigInteger('teknis_by')->nullable();
             $table->bigInteger('kadis_by')->nullable();
             $table->string('ket')->nullable();
+            $table->string('sertifikat')->nullable();
             $table->string('no_surat')->unique()->nullable();
             $table->bigInteger('verif_by')->nullable();
             $table->timestamps();

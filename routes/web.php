@@ -28,6 +28,7 @@ Route::namespace('User')->group(function(){
 	Route::post('sip-store', 'SipController@store')->name('sip.store');
 
 	Route::get('perizinan/sedang-ditinjau', 'PerizinanController@ditinjau')->name('perizinan.ditinjau');
+	Route::get('perizinan/telah-terbit', 'PerizinanController@terbit')->name('perizinan.terbit');
 	Route::get('perizinan/ditolak', 'PerizinanController@ditolak')->name('perizinan.ditolak');
 	Route::get('perizinan/ditolak/{no_tiket}', 'PerizinanController@show')->name('perizinan.ditolak.show');
 	Route::post('perizinan/ditolak/{no_tiket}/update', 'PerizinanController@update')->name('perizinan.ditolak.update');
@@ -63,6 +64,7 @@ Route::middleware('auth:admin')->prefix('admin')->namespace('Admin')->group(func
 	Route::get('perizinan-kadis', 'KadisController@index')->name('perizinan.kadis.index');
 	Route::get('perizinan-kadis/{no_tiket}', 'KadisController@show')->name('perizinan.kadis.show');
 	Route::put('perizinan-kadis/{no_tiket}/verif', 'KadisController@verif')->name('perizinan.kadis.verif'); // menerbitkan sertifikat
+	Route::get('cek/{no_tiket}/verif', 'KadisController@sertifikat'); // cek menerbitkan sertifikat
 
 	Route::get('preview-sertifikat', 'KadisController@sertifikat')->name('preview.sertifikat');
 });

@@ -14,6 +14,13 @@ class Perizinan extends Model
         // ->diffForHumans();
         ->translatedFormat('d F Y H:i');
     }
+    
+    public function getUpdatedAtAttribute()
+    {
+        return \Carbon\Carbon::parse($this->attributes['updated_at'])
+        // ->diffForHumans();
+        ->translatedFormat('d F Y');
+    }
 
     public function sip()
     {
