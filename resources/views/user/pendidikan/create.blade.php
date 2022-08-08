@@ -1,6 +1,6 @@
 @extends('layouts.user.app')
 
-@section('title', 'Buat SIP')
+@section('title', 'Buat Izin Pendidikan')
 
 @section('subheader')
 <link href="{{ asset('css/pages/wizard/wizard-1.css') }} " rel="stylesheet" type="text/css" />
@@ -12,7 +12,7 @@
   <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
   <span class="kt-subheader__breadcrumbs-separator"></span>
   <a href="" class="kt-subheader__breadcrumbs-link">
-  Buat Surat Izin Praktik (SIP) </a>
+  Buat Surat Izin Pendidikan </a>
   <!-- <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">Active link</span> -->
 </div>
 
@@ -359,6 +359,38 @@
     </div>
   </div>
 </div>
+
+<!-- Modal Validity -->
+<div class="modal fade bd-example-modal" id="modal-validity" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"> Data Santri Serupa</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <p id="pesan"></p>
+        <table id="table">
+          <tr>
+            <td>Nis </td>
+            <td> : </td>
+            <td id="nis"></td>
+          </tr>
+          <tr>
+            <td>Nama </td>
+            <td> : </td>
+            <td id="nama"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal -->
+
 @endsection
 
 @section('page_script')

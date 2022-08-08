@@ -119,21 +119,9 @@
               <label class="col-lg-3 col-form-label">Jenis Perizinan:*</label>
               <div class="col-lg-9">
                 <select class="form-control" name="jenis_izin">
-                  <option value="Dokter" {{ old('jenis_izin', $data->sip->jenis_izin) == 'Dokter' ? 'selected' : '' }}>Dokter</option>
-                  <option value="Dokter Spesialis" {{ old('jenis_izin', $data->sip->jenis_izin) == 'Dokter Spesialis' ? 'selected' : '' }}>Dokter Spesialis</option>
-                  <option value="Dokter Gigi" {{ old('jenis_izin', $data->sip->jenis_izin) == 'Dokter Gigi' ? 'selected' : '' }}>Dokter Gigi</option>
-                  <option value="Dokter Gigi Spesialis" {{ old('jenis_izin', $data->sip->jenis_izin) == 'Dokter Gigi Spesialis' ? 'selected' : '' }}>Dokter Gigi Spesialis</option>
-                  <option value="Dokter Internis" {{ old('jenis_izin', $data->sip->jenis_izin) == 'Dokter Internis' ? 'selected' : '' }}>Dokter Internis</option>
-                  <option value="Teknisi Kardiovaskuler" {{ old('jenis_izin', $data->sip->jenis_izin) == 'Teknisi Kardiovaskuler' ? 'selected' : '' }}>Teknisi Kardiovaskuler</option>
-                  <option value="Apoteker" {{ old('jenis_izin', $data->sip->jenis_izin) == 'Apoteker' ? 'selected' : '' }}>Apoteker</option>
-                  <option value="Asisten Apoteker" {{ old('jenis_izin', $data->sip->jenis_izin) == 'Asisten Apoteker' ? 'selected' : '' }}>Asisten Apoteker</option>
-                  <option value="Pranata Laboratorium Kesehatan" {{ old('jenis_izin', $data->sip->jenis_izin) == 'Pranata Laboratorium Kesehatan' ? 'selected' : '' }}>Pranata Laboratorium Kesehatan</option>
-                  <option value="Psikolog Klinik" {{ old('jenis_izin', $data->sip->jenis_izin) == 'Psikolog Klinik' ? 'selected' : '' }}>Psikolog Klinik</option>
-                  <option value="Teknik Elektromedik" {{ old('jenis_izin', $data->sip->jenis_izin) == 'Teknik Elektromedik' ? 'selected' : '' }}>Teknik Elektromedik</option>
-                  <option value="Fisioterapis" {{ old('jenis_izin', $data->sip->jenis_izin) == 'Fisioterapis' ? 'selected' : '' }}>Fisioterapis</option>
-                  <option value="Terdaftar Penyehat Tradiosional" {{ old('jenis_izin', $data->sip->jenis_izin) == 'Terdaftar Penyehat Tradiosional' ? 'selected' : '' }}>Terdaftar Penyehat Tradiosional</option>
-                  <option value="Bidan Praktek Mandiri" {{ old('jenis_izin', $data->sip->jenis_izin) == 'Bidan Praktek Mandiri' ? 'selected' : '' }}>Bidan Praktek Mandiri</option>
-                  <option value="Fisioterapi Praktek Mandiri (Nos OSS)" {{ old('jenis_izin', $data->sip->jenis_izin) == 'Fisioterapi Praktek Mandiri (Nos OSS)' ? 'selected' : '' }}>Fisioterapi Praktek Mandiri (Nos OSS)</option>
+                  @foreach($subizin as $dt)
+                  <option value="{{$dt->id}}" {{ old('jenis_izin', $data->sip->subizin_id) == $dt->id ? 'selected' : '' }}>{{$dt->nama}}</option>
+                  @endforeach
                 </select>
               </div>
             </div>
@@ -159,43 +147,154 @@
         </div>
         <hr> 
 
-        <h5 class="font-size-lg text-dark font-weight-bold mb-6">Alamat Praktik</h5>
+        <h5 class="font-size-lg text-dark font-weight-bold mb-6">Data Praktik</h5>
         <div class="row">
           <div class="col-md-4">
-            <h6 class="font-size-lg text-dark font-weight-bold mb-6">Alamat Praktik 1</h6>
+            <h6 class="font-size-lg text-dark font-weight-bold mb-6">Data Praktik 1</h6>
+            <div class="form-group row">
+              <label class="col-lg-3 col-form-label">Nama Praktek:*</label>
+              <div class="col-lg-9">
+                <input type="text" class="form-control" name="nama_praktek1" value="{{old('nama_praktek1', $data->sip->nama_praktek1)}}">
+              </div>
+            </div>
             <div class="form-group row">
               <label class="col-lg-3 col-form-label">Jalan:*</label>
               <div class="col-lg-9">
                 <input type="text" class="form-control" name="jalan1" value="{{old('jalan1', $data->sip->jalan1)}}">
               </div>
             </div>
-            <div class="form-group row">
-              <label class="col-lg-3 col-form-label">Kelurahan:*</label>
-              <div class="col-lg-9">
-                <input type="text" class="form-control" name="kelurahan1" value="{{old('jalan1', $data->sip->kelurahan1)}}">
-              </div>
-            </div>
+
             <div class="form-group row">
               <label class="col-lg-3 col-form-label">Kecamatan:*</label>
               <div class="col-lg-9">
-                <input type="text" class="form-control" name="kecamatan1" value="{{old('jalan1', $data->sip->kecamatan1)}}">
+                <select class="form-control" name="kecamatan1" id="kecamatan1" onchange="show_kelurahan1(this.value)">
+                  <option value="Biringkanaya" @if($data->sip->klh1->kecamatan == 'Biringkanaya') selected @endif>Biringkanaya</option>
+                  <option value="Bontoala" @if($data->sip->klh1->kecamatan == 'Bontoala') selected @endif>Bontoala</option>
+                  <option value="Kepulauan Sangkarrang" @if($data->sip->klh1->kecamatan == 'Kepulauan Sangkarrang') selected @endif>Kepulauan Sangkarrang</option>
+                  <option value="Makassar" @if($data->sip->klh1->kecamatan == 'Makassar') selected @endif>Makassar</option>
+                  <option value="Mamajang" @if($data->sip->klh1->kecamatan == 'Mamajang') selected @endif>Mamajang</option>
+                  <option value="Manggala" @if($data->sip->klh1->kecamatan == 'Manggala') selected @endif>Manggala</option>
+                  <option value="Mariso" @if($data->sip->klh1->kecamatan == 'Mariso') selected @endif>Mariso</option>
+                  <option value="Panakkukang" @if($data->sip->klh1->kecamatan == 'Panakkukang') selected @endif>Panakkukang</option>
+                  <option value="Rappocini" @if($data->sip->klh1->kecamatan == 'Rappocini') selected @endif>Rappocini</option>
+                  <option value="Tallo" @if($data->sip->klh1->kecamatan == 'Tallo') selected @endif>Tallo</option>
+                  <option value="Tamalanrea" @if($data->sip->klh1->kecamatan == 'Tamalanrea') selected @endif>Tamalanrea</option>
+                  <option value="Tamalate" @if($data->sip->klh1->kecamatan == 'Tamalate') selected @endif>Tamalate</option>
+                  <option value="Ujung Pandang" @if($data->sip->klh1->kecamatan == 'Ujung Pandang') selected @endif>Ujung Pandang</option>
+                  <option value="Ujung Tanah" @if($data->sip->klh1->kecamatan == 'Ujung Tanah') selected @endif>Ujung Tanah</option>
+                  <option value="Wajo" @if($data->sip->klh1->kecamatan == 'Wajo') selected @endif>Wajo</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-lg-3 col-form-label">Kelurahan:*</label>
+              <div class="col-lg-9">
+                <select class="form-control" name="kelurahan1" id="kelurahan1">
+                  <option></option>
+                </select>
               </div>
             </div>
           </div>
 
           @if($data->sip->jalan2 != '')
           <div class="col-md-4">
-            <h6 class="font-size-lg text-dark font-weight-bold mb-6">Alamat Praktik 2</h6>
-            <p>Jalan : <b>{{$data->sip->jalan2}}</b></p>
-            <p>Kelurahan : <b>{{$data->sip->kelurahan2}}</b></p>
-            <p>Kecamatan : <b>{{$data->sip->kecamatan2}}</b></p>
+            <h6 class="font-size-lg text-dark font-weight-bold mb-6">Data Praktik 2</h6>
+            <div class="form-group row">
+              <label class="col-lg-3 col-form-label">Nama Praktek:*</label>
+              <div class="col-lg-9">
+                <input type="text" class="form-control" name="nama_praktek2" value="{{old('nama_praktek2', $data->sip->nama_praktek2)}}">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-lg-3 col-form-label">Jalan:*</label>
+              <div class="col-lg-9">
+                <input type="text" class="form-control" name="jalan2" value="{{old('jalan2', $data->sip->jalan2)}}">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-lg-3 col-form-label">Kecamatan:*</label>
+              <div class="col-lg-9">
+                <select class="form-control" name="kecamatan2" id="kecamatan2" onchange="show_kelurahan2(this.value)">
+                  <option value="Biringkanaya" @if($data->sip->klh2->kecamatan == 'Biringkanaya') selected @endif>Biringkanaya</option>
+                  <option value="Bontoala" @if($data->sip->klh2->kecamatan == 'Bontoala') selected @endif>Bontoala</option>
+                  <option value="Kepulauan Sangkarrang" @if($data->sip->klh2->kecamatan == 'Kepulauan Sangkarrang') selected @endif>Kepulauan Sangkarrang</option>
+                  <option value="Makassar" @if($data->sip->klh2->kecamatan == 'Makassar') selected @endif>Makassar</option>
+                  <option value="Mamajang" @if($data->sip->klh2->kecamatan == 'Mamajang') selected @endif>Mamajang</option>
+                  <option value="Manggala" @if($data->sip->klh2->kecamatan == 'Manggala') selected @endif>Manggala</option>
+                  <option value="Mariso" @if($data->sip->klh2->kecamatan == 'Mariso') selected @endif>Mariso</option>
+                  <option value="Panakkukang" @if($data->sip->klh2->kecamatan == 'Panakkukang') selected @endif>Panakkukang</option>
+                  <option value="Rappocini" @if($data->sip->klh2->kecamatan == 'Rappocini') selected @endif>Rappocini</option>
+                  <option value="Tallo" @if($data->sip->klh2->kecamatan == 'Tallo') selected @endif>Tallo</option>
+                  <option value="Tamalanrea" @if($data->sip->klh2->kecamatan == 'Tamalanrea') selected @endif>Tamalanrea</option>
+                  <option value="Tamalate" @if($data->sip->klh2->kecamatan == 'Tamalate') selected @endif>Tamalate</option>
+                  <option value="Ujung Pandang" @if($data->sip->klh2->kecamatan == 'Ujung Pandang') selected @endif>Ujung Pandang</option>
+                  <option value="Ujung Tanah" @if($data->sip->klh2->kecamatan == 'Ujung Tanah') selected @endif>Ujung Tanah</option>
+                  <option value="Wajo" @if($data->sip->klh2->kecamatan == 'Wajo') selected @endif>Wajo</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-lg-3 col-form-label">Kelurahan:*</label>
+              <div class="col-lg-9">
+                <select class="form-control" name="kelurahan2" id="kelurahan2">
+                  <option></option>
+                </select>
+              </div>
+            </div>
+
           </div>
-          @elseif($data->sip->jalan3 != '')
+          @endif
+
+          @if($data->sip->jalan3 != '')
           <div class="col-md-4">
-            <h6 class="font-size-lg text-dark font-weight-bold mb-6">Alamat Praktik 3</h6>
-            <p>Jalan : <b>{{$data->sip->jalan3}}</b></p>
-            <p>Kelurahan : <b>{{$data->sip->kelurahan3}}</b></p>
-            <p>Kecamatan : <b>{{$data->sip->kecamatan3}}</b></p>
+            <h6 class="font-size-lg text-dark font-weight-bold mb-6">Data Praktik 3</h6>
+            <div class="form-group row">
+              <label class="col-lg-3 col-form-label">Nama Praktek:*</label>
+              <div class="col-lg-9">
+                <input type="text" class="form-control" name="nama_praktek3" value="{{old('nama_praktek3', $data->sip->nama_praktek3)}}">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-lg-3 col-form-label">Jalan:*</label>
+              <div class="col-lg-9">
+                <input type="text" class="form-control" name="jalan3" value="{{old('jalan3', $data->sip->jalan3)}}">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-lg-3 col-form-label">Kecamatan:*</label>
+              <div class="col-lg-9">
+                <select class="form-control" name="kecamatan3" id="kecamatan3" onchange="show_kelurahan3(this.value)">
+                  <option value="Biringkanaya" @if($data->sip->klh3->kecamatan == 'Biringkanaya') selected @endif>Biringkanaya</option>
+                  <option value="Bontoala" @if($data->sip->klh3->kecamatan == 'Bontoala') selected @endif>Bontoala</option>
+                  <option value="Kepulauan Sangkarrang" @if($data->sip->klh3->kecamatan == 'Kepulauan Sangkarrang') selected @endif>Kepulauan Sangkarrang</option>
+                  <option value="Makassar" @if($data->sip->klh3->kecamatan == 'Makassar') selected @endif>Makassar</option>
+                  <option value="Mamajang" @if($data->sip->klh3->kecamatan == 'Mamajang') selected @endif>Mamajang</option>
+                  <option value="Manggala" @if($data->sip->klh3->kecamatan == 'Manggala') selected @endif>Manggala</option>
+                  <option value="Mariso" @if($data->sip->klh3->kecamatan == 'Mariso') selected @endif>Mariso</option>
+                  <option value="Panakkukang" @if($data->sip->klh3->kecamatan == 'Panakkukang') selected @endif>Panakkukang</option>
+                  <option value="Rappocini" @if($data->sip->klh3->kecamatan == 'Rappocini') selected @endif>Rappocini</option>
+                  <option value="Tallo" @if($data->sip->klh3->kecamatan == 'Tallo') selected @endif>Tallo</option>
+                  <option value="Tamalanrea" @if($data->sip->klh3->kecamatan == 'Tamalanrea') selected @endif>Tamalanrea</option>
+                  <option value="Tamalate" @if($data->sip->klh3->kecamatan == 'Tamalate') selected @endif>Tamalate</option>
+                  <option value="Ujung Pandang" @if($data->sip->klh3->kecamatan == 'Ujung Pandang') selected @endif>Ujung Pandang</option>
+                  <option value="Ujung Tanah" @if($data->sip->klh3->kecamatan == 'Ujung Tanah') selected @endif>Ujung Tanah</option>
+                  <option value="Wajo" @if($data->sip->klh3->kecamatan == 'Wajo') selected @endif>Wajo</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-lg-3 col-form-label">Kelurahan:*</label>
+              <div class="col-lg-9">
+                <select class="form-control" name="kelurahan3" id="kelurahan3">
+                  <option></option>
+                </select>
+              </div>
+            </div>
           </div>
           @endif
         </div>
@@ -204,26 +303,26 @@
         <div class="row">
           <div class="col-md-6 text-center">
             <div class="form-group row">
-              <label class="col-md-2 col-form-label">Foto KTP:*</label>
+              <label class="col-md-2 col-form-label">Foto KTP: (jpg, jpeg, pdf)*</label>
               <div class="col-lg-6">
                 <input type="file" class="form-control" name="ktp">
               </div>
             </div>
-            <img src="{{ asset('storage/'.$data->sip->ktp) }}" class="rounded img-fluid" alt="...">
+            <img src="{{ asset('storage/'.$data->sip->ktp) }}" class="rounded img-fluid" alt="..." alt="..." height="100px" width="120px">
           </div>
           <div class="col-md-6 text-center">
             <div class="form-group row">
-              <label class="col-md-2 col-form-label">Pas Foto:*</label>
+              <label class="col-md-2 col-form-label">Pas Foto: (jpg, jpeg, pdf)*</label>
               <div class="col-lg-6">
                 <input type="file" class="form-control" name="foto">
               </div>
             </div>
-            <img src="{{ asset('storage/'.$data->sip->foto) }}" class="rounded img-fluid" alt="...">
+            <img src="{{ asset('storage/'.$data->sip->foto) }}" class="rounded img-fluid" alt="..." alt="..." height="100px" width="120px">
           </div>
         </div>
         <hr>
         <div class="form-group row">
-          <label class="col-md-2 col-form-label">STR:*</label>
+          <label class="col-md-2 col-form-label">STR: (pdf)*</label>
           <div class="col-lg-4">
             <input type="file" class="form-control" name="str">
           </div>
@@ -237,21 +336,21 @@
           <hr>
 
           <div class="form-group row">
-            <label class="col-md-2 col-form-label">Rekomendasi IDI:*</label>
+            <label class="col-md-2 col-form-label">Rekomendasi IDI: (pdf)*</label>
             <div class="col-lg-4">
-              <input type="file" class="form-control" name="rekomendasi_idi">
+              <input type="file" class="form-control" name="rekomendasi_org">
             </div>
           </div>
           <div class="row">
             <div class="col-md-12 text-center">
-              <embed src="{{asset('storage/'.$data->sip->rekomendasi_idi)}}#toolbar=0" type="application/pdf" width="80%" height="500px">
+              <embed src="{{asset('storage/'.$data->sip->rekomendasi_org)}}#toolbar=0" type="application/pdf" width="80%" height="500px">
               </div>
             </div>
             <hr>
             <hr>
 
             <div class="form-group row">
-              <label class="col-md-2 col-form-label">Surat Keterangan Pelayanan Kesehatan:</label>
+              <label class="col-md-2 col-form-label">Surat Keterangan Pelayanan Kesehatan: (pdf)*</label>
               <div class="col-lg-4">
                 <input type="file" class="form-control" name="surat_keterangan">
               </div>
@@ -271,7 +370,99 @@
 
         @section('page_script')
 
-        <script type="text/javascript">
+<script type="text/javascript">
+         // $(document).ready(function () {
+          curr_kel1 = {!! $data->sip->klh1->id !!};
+          var kec1 = $('#kecamatan1').val();
+          show_kelurahan1(kec1);       
+        // });
+
+// menampilkan kelurahan1 setelah memilih kecamatan1
+      function show_kelurahan1(kec) {
+        $("#kelurahan1").empty();
+        $("#kelurahan1").append("<option value=''>--Pilih kelurahan1--</option>");
+        $.ajax({
+          'url': "../../cek-kelurahan/" + kec,
+          'dataType': 'json',
+          success: function(data) {
+            jQuery.each(data, function(i, val) {
+              if(val.id == curr_kel1) {
+                check = 'selected';
+              } else {
+                check = '';
+              }
+              $('#kelurahan1').append('<option value="' + val.id + '" '+check+'>' + val.kecamatan +' - '+ val.kelurahan + '</option>');
+            });
+          },
+          error: function(xhr, status, error) {
+            var error = xhr.responseJSON;
+            if ($.isEmptyObject(error) == false) {
+              $.each(error.errors, function(key, value) {
+                alert(key + value);
+              });
+            }
+          }
+        })
+      }
+//end menampilkan kelurahan1 setelah memilih kecamatan1
+
+// menampilkan kelurahan2 setelah memilih kecamatan2
+        function show_kelurahan2(kec) {
+          $("#kelurahan2").empty();
+          $("#kelurahan2").append("<option value=''>--Pilih kelurahan2--</option>");
+          $.ajax({
+            'url': "../../cek-kelurahan/" + kec,
+            'dataType': 'json',
+            success: function(data) {
+              jQuery.each(data, function(i, val) {
+                if(val.id == curr_kel2) {
+                  check = 'selected';
+                } else {
+                  check = '';
+                }
+                $('#kelurahan2').append('<option value="' + val.id + '" '+check+'>' + val.kecamatan +' - '+ val.kelurahan + '</option>');
+              });
+            },
+            error: function(xhr, status, error) {
+              var error = xhr.responseJSON;
+              if ($.isEmptyObject(error) == false) {
+                $.each(error.errors, function(key, value) {
+                  alert(key + value);
+                });
+              }
+            }
+          })
+        }
+//end menampilkan kelurahan2 setelah memilih kecamatan2
+
+// menampilkan kelurahan3 setelah memilih kecamatan3
+          function show_kelurahan3(kec) {
+            $("#kelurahan3").empty();
+            $("#kelurahan3").append("<option value=''>--Pilih kelurahan3--</option>");
+            $.ajax({
+              'url': "../../cek-kelurahan/" + kec,
+              'dataType': 'json',
+              success: function(data) {
+                jQuery.each(data, function(i, val) {
+                  if(val.id == curr_kel3) {
+                    check = 'selected';
+                  } else {
+                    check = '';
+                  }
+                  $('#kelurahan3').append('<option value="' + val.id + '" '+check+'>' + val.kecamatan +' - '+ val.kelurahan + '</option>');
+                });
+              },
+              error: function(xhr, status, error) {
+                var error = xhr.responseJSON;
+                if ($.isEmptyObject(error) == false) {
+                  $.each(error.errors, function(key, value) {
+                    alert(key + value);
+                  });
+                }
+              }
+            })
+          }
+//end menampilkan kelurahan3 setelah memilih kecamatan3
 
            function updateberkas() { // verifikasi berkas berhasil
             $(document).on('click', '#update-button', function(){
@@ -286,101 +477,83 @@
                 timer: 6500
               }).then((result) => {
                 if (result.value) {
-                  // alert('hahah')
-                  // $('#berkas-form').submit(function(e){ // update berkas
-                    // e.preventDefault();
-                    // alert('hahah')
-                    var request = new FormData(document.getElementById("berkas-form"));
-                    var endpoint= "{{route('perizinan.ditolak.update', ['no_tiket' => $data->no_tiket])}}";
-                    $.ajax({
-                      url: endpoint,
-                      method: "POST",
-                      data: request,
-                      contentType: false,
-                      cache: false,
-                      processData: false,
-                      success:function(data){
-                        if(data.status == 'success') {
-                          successToRelaoad(data.status, data.pesan);
-                        } else {
-                          berhasil(data.status, data.pesan);
-                        }
-                      },
-                      error: function(xhr, status, error){
-                        var error = xhr.responseJSON; 
-                        if ($.isEmptyObject(error) == false) {
-                          $.each(error.errors, function(key, value) {
-                            gagal(key, value);
-                          });
-                        }
-                      } 
-                    }); 
-                  // });
+                  var request = new FormData(document.getElementById("berkas-form"));
+                  var endpoint= "{{route('perizinan.ditolak.update', ['no_tiket' => $data->no_tiket])}}";
+                  $.ajax({
+                    url: endpoint,
+                    method: "POST",
+                    data: request,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success:function(data){
+                      if(data.status == 'success') {
+                        successToRelaoad(data.status, data.pesan);
+                      } else {
+                        berhasil(data.status, data.pesan);
+                      }
+                    },
+                    error: function(xhr, status, error){
+                      var error = xhr.responseJSON; 
+                      if ($.isEmptyObject(error) == false) {
+                        $.each(error.errors, function(key, value) {
+                          gagal(key, value);
+                        });
+                      }
+                    } 
+                  }); 
                 }
               });
             });
           }
 
-          // $(document).ready(function(){
-    // $('#update-form').submit(function(e){ // update berkas
-    //   e.preventDefault();
-    //   var request = new FormData(this);
-    //   var endpoint= "{{route('perizinan.ditolak.update', ['no_tiket' => $data->no_tiket])}}";
-    //     $.ajax({
-    //       url: endpoint,
-    //       method: "POST",
-    //       data: request,
-    //       contentType: false,
-    //       cache: false,
-    //       processData: false,
-    //       success:function(data){
-    //         if(data.status == 'success') {
-    //           successToRelaoad(data.status, data.pesan);
-    //         } else {
-    //           berhasil(data.status, data.pesan);
-    //         }
-    //       },
-    //       error: function(xhr, status, error){
-    //         var error = xhr.responseJSON; 
-    //         if ($.isEmptyObject(error) == false) {
-    //           $.each(error.errors, function(key, value) {
-    //             gagal(key, value);
-    //           });
-    //         }
-    //       } 
-    //     }); 
-    //   });
-  // }
-  function successToRelaoad(status, pesan) {
-    Swal.fire({
-      type: status,
-      title: pesan,
-      showConfirmButton: true,
-      button: "Ok"
-    }).then((result) => {
-      window.location.href = "{{URL::to('perizinan/ditolak')}}"
-        // location.reload();
-      })
-  }
+          function successToRelaoad(status, pesan) {
+            Swal.fire({
+              type: status,
+              title: pesan,
+              showConfirmButton: true,
+              button: "Ok"
+            }).then((result) => {
+              window.location.href = "{{URL::to('perizinan/ditolak')}}"
+            })
+          }
 
-  function berhasil(status, pesan) {
-    Swal.fire({
-      type: status,
-      title: pesan,
-      showConfirmButton: true,
-      button: "Ok"
-    })
-  }
+          function berhasil(status, pesan) {
+            Swal.fire({
+              type: status,
+              title: pesan,
+              showConfirmButton: true,
+              button: "Ok"
+            })
+          }
 
-  function gagal(key, pesan) {
-    Swal.fire({
-      type: 'error',
-      title:  key + ' : ' + pesan,
-      showConfirmButton: true,
-      timer: 25500,
-      button: "Ok"
-    })
-  }
+          function gagal(key, pesan) {
+            Swal.fire({
+              type: 'error',
+              title:  key + ' : ' + pesan,
+              showConfirmButton: true,
+              timer: 25500,
+              button: "Ok"
+            })
+          }
 
-</script>
-@endsection
+
+        </script>
+
+
+         @if($data->sip->klh2)
+        <script type="text/javascript">
+          curr_kel2 = {!! $data->sip->klh2->id !!};
+          var kec2 = $('#kecamatan2').val();
+          show_kelurahan2(kec2);
+        </script>
+        @endif
+
+        @if($data->sip->klh3)
+        <script>
+          curr_kel3 = {!! $data->sip->klh3->id !!};
+          var kec3 = $('#kecamatan3').val();
+          show_kelurahan3(kec3);
+        </script>
+        @endif
+        @endsection

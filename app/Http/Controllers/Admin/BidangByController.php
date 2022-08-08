@@ -6,8 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Perizinan;
 use Auth;
+use App\Models\Admin;
+use App\Models\Sip;
 use Carbon\Carbon;
 use Mail;
+use File;
+use Storage;
 class BidangByController extends Controller
 {
 	public function index()
@@ -27,7 +31,11 @@ class BidangByController extends Controller
 			return redirect()->route('error')->with('not_found','Kamu Tidak Memiliki Akses Bidang');
 		}
 		
-		$data = Perizinan::where('status', '0')->whereNull('bidang_by')->where('no_tiket', $no_tiket)->with('sip')->first();
+		$data = Perizinan::where('status', '0')->whereNull('bidang_by')->where('no_tiket', $no_tiket)->first();
+		// $data = Sip::find(1);
+		// return $data->klh1;
+		// return $data->sip->klh3->kelurahan;
+		// return $data->sip->subizin;
 		if(!$data) {
 			abort(404);
 		}

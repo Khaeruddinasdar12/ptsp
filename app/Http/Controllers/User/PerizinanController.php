@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Perizinan;
 use App\Models\Sip;
+use App\Models\Subizin;
 use Auth;
-
+use QueryException;
+use Exception;
 class PerizinanController extends Controller
 {
     public function __construct()
@@ -15,40 +17,30 @@ class PerizinanController extends Controller
 		$this->middleware('auth');
 	}
 
-	public function ditinjau()
+	public function index()
 	{
 		$user_id = Auth::user()->id;
-		$data = Perizinan::where('user_id', $user_id)->where('status','0')->paginate(10);
-		return view('user.perizinan.ditinjau', ['data' => $data]);
-	}
-
-	public function ditolak()
-	{
-		$user_id = Auth::user()->id;
-		$data = Perizinan::where('user_id', $user_id)->where('status','2')->paginate(10);
-		return view('user.perizinan.ditolak', ['data' => $data]);
-	}
-	
-	public function terbit()
-	{
-		$user_id = Auth::user()->id;
-		$data = Perizinan::where('user_id', $user_id)->where('status','1')->paginate(10);
-		return view('user.perizinan.terbit', ['data' => $data]);
+		$data = Perizinan::where('user_id', $user_id)->paginate(10);
+		return view('user.perizinan.index', ['data' => $data]);
 	}
 
 	public function show($no_tiket)
 	{		
 		$user_id = Auth::user()->id;
+		$subizin = Subizin::where('jenis', 'sip')->get();
 		$data = Perizinan::where('user_id', $user_id)->where('status', '2')->where('no_tiket', $no_tiket)->with('sip')->first();
+
+		// return $data->sip->klh3->id;
 		if(!$data) {
 			abort(404);
 		}
 		// return $data;
-		return view('user.perizinan.sip-show', ['data' => $data]);
+		return view('user.perizinan.sip-show', ['data' => $data, 'subizin' => $subizin]);
 	}
 
 	public function update(Request $request, $no_tiket)
 	{
+		try{
 		$rules = [
 			'nama' => 'required|string',
 			'tempat_lahir' => 'required|string',
@@ -60,7 +52,6 @@ class PerizinanController extends Controller
 			'akhir_str' => 'required|date',
 			'jalan1' => 'required|string',
 			'kelurahan1' => 'required|string',
-			'kecamatan1' => 'required|string',
 			// 'foto'   => 'image|mimes:jpeg,png,jpg|max:2048',
 			// 'ktp'   => 'image|mimes:jpeg,png,jpg|max:2048',
 			// 'str'   => 'mimes:pdf|max:2048',
@@ -77,21 +68,21 @@ class PerizinanController extends Controller
 			'no_str' => 'No. STR',
 			'awal_str' => 'Tanggal Mulai Berlaku STR',
 			'akhir_str' => 'Tanggal Berakhir STR',
+			'nama_praktek1' => 'Nama Praktek 1',
 			'jalan1' => 'Jalan 1',
 			'kelurahan1' => 'Kelurahan 1',
-			'kecamatan1' => 'Kecamatan 1',
+			'nama_praktek2' => 'Nama Praktek 2',
 			'jalan2' => 'Jalan 2',
 			'kelurahan2' => 'Kelurahan 2',
-			'kecamatan2' => 'Kecamatan 2',
+			'nama_praktek3' => 'Nama Praktek 3',
 			'jalan3' => 'Jalan 3',
 			'kelurahan3' => 'Kelurahan 3',
-			'kecamatan3' => 'Kecamatan 3',
 			'surat_keterangan' => 'Surat Keterangan Pelayanan Kesehatan',
 			'surat_persetujuan' => 'Surat Persetujuan Pimpinan Instansi',
 			'ktp' => 'KTP',
 			'foto' => 'Foto',
 			'str' => 'STR',
-			'rekomendasi_idi' => 'Rekomendasi IDI',
+			'rekomendasi_org' => 'Rekomendasi Organisasi Profesi',
 
 		];
 		$validasi = $this->validate($request,$rules,$message,$attribute);
@@ -111,81 +102,106 @@ class PerizinanController extends Controller
 		$sip->tempat_lahir = $request->tempat_lahir;
 		$sip->tanggal_lahir = $request->tanggal_lahir;
 		$sip->alamat = $request->alamat;
-		$sip->jenis_izin = $request->jenis_izin;
+		$sip->subizin_id = $request->jenis_izin;
 		$sip->no_str = $request->no_str;
 		$sip->awal_str = $request->awal_str;
 		$sip->akhir_str = $request->akhir_str;
+		$sip->nama_praktek1 = $request->nama_praktek1;
 		$sip->jalan1 = $request->jalan1;
 		$sip->kelurahan1 = $request->kelurahan1;
-		$sip->kecamatan1 = $request->kecamatan1;
 
 		if($request->jalan2 || $request->kelurahan2 || $request->kecamatan2) {
 			$validasi = $this->validate($request, [
+				'nama_praktek2' => 'required|string',
 				'jalan2' => 'required|string',
 				'kelurahan2' => 'required|string',
-				'kecamatan2' => 'required|string',
 			],$message,$attribute);
-
+			$sip->nama_praktek2 = $request->nama_praktek2;
 			$sip->jalan2 = $request->jalan2;
 			$sip->kelurahan2 = $request->kelurahan2;
-			$sip->kecamatan2 = $request->kecamatan2;
 		}
 
 		if($request->jalan3 || $request->kelurahan3 || $request->kecamatan3) {
 			$validasi = $this->validate($request, [
+				'nama_praktek3' => 'required|string',
 				'jalan3'  => 'required|string',
 				'kelurahan3'  => 'required|string',
-				'kecamatan3'  => 'required|string',
 			],$message,$attribute);
-
+			$sip->nama_praktek3 = $request->nama_praktek3;
 			$sip->jalan3 = $request->jalan3;
 			$sip->kelurahan3 = $request->kelurahan3;
-			$sip->kecamatan3 = $request->kecamatan3;
 		}
 		
 		$ktp = $request->file('ktp'); // upload KTP
 		if ($ktp) {
-			$gambar_path = $ktp->store('sip', 'public');
-			$sip->ktp = $gambar_path;
-		}
+			$validasi = $this->validate($request, [
+				'ktp' => 'image|mimes:jpeg,png,jpg|max:1024',
+			],$message,$attribute);
+            if ($sip->ktp && file_exists(storage_path('app/public/' . $sip->ktp))) {
+                \Storage::delete('public/' . $sip->ktp);
+            }
+            $path = $ktp->store('sip', 'public');
+            $sip->ktp = $path;
+        }
 
         $foto = $request->file('foto'); // upload Foto
         if ($foto) {
-        	$gambar_path = $foto->store('sip', 'public');
-        	$sip->foto = $gambar_path;
+        	$validasi = $this->validate($request, [
+				'foto' => 'image|mimes:jpeg,png,jpg|max:1024',
+			],$message,$attribute);
+            if ($sip->foto && file_exists(storage_path('app/public/' . $sip->foto))) {
+                \Storage::delete('public/' . $sip->foto);
+            }
+            $path = $foto->store('sip', 'public');
+            $sip->foto = $path;
         }
 
         $str = $request->file('str'); // upload STR
         if ($str) {
-        	$gambar_path = $str->store('sip', 'public');
-        	$sip->str = $gambar_path;
+        	$validasi = $this->validate($request, [
+				'str'   => 'mimes:pdf|max:1024',
+			],$message,$attribute);
+            if ($sip->str && file_exists(storage_path('app/public/' . $sip->str))) {
+                \Storage::delete('public/' . $sip->foto);
+            }
+            $path = $str->store('sip', 'public');
+            $sip->str = $path;
         }
 
-        $idi = $request->file('rekomendasi_idi'); // upload Rekomendasi IDI
-        if ($idi) {
-        	$gambar_path = $idi->store('sip', 'public');
-        	$sip->rekomendasi_idi = $gambar_path;
+        $idi = $request->file('rekomendasi_org'); // upload Rekomendasi Org Profesi
+        if($idi) {
+        	$validasi = $this->validate($request, [
+				'rekomendasi_org' => 'mimes:pdf|max:1024',
+			],$message,$attribute);
+            if ($sip->rekomendasi_org && file_exists(storage_path('app/public/' . $sip->rekomendasi_org))) {
+                \Storage::delete('public/' . $sip->rekomendasi_org);
+            }
+            $path = $idi->store('sip', 'public');
+            $sip->rekomendasi_org = $path;
         }
 
         $surat_keterangan = $request->file('surat_keterangan'); // Surat Keterangan Pelayanan Kesehatan
-        if ($surat_keterangan) {
-        	$gambar_path = $surat_keterangan->store('sip', 'public');
-        	$sip->surat_keterangan = $gambar_path;
-        }	
-
-        $surat_persetujuan = $request->file('surat_persetujuan'); // Surat Persetujuan Pimpinan
-        if ($surat_persetujuan) {
+        if($surat_keterangan) {
         	$validasi = $this->validate($request, [
-				'surat_persetujuan' => 'mimes:pdf|max:2048',
+				'surat_keterangan'   => 'mimes:pdf|max:1024',
 			],$message,$attribute);
-        	$gambar_path = $surat_persetujuan->store('sip', 'public');
-        	$sip->surat_persetujuan = $gambar_path;
+            if ($sip->surat_keterangan && file_exists(storage_path('app/public/' . $sip->surat_keterangan))) {
+                \Storage::delete('public/' . $sip->surat_keterangan);
+            }
+            $path = $surat_keterangan->store('sip', 'public');
+            $sip->surat_keterangan = $path;
         }	
 
-        $pelengkap = $request->file('pelengkap'); // Berkas Pelengkap
-        if ($pelengkap) {
-        	$gambar_path = $pelengkap->store('sip', 'public');
-        	$sip->pelengkap = $gambar_path;        
+        $surat_persetujuan = $request->file('surat_persetujuan'); // Surat Persetujuan Pimpinan (opsional)
+        if($surat_persetujuan) {
+        	$validasi = $this->validate($request, [
+				'surat_persetujuan' => 'mimes:pdf|max:1024',
+			],$message,$attribute);
+            if ($sip->surat_persetujuan && file_exists(storage_path('app/public/' . $sip->surat_persetujuan))) {
+                \Storage::delete('public/' . $sip->surat_persetujuan);
+            }
+            $path = $surat_persetujuan->store('sip', 'public');
+            $sip->surat_persetujuan = $path;
         }
 
         $izin->save();
@@ -195,5 +211,17 @@ class PerizinanController extends Controller
         	'pesan' => 'Berhasil Mengirim Perubahan Data Perizinan!'
         );
         return redirect()->route('perizinan.ditolak')->with('success', 'Berhasil Mengirim!');
+    }catch(Exception $e){
+    	return $arrayName = array(
+    		'status' => 'error',
+    		'pesan' => $e->getMessage()
+    	);
+    }catch(QueryException $e){
+    	return $arrayName = array(
+    		'status' => 'error',
+    		'pesan' => $e->getMessage()
+    	);
+    }
+
 	}
 }

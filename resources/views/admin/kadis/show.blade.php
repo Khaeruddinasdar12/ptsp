@@ -96,25 +96,28 @@
             </div>
             <hr> 
 
-            <h5 class="font-size-lg text-dark font-weight-bold mb-6">Alamat Praktik</h5>
+            <h5 class="font-size-lg text-dark font-weight-bold mb-6">Data Praktik</h5>
             <div class="row">
               <div class="col-md-4">
-                <h6 class="font-size-lg text-dark font-weight-bold mb-6">Alamat Praktik 1</h6>
+                <h6 class="font-size-lg text-dark font-weight-bold mb-6">Data Praktik 1</h6>
+                <p>Nama Praktik : <b>{{$data->sip->nama_praktek1}}</b></p>
                 <p>Jalan : <b>{{$data->sip->jalan1}}</b></p>
-                <p>Kelurahan : <b>{{$data->sip->kelurahan1}}</b></p>
-                <p>Kecamatan : <b>{{$data->sip->kecamatan1}}</b></p>
+                <p>Kelurahan : <b>{{$data->sip->klh1->kelurahan}}</b></p>
+                <p>Kecamatan : <b>{{$data->sip->klh1->kecamatan}}</b></p>
               </div>
 
               @if($data->sip->jalan2 != '')
               <div class="col-md-4">
-                <h6 class="font-size-lg text-dark font-weight-bold mb-6">Alamat Praktik 2</h6>
+                <h6 class="font-size-lg text-dark font-weight-bold mb-6">Data Praktik 2</h6>
+                <p>Nama Praktik : <b>{{$data->sip->nama_praktek2}}</b></p>
                 <p>Jalan : <b>{{$data->sip->jalan2}}</b></p>
                 <p>Kelurahan : <b>{{$data->sip->kelurahan2}}</b></p>
                 <p>Kecamatan : <b>{{$data->sip->kecamatan2}}</b></p>
               </div>
               @elseif($data->sip->jalan3 != '')
               <div class="col-md-4">
-                <h6 class="font-size-lg text-dark font-weight-bold mb-6">Alamat Praktik 3</h6>
+                <h6 class="font-size-lg text-dark font-weight-bold mb-6">Data Praktik 3</h6>
+                <p>Nama Praktik : <b>{{$data->sip->nama_praktek3}}</b></p>
                 <p>Jalan : <b>{{$data->sip->jalan3}}</b></p>
                 <p>Kelurahan : <b>{{$data->sip->kelurahan3}}</b></p>
                 <p>Kecamatan : <b>{{$data->sip->kecamatan3}}</b></p>
@@ -126,11 +129,13 @@
             <div class="row">
               <div class="col-md-6 text-center">
                 <h5 class="font-size-lg text-dark font-weight-bold mb-6">Foto KTP</h5>
-                <img src="{{ asset('storage/'.$data->sip->ktp) }}" class="rounded img-fluid" alt="...">
+                <a href="{{ asset('storage/'.$data->sip->ktp) }}" target="_blank"><img src="{{ asset('storage/'.$data->sip->ktp) }}" class="rounded img-fluid" alt="..." height="100px" width="120px"></a>
               </div>
               <div class="col-md-6 text-center">
                 <h5 class="font-size-lg text-dark font-weight-bold mb-6">Pas Foto</h5>
-                <img src="{{ asset('storage/'.$data->sip->foto) }}" class="rounded img-fluid" alt="...">
+                <a href="{{ asset('storage/'.$data->sip->foto) }}" target="_blank">
+                  <img src="{{ asset('storage/'.$data->sip->foto) }}" class="rounded img-fluid" alt="..." height="100px" width="120px">
+                </a>
               </div>
             </div>
             <hr>
@@ -146,7 +151,7 @@
               <h5 class="font-size-lg text-dark font-weight-bold mb-6">File Rekomendasi IDI</h5>
               <div class="row">
                 <div class="col-md-12 text-center">
-                  <embed src="{{asset('storage/'.$data->sip->rekomendasi_idi)}}#toolbar=0" type="application/pdf" width="80%" height="500px">
+                  <embed src="{{asset('storage/'.$data->sip->rekomendasi_org)}}#toolbar=0" type="application/pdf" width="80%" height="500px">
                   </div>
                 </div>
                 <hr>
@@ -159,14 +164,36 @@
                   </div>
                   <hr>
 
-                </div>
-              </div>
-            </form>
-            @endsection
+                  <!-- Surat Persetujuan Pimpinan -->
+                  @if($data->sip->surat_persetujuan)
+                  <h5 class="font-size-lg text-dark font-weight-bold mb-6">File Surat Keterangan Pelayanan Kesehatan</h5>
+                  <div class="row">
+                    <div class="col-md-12 text-center">
+                      <embed src="{{asset('storage/'.$data->sip->surat_keterangan)}}#toolbar=0" type="application/pdf" width="80%" height="500px">
+                      </div>
+                    </div>
+                    <hr>
+                    @endif
 
-            @section('page_script')
 
-  <script type="text/javascript">
+                    <!-- Berkas Pendukung -->
+                    @if($data->sip->berkas_pendukung)
+                    <h5 class="font-size-lg text-dark font-weight-bold mb-6">Berkas Pendukung</h5>
+                    <div class="row">
+                      <div class="col-md-12 text-center">
+                        <embed src="{{asset('storage/'.$data->sip->berkas_pendukung)}}#toolbar=0" type="application/pdf" width="80%" height="500px">
+                        </div>
+                      </div>
+                      <hr>
+                      @endif
+                    </div>
+                  </div>
+                </form>
+                @endsection
+
+                @section('page_script')
+
+                <script type="text/javascript">
     function verifikasi() { // verifikasi berkas berhasil
       $(document).on('click', '#verif', function(){
         Swal.fire({
