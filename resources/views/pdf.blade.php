@@ -3,20 +3,23 @@
     <title>Sertifikat Surat Izin Praktik</title>
     <meta charset="utf-8">
     <style>
-        body{
+        body {
             font-family: arial;
         }
-        p{
+
+        p {
             margin: .5rem;
         }
-        h3{
+
+        h3 {
             margin: 0;
         }
-        span{
+
+        span {
             color: red;
         }
 
-        .bg{
+        .bg {
             /* display: flex; */
             /* justify-content: center; */
             position: absolute;
@@ -32,109 +35,137 @@
             transform: translate(-50%, -50%);
         }
 
-        #judul{
-            text-align:center;
+        #judul {
+            text-align: center;
             text-transform: uppercase;
         }
-        .merah{
+
+        .merah {
             color: red;
         }
-        .clearfix:after {
-  content:"";
-  display:block;
-  clear:both;
- }
 
-        #halaman{
+        .clearfix:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        #halaman {
             position: relative;
             font-family: serif;
-            width: auto; 
-            height: auto; 
+            width: auto;
+            height: auto;
             /* position: absolute;  */
-            border: 1px solid #EB8D56; 
-            padding-top: 30px; 
-            padding-left: 30px; 
-            padding-right: 30px; 
+            border: 1px solid #EB8D56;
+            padding-top: 30px;
+            padding-left: 30px;
+            padding-right: 30px;
             /* padding-bottom: 80px; */
         }
-         .border1{
-            width: auto; 
-            height: auto; 
+
+        .border1 {
+            width: auto;
+            height: auto;
             /* position: absolute;  */
-            border: 3px solid #EB8D56; 
-            padding-top: 5px; 
-            padding-left: 5px; 
-            padding-right: 5px; 
+            border: 3px solid #EB8D56;
+            padding-top: 5px;
+            padding-left: 5px;
+            padding-right: 5px;
             padding-bottom: 5px;
         }
-         .border2{
-            width: auto; 
-            height: auto; 
+
+        .border2 {
+            width: auto;
+            height: auto;
             /* position: absolute;  */
-            border: 1px solid #EB8D56; 
-            padding-top: 5px; 
-            padding-left: 5px; 
-            padding-right: 5px; 
+            border: 1px solid #EB8D56;
+            padding-top: 5px;
+            padding-left: 5px;
+            padding-right: 5px;
             padding-bottom: 5px;
         }
-        .kop1{
+
+        .kop1 {
             /*border-bottom: 1px solid #EB8D56;*/
             padding-bottom: .2rem;
         }
-        .kop{
-            
+
+        .kop {
+
             display: -webkit-box;
-            display: flex;
-            justify-content: center;
+            /*display: flex;*/
+            /*justify-content: center;*/
             padding-bottom: 1rem;
             /*border-bottom: 3px solid #EB8D56;*/
+            font-size:.8rem;
         }
-        .kop img{
-            
-            float: left;
-            width: 8em;
+
+        .kop img.logo{
+
+            /*float: left;*/
+            width: 6em;
             height: 7em;
-            margin-right: 3rem;
+            margin-right: 1rem;
             /* height: 6em; */
         }
-        .kop .text{
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+        .kop img.qrCode{
+            width: 6em;
+            height: 6em;
+            margin-left: 1rem;
+            /*float: right;*/
         }
+
+        .kop .text {
+            text-align: center;
+            /*display: flex;*/
+            /*flex-direction: column;*/
+            /*justify-content: center;*/
+            width: 27rem;
+            /*font-size: .5rem;*/
+        }
+
         .kop h3 {
             margin: 0;
         }
+
         .kop p {
             /* font-size: .7rem; */
         }
-        .suratIzin p{
-            margin:0%;
+
+        .suratIzin p {
+            margin: 0%;
         }
-        .suratIzin h3{
+
+        .suratIzin h3 {
             margin: 0;
             text-decoration: underline;
         }
-        .suratIzin{
+
+        .suratIzin {
             text-align: center;
         }
-        .berdasarkan{
-        }
-        .data_nama{
+
+        .berdasarkan {}
+
+        .data_nama {
             text-align: center;
         }
-        .penetapan{
-            /*display: flex;*/
+
+      .penetapan {
+            margin-right: 0;
+            margin-left: auto;
         }
-        .penetapan .penetapan1{
-            /*display: flex;*/
-            float: left
-            align-items: center;
-            width: 50%;
+
+        .asdarGeblek {
+                width: 10rem;
+                height: auto;
+                margin-right:5rem;
         }
-        .penetapan .penetapan2{
-            float: right;
+        .hr{
+            border:0px; border-bottom: 1px solid #EB8D56; height:3px; border-top: 3px solid  #EB8D56;
+        }
+        .descSurat{
+            text-align: justify;
         }
     </style>
 
@@ -146,37 +177,34 @@
     <div id=halaman>
         <img class="bg" src="{{ public_path('cert/bg.png') }}" alt="">
         <div class="kop1">
-        <div class="kop" >
-            <img src="{{ public_path('cert/logo.jpg') }}" alt="" srcset="">
-            <div class="text">
-                <h3 id=judul>PEMERINTAH KOTA MAKASSAR</h3>
-                <h3 id=judul>DINAS PENANAMAN MODAL DAN PELAYANAN TERPADU SATU PINTU</h3>
-                <p>Jl. Jendral Ahmad Yani No. 2 Makasssar 90171 <br>
+        <table class="kop">
+        <tr>
+        <th><img src="{{ public_path('cert/logo.jpg') }}" alt="" srcset="" class="logo"></th>
+        <th><div class="text">
+            <h3 id=judul>PEMERINTAH KOTA MAKASSAR</h3>
+            <h3 id=judul>DINAS PENANAMAN MODAL DAN PELAYANAN TERPADU SATU PINTU</h3>
+            <p>Jl. Jendral Ahmad Yani No. 2 Makasssar 90171 <br>
                 Website: dpmptsp.makassarkota.go.id</p>
-            </div>
+        </div></th>
+        <th><img src="{{ public_path('cert/qr-code.png') }}" alt="" class="qrCode"></th>
+        </tr>
+        </table>
         </div>
-        </div>
-        <!--<br>-->
-                <hr style="border:0px;
-	border-bottom: 1px solid #EB8D56;
-    height:3px;
-  border-top: 3px solid  #EB8D56;">
-                <!--<hr style="border:none; border-bottom: 3px solid #EB8D56; margin:0;">-->
+        <hr class="hr">
         <br>
-        <!--<br>-->
         <div class="suratIzin">
             <h3 id="judul">SURAT IZIN KERJA (SIK)</h3>
             <p>Nomor: {{$no_surat}}</p>
         </div>
         
-        <p >Berdasarkan  dan
+        <p class='descSurat'>Berdasarkan  dan
         <span>Peraturan Menteri Kesehatan Republik Indonesia Nomor
         2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran</span>
         Peraturan Walikota Makassar Nomor 59 Tahun 2021 Tentang Pendelegasian
         Kewenangan Penyelenggaraan Pelayanan Perizinan Berusaha Kepada Kepala Dinas
         Penanaman Modal dan Pelayanan Terpadu Satu Pintu Kota Makassar, maka yang
         bertanda tangan di bawah ini, Kepala Dinas Penanaman Modal dan Pelayanan Terpadu
-        Satu Pintu Kota Makassar memberikan Surat Izin Kerja, Kepada :</p>
+        Satu Pintu Kota Makassar memberikan Surat Izin Kerja, Kepada:</p>
         
         <h4 class="data_nama"><u>{{$nama}}</u></h4>
 
@@ -240,31 +268,16 @@
 
         <br>
         <br>
-        <div class="penetapan">
-            <div class="penetapan1">
-                <img src="{{ public_path('cert/qr-code.png') }}" alt="">
-                <img src="{{ public_path('cert/wa-foto.jpg') }}" alt="">
-            </div>
-            <div class="penetapan2">
-                <p>Ditetapkan di Makassar</p>
-                <p>Pada tanggal: {{$penetapan}}</p>
-                <img src="{{ public_path('cert/foto2.jpg') }}" alt="">
-            </div>
-           
-        </div>
-
-        
-
-        <!-- <div style="width: 50%; text-align: left; float: right;">Ditetapkan di Makassar</div><br>
-        <div style="width: 50%; text-align: left; float: right;">Pada tanggal: ${data_tgl_selesai}</div><br><br><br><br><br>
-        <div style="width: 50%; text-align: left; float: right;">Arbrian Abdul Jamal</div>
-        <div style="float:right; width:50%;">
-            <img src="./foto2.jpg" alt="">
-            <!-- <p>Ditandatangani secara elektronik oleh</p>
-            <h4>KEPALA DINAS PENANAMAN MODAL DAN PELAYANAN TERPADU SATU PINTU KOTA MAKASSAR</h4>
-            <br>
-            <h4>A. ZULKIFLY</h4> 
-        </div> -->
+        <table class="penetapan clearfix">
+            <tr>
+                <th><img src="{{ public_path('cert/wa-foto.jpg') }}" alt="" class="asdarGeblek"></th>
+                <th>
+                    <p>Ditetapkan di Makassar</p>
+                    <p>Pada tanggal: {{$penetapan}}</p>
+                    <img src="{{ public_path('cert/foto2.jpg') }}" alt="">
+                </th>
+            </tr>
+        </table>
         <br>
         <br>
             <p><strong>Tembusan :</strong></p>
