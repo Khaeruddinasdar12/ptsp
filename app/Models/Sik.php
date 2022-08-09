@@ -5,33 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Sip extends Model
+class Sik extends Model
 {
     use HasFactory;
 
     public function perizinan()
     {
         return $this->belongsTo(Perizinan::class);
-    }
-
-    public function klh1()
-    {
-        return $this->belongsTo(Kelurahan::class, 'kelurahan1');
-    }
-
-    public function klh2()
-    {
-        return $this->belongsTo(Kelurahan::class, 'kelurahan2');
-    }
-
-    public function klh3()
-    {
-        return $this->belongsTo(Kelurahan::class, 'kelurahan3');
-    }
-
-    public function subizin()
-    {
-        return $this->belongsTo(Subizin::class, 'subizin_id');
     }
 
     public function getAwalStrAttribute()

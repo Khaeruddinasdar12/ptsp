@@ -1,0 +1,769 @@
+﻿{
+    "data": [
+        {
+            "id": 1,
+            "kecamatan": "Biringkanaya",
+            "kelurahan": "Bakung"
+        },
+        {
+            "id": 2,
+            "kecamatan": "Biringkanaya",
+            "kelurahan": "Berua"
+        },
+        {
+            "id": 3,
+            "kecamatan": "Biringkanaya",
+            "kelurahan": "Bulurokeng"
+        },
+        {
+            "id": 4,
+            "kecamatan": "Biringkanaya",
+            "kelurahan": "Daya "
+        },
+        {
+            "id": 5,
+            "kecamatan": "Biringkanaya",
+            "kelurahan": "Katimbang"
+        },
+        {
+            "id": 6,
+            "kecamatan": "Biringkanaya",
+            "kelurahan": "Laikang"
+        },
+        {
+            "id": 7,
+            "kecamatan": "Biringkanaya",
+            "kelurahan": "Paccerakkang"
+        },
+        {
+            "id": 8,
+            "kecamatan": "Biringkanaya",
+            "kelurahan": "Pai"
+        },
+        {
+            "id": 9,
+            "kecamatan": "Biringkanaya",
+            "kelurahan": "Sudiang"
+        },
+        {
+            "id": 10,
+            "kecamatan": "Biringkanaya",
+            "kelurahan": "Sudiang Raya "
+        },
+        {
+            "id": 11,
+            "kecamatan": "Biringkanaya",
+            "kelurahan": "Untia"
+        },
+        {
+            "id": 12,
+            "kecamatan": "Bontoala",
+            "kelurahan": "Baraya"
+        },
+        {
+            "id": 13,
+            "kecamatan": "Bontoala",
+            "kelurahan": "Bontoala"
+        },
+        {
+            "id": 14,
+            "kecamatan": "Bontoala",
+            "kelurahan": "Bontoala Parang"
+        },
+        {
+            "id": 15,
+            "kecamatan": "Bontoala",
+            "kelurahan": "Bontoala Tua"
+        },
+        {
+            "id": 16,
+            "kecamatan": "Bontoala",
+            "kelurahan": "Bunga Ejaya"
+        },
+        {
+            "id": 17,
+            "kecamatan": "Bontoala",
+            "kelurahan": "Gaddong"
+        },
+        {
+            "id": 18,
+            "kecamatan": "Bontoala",
+            "kelurahan": "Layang"
+        },
+        {
+            "id": 19,
+            "kecamatan": "Bontoala",
+            "kelurahan": "Malimongan Baru"
+        },
+        {
+            "id": 20,
+            "kecamatan": "Bontoala",
+            "kelurahan": "Parang Layang"
+        },
+        {
+            "id": 21,
+            "kecamatan": "Bontoala",
+            "kelurahan": "Timungan Lompoa"
+        },
+        {
+            "id": 22,
+            "kecamatan": "Bontoala",
+            "kelurahan": "Tompo Balang"
+        },
+        {
+            "id": 23,
+            "kecamatan": "Bontoala",
+            "kelurahan": "Wajo Baru"
+        },
+        {
+            "id": 24,
+            "kecamatan": "Kepulauan Sangkarrang",
+            "kelurahan": "Barrang Caddi"
+        },
+        {
+            "id": 25,
+            "kecamatan": "Kepulauan Sangkarrang",
+            "kelurahan": "Barrang Lompo"
+        },
+        {
+            "id": 26,
+            "kecamatan": "Kepulauan Sangkarrang",
+            "kelurahan": "Kodingareng"
+        },
+        {
+            "id": 27,
+            "kecamatan": "Makassar",
+            "kelurahan": "Bara-Baraya"
+        },
+        {
+            "id": 28,
+            "kecamatan": "Makassar",
+            "kelurahan": "Bara-Baraya Selatan"
+        },
+        {
+            "id": 29,
+            "kecamatan": "Makassar",
+            "kelurahan": "Bara-Baraya Timur"
+        },
+        {
+            "id": 30,
+            "kecamatan": "Makassar",
+            "kelurahan": "Bara-Baraya Utara"
+        },
+        {
+            "id": 31,
+            "kecamatan": "Makassar",
+            "kelurahan": "Barana"
+        },
+        {
+            "id": 32,
+            "kecamatan": "Makassar",
+            "kelurahan": "Lariang Bangi"
+        },
+        {
+            "id": 33,
+            "kecamatan": "Makassar",
+            "kelurahan": "Maccini"
+        },
+        {
+            "id": 34,
+            "kecamatan": "Makassar",
+            "kelurahan": "Maccini Gusung"
+        },
+        {
+            "id": 35,
+            "kecamatan": "Makassar",
+            "kelurahan": "Maacini Parang"
+        },
+        {
+            "id": 36,
+            "kecamatan": "Makassar",
+            "kelurahan": "Maradekaya"
+        },
+        {
+            "id": 37,
+            "kecamatan": "Makassar",
+            "kelurahan": "Maradekaya Selatan"
+        },
+        {
+            "id": 38,
+            "kecamatan": "Makassar",
+            "kelurahan": "Maradekaya Utara"
+        },
+        {
+            "id": 39,
+            "kecamatan": "Makassar",
+            "kelurahan": "Maricaya"
+        },
+        {
+            "id": 40,
+            "kecamatan": "Makassar",
+            "kelurahan": "Maricaya Baru"
+        },
+        {
+            "id": 41,
+            "kecamatan": "Mamajang",
+            "kelurahan": "Baji Mappakasunggu"
+        },
+        {
+            "id": 42,
+            "kecamatan": "Mamajang",
+            "kelurahan": "Bonto Biraeng"
+        },
+        {
+            "id": 43,
+            "kecamatan": "Mamajang",
+            "kelurahan": "Bonto Lebang"
+        },
+        {
+            "id": 44,
+            "kecamatan": "Mamajang",
+            "kelurahan": "Karang Anyar"
+        },
+        {
+            "id": 45,
+            "kecamatan": "Mamajang",
+            "kelurahan": "Labuang Baji"
+        },
+        {
+            "id": 46,
+            "kecamatan": "Mamajang",
+            "kelurahan": "Mamajang Dalam"
+        },
+        {
+            "id": 47,
+            "kecamatan": "Mamajang",
+            "kelurahan": "Mamajang Luar"
+        },
+        {
+            "id": 48,
+            "kecamatan": "Mamajang",
+            "kelurahan": "Mandala"
+        },
+        {
+            "id": 49,
+            "kecamatan": "Mamajang",
+            "kelurahan": "Maricaya Selatan"
+        },
+        {
+            "id": 50,
+            "kecamatan": "Mamajang",
+            "kelurahan": "Pa'batang"
+        },
+        {
+            "id": 51,
+            "kecamatan": "Mamajang",
+            "kelurahan": "Parang"
+        },
+        {
+            "id": 52,
+            "kecamatan": "Mamajang",
+            "kelurahan": "Sambung Jawa"
+        },
+        {
+            "id": 53,
+            "kecamatan": "Mamajang",
+            "kelurahan": "Tamparang Keke"
+        },
+        {
+            "id": 54,
+            "kecamatan": "Manggala",
+            "kelurahan": "Antang"
+        },
+        {
+            "id": 55,
+            "kecamatan": "Manggala",
+            "kelurahan": "Bangkala"
+        },
+        {
+            "id": 56,
+            "kecamatan": "Manggala",
+            "kelurahan": "Batua"
+        },
+        {
+            "id": 57,
+            "kecamatan": "Manggala",
+            "kelurahan": "Biring Romang"
+        },
+        {
+            "id": 58,
+            "kecamatan": "Manggala",
+            "kelurahan": "Bitowa"
+        },
+        {
+            "id": 59,
+            "kecamatan": "Manggala",
+            "kelurahan": "Borong"
+        },
+        {
+            "id": 60,
+            "kecamatan": "Manggala",
+            "kelurahan": "Manggala"
+        },
+        {
+            "id": 61,
+            "kecamatan": "Manggala",
+            "kelurahan": "Tamangapa"
+        },
+        {
+            "id": 62,
+            "kecamatan": "Mariso",
+            "kelurahan": "Bontorannu"
+        },
+        {
+            "id": 63,
+            "kecamatan": "Mariso",
+            "kelurahan": "Kampung Buyang"
+        },
+        {
+            "id": 64,
+            "kecamatan": "Mariso",
+            "kelurahan": "Kunjung Mae"
+        },
+        {
+            "id": 65,
+            "kecamatan": "Mariso",
+            "kelurahan": "Lette"
+        },
+        {
+            "id": 66,
+            "kecamatan": "Mariso",
+            "kelurahan": "Mario"
+        },
+        {
+            "id": 67,
+            "kecamatan": "Mariso",
+            "kelurahan": "Mariso"
+        },
+        {
+            "id": 68,
+            "kecamatan": "Mariso",
+            "kelurahan": "Mattoangin"
+        },
+        {
+            "id": 69,
+            "kecamatan": "Mariso",
+            "kelurahan": "Panambungan"
+        },
+        {
+            "id": 70,
+            "kecamatan": "Mariso",
+            "kelurahan": "Tamarunang"
+        },
+        {
+            "id": 71,
+            "kecamatan": "Panakkukang",
+            "kelurahan": "Karampuang"
+        },
+        {
+            "id": 72,
+            "kecamatan": "Panakkukang",
+            "kelurahan": "Masale"
+        },
+        {
+            "id": 73,
+            "kecamatan": "Panakkukang",
+            "kelurahan": "Pampang "
+        },
+        {
+            "id": 74,
+            "kecamatan": "Panakkukang",
+            "kelurahan": "Panaikang"
+        },
+        {
+            "id": 75,
+            "kecamatan": "Panakkukang",
+            "kelurahan": "Pandang"
+        },
+        {
+            "id": 76,
+            "kecamatan": "Panakkukang",
+            "kelurahan": "Sinrijala"
+        },
+        {
+            "id": 77,
+            "kecamatan": "Panakkukang",
+            "kelurahan": "Tamamaung"
+        },
+        {
+            "id": 78,
+            "kecamatan": "Panakkukang",
+            "kelurahan": "Karuwisi"
+        },
+        {
+            "id": 79,
+            "kecamatan": "Panakkukang",
+            "kelurahan": "Karuwisi Utara"
+        },
+        {
+            "id": 80,
+            "kecamatan": "Panakkukang",
+            "kelurahan": "Paropo"
+        },
+        {
+            "id": 81,
+            "kecamatan": "Panakkukang",
+            "kelurahan": "Tello Baru"
+        },
+        {
+            "id": 82,
+            "kecamatan": "Rappocini",
+            "kelurahan": "Balla Parang"
+        },
+        {
+            "id": 83,
+            "kecamatan": "Rappocini",
+            "kelurahan": "Banta-Bantaeng"
+        },
+        {
+            "id": 84,
+            "kecamatan": "Rappocini",
+            "kelurahan": "Bonto Makkio"
+        },
+        {
+            "id": 85,
+            "kecamatan": "Rappocini",
+            "kelurahan": "Bua Kana"
+        },
+        {
+            "id": 86,
+            "kecamatan": "Rappocini",
+            "kelurahan": "Gunung Sari"
+        },
+        {
+            "id": 87,
+            "kecamatan": "Rappocini",
+            "kelurahan": "Karunrung"
+        },
+        {
+            "id": 88,
+            "kecamatan": "Rappocini",
+            "kelurahan": "Kassi-Kassi"
+        },
+        {
+            "id": 89,
+            "kecamatan": "Rappocini",
+            "kelurahan": "Mapala"
+        },
+        {
+            "id": 90,
+            "kecamatan": "Rappocini",
+            "kelurahan": "Minasa Upa"
+        },
+        {
+            "id": 91,
+            "kecamatan": "Rappocini",
+            "kelurahan": "Rappocini"
+        },
+        {
+            "id": 92,
+            "kecamatan": "Rappocini",
+            "kelurahan": "Tidung"
+        },
+        {
+            "id": 93,
+            "kecamatan": "Tallo",
+            "kelurahan": "Buloa"
+        },
+        {
+            "id": 94,
+            "kecamatan": "Tallo",
+            "kelurahan": "Bunga Eja Beru"
+        },
+        {
+            "id": 95,
+            "kecamatan": "Tallo",
+            "kelurahan": "Kalukuang"
+        },
+        {
+            "id": 96,
+            "kecamatan": "Tallo",
+            "kelurahan": "Kaluku Bodoa"
+        },
+        {
+            "id": 97,
+            "kecamatan": "Tallo",
+            "kelurahan": "La'latang"
+        },
+        {
+            "id": 98,
+            "kecamatan": "Tallo",
+            "kelurahan": "Lakkang"
+        },
+        {
+            "id": 99,
+            "kecamatan": "Tallo",
+            "kelurahan": "Lembo"
+        },
+        {
+            "id": 100,
+            "kecamatan": "Tallo",
+            "kelurahan": "Pannampu"
+        },
+        {
+            "id": 101,
+            "kecamatan": "Tallo",
+            "kelurahan": "Rappojawa"
+        },
+        {
+            "id": 102,
+            "kecamatan": "Tallo",
+            "kelurahan": "Rappokalling"
+        },
+        {
+            "id": 103,
+            "kecamatan": "Tallo",
+            "kelurahan": "Suangga"
+        },
+        {
+            "id": 104,
+            "kecamatan": "Tallo",
+            "kelurahan": "Tallo"
+        },
+        {
+            "id": 105,
+            "kecamatan": "Tallo",
+            "kelurahan": "Tammua"
+        },
+        {
+            "id": 106,
+            "kecamatan": "Tallo",
+            "kelurahan": "Ujung Pandang Baru"
+        },
+        {
+            "id": 107,
+            "kecamatan": "Tallo",
+            "kelurahan": "Wala-Walaya"
+        },
+        {
+            "id": 108,
+            "kecamatan": "Tamalanrea",
+            "kelurahan": "Bira"
+        },
+        {
+            "id": 109,
+            "kecamatan": "Tamalanrea",
+            "kelurahan": "Buntusu"
+        },
+        {
+            "id": 110,
+            "kecamatan": "Tamalanrea",
+            "kelurahan": "Kapasa"
+        },
+        {
+            "id": 111,
+            "kecamatan": "Tamalanrea",
+            "kelurahan": "Kapasa Raya"
+        },
+        {
+            "id": 112,
+            "kecamatan": "Tamalanrea",
+            "kelurahan": "Parang Loe"
+        },
+        {
+            "id": 113,
+            "kecamatan": "Tamalanrea",
+            "kelurahan": "Tamalanre"
+        },
+        {
+            "id": 114,
+            "kecamatan": "Tamalanrea",
+            "kelurahan": "Tamalanrea Indah"
+        },
+        {
+            "id": 115,
+            "kecamatan": "Tamalanrea",
+            "kelurahan": "Tamalanrea Raya"
+        },
+        {
+            "id": 116,
+            "kecamatan": "Tamalate",
+            "kelurahan": "Balang Baru"
+        },
+        {
+            "id": 117,
+            "kecamatan": "Tamalate",
+            "kelurahan": "Barombong"
+        },
+        {
+            "id": 118,
+            "kecamatan": "Tamalate",
+            "kelurahan": "Bongaya"
+        },
+        {
+            "id": 119,
+            "kecamatan": "Tamalate",
+            "kelurahan": "Bonto Duri"
+        },
+        {
+            "id": 120,
+            "kecamatan": "Tamalate",
+            "kelurahan": "Jongaya"
+        },
+        {
+            "id": 121,
+            "kecamatan": "Tamalate",
+            "kelurahan": "Maccini Sombala"
+        },
+        {
+            "id": 122,
+            "kecamatan": "Tamalate",
+            "kelurahan": "Mangasa"
+        },
+        {
+            "id": 123,
+            "kecamatan": "Tamalate",
+            "kelurahan": "Mannuruki"
+        },
+        {
+            "id": 124,
+            "kecamatan": "Tamalate",
+            "kelurahan": "Pa'baeng-Baeng"
+        },
+        {
+            "id": 125,
+            "kecamatan": "Tamalate",
+            "kelurahan": "Parang Tambung"
+        },
+        {
+            "id": 126,
+            "kecamatan": "Tamalate",
+            "kelurahan": "Tanjung Merdeka"
+        },
+        {
+            "id": 127,
+            "kecamatan": "Ujung Pandang",
+            "kelurahan": "Baru"
+        },
+        {
+            "id": 128,
+            "kecamatan": "Ujung Pandang",
+            "kelurahan": "Bulogading"
+        },
+        {
+            "id": 129,
+            "kecamatan": "Ujung Pandang",
+            "kelurahan": "Lae-Lae"
+        },
+        {
+            "id": 130,
+            "kecamatan": "Ujung Pandang",
+            "kelurahan": "Lajangiru"
+        },
+        {
+            "id": 131,
+            "kecamatan": "Ujung Pandang",
+            "kelurahan": "Losari"
+        },
+        {
+            "id": 132,
+            "kecamatan": "Ujung Pandang",
+            "kelurahan": "Maloku "
+        },
+        {
+            "id": 133,
+            "kecamatan": "Ujung Pandang",
+            "kelurahan": "Mangkura"
+        },
+        {
+            "id": 134,
+            "kecamatan": "Ujung Pandang",
+            "kelurahan": "Pisang Selatan"
+        },
+        {
+            "id": 135,
+            "kecamatan": "Ujung Pandang",
+            "kelurahan": "Pisang Utara"
+        },
+        {
+            "id": 136,
+            "kecamatan": "Ujung Pandang",
+            "kelurahan": "Sariwegading"
+        },
+        {
+            "id": 137,
+            "kecamatan": "Ujung Tanah",
+            "kelurahan": "Camba Berua"
+        },
+        {
+            "id": 138,
+            "kecamatan": "Ujung Tanah",
+            "kelurahan": "Cambaya"
+        },
+        {
+            "id": 139,
+            "kecamatan": "Ujung Tanah",
+            "kelurahan": "Gusung"
+        },
+        {
+            "id": 140,
+            "kecamatan": "Ujung Tanah",
+            "kelurahan": "Pattingalloang"
+        },
+        {
+            "id": 141,
+            "kecamatan": "Ujung Tanah",
+            "kelurahan": "Pattingalloang Baru"
+        },
+        {
+            "id": 142,
+            "kecamatan": "Ujung Tanah",
+            "kelurahan": "Tabaringan"
+        },
+        {
+            "id": 143,
+            "kecamatan": "Ujung Tanah",
+            "kelurahan": "Tamalabba"
+        },
+        {
+            "id": 144,
+            "kecamatan": "Ujung Tanah",
+            "kelurahan": "Totaka"
+        },
+        {
+            "id": 145,
+            "kecamatan": "Ujung Tanah",
+            "kelurahan": "Ujung Tanah"
+        },
+        {
+            "id": 146,
+            "kecamatan": "Wajo",
+            "kelurahan": "Butung"
+        },
+        {
+            "id": 147,
+            "kecamatan": "Wajo",
+            "kelurahan": "Ende"
+        },
+        {
+            "id": 148,
+            "kecamatan": "Wajo",
+            "kelurahan": "Malimongan"
+        },
+        {
+            "id": 149,
+            "kecamatan": "Wajo",
+            "kelurahan": "Malimongan Tua"
+        },
+        {
+            "id": 150,
+            "kecamatan": "Wajo",
+            "kelurahan": "Mampu"
+        },
+        {
+            "id": 151,
+            "kecamatan": "Wajo",
+            "kelurahan": "Melayu"
+        },
+        {
+            "id": 152,
+            "kecamatan": "Wajo",
+            "kelurahan": "Melayu Baru"
+        },
+        {
+            "id": 153,
+            "kecamatan": "Wajo",
+            "kelurahan": "Pattunuang"
+        }
+    ]
+}

@@ -1,6 +1,6 @@
 @extends('layouts.user.app')
 
-@section('title', 'Buat SIP')
+@section('title', 'Buat SIK')
 
 @section('subheader')
 <link href="{{ asset('css/pages/wizard/wizard-1.css') }} " rel="stylesheet" type="text/css" />
@@ -12,7 +12,7 @@
   <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
   <span class="kt-subheader__breadcrumbs-separator"></span>
   <a href="" class="kt-subheader__breadcrumbs-link">
-  Buat Surat Izin Praktik (SIP) </a>
+  Buat Surat Izin Kerja (SIK) </a>
   <!-- <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">Active link</span> -->
 </div>
 
@@ -50,7 +50,7 @@
                     <i class="flaticon-open-box"></i>
                   </div>
                   <div class="kt-wizard-v1__nav-label">
-                    2) Data Perizinan (SIP)
+                    2) Data Perizinan (SIK)
                   </div>
                 </div>
               </a>
@@ -122,9 +122,22 @@
                 <label class="col-lg-3 col-form-label">Jenis Perizinan:*</label>
                 <div class="col-lg-9">
                   <select class="form-control" name="jenis_izin" {{$required}}>
-                    @foreach($data as $datas)
-                    <option value="{{$datas->id}}">{{$datas->nama}}</option>
-                    @endforeach
+                    <option value="Dokter">Dokter</option>
+                    <option value="Dokter Spesialis">Dokter Spesialis</option>
+                    <option value="Dokter Gigi">Dokter Gigi</option>
+                    <option value="Dokter Gigi Spesialis">Dokter Gigi Spesialis</option>
+                    <option value="Dokter Internis">Dokter Internis</option>
+                    <option value="Teknisi Kardiovaskuler">Teknisi Kardiovaskuler</option>
+                    <option value="Apoteker">Apoteker</option>
+                    <option value="Asisten Apoteker">Asisten Apoteker</option>
+                    <option value="Pranata Laboratorium Kesehatan">Pranata Laboratorium Kesehatan</option>
+                    <option value="Psikolog Klinik">Psikolog Klinik</option>
+                    <option value="Teknik Elektromedik">Teknik Elektromedik</option>
+                    <option value="Fisioterapis">Fisioterapis</option>
+                    <option value="Terdaftar Penyehat Tradiosional">Terdaftar Penyehat Tradiosional</option>
+                    <option value="Bidan Praktek Mandiri">Bidan Praktek Mandiri</option>
+                    <option value="Fisioterapi Praktek Mandiri (Nos OSS)">Fisioterapi Praktek Mandiri (Nos OSS)</option>
+
                   </select>
                 </div>
               </div>
@@ -152,8 +165,6 @@
             <!--begin: Form Wizard Step 3-->
             <div class="kt-wizard-v1__content" data-ktwizard-type="step-content">
               <h4 class="font-size-lg text-dark font-weight-bold mb-6">Data Praktik</h4>
-              <hr>
-              <h5 class="font-size-lg text-dark font-weight-bold mb-6">Praktek 1</h5>
               <div class="form-group row">
                 <label class="col-lg-3 col-form-label">Nama Praktek:*</label>
                 <div class="col-lg-9">
@@ -195,97 +206,7 @@
                 <div class="col-lg-9">
                   <input type="text" class="form-control" name="jalan1" {{$required}}>
                 </div>
-              </div>  
-              <hr>
-
-              <h5 class="font-size-lg text-dark font-weight-bold mb-6">Praktek 2 (jika ada)</h5>
-              <div class="form-group row">
-                <label class="col-lg-3 col-form-label">Nama Praktek:</label>
-                <div class="col-lg-9">
-                  <input type="text" class="form-control" name="nama_praktek2" {{$required}}>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-lg-3 col-form-label">Kecamatan:*</label>
-                <div class="col-lg-9">
-                  <select class="form-control" name="kecamatan2" id="kecamatan2" onchange="show_kelurahan2(this.value)">
-                    <option value="Biringkanaya" selected="">Biringkanaya</option>
-                    <option value="Bontoala">Bontoala</option>
-                    <option value="Kepulauan Sangkarrang">Kepulauan Sangkarrang</option>
-                    <option value="Makassar">Makassar</option>
-                    <option value="Mamajang">Mamajang</option>
-                    <option value="Manggala">Manggala</option>
-                    <option value="Mariso">Mariso</option>
-                    <option value="Panakkukang">Panakkukang</option>
-                    <option value="Rappocini">Rappocini</option>
-                    <option value="Tallo">Tallo</option>
-                    <option value="Tallo">Tamalanrea</option>
-                    <option value="Tamalate">Tamalate</option>
-                    <option value="Ujung Pandang">Ujung Pandang</option>
-                    <option value="Ujung Tanah">Ujung Tanah</option>
-                    <option value="Wajo">Wajo</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-lg-3 col-form-label">Kelurahan:*</label>
-                <div class="col-lg-9">
-                  <select class="form-control" name="kelurahan2" id="kelurahan2">
-                    <option></option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-lg-3 col-form-label">Jalan:</label>
-                <div class="col-lg-9">
-                  <input type="text" class="form-control" name="jalan2" {{$required}}>
-                </div>
-              </div>            
-              <hr>
-
-              <h5 class="font-size-lg text-dark font-weight-bold mb-6">Praktek 3 (jika ada)</h5>
-              <div class="form-group row">
-                <label class="col-lg-3 col-form-label">Nama Praktek:</label>
-                <div class="col-lg-9">
-                  <input type="text" class="form-control" name="nama_praktek3" {{$required}}>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-lg-3 col-form-label">Kecamatan:*</label>
-                <div class="col-lg-9">
-                  <select class="form-control" name="kecamatan3" id="kecamatan3" onchange="show_kelurahan3(this.value)">
-                    <option value="Biringkanaya" selected="">Biringkanaya</option>
-                    <option value="Bontoala">Bontoala</option>
-                    <option value="Kepulauan Sangkarrang">Kepulauan Sangkarrang</option>
-                    <option value="Makassar">Makassar</option>
-                    <option value="Mamajang">Mamajang</option>
-                    <option value="Manggala">Manggala</option>
-                    <option value="Mariso">Mariso</option>
-                    <option value="Panakkukang">Panakkukang</option>
-                    <option value="Rappocini">Rappocini</option>
-                    <option value="Tallo">Tallo</option>
-                    <option value="Tallo">Tamalanrea</option>
-                    <option value="Tamalate">Tamalate</option>
-                    <option value="Ujung Pandang">Ujung Pandang</option>
-                    <option value="Ujung Tanah">Ujung Tanah</option>
-                    <option value="Wajo">Wajo</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-lg-3 col-form-label">Kelurahan:*</label>
-                <div class="col-lg-9">
-                  <select class="form-control" name="kelurahan3" id="kelurahan3">
-                    <option></option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-lg-3 col-form-label">Jalan:</label>
-                <div class="col-lg-9">
-                  <input type="text" class="form-control" name="jalan3" {{$required}}>
-                </div>
-              </div>
+              </div> 
             </div>
             <!--end: Form Wizard Step 3-->
 
@@ -306,15 +227,21 @@
                 </div>
               </div>
               <div class="form-group row">
+                <label class="col-lg-3 col-form-label">Ijazah Fisioterapi: (jpeg, jpg, png) max 1MB*</label>
+                <div class="col-lg-9">
+                  <input type="file" class="form-control" name="ijazah">
+                </div>
+              </div>
+              <div class="form-group row">
                 <label class="col-lg-3 col-form-label">STR: (pdf) max 1MB*</label>
                 <div class="col-lg-9">
                   <input type="file" class="form-control" name="str" {{$required}}>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-lg-3 col-form-label">Rekomendasi Organisasi Profesi: (pdf) max 1MB*</label>
+                <label class="col-lg-3 col-form-label">Rekomendasi IFI: (pdf) max 1MB*</label>
                 <div class="col-lg-9">
-                  <input type="file" class="form-control" name="rekomendasi_org" {{$required}}>
+                  <input type="file" class="form-control" name="rekomendasi_idi" {{$required}}>
                 </div>
               </div>
               <div class="form-group row">
@@ -325,15 +252,9 @@
               </div>
               <hr>
               <div class="form-group row">
-                <label class="col-lg-3 col-form-label">Surat Persetujuan Pimpinan Instansi: (pdf) max 1MB</label>
+                <label class="col-lg-3 col-form-label">Surat Keterangan Keluasan (jika PNS): max 1MB</label>
                 <div class="col-lg-9">
-                  <input type="file" class="form-control" name="surat_persetujuan" {{$required}}>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-lg-3 col-form-label">Berkas Pendukung Lainnya: (pdf) max 1MB</label>
-                <div class="col-lg-9">
-                  <input type="file" class="form-control" name="berkas_pendukung" {{$required}}>
+                  <input type="file" class="form-control" name="surat_keluasan" {{$required}}>
                 </div>
               </div>
             </div>
@@ -359,6 +280,8 @@
     </div>
   </div>
 </div>
+
+
 @endsection
 
 @section('page_script')
@@ -369,12 +292,6 @@
   $(document).ready(function () {
     var kec1 = $('#kecamatan1').val();
     show_kelurahan1(kec1);
-
-    var kec2 = $('#kecamatan2').val();
-    show_kelurahan2(kec2);
-
-    var kec3 = $('#kecamatan3').val();
-    show_kelurahan3(kec3);
   });
 
       // menampilkan kelurahan1 setelah memilih kecamatan1
@@ -409,68 +326,5 @@
       }
   //end menampilkan kelurahan1 setelah memilih kecamatan1
 
-        // menampilkan kelurahan2 setelah memilih kecamatan2
-        function show_kelurahan2(kec) {
-          $("#kelurahan2").empty();
-          $("#kelurahan2").append("<option value=''>--Pilih kelurahan2--</option>");
-        // var id_provinsi = $('#provinsi').val();
-        $.ajax({
-          'url': "../../cek-kelurahan/" + kec,
-          'dataType': 'json',
-          // beforeSend: function(){
-          //   $(".loader").css("display","block");
-          // },
-          success: function(data) {
-            jQuery.each(data, function(i, val) {
-
-              $('#kelurahan2').append('<option value="' + val.id + '">' + val.kecamatan +' - '+ val.kelurahan + '</option>');
-            });
-            // $(".loader").css("display","none");
-          },
-          error: function(xhr, status, error) {
-            var error = xhr.responseJSON;
-            if ($.isEmptyObject(error) == false) {
-              $.each(error.errors, function(key, value) {
-                // toastgagal(key, value);
-                alert(key + value);
-              });
-              // $(".loader").css("display","none");
-            }
-          }
-        })
-      }
-  //end menampilkan kelurahan2 setelah memilih kecamatan2
-
-          // menampilkan kelurahan3 setelah memilih kecamatan3
-          function show_kelurahan3(kec) {
-            $("#kelurahan3").empty();
-            $("#kelurahan3").append("<option value=''>--Pilih kelurahan3--</option>");
-        // var id_provinsi = $('#provinsi').val();
-        $.ajax({
-          'url': "../../cek-kelurahan/" + kec,
-          'dataType': 'json',
-          // beforeSend: function(){
-          //   $(".loader").css("display","block");
-          // },
-          success: function(data) {
-            jQuery.each(data, function(i, val) {
-
-              $('#kelurahan3').append('<option value="' + val.id + '">' + val.kecamatan +' - '+ val.kelurahan + '</option>');
-            });
-            // $(".loader").css("display","none");
-          },
-          error: function(xhr, status, error) {
-            var error = xhr.responseJSON;
-            if ($.isEmptyObject(error) == false) {
-              $.each(error.errors, function(key, value) {
-                // toastgagal(key, value);
-                alert(key + value);
-              });
-              // $(".loader").css("display","none");
-            }
-          }
-        })
-      }
-  //end menampilkan kelurahan3 setelah memilih kecamatan3
 </script>
 @endsection

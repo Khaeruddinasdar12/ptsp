@@ -11,6 +11,26 @@ class GuestController extends Controller
 		return view('guest.index');
 	}
 
+    public function sejarah()
+    {
+        return view('guest.sejarah');
+    }
+
+    public function visi()
+    {
+        return view('guest.visi');
+    }
+
+    public function struktur()
+    {
+        return view('guest.struktur');
+    }
+
+    public function layanan()
+    {
+        return view('guest.layanan');
+    }
+
 	public function pdf()
 	{
         $data = [

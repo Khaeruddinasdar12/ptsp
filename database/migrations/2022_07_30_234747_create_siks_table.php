@@ -4,11 +4,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSipsTable extends Migration
+class CreateSiksTable extends Migration
 {
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
-        Schema::create('sips', function (Blueprint $table) {
+        Schema::create('siks', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('perizinan_id');
             $table->string('nama');
@@ -20,29 +25,28 @@ class CreateSipsTable extends Migration
             $table->string('no_rekomendasi')->nullable();
             $table->string('alamat');
             $table->bigInteger('subizin_id');
-            $table->string('nama_praktek1');
-            $table->string('jalan1');
-            $table->string('kelurahan1');
-            $table->string('nama_praktek2')->nullable();
-            $table->string('jalan2')->nullable();
-            $table->string('kelurahan2')->nullable();
-            $table->string('nama_praktek3')->nullable();
-            $table->string('jalan3')->nullable();
-            $table->string('kelurahan3')->nullable();
+            $table->string('nama_praktek');
+            $table->string('jalan');
+            $table->string('kelurahan');
+            $table->string('kecamatan');
             $table->string('ktp');
             $table->string('foto');
             $table->string('str');
-            $table->string('rekomendasi_org');
+            $table->string('ijazah');
+            $table->string('rekomendasi_ifi');
             $table->string('surat_keterangan');
-            $table->string('surat_persetujuan')->nullable();
-            $table->string('berkas_pendukung')->nullable();
-
+            $table->string('surat_keluasan')->nullable();
             $table->timestamps();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
-        Schema::dropIfExists('sips');
+        Schema::dropIfExists('siks');
     }
 }

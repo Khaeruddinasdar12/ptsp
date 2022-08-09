@@ -13,25 +13,38 @@ Route::post('admin/logout', 'Auth\AdminAuthController@postLogout')->name('admin.
 Auth::routes();
 
 Route::get('/', 'GuestController@index')->name('index');
-
+Route::get('/sejarah-makassar', 'GuestController@sejarah')->name('sejarah');
+Route::get('/visi-misi', 'GuestController@visi')->name('visi');
+Route::get('/struktur-organisasi', 'GuestController@struktur')->name('struktur');
+Route::get('/layanan', 'GuestController@layanan')->name('layanan');
 Route::get('pdf', 'GuestController@pdf');
 Route::get('cek-email', 'GuestController@email')->name('email');
 
 Route::namespace('User')->group(function(){
+
+	Route::get('/cek-kelurahan/{kec}', 'SipController@kelurahan');
+
 	Route::get('/home', 'DashboardController@index')->name('home');
 
 	Route::get('keluhan', 'KeluhanController@index')->name('keluhan.index');
 	Route::post('keluhan', 'KeluhanController@store')->name('keluhan.store');
 	Route::delete('keluhan/{id}/delete', 'KeluhanController@destroy')->name('keluhan.delete');
 
+	// SIP
 	Route::get('perizinan/surat-izin-praktik/create', 'SipController@create')->name('sip.create');
 	Route::post('sip-store', 'SipController@store')->name('sip.store');
+	// SIK
+	Route::get('perizinan/surat-izin-kerja/create', 'SikController@create')->name('sik.create');
+	// PENDIDIKAN
+	Route::get('perizinan/izin-pendidikan/create', 'PendidikanController@create')->name('pendidikan.create');
 
-	Route::get('perizinan/sedang-ditinjau', 'PerizinanController@ditinjau')->name('perizinan.ditinjau');
-	Route::get('perizinan/telah-terbit', 'PerizinanController@terbit')->name('perizinan.terbit');
-	Route::get('perizinan/ditolak', 'PerizinanController@ditolak')->name('perizinan.ditolak');
-	Route::get('perizinan/ditolak/{no_tiket}', 'PerizinanController@show')->name('perizinan.ditolak.show');
-	Route::post('perizinan/ditolak/{no_tiket}/update', 'PerizinanController@update')->name('perizinan.ditolak.update');
+	// PERIZINAN ANDA
+	Route::get('perizinan', 'PerizinanController@index')->name('perizinan.index');
+	Route::get('perizinan/{no_tiket}', 'PerizinanController@show')->name('perizinan.ditolak.show');
+	Route::post('perizinan/{no_tiket}/update', 'PerizinanController@update')->name('perizinan.ditolak.update');
+
+	// DOWNLOAD
+	Route::get('download', 'DownloadController@index')->name('download.index');
 
 });
 
@@ -67,4 +80,9 @@ Route::middleware('auth:admin')->prefix('admin')->namespace('Admin')->group(func
 	Route::get('cek/{no_tiket}/verif', 'KadisController@sertifikat'); // cek menerbitkan sertifikat
 
 	Route::get('preview-sertifikat', 'KadisController@sertifikat')->name('preview.sertifikat');
+
+	// SUPERADMIN
+	Route::get('setting', 'SettingController@index')->name('setting.index');
+	Route::post('store-subizin', 'SettingController@storesub')->name('subizin.store'); // store sub izin
+	Route::delete('delete-subizin/{id}', 'SettingController@deletesub')->name('subizin.delete'); // delete sub izin
 });

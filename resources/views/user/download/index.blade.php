@@ -1,6 +1,6 @@
 @extends('layouts.user.app')
 
-@section('title', 'Perizinan Sedang Ditinjau')
+@section('title', 'Download')
 
 @section('page_style')
 <link href="{{ asset('plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css">
@@ -15,7 +15,7 @@
   <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
   <span class="kt-subheader__breadcrumbs-separator"></span>
   <a href="" class="kt-subheader__breadcrumbs-link">
-  Tabel Data Perizinan Sedang Ditinjau </a>
+  Tabel Data Perizinan Telah Terbit </a>
 </div>
 @endsection
 
@@ -50,7 +50,7 @@
           </span>
         </span>
         <h3 class="kt-portlet__head-title">
-          Tabel Data Perizinan Sedang Ditinjau
+          Tabel Data Perizinan Telah Terbit
         </h3>
       </div>
     </div>
@@ -65,8 +65,10 @@
                 <th>No.</th>
                 <th>No. Tiket</th>
                 <th>Jenis Izin</th>
+                <th>Sub Izin</th>
                 <th>Status</th>
-                <th>Waktu</th>
+                <th>Tanggal Terbit</th>
+                <th>Sertifikat</th>
               </tr>
             </thead>
             <tbody>
@@ -75,17 +77,15 @@
               <tr>
                 <td>{{ $no++; }}</td>
                 <td>{{ $datas->no_tiket}}</td>
-                <td>{{ $datas->jenis_izin}}</td>
+                <td>{{ $datas->sip->subizin->jenis}}</td>
+                <td>{{ $datas->sip->subizin->nama}}</td>
                 <td>
-                  @if($datas->bidang_by == '')
-                  <span class="badge rounded-pill bg-warning">Ditinjau Bidang</span>
-                  @elseif($datas->teknis_by == '')
-                  <span class="badge rounded-pill bg-warning">Ditinjau Teknis</span>
-                  @else
-                  <span class="badge rounded-pill bg-warning">Ditinjau Kadis</span>
-                  @endif
+                  <span class="badge rounded-pill bg-success">Telah Terbit</span>
                 </td>
-                <td>{{ $datas->created_at }}</td>
+                <td>{{ $datas->updated_at }}</td>
+                <td><a href="{{route('perizinan.ditolak.show', ['no_tiket' => $datas->no_tiket]) }}" class="btn btn-outline-danger btn-sm" title="sertifikat">
+                  <i class="fa fa-file-pdf"></i>
+                </a></td>
               </tr>
               @endforeach
             </tbody>
@@ -256,4 +256,3 @@
     }
   </script>
   @endsection
-

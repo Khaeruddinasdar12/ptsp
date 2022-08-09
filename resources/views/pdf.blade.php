@@ -196,7 +196,7 @@
             <h3 id="judul">SURAT IZIN KERJA (SIK)</h3>
             <p>Nomor: {{$no_surat}}</p>
         </div>
-        
+
         <p class='descSurat'>Berdasarkan  dan
         <span>Peraturan Menteri Kesehatan Republik Indonesia Nomor
         2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran</span>
