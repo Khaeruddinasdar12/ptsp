@@ -159,9 +159,13 @@
         .asdarGeblek {
                 width: 10rem;
                 height: auto;
+                margin-right:5rem;
         }
         .hr{
             border:0px; border-bottom: 1px solid #EB8D56; height:3px; border-top: 3px solid  #EB8D56;
+        }
+        .descSurat{
+            text-align: justify;
         }
     </style>
 
@@ -192,15 +196,15 @@
             <h3 id="judul">SURAT IZIN KERJA (SIK)</h3>
             <p>Nomor: {{$no_surat}}</p>
         </div>
-        
-        <p align="justify">Berdasarkan  dan
+
+        <p class='descSurat'>Berdasarkan  dan
         <span>Peraturan Menteri Kesehatan Republik Indonesia Nomor
         2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran</span>
         Peraturan Walikota Makassar Nomor 59 Tahun 2021 Tentang Pendelegasian
         Kewenangan Penyelenggaraan Pelayanan Perizinan Berusaha Kepada Kepala Dinas
         Penanaman Modal dan Pelayanan Terpadu Satu Pintu Kota Makassar, maka yang
         bertanda tangan di bawah ini, Kepala Dinas Penanaman Modal dan Pelayanan Terpadu
-        Satu Pintu Kota Makassar memberikan Surat Izin Kerja, Kepada :</p>
+        Satu Pintu Kota Makassar memberikan Surat Izin Kerja, Kepada:</p>
         
         <h4 class="data_nama"><u>{{$nama}}</u></h4>
 

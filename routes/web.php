@@ -13,7 +13,7 @@ Route::post('admin/logout', 'Auth\AdminAuthController@postLogout')->name('admin.
 Auth::routes();
 
 Route::get('/', 'GuestController@index')->name('index');
-Route::get('/sejarah-makassar', 'GuestController@sejarah')->name('sejarah');
+Route::get('/tentang', 'GuestController@tentang')->name('tentang');
 Route::get('/visi-misi', 'GuestController@visi')->name('visi');
 Route::get('/struktur-organisasi', 'GuestController@struktur')->name('struktur');
 Route::get('/layanan', 'GuestController@layanan')->name('layanan');
