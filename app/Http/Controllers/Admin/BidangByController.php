@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Perizinan;
+use App\Models\Sipreason;
 use Auth;
 use App\Models\Admin;
 use App\Models\Sip;
@@ -21,8 +22,26 @@ class BidangByController extends Controller
 		}
 		
 		$data = Perizinan::where('status', '0')->whereNull('bidang_by')->paginate(10);
+
 		// return $data;
 		return view('admin.bidang.index', ['data' => $data]);
+	}
+
+	public function reason(Request $request, $id)
+	{
+		if (Auth::guard('admin')->user()->role != 'bidang') {
+			return redirect()->route('error')->with('not_found','Kamu Tidak Memiliki Akses Bidang');
+		}
+		$data = Sipreason::where('sip_id', $id)->first();
+		if($data) {
+			Sipreason::where('sip_id', $id)->update(array($request->nama => $request->pesan));
+		} else {
+			Sipreason::create(array([
+				'sip_id' => $id,
+				$request->nama => $request->pesan
+			]));
+		}
+		return redirect()->back()->with('success','Alasan ditambahkan!');
 	}
 
 	public function show($no_tiket)
@@ -32,15 +51,18 @@ class BidangByController extends Controller
 		}
 		
 		$data = Perizinan::where('status', '0')->whereNull('bidang_by')->where('no_tiket', $no_tiket)->first();
-		// $data = Sip::find(1);
-		// return $data->klh1;
-		// return $data->sip->klh3->kelurahan;
-		// return $data->sip->subizin;
+		
 		if(!$data) {
 			abort(404);
 		}
-		// return $data;
-		return view('admin.bidang.show', ['data' => $data]);
+
+		// return $data->sip->reason;
+		
+		if($data->jenis_izin == 'sik') {
+			return view('admin.bidang.sik-show', ['data' => $data]);
+		} elseif($data->jenis_izin == 'sip') {
+			return view('admin.bidang.sip-show', ['data' => $data]);
+		}
 	}
 
 	public function verif(Request $request, $no_tiket)

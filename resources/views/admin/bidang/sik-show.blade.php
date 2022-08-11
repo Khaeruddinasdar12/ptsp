@@ -50,7 +50,7 @@
             </span>
           </span>
           <h3 class="kt-portlet__head-title">
-            Detail Perizinan
+            Detail Perizinan Surat Izin Kerja (SIK)
           </h3>
         </div>
         <div class="row align-items-center">
@@ -75,10 +75,11 @@
             <div class="row">
               <div class="col-md-6">
                 <h5 class="font-size-lg text-dark font-weight-bold mb-6">Data Pribadi</h5>
-                <p>Nama Lengkap Sesuai STR : <b>{{$data->sip->nama}}</b></p>
-                <p>Tempat Lahir: <b>{{$data->sip->tempat_lahir}}</b></p>
-                <p>Tanggal Lahir: <b>{{$data->sip->tanggal_lahir}}</b></p>
-                <p>Alamat Rumah: <b>{{$data->sip->alamat}}</b></p>
+                <p>Nama Lengkap Sesuai STR : <b>{{$data->sik->nama}}</b></p>
+                <p>Tempat Lahir: <b>{{$data->sik->tempat_lahir}}</b></p>
+                <p>Tanggal Lahir: <b>{{$data->sik->tanggal_lahir}}</b></p>
+                <p>No. HP: <b>{{$data->sik->nohp}}</b></p>
+                <p>Alamat Rumah: <b>{{$data->sik->alamat}}</b></p>
               </div>
               <div class="col-md-6">
                 <h5 class="font-size-lg text-dark font-weight-bold mb-6">Data Perizinan</h5>
@@ -88,56 +89,40 @@
                 @php $surat = 'Surat Izin Kerja' @endphp
                 @endif
                 <p>Jenis Surat : <b>{{$surat}}</b></p>
-                <p>Jenis Izin : <b>{{$data->sip->subizin->nama}}</b></p>
-                <p>No. STR : <b>{{$data->sip->no_str}}</b></p>
-                <p>Tanggal Mulai Berlaku STR : <b>{{$data->sip->awal_str}}</b></p>
-                <p>Tanggal Berakhir STR : <b>{{$data->sip->akhir_str}}</b></p>
+                <p>Jenis Izin : <b>{{$data->sik->subizin->nama}}</b></p>
+                <p>No. STR : <b>{{$data->sik->no_str}}</b></p>
+                <p>Tanggal Mulai Berlaku STR : <b>{{$data->sik->awal_str}}</b></p>
+                <p>Tanggal Berakhir STR : <b>{{$data->sik->akhir_str}}</b></p>
                 <!-- <p>Status Kepegawaian : <span class="badge badge-pill badge-success">Aktif</span></p> -->
               </div>
             </div>
+            <hr>
             <hr> 
 
             <h5 class="font-size-lg text-dark font-weight-bold mb-6">Data Praktik</h5>
             <div class="row">
               <div class="col-md-4">
-                <h6 class="font-size-lg text-dark font-weight-bold mb-6">Data Praktik 1</h6>
-                <p>Nama Praktik : <b>{{$data->sip->nama_praktek1}}</b></p>
-                <p>Jalan : <b>{{$data->sip->jalan1}}</b></p>
-                <p>Kelurahan : <b>{{$data->sip->klh1->kelurahan}}</b></p>
-                <p>Kecamatan : <b>{{$data->sip->klh1->kecamatan}}</b></p>
+                <p>Nama Praktik : <b>{{$data->sik->nama_praktek}}</b></p>
+                <p>Jalan : <b>{{$data->sik->jalan}}</b></p>
+                <p>Kelurahan : <b>{{$data->sik->klh->kelurahan}}</b></p>
+                <p>Kecamatan : <b>{{$data->sik->klh->kecamatan}}</b></p>
               </div>
-
-              @if($data->sip->jalan2 != '')
-              <div class="col-md-4">
-                <h6 class="font-size-lg text-dark font-weight-bold mb-6">Data Praktik 2</h6>
-                <p>Nama Praktik : <b>{{$data->sip->nama_praktek2}}</b></p>
-                <p>Jalan : <b>{{$data->sip->jalan2}}</b></p>
-                <p>Kelurahan : <b>{{$data->sip->klh2->kelurahan}}</b></p>
-                <p>Kecamatan : <b>{{$data->sip->klh2->kecamatan}}</b></p>
-              </div>
-              @endif
-
-              @if($data->sip->jalan3 != '')
-              <div class="col-md-4">
-                <h6 class="font-size-lg text-dark font-weight-bold mb-6">Data Praktik 3</h6>
-                <p>Nama Praktik : <b>{{$data->sip->nama_praktek2}}</b></p>
-                <p>Jalan : <b>{{$data->sip->jalan3}}</b></p>
-                <p>Kelurahan : <b>{{$data->sip->klh3->kelurahan}}</b></p>
-                <p>Kecamatan : <b>{{$data->sip->klh3->kecamatan}}</b></p>
-              </div>
-              @endif
             </div>
             <hr>
 
             <div class="row">
-              <div class="col-md-6 text-center">
+              <div class="col-md-4 text-center">
                 <h5 class="font-size-lg text-dark font-weight-bold mb-6">Foto KTP</h5>
-                <a href="{{ asset('storage/'.$data->sip->ktp) }}" target="_blank"><img src="{{ asset('storage/'.$data->sip->ktp) }}" class="rounded img-fluid" alt="..." height="100px" width="120px"></a>
+                <a href="{{ asset('storage/'.$data->sik->ktp) }}" target="_blank"><img src="{{ asset('storage/'.$data->sik->ktp) }}" class="rounded img-fluid" alt="..." height="100px" width="120px"></a>
               </div>
-              <div class="col-md-6 text-center">
+              <div class="col-md-4 text-center">
                 <h5 class="font-size-lg text-dark font-weight-bold mb-6">Pas Foto</h5>
-                <a href="{{ asset('storage/'.$data->sip->foto) }}" target="_blank">
-                <img src="{{ asset('storage/'.$data->sip->foto) }}" class="rounded img-fluid" alt="..." height="100px" width="120px"></a>
+                <a href="{{ asset('storage/'.$data->sik->foto) }}" target="_blank">
+                <img src="{{ asset('storage/'.$data->sik->foto) }}" class="rounded img-fluid" alt="..." height="100px" width="120px"></a>
+              </div>
+              <div class="col-md-4 text-center">
+                <h5 class="font-size-lg text-dark font-weight-bold mb-6">Ijazah</h5>
+                <a href="{{ asset('storage/'.$data->sik->ijazah) }}" target="_blank"><img src="{{ asset('storage/'.$data->sik->ijazah) }}" class="rounded img-fluid" alt="..." height="100px" width="120px"></a>
               </div>
             </div>
             <hr>
@@ -145,7 +130,7 @@
             <h5 class="font-size-lg text-dark font-weight-bold mb-6">File STR</h5>
             <div class="row">
               <div class="col-md-12 text-center">
-                <embed src="{{asset('storage/'.$data->sip->str)}}#toolbar=0" type="application/pdf" width="80%" height="500px">
+                <embed src="{{asset('storage/'.$data->sik->str)}}#toolbar=0" type="application/pdf" width="80%" height="500px">
                 </div>
               </div>
               <hr>
@@ -153,37 +138,39 @@
               <h5 class="font-size-lg text-dark font-weight-bold mb-6">File Rekomendasi Organisasi Profesi</h5>
               <div class="row">
                 <div class="col-md-12 text-center">
-                  <embed src="{{asset('storage/'.$data->sip->rekomendasi_org)}}#toolbar=0" type="application/pdf" width="80%" height="500px">
+                  <embed src="{{asset('storage/'.$data->sik->rekomendasi_org)}}#toolbar=0" type="application/pdf" width="80%" height="500px">
                   </div>
                 </div>
+                <hr>
                 <hr>
 
                 <h5 class="font-size-lg text-dark font-weight-bold mb-6">File Surat Keterangan Pelayanan Kesehatan</h5>
                 <div class="row">
                   <div class="col-md-12 text-center">
-                    <embed src="{{asset('storage/'.$data->sip->surat_keterangan)}}#toolbar=0" type="application/pdf" width="80%" height="500px">
+                    <embed src="{{asset('storage/'.$data->sik->surat_keterangan)}}#toolbar=0" type="application/pdf" width="80%" height="500px">
                     </div>
                   </div>
                   <hr>
+                  <hr>
 
-                  <!-- Surat Persetujuan Pimpinan -->
-                  @if($data->sip->surat_persetujuan)
-                <h5 class="font-size-lg text-dark font-weight-bold mb-6">File Surat Keterangan Pelayanan Kesehatan</h5>
+                  <!-- OPSIONAL -->
+                  <!-- Surat Keluasan -->
+                  @if($data->sik->surat_keluasan)
+                <h5 class="font-size-lg text-dark font-weight-bold mb-6">File Surat Keluasan (PNS)</h5>
                 <div class="row">
                   <div class="col-md-12 text-center">
-                    <embed src="{{asset('storage/'.$data->sip->surat_keterangan)}}#toolbar=0" type="application/pdf" width="80%" height="500px">
+                    <embed src="{{asset('storage/'.$data->sik->surat_keluasan)}}#toolbar=0" type="application/pdf" width="80%" height="500px">
                     </div>
                   </div>
                   <hr>
                   @endif
 
-
                   <!-- Berkas Pendukung -->
-                  @if($data->sip->berkas_pendukung)
+                  @if($data->sik->berkas_pendukung)
                 <h5 class="font-size-lg text-dark font-weight-bold mb-6">Berkas Pendukung</h5>
                 <div class="row">
                   <div class="col-md-12 text-center">
-                    <embed src="{{asset('storage/'.$data->sip->berkas_pendukung)}}#toolbar=0" type="application/pdf" width="80%" height="500px">
+                    <embed src="{{asset('storage/'.$data->sik->berkas_pendukung)}}#toolbar=0" type="application/pdf" width="80%" height="500px">
                     </div>
                   </div>
                   <hr>
@@ -198,7 +185,7 @@
               <div class="modal-dialog modal-lg">
                 <div class="modal-content ">
                   <div class="modal-header">
-                    <h5 class="modal-title"> Tolak Pengajuan BerkaS</h5>
+                    <h5 class="modal-title"> Tolak Pengajuan Berkas</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>

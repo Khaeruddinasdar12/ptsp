@@ -50,7 +50,7 @@
             </span>
           </span>
           <h3 class="kt-portlet__head-title">
-            Detail Perizinan
+            Detail Perizinan Surat Izin Praktik (SIP)
           </h3>
         </div>
         <div class="row align-items-center">
@@ -152,7 +152,7 @@
               </div>
               <hr>
 
-              <h5 class="font-size-lg text-dark font-weight-bold mb-6">File Rekomendasi IDI</h5>
+              <h5 class="font-size-lg text-dark font-weight-bold mb-6">File Rekomendasi Organisasi Profesi</h5>
               <div class="row">
                 <div class="col-md-12 text-center">
                   <embed src="{{asset('storage/'.$data->sip->rekomendasi_org)}}#toolbar=0" type="application/pdf" width="80%" height="500px">

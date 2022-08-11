@@ -34,6 +34,11 @@ class Sip extends Model
         return $this->belongsTo(Subizin::class, 'subizin_id');
     }
 
+    public function reason()
+    {
+        return $this->hasOne(Sipreason::class, 'sip_id', 'id');
+    }
+
     public function getAwalStrAttribute()
     {
         return \Carbon\Carbon::parse($this->attributes['awal_str'])

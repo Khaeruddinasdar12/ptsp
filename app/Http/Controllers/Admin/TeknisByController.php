@@ -32,7 +32,11 @@ class TeknisByController extends Controller
 		if(!$data) {
 			abort(404);
 		}
-		// return $data;
+		if($data->jenis_izin == 'sik') {
+			return view('admin.teknis.sik-show', ['data' => $data]);
+		} elseif($data->jenis_izin == 'sip') {
+			return view('admin.teknis.sip-show', ['data' => $data]);
+		}
 		return view('admin.teknis.show', ['data' => $data]);
 	}
 

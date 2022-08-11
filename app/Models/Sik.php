@@ -14,6 +14,16 @@ class Sik extends Model
         return $this->belongsTo(Perizinan::class);
     }
 
+    public function klh()
+    {
+        return $this->belongsTo(Kelurahan::class, 'kelurahan');
+    }
+
+    public function subizin()
+    {
+        return $this->belongsTo(Subizin::class, 'subizin_id');
+    }
+    
     public function getAwalStrAttribute()
     {
         return \Carbon\Carbon::parse($this->attributes['awal_str'])

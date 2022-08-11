@@ -13,5 +13,5 @@
   <link href="{{ asset('css/skins/brand/dark.css') }}" rel="stylesheet" type="text/css">
   <link href="{{ asset('css/skins/aside/dark.css') }}" rel="stylesheet" type="text/css">
   @yield('page_style')
-  <link rel="shortcut icon" href="{{ asset('img/logo-makassar.png') }}">
+  <link rel="shortcut icon" href="{{ asset('img/dpmptsp-mks.png') }}">
 </head>

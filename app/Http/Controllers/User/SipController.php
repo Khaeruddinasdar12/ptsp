@@ -190,6 +190,7 @@ class SipController extends Controller
         	'status' => 'success',
         	'pesan' => 'Berhasil Mengajukan Surat Izin Praktik!'
         );
+        
     }catch(Exception $e){
     	return $arrayName = array(
     		'status' => 'error',

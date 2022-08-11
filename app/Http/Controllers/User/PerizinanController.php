@@ -27,15 +27,23 @@ class PerizinanController extends Controller
 	public function show($no_tiket)
 	{		
 		$user_id = Auth::user()->id;
-		$subizin = Subizin::where('jenis', 'sip')->get();
-		$data = Perizinan::where('user_id', $user_id)->where('status', '2')->where('no_tiket', $no_tiket)->with('sip')->first();
+		
+		$data = Perizinan::where('user_id', $user_id)->where('status', '2')->where('no_tiket', $no_tiket)->first();
 
 		// return $data->sip->klh3->id;
 		if(!$data) {
 			abort(404);
 		}
+		if($data->jenis_izin == 'sik') {
+			// return $data->sik;
+			$subizin = Subizin::where('jenis', 'sik')->get();
+			return view('user.sik.sik-show', ['data' => $data, 'subizin' => $subizin]);
+		} elseif($data->jenis_izin == 'sip') {
+			$subizin = Subizin::where('jenis', 'sik')->get();
+			return view('user.sip.sip-show', ['data' => $data, 'subizin' => $subizin]);
+		}
 		// return $data;
-		return view('user.perizinan.sip-show', ['data' => $data, 'subizin' => $subizin]);
+		
 	}
 
 	public function update(Request $request, $no_tiket)

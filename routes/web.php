@@ -35,6 +35,8 @@ Route::namespace('User')->group(function(){
 	Route::post('sip-store', 'SipController@store')->name('sip.store');
 	// SIK
 	Route::get('perizinan/surat-izin-kerja/create', 'SikController@create')->name('sik.create');
+	Route::post('sik-store', 'SikController@store')->name('sik.store');
+	Route::post('sik/{no_tiket}/update', 'SikController@update')->name('sik.update');
 	// PENDIDIKAN
 	Route::get('perizinan/izin-pendidikan/create', 'PendidikanController@create')->name('pendidikan.create');
 
@@ -66,6 +68,7 @@ Route::middleware('auth:admin')->prefix('admin')->namespace('Admin')->group(func
 	Route::get('perizinan-bidang/{no_tiket}', 'BidangByController@show')->name('perizinan.bidang.show');
 	Route::put('perizinan-bidang/{no_tiket}/tolak', 'BidangByController@tolak')->name('perizinan.bidang.tolak');
 	Route::put('perizinan-bidang/{no_tiket}/verif', 'BidangByController@verif')->name('perizinan.bidang.verif');
+	Route::put('perizinan-bidang/reason-sip/{id}', 'BidangByController@reason')->name('reason.sip.store');
 
 	// TEKNIS
 	Route::get('perizinan-teknis', 'TeknisByController@index')->name('perizinan.teknis.index');

@@ -27,6 +27,11 @@ class Perizinan extends Model
         return $this->hasOne(Sip::class);
     }
 
+    public function sik()
+    {
+        return $this->hasOne(Sik::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
