@@ -178,7 +178,7 @@
                     <option value="Panakkukang">Panakkukang</option>
                     <option value="Rappocini">Rappocini</option>
                     <option value="Tallo">Tallo</option>
-                    <option value="Tallo">Tamalanrea</option>
+                    <option value="Tamalanrea">Tamalanrea</option>
                     <option value="Tamalate">Tamalate</option>
                     <option value="Ujung Pandang">Ujung Pandang</option>
                     <option value="Ujung Tanah">Ujung Tanah</option>
@@ -209,38 +209,38 @@
               <div class="form-group row">
                 <label class="col-lg-3 col-form-label">Foto KTP: (jpeg, jpg, png) max 1MB*</label>
                 <div class="col-lg-9">
-                  <input type="file" class="form-control" name="ktp" {{$required}}>
+                  <input type="file" class="form-control" name="ktp" accept="image/jpeg,image/jpg,image/png" {{$required}}>
                 </div>
 
               </div>
               <div class="form-group row">
                 <label class="col-lg-3 col-form-label">Pas Foto: (jpeg, jpg, png) max 1MB*</label>
                 <div class="col-lg-9">
-                  <input type="file" class="form-control" name="foto">
+                  <input type="file" class="form-control" name="foto" accept="image/jpeg,image/jpg,image/png">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-lg-3 col-form-label">Ijazah: (jpeg, jpg, png) max 1MB*</label>
                 <div class="col-lg-9">
-                  <input type="file" class="form-control" name="ijazah">
+                  <input type="file" class="form-control" name="ijazah" accept="image/jpeg,image/jpg,image/png">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-lg-3 col-form-label">STR: (pdf) max 1MB*</label>
                 <div class="col-lg-9">
-                  <input type="file" class="form-control" name="str" {{$required}}>
+                  <input type="file" class="form-control" name="str" accept="application/pdf" {{$required}}>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-lg-3 col-form-label">Rekomendasi Organisasi Profesi: (pdf) max 1MB*</label>
                 <div class="col-lg-9">
-                  <input type="file" class="form-control" name="rekomendasi_org" {{$required}}>
+                  <input type="file" class="form-control" name="rekomendasi_org" accept="application/pdf" {{$required}}>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-lg-3 col-form-label">Surat Keterangan Dari Pimpinan Fasilitas Pelayanan Kesehatan: (pdf) max 1MB*</label>
                 <div class="col-lg-9">
-                  <input type="file" class="form-control" name="surat_keterangan" {{$required}}>
+                  <input type="file" class="form-control" name="surat_keterangan" accept="application/pdf" {{$required}}>
                 </div>
               </div>
 
@@ -248,13 +248,13 @@
               <div class="form-group row">
                 <label class="col-lg-3 col-form-label">Surat Keterangan Keluasan (jika PNS): (pdf) max 1MB</label>
                 <div class="col-lg-9">
-                  <input type="file" class="form-control" name="surat_keluasan" {{$required}}>
+                  <input type="file" class="form-control" name="surat_keluasan" accept="application/pdf" {{$required}}>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-lg-3 col-form-label">Berkas Pendukung Lainnya: (pdf) max 1MB</label>
                 <div class="col-lg-9">
-                  <input type="file" class="form-control" name="berkas_pendukung" {{$required}}>
+                  <input type="file" class="form-control" name="berkas_pendukung" accept="application/pdf" {{$required}}>
                 </div>
               </div>
             </div>

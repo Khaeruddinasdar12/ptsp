@@ -80,14 +80,14 @@
                 <td>
                   @if($datas->status == '0')
                     @if($datas->bidang_by == '')
-                    <span class="badge rounded-pill bg-warning">Ditinjau Bidang</span>
+                    <span class="badge rounded-pill bg-warning">Verifikasi Administrasi</span>
                     @elseif($datas->teknis_by == '')
-                    <span class="badge rounded-pill bg-warning">Ditinjau Teknis</span>
+                    <span class="badge rounded-pill bg-warning">Verifikasi Teknis</span>
                     @else
-                    <span class="badge rounded-pill bg-warning">Ditinjau Kadis</span>
+                    <span class="badge rounded-pill bg-warning">Verifikasi Kadis</span>
                     @endif
                   @elseif($datas->status == '2')
-                  <span class="badge rounded-pill bg-danger">Ditolak</span>
+                  <span class="badge rounded-pill bg-danger text-white"><i class="fa flaticon-circle"></i> Ditolak</span>
                   @endif
                   
                 </td>

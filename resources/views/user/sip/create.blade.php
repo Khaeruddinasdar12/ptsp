@@ -174,7 +174,7 @@
                     <option value="Panakkukang">Panakkukang</option>
                     <option value="Rappocini">Rappocini</option>
                     <option value="Tallo">Tallo</option>
-                    <option value="Tallo">Tamalanrea</option>
+                    <option value="Tamalanrea">Tamalanrea</option>
                     <option value="Tamalate">Tamalate</option>
                     <option value="Ujung Pandang">Ujung Pandang</option>
                     <option value="Ujung Tanah">Ujung Tanah</option>
@@ -219,7 +219,7 @@
                     <option value="Panakkukang">Panakkukang</option>
                     <option value="Rappocini">Rappocini</option>
                     <option value="Tallo">Tallo</option>
-                    <option value="Tallo">Tamalanrea</option>
+                    <option value="Tamalanrea">Tamalanrea</option>
                     <option value="Tamalate">Tamalate</option>
                     <option value="Ujung Pandang">Ujung Pandang</option>
                     <option value="Ujung Tanah">Ujung Tanah</option>
@@ -264,7 +264,7 @@
                     <option value="Panakkukang">Panakkukang</option>
                     <option value="Rappocini">Rappocini</option>
                     <option value="Tallo">Tallo</option>
-                    <option value="Tallo">Tamalanrea</option>
+                    <option value="Tamalanrea">Tamalanrea</option>
                     <option value="Tamalate">Tamalate</option>
                     <option value="Ujung Pandang">Ujung Pandang</option>
                     <option value="Ujung Tanah">Ujung Tanah</option>
@@ -295,45 +295,45 @@
               <div class="form-group row">
                 <label class="col-lg-3 col-form-label">Foto KTP: (jpeg, jpg, png) max 1MB*</label>
                 <div class="col-lg-9">
-                  <input type="file" class="form-control" name="ktp" {{$required}}>
+                  <input type="file" class="form-control" name="ktp" accept="image/jpeg,image/jpg,image/png" {{$required}}>
                 </div>
 
               </div>
               <div class="form-group row">
                 <label class="col-lg-3 col-form-label">Pas Foto: (jpeg, jpg, png) max 1MB*</label>
                 <div class="col-lg-9">
-                  <input type="file" class="form-control" name="foto">
+                  <input type="file" class="form-control" name="foto" accept="image/jpeg,image/jpg,image/png">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-lg-3 col-form-label">STR: (pdf) max 1MB*</label>
                 <div class="col-lg-9">
-                  <input type="file" class="form-control" name="str" {{$required}}>
+                  <input type="file" class="form-control" name="str" accept="application/pdf" {{$required}}>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-lg-3 col-form-label">Rekomendasi Organisasi Profesi: (pdf) max 1MB*</label>
                 <div class="col-lg-9">
-                  <input type="file" class="form-control" name="rekomendasi_org" {{$required}}>
+                  <input type="file" class="form-control" name="rekomendasi_org" accept="application/pdf" {{$required}}>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-lg-3 col-form-label">Surat Keterangan Pelayanan Kesehatan: (pdf) max 1MB*</label>
                 <div class="col-lg-9">
-                  <input type="file" class="form-control" name="surat_keterangan" {{$required}}>
+                  <input type="file" class="form-control" name="surat_keterangan" accept="application/pdf" {{$required}}>
                 </div>
               </div>
               <hr>
               <div class="form-group row">
                 <label class="col-lg-3 col-form-label">Surat Persetujuan Pimpinan Instansi: (pdf) max 1MB</label>
                 <div class="col-lg-9">
-                  <input type="file" class="form-control" name="surat_persetujuan" {{$required}}>
+                  <input type="file" class="form-control" name="surat_persetujuan" accept="application/pdf" {{$required}}>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-lg-3 col-form-label">Berkas Pendukung Lainnya: (pdf) max 1MB</label>
                 <div class="col-lg-9">
-                  <input type="file" class="form-control" name="berkas_pendukung" {{$required}}>
+                  <input type="file" class="form-control" name="berkas_pendukung" accept="application/pdf" {{$required}}>
                 </div>
               </div>
             </div>
@@ -365,6 +365,29 @@
 <script src="{{ asset('js/pages/custom/wizard/wizard-1.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
+  function cekTanggalMulai() {
+    var start = document.getElementById("date_start").value;
+    var end = document.getElementById("date_end").value;
+    if(end != '') {
+      if (new Date(start) > new Date(end)) {
+        gagal('Tanggal mulai', 'Tanggal mulai tidak boleh lebih dari tanggal akhir');
+        document.getElementById("date_start").value = '';
+      }
+    }
+  }
+
+  function cekTanggal() {
+    var start = document.getElementById("date_start").value;
+    var end = document.getElementById("date_end").value;
+    if(start == '') {
+      document.getElementById("date_end").value = '';
+      gagal('Tanggal mulai', 'Pilih tanggal mulai terlebih dahulu');
+    } else if(new Date(start) > new Date(end)) {
+      document.getElementById("date_end").value = '';
+      gagal('Tanggal mulai', 'Tanggal mulai tidak boleh lebih dari tanggal akhir');
+    }
+  }
+  
 
   $(document).ready(function () {
     var kec1 = $('#kecamatan1').val();

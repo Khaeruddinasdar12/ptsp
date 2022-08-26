@@ -19,6 +19,11 @@
 
   @section('content')
 
+  <!-- LOADER -->
+  <div style="display: none;" id="loader" class="loader">
+  </div>
+  <!-- END LOADER -->
+  
   <div class="row justify-content-center">
     <div class="col-md-12">
       @include('layouts.admin.alert')
@@ -53,7 +58,7 @@
       </div>
       <div class="row align-items-center">
         <div class="col-12 kt-align-right">
-          <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-verifikasi">
+          <button type="button" class="btn btn-danger btn-sm" onclick="tolak()" id="tolak">
             <i class="fa fa-times"></i> Tolak Berkas</button>
             <button type="button" class="btn btn-success btn-sm" id="verif" onclick="verifikasi()" title="Terima Berkas">
               <i class="fa fa-check"></i> Verifikasi Berkas</button>
@@ -66,7 +71,12 @@
             <div class="col-md-12">
               <p>No. Tiket : <b>{{$data->no_tiket}}</b></p>
             </div>
+
+            <div class="col-md-12">
+              <p>Jenis Perizinan : <b>{{ $data->sip->subizin->nama }}</b></p>
+            </div>
           </div>
+
           <div class="table-responsive">
             <!--begin: Datatable -->
             <table class="table table-striped table-bordered table-hover belum no-footer dtr-inline" role="grid" aria-describedby="table" width="100%">
@@ -76,203 +86,521 @@
                   <th>Formulir</th>
                   <th>Isi</th>
                   <th>Status</th>
+                  <th>Ket</th>
                   <th>Action</th>
                 </tr>
               </thead>
+              @php 
+              $no = 1; 
+              $terima = '<span class="badge rounded-pill bg-success text-white"><i class="fa fa-check"></i> Terima</span>' ;
+              $tolak = '<span class="badge rounded-pill bg-danger text-white"><i class="fa flaticon-circle"></i> Ditolak</span>';
+              $belumperiksa = '<span class="badge rounded-pill bg-primary text-white"><i class="fa flaticon-info"></i> Belum diperiksa</span>';
+              @endphp
               <tbody>
                 <tr>
-                  <td>1</td>
-                  <td>Nama Sesuai STR</td>
+                  <td>{{$no}}</td>
+                  <td valign="center">Nama Sesuai STR</td>
                   <td>{{ $data->sip->nama }}</td>
-                  <td>@if($data->sip->reason->nama) <span class="badge rounded-pill bg-danger"><i class="fa fa-times"></i></span> @endif</td>
+                  <td>
+                    @if($data->sip->reason && $data->sip->reason->nama =='1') {!! $terima !!}
+                    @elseif($data->sip->reason && $data->sip->reason->nama == '') {!! $belumperiksa !!}
+                    @elseif($data->sip->reason && $data->sip->reason->nama != '1') {!! $tolak !!}
+                    @else {!! $belumperiksa !!} @endif
+                  </td>
+                  <td>@if($data->sip->reason && $data->sip->reason->nama != '1') {{$data->sip->reason->nama}} @endif</td>
                   <td>
                     <button class="btn btn-outline-primary btn-sm" onclick="reason('nama', 'Nama')"><i class="fa fa-comment"></i></button>&nbsp;
-                    <button class="btn btn-outline-danger btn-sm"><i class="fa fa-times"></i></button></td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Tempat Lahir</td>
-                    <td>{{ $data->sip->tempat_lahir }}</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>Tanggal Lahir</td>
-                    <td>{{ $data->sip->tanggal_lahir }}</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>4</td>
-                    <td>Alamat Rumah</td>
-                    <td>{{ $data->sip->alamat }}</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>5</td>
-                    <td>Jenis Perizinan</td>
-                    <td>{{ $data->sip->subizin->jenis }}</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>6</td>
-                    <td>Nomor STR</td>
-                    <td>{{ $data->sip->no_str }}</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>7</td>
-                    <td>Tanggal Mulai Berlaku STR</td>
-                    <td>{{ $data->sip->awal_str }}</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>8</td>
-                    <td>Tanggal Berakhir STR</td>
-                    <td>{{ $data->sip->akhir_str }}</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>9</td>
-                    <td>Nama Praktek 1</td>
-                    <td>{{ $data->sip->nama_praktek1 }}</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>10</td>
-                    <td>Kelurahan Praktek 1</td>
-                    <td>{{ $data->sip->klh1->kelurahan }}</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>11</td>
-                    <td>Kecamatan Praktek 1</td>
-                    <td>{{ $data->sip->klh1->kecamatan }}</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>12</td>
-                    <td>Foto KTP</td>
-                    <td><a href="{{ asset('storage/'.$data->sip->ktp) }}" target="_blank">Lihat Berkas</a></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>13</td>
-                    <td>Pas Foto</td>
-                    <td><a href="{{ asset('storage/'.$data->sip->ktp) }}" target="_blank">Lihat Berkas</a></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>14</td>
-                    <td>File STR</td>
-                    <td><a href="{{ asset('storage/'.$data->sip->str) }}" target="_blank">Lihat Berkas</a></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>15</td>
-                    <td>Rekomendasi Organisasi Profesi</td>
-                    <td><a href="{{ asset('storage/'.$data->sip->rekomendasi_org) }}" target="_blank">Lihat Berkas</a></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>16</td>
-                    <td>Surat Keterangan Pelayanan Kesehatan</td>
-                    <td><a href="{{ asset('storage/'.$data->sip->surat_keterangan) }}" target="_blank">Lihat Berkas</a></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
+                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('nama', 'Nama')" id="ceklis"><i class="fa fa-check"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{$no = $no+1}}</td>
+                  <td>Tempat Lahir</td>
+                  <td>{{ $data->sip->tempat_lahir }}</td>
+                  <td>
+                    @if($data->sip->reason && $data->sip->reason->tempat_lahir =='1') {!! $terima !!}
+                    @elseif($data->sip->reason && $data->sip->reason->tempat_lahir == '') {!! $belumperiksa !!}
+                    @elseif($data->sip->reason && $data->sip->reason->tempat_lahir != '1') {!! $tolak !!}
+                    @else {!! $belumperiksa !!} @endif
+                  </td>
+                  <td>@if($data->sip->reason && $data->sip->reason->tempat_lahir != '1') {{$data->sip->reason->tempat_lahir}} @endif</td>
+                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('tempat_lahir', 'Tempat Lahir')"><i class="fa fa-comment"></i></button>&nbsp;
+                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('tempat_lahir', 'Tempat Lahir')" id="ceklis"><i class="fa fa-check"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{$no = $no+1}}</td>
+                  <td>Tanggal Lahir</td>
+                  <td>{{ $data->sip->tanggal_lahir }}</td>
+                  <td>
+                    @if($data->sip->reason && $data->sip->reason->tanggal_lahir =='1') {!! $terima !!}
+                    @elseif($data->sip->reason && $data->sip->reason->tanggal_lahir == '') {!! $belumperiksa !!}
+                    @elseif($data->sip->reason && $data->sip->reason->tanggal_lahir != '1') {!! $tolak !!}
+                    @else {!! $belumperiksa !!} @endif
+                  </td>
+                  <td>@if($data->sip->reason && $data->sip->reason->tanggal_lahir != '1') {{$data->sip->reason->tanggal_lahir}} @endif</td>
+                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('tanggal_lahir', 'Tanggal Lahir')"><i class="fa fa-comment"></i></button>&nbsp;
+                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('tanggal_lahir', 'Tanggal Lahir')" id="ceklis"><i class="fa fa-check"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{$no = $no+1}}</td>
+                  <td>Alamat Rumah</td>
+                  <td>{{ $data->sip->alamat }}</td>
+                  <td>
+                    @if($data->sip->reason && $data->sip->reason->alamat =='1') {!! $terima !!}
+                    @elseif($data->sip->reason && $data->sip->reason->alamat == '') {!! $belumperiksa !!}
+                    @elseif($data->sip->reason && $data->sip->reason->alamat != '1') {!! $tolak !!}
+                    @else {!! $belumperiksa !!} @endif
+                  </td>
+                  <td>@if($data->sip->reason && $data->sip->reason->alamat != '1') {{$data->sip->reason->alamat}} @endif</td>
+                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('alamat', 'Alamat')"><i class="fa fa-comment"></i></button>&nbsp;
+                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('alamat', 'Alamat')" id="ceklis"><i class="fa fa-check"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{$no = $no+1}}</td>
+                  <td>Nomor STR</td>
+                  <td>{{ $data->sip->no_str }}</td>
+                  <td>
+                    @if($data->sip->reason && $data->sip->reason->no_str =='1') {!! $terima !!}
+                    @elseif($data->sip->reason && $data->sip->reason->no_str == '') {!! $belumperiksa !!}
+                    @elseif($data->sip->reason && $data->sip->reason->no_str != '1') {!! $tolak !!}
+                    @else {!! $belumperiksa !!} @endif
+                  </td>
+                  <td>@if($data->sip->reason && $data->sip->reason->no_str != '1') {{$data->sip->reason->no_str}} @endif</td>
+                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('no_str', 'Nomor STR')"><i class="fa fa-comment"></i></button>&nbsp;
+                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('no_str', 'Nomor STR')" id="ceklis"><i class="fa fa-check"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{$no = $no+1}}</td>
+                  <td>Tanggal Mulai Berlaku STR</td>
+                  <td>{{ $data->sip->awal_str }}</td>
+                  <td>
+                    @if($data->sip->reason && $data->sip->reason->awal_str =='1') {!! $terima !!}
+                    @elseif($data->sip->reason && $data->sip->reason->awal_str == '') {!! $belumperiksa !!}
+                    @elseif($data->sip->reason && $data->sip->reason->awal_str != '1') {!! $tolak !!}
+                    @else {!! $belumperiksa !!} @endif
+                  </td>
+                  <td>@if($data->sip->reason && $data->sip->reason->awal_str != '1') {{$data->sip->reason->awal_str}} @endif</td>
+                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('awal_str', 'Tanggal Mulai Berlaku STR')"><i class="fa fa-comment"></i></button>&nbsp;
+                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('awal_str', 'Tanggal Mulai Berlaku STR')" id="ceklis"><i class="fa fa-check"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{$no = $no+1}}</td>
+                  <td>Tanggal Berakhir STR</td>
+                  <td>{{ $data->sip->akhir_str }}</td>
+                  <td>
+                    @if($data->sip->reason && $data->sip->reason->akhir_str =='1') {!! $terima !!}
+                    @elseif($data->sip->reason && $data->sip->reason->akhir_str == '') {!! $belumperiksa !!}
+                    @elseif($data->sip->reason && $data->sip->reason->akhir_str != '1') {!! $tolak !!}
+                    @else {!! $belumperiksa !!} @endif
+                  </td>
+                  <td>@if($data->sip->reason && $data->sip->reason->akhir_str != '1') {{$data->sip->reason->akhir_str}} @endif</td>
+                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('akhir_str', 'Tanggal Berakhir STR')"><i class="fa fa-comment"></i></button>&nbsp;
+                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('akhir_str', 'Tanggal Berakhir STR')" id="ceklis"><i class="fa fa-check"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{$no = $no+1}}</td>
+                  <td>Nama Praktek 1</td>
+                  <td>{{ $data->sip->nama_praktek1 }}</td>
+                  <td>
+                    @if($data->sip->reason && $data->sip->reason->nama_praktek1 =='1') {!! $terima !!}
+                    @elseif($data->sip->reason && $data->sip->reason->nama_praktek1 == '') {!! $belumperiksa !!}
+                    @elseif($data->sip->reason && $data->sip->reason->nama_praktek1 != '1') {!! $tolak !!}
+                    @else {!! $belumperiksa !!} @endif
+                  </td>
+                  <td>@if($data->sip->reason && $data->sip->reason->nama_praktek1 != '1') {{$data->sip->reason->nama_praktek1}} @endif</td>
+                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('nama_praktek1', 'Nama Praktek 1')"><i class="fa fa-comment"></i></button>&nbsp;
+                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('nama_praktek1', 'Nama Praktek 1')" id="ceklis"><i class="fa fa-check"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{$no = $no+1}}</td>
+                  <td>Jalan 1</td>
+                  <td>{{ $data->sip->jalan1 }}</td>
+                  <td>
+                    @if($data->sip->reason && $data->sip->reason->jalan1 =='1') {!! $terima !!}
+                    @elseif($data->sip->reason && $data->sip->reason->jalan1 == '') {!! $belumperiksa !!}
+                    @elseif($data->sip->reason && $data->sip->reason->jalan1 != '1') {!! $tolak !!}
+                    @else {!! $belumperiksa !!} @endif
+                  </td>
+                  <td>@if($data->sip->reason && $data->sip->reason->jalan1 != '1') {{$data->sip->reason->jalan1}} @endif</td>
+                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('jalan1', 'Jalan 1')"><i class="fa fa-comment"></i></button>&nbsp;
+                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('jalan1', 'Jalan 1')" id="ceklis"><i class="fa fa-check"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{$no = $no+1}}</td>
+                  <td>Kecamatan & Kelurahan Praktek 1</td>
+                  <td>Kec. {{ $data->sip->klh1->kelurahan }}, Kel. {{ $data->sip->klh1->kelurahan }} </td>
+                  <td>
+                    @if($data->sip->reason && $data->sip->reason->kelurahan1 =='1') {!! $terima !!}
+                    @elseif($data->sip->reason && $data->sip->reason->kelurahan1 == '') {!! $belumperiksa !!}
+                    @elseif($data->sip->reason && $data->sip->reason->kelurahan1 != '1') {!! $tolak !!}
+                    @else {!! $belumperiksa !!} @endif
+                  </td>
+                  <td>@if($data->sip->reason && $data->sip->reason->kelurahan1 != '1') {{$data->sip->reason->kelurahan1}} @endif</td>
+                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('kelurahan1', 'Kecamatan & Kelurahan Praktek 1')"><i class="fa fa-comment"></i></button>&nbsp;
+                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('kelurahan1', 'Kecamatan & Kelurahan Praktek 1')" id="ceklis"><i class="fa fa-check"></i></button>
+                  </td>
+                </tr>
 
-                  <!-- OPSIONAL -->
-                  @if($data->sip->surat_persetujuan)
-                  <tr>
-                    <td>17</td>
-                    <td>Surat Persetujuan Pimpinan Instansi</td>
-                    <td><a href="{{ asset('storage/'.$data->sip->surat_persetujuan) }}" target="_blank">Lihat Berkas</a></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  @endif
+                <!-- JALAN 2 -->
+                @if($data->sip->jalan2 && $data->sip->nama_praktek2 && $data->sip->kelurahan2)
+                <tr>
+                  <td>{{$no = $no+1}}</td>
+                  <td>Nama Praktek 2</td>
+                  <td>{{ $data->sip->nama_praktek2 }}</td>
+                  <td>
+                    @if($data->sip->reason && $data->sip->reason->nama_praktek2 =='1') {!! $terima !!}
+                    @elseif($data->sip->reason && $data->sip->reason->nama_praktek2 == '') {!! $belumperiksa !!}
+                    @elseif($data->sip->reason && $data->sip->reason->nama_praktek2 != '1') {!! $tolak !!}
+                    @else {!! $belumperiksa !!} @endif
+                  </td>
+                  <td>@if($data->sip->reason && $data->sip->reason->nama_praktek2 != '1') {{$data->sip->reason->nama_praktek2}} @endif</td>
+                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('nama_praktek2', 'Nama Praktek 2')"><i class="fa fa-comment"></i></button>&nbsp;
+                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('nama_praktek2', 'Nama Praktek 2')" id="ceklis"><i class="fa fa-check"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{$no = $no+1}}</td>
+                  <td>Jalan 2</td>
+                  <td>{{ $data->sip->jalan2 }}</td>
+                  <td>
+                    @if($data->sip->reason && $data->sip->reason->jalan2 =='1') {!! $terima !!}
+                    @elseif($data->sip->reason && $data->sip->reason->jalan2 == '') {!! $belumperiksa !!}
+                    @elseif($data->sip->reason && $data->sip->reason->jalan2 != '1') {!! $tolak !!}
+                    @else {!! $belumperiksa !!} @endif
+                  </td>
+                  <td>@if($data->sip->reason && $data->sip->reason->jalan2 != '1') {{$data->sip->reason->jalan2}} @endif</td>
+                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('jalan2', 'Jalan 2')"><i class="fa fa-comment"></i></button>&nbsp;
+                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('jalan2', 'Jalan 2')" id="ceklis"><i class="fa fa-check"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{$no = $no+1}}</td>
+                  <td>Kecamatan & Kelurahan Praktek 2</td>
+                  <td>Kec. {{ $data->sip->klh2->kelurahan }}, Kel. {{ $data->sip->klh2->kelurahan }} </td>
+                  <td>
+                    @if($data->sip->reason && $data->sip->reason->kelurahan2 =='1') {!! $terima !!}
+                    @elseif($data->sip->reason && $data->sip->reason->kelurahan2 == '') {!! $belumperiksa !!}
+                    @elseif($data->sip->reason && $data->sip->reason->kelurahan2 != '1') {!! $tolak !!}
+                    @else {!! $belumperiksa !!} @endif
+                  </td>
+                  <td>@if($data->sip->reason && $data->sip->reason->kelurahan2 != '1') {{$data->sip->reason->kelurahan2}} @endif</td>
+                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('kelurahan2', 'Kecamatan & Kelurahan Praktek 2')"><i class="fa fa-comment"></i></button>&nbsp;
+                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('kelurahan2', 'Kecamatan & Kelurahan Praktek 2')" id="ceklis"><i class="fa fa-check"></i></button>
+                  </td>
+                </tr>
+                @endif
+                <!-- END JALAN 2 -->
 
-                  @if($data->sip->berkas_pendukung)
-                  <tr>
-                    <td>18</td>
-                    <td>Berkas Pendukung</td>
-                    <td><a href="{{ asset('storage/'.$data->sip->berkas_pendukung) }}" target="_blank">Lihat Berkas</a></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  @endif
-                </tbody>
 
-              </table>
-              <!--end: Datatable -->
-            </div>
+                <!-- JALAN 3 -->
+                @if($data->sip->jalan3 && $data->sip->nama_praktek3 && $data->sip->kelurahan3)
+                <tr>
+                  <td>{{$no = $no+1}}</td>
+                  <td>Nama Praktek 3</td>
+                  <td>{{ $data->sip->nama_praktek3 }}</td>
+                  <td>
+                    @if($data->sip->reason && $data->sip->reason->nama_praktek3 =='1') {!! $terima !!}
+                    @elseif($data->sip->reason && $data->sip->reason->nama_praktek3 == '') {!! $belumperiksa !!}
+                    @elseif($data->sip->reason && $data->sip->reason->nama_praktek3 != '1') {!! $tolak !!}
+                    @else {!! $belumperiksa !!} @endif
+                  </td>
+                  <td>@if($data->sip->reason && $data->sip->reason->nama_praktek3 != '1') {{$data->sip->reason->nama_praktek3}} @endif</td>
+                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('nama_praktek3', 'Nama Praktek 3')"><i class="fa fa-comment"></i></button>&nbsp;
+                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('nama_praktek3', 'Nama Praktek 3')" id="ceklis"><i class="fa fa-check"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{$no = $no+1}}</td>
+                  <td>Jalan 3</td>
+                  <td>{{ $data->sip->jalan3 }}</td>
+                  <td>
+                    @if($data->sip->reason && $data->sip->reason->jalan3 =='1') {!! $terima !!}
+                    @elseif($data->sip->reason && $data->sip->reason->jalan3 == '') {!! $belumperiksa !!}
+                    @elseif($data->sip->reason && $data->sip->reason->jalan3 != '1') {!! $tolak !!}
+                    @else {!! $belumperiksa !!} @endif
+                  </td>
+                  <td>@if($data->sip->reason && $data->sip->reason->jalan3 != '1') {{$data->sip->reason->jalan3}} @endif</td>
+                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('jalan3', 'Jalan 3')"><i class="fa fa-comment"></i></button>&nbsp;
+                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('jalan3', 'Jalan 3')" id="ceklis"><i class="fa fa-check"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{$no = $no+1}}</td>
+                  <td>Kecamatan & Kelurahan Praktek 3</td>
+                  <td>Kec. {{ $data->sip->klh3->kelurahan }}, Kel. {{ $data->sip->klh3->kelurahan }} </td>
+                  <td>
+                    @if($data->sip->reason && $data->sip->reason->kelurahan3 =='1') {!! $terima !!}
+                    @elseif($data->sip->reason && $data->sip->reason->kelurahan3 == '') {!! $belumperiksa !!}
+                    @elseif($data->sip->reason && $data->sip->reason->kelurahan3 != '1') {!! $tolak !!}
+                    @else {!! $belumperiksa !!} @endif
+                  </td>
+                  <td>@if($data->sip->reason && $data->sip->reason->kelurahan3 != '1') {{$data->sip->reason->kelurahan3}} @endif</td>
+                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('kelurahan3', 'Kecamatan & Kelurahan Praktek 3')"><i class="fa fa-comment"></i></button>&nbsp;
+                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('kelurahan3', 'Kecamatan & Kelurahan Praktek 3')" id="ceklis"><i class="fa fa-check"></i></button>
+                  </td>
+                </tr>
+                @endif
+                <!-- END JALAN 3 -->
 
+                
+                <tr>
+                  <td>{{$no = $no+1}}</td>
+                  <td>Foto KTP</td>
+                  <td><a href="{{ asset('storage/'.$data->sip->ktp) }}" target="_blank">Lihat Berkas</a></td>
+                  <td>
+                    @if($data->sip->reason && $data->sip->reason->ktp =='1') {!! $terima !!}
+                    @elseif($data->sip->reason && $data->sip->reason->ktp == '') {!! $belumperiksa !!}
+                    @elseif($data->sip->reason && $data->sip->reason->ktp != '1') {!! $tolak !!}
+                    @else {!! $belumperiksa !!} @endif
+                  </td>
+                  <td>@if($data->sip->reason && $data->sip->reason->ktp != '1') {{$data->sip->reason->ktp}} @endif</td>
+                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('ktp', 'KTP')"><i class="fa fa-comment"></i></button>&nbsp;
+                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('ktp', 'KTP')" id="ceklis"><i class="fa fa-check"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{$no = $no+1}}</td>
+                  <td>Pas Foto</td>
+                  <td><a href="{{ asset('storage/'.$data->sip->foto) }}" target="_blank">Lihat Berkas</a></td>
+                  <td>
+                   @if($data->sip->reason && $data->sip->reason->foto =='1') {!! $terima !!}
+                   @elseif($data->sip->reason && $data->sip->reason->foto == '') {!! $belumperiksa !!}
+                   @elseif($data->sip->reason && $data->sip->reason->foto != '1') {!! $tolak !!}
+                   @else {!! $belumperiksa !!} @endif
+                 </td>
+                 <td>@if($data->sip->reason && $data->sip->reason->foto != '1') {{$data->sip->reason->foto}} @endif</td>
+                 <td><button class="btn btn-outline-primary btn-sm" onclick="reason('foto', 'Pas Foto')"><i class="fa fa-comment"></i></button>&nbsp;
+                  <button class="btn btn-outline-success btn-sm" onclick="ceklis('foto', 'Pas Foto')" id="ceklis"><i class="fa fa-check"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>{{$no = $no+1}}</td>
+                <td>File STR</td>
+                <td><a href="{{ asset('storage/'.$data->sip->str) }}" target="_blank">Lihat Berkas</a></td>
+                <td>
+                  @if($data->sip->reason && $data->sip->reason->str =='1') {!! $terima !!}
+                  @elseif($data->sip->reason && $data->sip->reason->str == '') {!! $belumperiksa !!}
+                  @elseif($data->sip->reason && $data->sip->reason->str != '1') {!! $tolak !!}
+                  @else {!! $belumperiksa !!} @endif
+                </td>
+                <td>@if($data->sip->reason && $data->sip->reason->str != '1') {{$data->sip->reason->str}} @endif</td>
+                <td><button class="btn btn-outline-primary btn-sm" onclick="reason('str', 'File STR')"><i class="fa fa-comment"></i></button>&nbsp;
+                  <button class="btn btn-outline-success btn-sm" onclick="ceklis('str', 'File STR')" id="ceklis"><i class="fa fa-check"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>{{$no = $no+1}}</td>
+                <td>Rekomendasi Organisasi Profesi</td>
+                <td><a href="{{ asset('storage/'.$data->sip->rekomendasi_org) }}" target="_blank">Lihat Berkas</a></td>
+                <td>
+                  @if($data->sip->reason && $data->sip->reason->rekomendasi_org =='1') {!! $terima !!}
+                  @elseif($data->sip->reason && $data->sip->reason->rekomendasi_org == '') {!! $belumperiksa !!}
+                  @elseif($data->sip->reason && $data->sip->reason->rekomendasi_org != '1') {!! $tolak !!}
+                  @else {!! $belumperiksa !!} @endif
+                </td>
+                <td>@if($data->sip->reason && $data->sip->reason->rekomendasi_org != '1') {{$data->sip->reason->rekomendasi_org}} @endif</td>
+                <td><button class="btn btn-outline-primary btn-sm" onclick="reason('rekomendasi_org', 'Rekomendasi Organisasi Profesi')"><i class="fa fa-comment"></i></button>&nbsp;
+                  <button class="btn btn-outline-success btn-sm" onclick="ceklis('rekomendasi_org', 'Rekomendasi Organisasi Profesi')" id="ceklis"><i class="fa fa-check"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>{{$no = $no+1}}</td>
+                <td>Surat Keterangan Pelayanan Kesehatan</td>
+                <td><a href="{{ asset('storage/'.$data->sip->surat_keterangan) }}" target="_blank">Lihat Berkas</a></td>
+                <td>
+                  @if($data->sip->reason && $data->sip->reason->surat_keterangan =='1') {!! $terima !!}
+                  @elseif($data->sip->reason && $data->sip->reason->surat_keterangan == '') {!! $belumperiksa !!}
+                  @elseif($data->sip->reason && $data->sip->reason->surat_keterangan != '1') {!! $tolak !!}
+                  @else {!! $belumperiksa !!} @endif
+                </td>
+                <td>@if($data->sip->reason && $data->sip->reason->surat_keterangan != '1') {{$data->sip->reason->surat_keterangan}} @endif</td>
+                <td><button class="btn btn-outline-primary btn-sm" onclick="reason('surat_keterangan', 'Surat Keterangan Pelayanan Kesehatan')"><i class="fa fa-comment"></i></button>&nbsp;
+                  <button class="btn btn-outline-success btn-sm" onclick="ceklis('surat_keterangan', 'Surat Keterangan Pelayanan Kesehatan')" id="ceklis"><i class="fa fa-check"></i></button>
+                </td>
+              </tr>
 
+              <!-- OPSIONAL -->
+              @if($data->sip->surat_persetujuan)
+              <tr>
+                <td>{{$no = $no+1}}</td>
+                <td>Surat Persetujuan Pimpinan Instansi</td>
+                <td><a href="{{ asset('storage/'.$data->sip->surat_persetujuan) }}" target="_blank">Lihat Berkas</a></td>
+                <td>
+                  @if($data->sip->reason && $data->sip->reason->surat_persetujuan =='1') {!! $terima !!}
+                  @elseif($data->sip->reason && $data->sip->reason->surat_persetujuan == '') {!! $belumperiksa !!}
+                  @elseif($data->sip->reason && $data->sip->reason->surat_persetujuan != '1') {!! $tolak !!}
+                  @else {!! $belumperiksa !!} @endif
+                </td>
+                <td>@if($data->sip->reason && $data->sip->reason->surat_persetujuan != '1') {{$data->sip->reason->surat_persetujuan}} @endif</td>
+                <td><button class="btn btn-outline-primary btn-sm" onclick="reason('surat_persetujuan', 'Surat Persetujuan Pimpinan Instansi')"><i class="fa fa-comment"></i></button>&nbsp;
+                  <button class="btn btn-outline-success btn-sm" onclick="ceklis('surat_persetujuan', 'Surat Persetujuan Pimpinan Instansi')" id="ceklis"><i class="fa fa-check"></i></button>
+                </td>
+              </tr>
+              @endif
 
-          </div>
+              @if($data->sip->berkas_pendukung)
+              <tr>
+                <td>{{$no = $no+1}}</td>
+                <td>Berkas Pendukung</td>
+                <td><a href="{{ asset('storage/'.$data->sip->berkas_pendukung) }}" target="_blank">Lihat Berkas</a></td>
+                <td>
+                  @if($data->sip->reason && $data->sip->reason->berkas_pendukung =='1') {!! $terima !!}
+                  @elseif($data->sip->reason && $data->sip->reason->berkas_pendukung == '') {!! $belumperiksa !!}
+                  @elseif($data->sip->reason && $data->sip->reason->berkas_pendukung != '1') {!! $tolak !!}
+                  @else {!! $belumperiksa !!} @endif
+                </td>
+                <td>@if($data->sip->reason && $data->sip->reason->berkas_pendukung != '1') {{$data->sip->reason->berkas_pendukung}} @endif</td>
+                <td><button class="btn btn-outline-primary btn-sm" onclick="reason('berkas_pendukung', 'Berkas Pendukung')"><i class="fa fa-comment"></i></button>&nbsp;
+                  <button class="btn btn-outline-success btn-sm" onclick="ceklis('berkas_pendukung', 'Berkas Pendukung')" id="ceklis"><i class="fa fa-check"></i></button>
+                </td>
+              </tr>
+              @endif
+            </tbody>
+          </table>
         </div>
+      </div>
+    </div>
 
-        <!-- Modal Tambah Keluhan -->
-        <div class="modal fade bd-example-modal" id="modal-reason" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content ">
-              <div class="modal-header">
-                <h5 class="modal-title" id="judul-modal"> </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
+    <!-- Modal Post Reason -->
+    <div class="modal fade bd-example-modal" id="modal-reason" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content ">
+          <div class="modal-header">
+            <h5 class="modal-title" id="judul-modal"> </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form method="post" action="" id="post-reason">
+            @csrf
+            @method('PUT')
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label">Pesan:</label>
+                <textarea class="form-control" rows="8" name="pesan" required></textarea>
               </div>
-              <form method="post" action="" id="post-reason">
-                @csrf
-                @method('PUT')
-                <div class="modal-body">
-                  <div class="mb-3">
-                    <label for="message-text" class="col-form-label">Pesan:</label>
-                    <textarea class="form-control" rows="8" name="pesan" required></textarea>
-                  </div>
-                  <input type="hidden" name="" id="field">
-                </div>
-                <div class="modal-footer">
-                  <button type="submit" class="btn btn-primary">Kirim</button>
-                </div>
-              </form>
+              <input type="hidden" name="key" id="field">
             </div>
-          </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Kirim</button>
+            </div>
+          </form>
         </div>
-        <!-- End Modal -->
-        @endsection
+      </div>
+    </div>
+    <!-- End Modal -->
+    @endsection
 
-        @section('page_script')
+    @section('page_script')
 
-        <script type="text/javascript">
-          const route= "{{ route('reason.sip.store', ['id' => $data->id]) }}";
-          function reason(key, head) {
+    <script type="text/javascript">
 
-            $('#field').attr('value', key);
-            $('#field').attr('name', key);
-            $('#post-reason').attr('action', route);
-            $('#judul-modal').html("Tolak "+head);
-            $("#modal-reason").modal("show");
+      function reason(key, head) {
+        $('#field').attr('value', key);
+        $('#judul-modal').html("Tolak "+head);
+        $("#modal-reason").modal("show");
+      }
+
+          $('#post-reason').submit(function(e){ // tolak kolom
+            const route= "{{ route('reason.sip.bidang', ['id' => $data->id, 'jenis' => 'sik']) }}";
+            e.preventDefault();
+            var request = new FormData(this);
+            var endpoint= route;
+            $.ajax({
+              url: endpoint,
+              method: "POST",
+              data: request,
+              contentType: false,
+              cache: false,
+              processData: false,
+              beforeSend: function(){
+                $('#loader').attr("style", "");
+              },
+              success:function(data){
+                $('#post-reason')[0].reset();
+                $('#modal-reason').modal("hide");
+                if(data.status == 'success') {
+                  ceklisSuccess(data.status, data.pesan)
+                } else {
+                  berhasil(data.status, data.pesan);
+                }
+              },
+              complete:function(data) {
+                $('#loader').attr("style", "display:none");
+              },
+              error: function(xhr, status, error){
+                var error = xhr.responseJSON; 
+                if ($.isEmptyObject(error) == false) {
+                  $.each(error.errors, function(key, value) {
+                    gagal(key, value);
+                  });
+                }
+              } 
+            }); 
+          });
+
+    function tolak() { // kirim tolak 
+      $(document).on('click', '#tolak', function(){
+        Swal.fire({
+          title: 'Kirim Notifikasi Penolakan Ke User ?',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ya!',
+          timer: 6500
+        }).then((result) => {
+          if (result.value) {
+            var me = $(this),
+            url = "{{ route('perizinan.bidang.tolak', ['no_tiket' => $data->no_tiket]) }}",
+            token = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+              url: url,
+              method: "POST",
+              data : {
+                '_method' : 'PUT',
+                '_token'  : token
+              },
+              beforeSend: function(){
+                $('#loader').attr("style", "");
+              },
+              success:function(data){
+                if(data.status == 'success') {
+                  successToRelaoad(data.status, data.pesan)
+                } else {
+                  berhasil(data.status, data.pesan);
+                }
+              },
+              complete:function(data) {
+                $('#loader').attr("style", "display:none");
+              },
+              error: function(xhr, status, error){
+                var error = xhr.responseJSON; 
+                if ($.isEmptyObject(error) == false) {
+                  $.each(error.errors, function(key, value) {
+                    gagal(key, value);
+                  });
+                }
+              } 
+            });
           }
+        });
+      });
+    }
 
     function verifikasi() { // verifikasi berkas berhasil
       $(document).on('click', '#verif', function(){
         Swal.fire({
           title: 'Berkas Telah Sesuai ?',
-          text: "Berkas yang diverifikasi akan dikirim ke tahap selanjutnya dan tidak dapat lagi diubah oleh Anda!",
+          text: "Pastikan semua telah diperiksa. Berkas yang diverifikasi akan dikirim ke tahap selanjutnya dan tidak dapat diubah lagi oleh Anda!",
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
@@ -291,12 +619,70 @@
                 '_method' : 'PUT',
                 '_token'  : token
               },
+              beforeSend: function(){
+                $('#loader').attr("style", "");
+              },
               success:function(data){
                 if(data.status == 'success') {
                   successToRelaoad(data.status, data.pesan)
                 } else {
                   berhasil(data.status, data.pesan);
                 }
+              },
+              complete:function(data) {
+                $('#loader').attr("style", "display:none");
+              },
+              error: function(xhr, status, error){
+                var error = xhr.responseJSON; 
+                if ($.isEmptyObject(error) == false) {
+                  $.each(error.errors, function(key, value) {
+                    gagal(key, value);
+                  });
+                }
+              } 
+            });
+          }
+        });
+      });
+    }
+
+    function ceklis(key, head) { // ceklis status kolom
+      $(document).on('click', '#ceklis', function(){
+        Swal.fire({
+          title: head + ' Sesuai ?',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ya',
+          timer: 6500
+        }).then((result) => {
+          if (result.value) {
+            var me = $(this),
+            url = "{{ route('ceklis.bidang', ['id' => $data->id]) }}",
+            token = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+              url: url,
+              method: "POST",
+              data : {
+                '_method' : 'PUT',
+                '_token'  : token,
+                'key' : key,
+                'head' : head,
+                'izin' : 'sip'
+              },
+              beforeSend: function(){
+                $('#loader').attr("style", "");
+              },
+              success:function(data){
+                if(data.status == 'success') {
+                  ceklisSuccess(data.status, data.pesan)
+                } else {
+                  berhasil(data.status, data.pesan);
+                }
+              },
+              complete:function(data) {
+                $('#loader').attr("style", "display:none");
               },
               error: function(xhr, status, error){
                 var error = xhr.responseJSON; 
@@ -313,6 +699,17 @@
     }
 
 
+    function ceklisSuccess(status, pesan) {
+      Swal.fire({
+        type: status,
+        title: pesan,
+        showConfirmButton: true,
+        button: "Ok"
+      }).then((result) => {
+        location.reload();
+      })
+    }
+
     function successToRelaoad(status, pesan) {
       Swal.fire({
         type: status,
@@ -321,7 +718,6 @@
         button: "Ok"
       }).then((result) => {
         window.location.href = "{{URL::to('admin/perizinan-bidang')}}"
-        // location.reload();
       })
     }
 
@@ -330,7 +726,7 @@
         type: status,
         title: pesan,
         showConfirmButton: true,
-        button: "Ok"
+        button: "Ok",
       })
     }
 

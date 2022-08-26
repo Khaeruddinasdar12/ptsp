@@ -79,14 +79,14 @@
                 <td>{{ $datas->jenis_izin}}</td>
                 <td>
                   @if($datas->bidang_by == '')
-                  <span class="badge rounded-pill bg-warning">Ditinjau Bidang</span>
+                  <span class="badge rounded-pill bg-warning">Verifikasi Administrasi</span>
                   @elseif($datas->teknis_by == '')
-                  <span class="badge rounded-pill bg-warning">Ditinjau Teknis</span>
+                  <span class="badge rounded-pill bg-warning">Verifikasi Teknis</span>
                   @else
-                  <span class="badge rounded-pill bg-warning">Ditinjau Kadis</span>
+                  <span class="badge rounded-pill bg-warning">Verifikasi Kadis</span>
                   @endif
                 </td>
-                <td>{{ $datas->created_at }}</td>
+                <td>{{ $datas->updated_at }}</td>
                 <td><a href="{{route('perizinan.bidang.show', ['no_tiket' => $datas->no_tiket])}}" class="btn btn-outline-primary btn-sm" title="Lihat detail">
                   <i class="fa fa-eye"></i>
                 </a></td>

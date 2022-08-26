@@ -9,6 +9,8 @@ class Sik extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['perizinan_id', 'nama', 'tempat_lahir', 'tanggal_lahir', 'nohp','no_str', 'awal_str', 'akhir_str', 'no_rekomendasi', 'alamat', 'subizin_id', 'nama_praktek', 'jalan', 'kelurahan', 'ktp', 'foto', 'str', 'ijazah','rekomendasi_org', 'surat_keterangan', 'surat_keluasan', 'berkas_pendukung', 'created_at', 'updated_at'];
+
     public function perizinan()
     {
         return $this->belongsTo(Perizinan::class);
@@ -22,6 +24,11 @@ class Sik extends Model
     public function subizin()
     {
         return $this->belongsTo(Subizin::class, 'subizin_id');
+    }
+
+    public function reason()
+    {
+        return $this->hasOne(Sikreason::class, 'sik_id', 'id');
     }
     
     public function getAwalStrAttribute()

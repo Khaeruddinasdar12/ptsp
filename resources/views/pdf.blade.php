@@ -186,32 +186,31 @@
             <p>Jl. Jendral Ahmad Yani No. 2 Makasssar 90171 <br>
                 Website: dpmptsp.makassarkota.go.id</p>
         </div></th>
-        <th><img src="{{ public_path('cert/qr-code.png') }}" alt="" class="qrCode"></th>
+        <th><img src="{{ public_path('storage/qr-code/'.$barcode) }}" alt="" class="qrCode"></th>
         </tr>
         </table>
         </div>
         <hr class="hr">
         <br>
         <div class="suratIzin">
-            <h3 id="judul">SURAT IZIN KERJA (SIK)</h3>
+            <h3 id="judul">{{$jenis_izin}}</h3>
             <p>Nomor: {{$no_surat}}</p>
         </div>
 
         <p class='descSurat'>Berdasarkan  dan
-        <span>Peraturan Menteri Kesehatan Republik Indonesia Nomor
-        2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran</span>
+        <span>{{$dasar_hukum}}</span>
         Peraturan Walikota Makassar Nomor 59 Tahun 2021 Tentang Pendelegasian
         Kewenangan Penyelenggaraan Pelayanan Perizinan Berusaha Kepada Kepala Dinas
         Penanaman Modal dan Pelayanan Terpadu Satu Pintu Kota Makassar, maka yang
         bertanda tangan di bawah ini, Kepala Dinas Penanaman Modal dan Pelayanan Terpadu
-        Satu Pintu Kota Makassar memberikan Surat Izin Kerja, Kepada:</p>
+        Satu Pintu Kota Makassar memberikan {{$jenis_izin}}, Kepada:</p>
         
         <h4 class="data_nama"><u>{{$nama}}</u></h4>
 
         <table>
             <tr>
                 <td style="width: 30%;">Jenis Praktek : </td>
-                <td style="width: 5%;">:</td>
+                <td style="width: 5%;"></td>
                 <td style="width: 65%;">{{$jenis_izin}}</td>
             </tr>
             <tr>
@@ -227,7 +226,7 @@
             <tr>
                 <td style="width: 30%;">Tempat Praktik yang ke-1</td>
                 <td style="width: 5%;">:</td>
-                <td style="width: 65%;">${data_nama_sarana_praktik},</td>
+                <td style="width: 65%;">{{$praktek1}}</td>
             </tr>
             <tr>
                 <td style="width: 30%;">Kelurahan</td>
@@ -247,12 +246,12 @@
             <tr>
                 <td style="width: 30%;">SIP berlaku sampai</td>
                 <td style="width: 5%;">:</td>
-                <td style="width: 65%;">${data_tgl_masa_berlaku}</td>
+                <td style="width: 65%;">{{$akhir_str}}</td>
             </tr>
             <tr>
                 <td style="width: 30%;">No. Rekomendasi OP</td>
                 <td style="width: 5%;">:</td>
-                <td style="width: 65%;">${data_no_rekomendasi_op}</td>
+                <td style="width: 65%;"></td>
             </tr>
             <tr>
                 <td style="width: 30%;">No. Rekomendasi Dinkes</td>
@@ -262,7 +261,7 @@
             <tr class="merah">
                 <td style="width: 30%;">Untuk Praktik sebagai</td>
                 <td style="width: 5%;">:</td>
-                <td style="width: 65%;">{{$jenis_izin}}</td>
+                <td style="width: 65%;">{{$subizin}}</td>
             </tr>
         </table>
 
@@ -270,7 +269,7 @@
         <br>
         <table class="penetapan clearfix">
             <tr>
-                <th><img src="{{ public_path('cert/wa-foto.jpg') }}" alt="" class="asdarGeblek"></th>
+                <th><img src="{{ public_path('storage/'.$pas_foto) }}" alt="" class="asdarGeblek"></th>
                 <th>
                     <p>Ditetapkan di Makassar</p>
                     <p>Pada tanggal: {{$penetapan}}</p>
@@ -279,16 +278,12 @@
             </tr>
         </table>
         <br>
-        <br>
             <p><strong>Tembusan :</strong></p>
             <ol>
                 <li>Dinas Kesehatan Kota Makassar</li>
                 <li>Pertinggal,-</li>
             </ol>
 
-        <br>
-        <br>
-        <br>
 
         <hr style="border: 2px solid ">
 

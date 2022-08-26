@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use PDF;
+use QrCode;
+use Storage;
 class GuestController extends Controller
 {
 	public function index()
@@ -56,6 +58,17 @@ class GuestController extends Controller
             'class' => 'danger',
         );
         return view('email', $data_send);
+    }
+
+    public function qr()
+    {
+        $no_tiket = time();
+        $route = config('app.url').'/cek-sertifikat/'.$no_tiket;
+        $image = QrCode::format('png')
+            ->size(200)->errorCorrection('H')
+            ->generate($route);
+            $output_file = 'qr-code/' . $no_tiket . '.png';
+            Storage::disk('public')->put($output_file, $image);
     }
 }
 
