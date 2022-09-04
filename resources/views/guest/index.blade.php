@@ -7,8 +7,8 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-6 d-flex flex-column justify-content-center">
-          <h1 data-aos="fade-up">Layanan Perizinan Non Oss </h1>
-          <h2 data-aos="fade-up" data-aos-delay="400">Buat surat perizinan non OSS dengan sistem online.</h2>
+          <h1 data-aos="fade-up">SOLATA' BOSS</h1>
+          <h2 data-aos="fade-up" data-aos-delay="400">Sistem Online Pelayanan Terpadu Bukan OSS.</h2>
           <div data-aos="fade-up" data-aos-delay="600">
             <div class="text-center text-lg-start">
               <a href="{{route('layanan')}}" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">

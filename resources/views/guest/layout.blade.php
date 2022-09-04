@@ -35,19 +35,19 @@
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
       <a href="{{route('index')}}" class="logo d-flex align-items-center">
-        <img src="{{asset('img/logo-makassar.png')}}" alt="">
-        <span>Ptsp Makassar</span>
+        <img src="{{asset('img/ptsp.png')}}" alt="">
+        <span>SOLATA' BOSS</span>
       </a>
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto {{ (request()->is('/') ? 'active' : '') }}" href="{{route('index')}}">Home</a></li>
-          <li><a class="nav-link scrollto {{ (request()->is('sejarah-makassar') ? 'active' : '') }}" href="{{route('sejarah')}}">Sejarah Makassar</a></li>
+          <li><a class="nav-link scrollto {{ (request()->is('/') ? 'active' : '') }}" href="{{route('index')}}">Beranda</a></li>
+          <li><a class="nav-link scrollto {{ (request()->is('tentang') ? 'active' : '') }}" href="{{route('tentang')}}">Tentang</a></li>
           <li><a class="nav-link scrollto {{ (request()->is('visi-misi') ? 'active' : '') }}" href="{{route('visi')}}">Visi Misi</a></li>
           <li><a class="nav-link scrollto {{ (request()->is('struktur-organisasi') ? 'active' : '') }}" href="{{route('struktur')}}">Struktur Organisasi</a></li>
           <li><a class="nav-link scrollto {{ (request()->is('layanan') ? 'active' : '') }}" href="{{route('layanan')}}">Layanan</a></li>
           @guest
-          <li><a class="nav-link scrollto" href="{{ route('login') }}">Login</a></li>
+          <li><a class="nav-link scrollto" href="{{ route('login') }}">Masuk</a></li>
           <li><a class="getstarted scrollto" href="#about">Daftar</a></li>
           
           @else
@@ -86,8 +86,8 @@
         <div class="row gy-4">
           <div class="col-lg-5 col-md-12 footer-info">
             <a href="#" class="logo d-flex align-items-center">
-              <img src="{{asset('img/logo-makassar.png')}}" alt="">
-              <span>Ptsp Makassar</span>
+              <img src="{{asset('img/ptsp.png')}}" alt="">
+              <span>SOLATA' BOSS</span>
             </a>
             <p>Visi: Terwujudnya iklim investasi yang kondusif bagi semua, melalu penyelenggaraan perizinan dan penanaman modal yang berkelas dunia.</p>
             <!-- <div class="social-links mt-3">
@@ -98,10 +98,10 @@
             </div> -->
           </div>
 
-          <div class="col-lg-2 col-6 footer-links">
+          <div class="col-lg-2 col-sm-12 footer-links">
           </div>
 
-          <div class="col-lg-2 col-6 footer-links">
+          <div class="col-lg-2 col-sm-12 footer-links">
             <h4>Layanan</h4>
             <ul>
               <li><i class="bi bi-chevron-right"></i> <a href="#">Surat Izin Praktik (SIP)</a></li>

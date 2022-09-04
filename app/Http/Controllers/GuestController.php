@@ -11,9 +11,9 @@ class GuestController extends Controller
 		return view('guest.index');
 	}
 
-    public function sejarah()
+    public function tentang()
     {
-        return view('guest.sejarah');
+        return view('guest.tentang');
     }
 
     public function visi()
