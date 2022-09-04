@@ -55,334 +55,335 @@
           Detail Perizinan Surat Izin Kerja (SIK)
         </h3>
       </div>
-      <div class="row align-items-center">
-        <div class="col-12 kt-align-right">
-          <button type="button" class="btn btn-danger btn-sm" onclick="tolak()" id="tolak">
-            <i class="fa fa-times"></i> Tolak Berkas</button>
-            <button type="button" class="btn btn-success btn-sm" id="verif" onclick="verifikasi()" title="Terima Berkas">
-              <i class="fa fa-check"></i> Verifikasi Berkas</button>
-            </div>
-          </div>
 
+    </div>
+    <div class="kt-portlet__body">
+      <div class="row">
+        <div class="col-md-12">
+          <p>No. Tiket : <b>{{$data->no_tiket}}</b></p>
         </div>
-        <div class="kt-portlet__body">
-          <div class="row">
-            <div class="col-md-12">
-              <p>No. Tiket : <b>{{$data->no_tiket}}</b></p>
-            </div>
 
-            <div class="col-md-12">
-              <p>Jenis Perizinan : <b>{{ $data->sik->subizin->nama }}</b></p>
-            </div>
-            <div class="col-md-12">
-              <p>No HP : <b>{{ $data->sik->nohp }}</b></p>
-            </div>
+        <div class="col-md-12">
+          <p>Jenis Perizinan : <b>{{ $data->sik->subizin->nama }}</b></p>
+        </div>
+        <div class="col-md-12">
+          <p>No HP : <b>{{ $data->sik->nohp }}</b></p>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <!--begin: Datatable -->
+        <table class="table table-striped table-bordered table-hover belum no-footer dtr-inline" role="grid" aria-describedby="table" width="100%">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Formulir</th>
+              <th>Isi</th>
+              <th>Status</th>
+              <th>Ket</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          @php 
+          $no = 1; 
+          $terima = '<span class="badge rounded-pill bg-success text-white"><i class="fa fa-check"></i> Terima</span>' ;
+          $tolak = '<span class="badge rounded-pill bg-danger text-white"><i class="fa flaticon-circle"></i> Ditolak</span>';
+          $belumperiksa = '<span class="badge rounded-pill bg-warning"><i class="fa flaticon-info"></i> Belum diperiksa</span>';
+          @endphp
+          <tbody>
+            <tr>
+              <td>{{$no}}</td>
+              <td valign="center">Nama Sesuai STR</td>
+              <td>{{ $data->sik->nama }}</td>
+              <td>
+                @if($data->sik->reason && $data->sik->reason->nama =='1') {!! $terima !!}
+                @elseif($data->sik->reason && $data->sik->reason->nama == '') {!! $belumperiksa !!}
+                @elseif($data->sik->reason && $data->sik->reason->nama != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              <td>@if($data->sik->reason && $data->sik->reason->nama != '1') {{$data->sik->reason->nama}} @endif</td>
+              <td>
+                <button class="btn btn-outline-danger btn-sm" onclick="reason('nama', 'Nama')"><i class="fa fa-times"></i></button>&nbsp;
+                <button class="btn btn-outline-success btn-sm" onclick="ceklis('nama', 'Nama')" id="ceklis"><i class="fa fa-check"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Tempat Lahir</td>
+              <td>{{ $data->sik->tempat_lahir }}</td>
+              <td>
+                @if($data->sik->reason && $data->sik->reason->tempat_lahir =='1') {!! $terima !!}
+                @elseif($data->sik->reason && $data->sik->reason->tempat_lahir == '') {!! $belumperiksa !!}
+                @elseif($data->sik->reason && $data->sik->reason->tempat_lahir != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              <td>@if($data->sik->reason && $data->sik->reason->tempat_lahir != '1') {{$data->sik->reason->tempat_lahir}} @endif</td>
+              <td><button class="btn btn-outline-danger btn-sm" onclick="reason('tempat_lahir', 'Tempat Lahir')"><i class="fa fa-times"></i></button>&nbsp;
+                <button class="btn btn-outline-success btn-sm" onclick="ceklis('tempat_lahir', 'Tempat Lahir')" id="ceklis"><i class="fa fa-check"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Tanggal Lahir</td>
+              <td>{{ $data->sik->tanggal_lahir }}</td>
+              <td>
+                @if($data->sik->reason && $data->sik->reason->tanggal_lahir =='1') {!! $terima !!}
+                @elseif($data->sik->reason && $data->sik->reason->tanggal_lahir == '') {!! $belumperiksa !!}
+                @elseif($data->sik->reason && $data->sik->reason->tanggal_lahir != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              <td>@if($data->sik->reason && $data->sik->reason->tanggal_lahir != '1') {{$data->sik->reason->tanggal_lahir}} @endif</td>
+              <td><button class="btn btn-outline-danger btn-sm" onclick="reason('tanggal_lahir', 'Tanggal Lahir')"><i class="fa fa-times"></i></button>&nbsp;
+                <button class="btn btn-outline-success btn-sm" onclick="ceklis('tanggal_lahir', 'Tanggal Lahir')" id="ceklis"><i class="fa fa-check"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Alamat Rumah</td>
+              <td>{{ $data->sik->alamat }}</td>
+              <td>
+                @if($data->sik->reason && $data->sik->reason->alamat =='1') {!! $terima !!}
+                @elseif($data->sik->reason && $data->sik->reason->alamat == '') {!! $belumperiksa !!}
+                @elseif($data->sik->reason && $data->sik->reason->alamat != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              <td>@if($data->sik->reason && $data->sik->reason->alamat != '1') {{$data->sik->reason->alamat}} @endif</td>
+              <td><button class="btn btn-outline-danger btn-sm" onclick="reason('alamat', 'Alamat')"><i class="fa fa-times"></i></button>&nbsp;
+                <button class="btn btn-outline-success btn-sm" onclick="ceklis('alamat', 'Alamat')" id="ceklis"><i class="fa fa-check"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Nomor STR</td>
+              <td>{{ $data->sik->no_str }}</td>
+              <td>
+                @if($data->sik->reason && $data->sik->reason->no_str =='1') {!! $terima !!}
+                @elseif($data->sik->reason && $data->sik->reason->no_str == '') {!! $belumperiksa !!}
+                @elseif($data->sik->reason && $data->sik->reason->no_str != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              <td>@if($data->sik->reason && $data->sik->reason->no_str != '1') {{$data->sik->reason->no_str}} @endif</td>
+              <td><button class="btn btn-outline-danger btn-sm" onclick="reason('no_str', 'Nomor STR')"><i class="fa fa-times"></i></button>&nbsp;
+                <button class="btn btn-outline-success btn-sm" onclick="ceklis('no_str', 'Nomor STR')" id="ceklis"><i class="fa fa-check"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Tanggal Mulai Berlaku STR</td>
+              <td>{{ $data->sik->awal_str }}</td>
+              <td>
+                @if($data->sik->reason && $data->sik->reason->awal_str =='1') {!! $terima !!}
+                @elseif($data->sik->reason && $data->sik->reason->awal_str == '') {!! $belumperiksa !!}
+                @elseif($data->sik->reason && $data->sik->reason->awal_str != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              <td>@if($data->sik->reason && $data->sik->reason->awal_str != '1') {{$data->sik->reason->awal_str}} @endif</td>
+              <td><button class="btn btn-outline-danger btn-sm" onclick="reason('awal_str', 'Tanggal Mulai Berlaku STR')"><i class="fa fa-times"></i></button>&nbsp;
+                <button class="btn btn-outline-success btn-sm" onclick="ceklis('awal_str', 'Tanggal Mulai Berlaku STR')" id="ceklis"><i class="fa fa-check"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Tanggal Berakhir STR</td>
+              <td>{{ $data->sik->akhir_str }}</td>
+              <td>
+                @if($data->sik->reason && $data->sik->reason->akhir_str =='1') {!! $terima !!}
+                @elseif($data->sik->reason && $data->sik->reason->akhir_str == '') {!! $belumperiksa !!}
+                @elseif($data->sik->reason && $data->sik->reason->akhir_str != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              <td>@if($data->sik->reason && $data->sik->reason->akhir_str != '1') {{$data->sik->reason->akhir_str}} @endif</td>
+              <td><button class="btn btn-outline-danger btn-sm" onclick="reason('akhir_str', 'Tanggal Berakhir STR')"><i class="fa fa-times"></i></button>&nbsp;
+                <button class="btn btn-outline-success btn-sm" onclick="ceklis('akhir_str', 'Tanggal Berakhir STR')" id="ceklis"><i class="fa fa-check"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Nama Praktek </td>
+              <td>{{ $data->sik->nama_praktek }}</td>
+              <td>
+                @if($data->sik->reason && $data->sik->reason->nama_praktek =='1') {!! $terima !!}
+                @elseif($data->sik->reason && $data->sik->reason->nama_praktek == '') {!! $belumperiksa !!}
+                @elseif($data->sik->reason && $data->sik->reason->nama_praktek != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              <td>@if($data->sik->reason && $data->sik->reason->nama_praktek != '1') {{$data->sik->reason->nama_praktek}} @endif</td>
+              <td><button class="btn btn-outline-danger btn-sm" onclick="reason('nama_praktek', 'Nama Praktek')"><i class="fa fa-times"></i></button>&nbsp;
+                <button class="btn btn-outline-success btn-sm" onclick="ceklis('nama_praktek', 'Nama Praktek')" id="ceklis"><i class="fa fa-check"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Jalan</td>
+              <td>{{ $data->sik->jalan }}</td>
+              <td>
+                @if($data->sik->reason && $data->sik->reason->jalan =='1') {!! $terima !!}
+                @elseif($data->sik->reason && $data->sik->reason->jalan == '') {!! $belumperiksa !!}
+                @elseif($data->sik->reason && $data->sik->reason->jalan != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              <td>@if($data->sik->reason && $data->sik->reason->jalan != '1') {{$data->sik->reason->jalan}} @endif</td>
+              <td><button class="btn btn-outline-danger btn-sm" onclick="reason('jalan', 'Jalan')"><i class="fa fa-times"></i></button>&nbsp;
+                <button class="btn btn-outline-success btn-sm" onclick="ceklis('jalan', 'Jalan')" id="ceklis"><i class="fa fa-check"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Kecamatan & Kelurahan Praktek</td>
+              <td>Kec. {{ $data->sik->klh->kelurahan }}, Kel. {{ $data->sik->klh->kelurahan }} </td>
+              <td>
+                @if($data->sik->reason && $data->sik->reason->kelurahan =='1') {!! $terima !!}
+                @elseif($data->sik->reason && $data->sik->reason->kelurahan == '') {!! $belumperiksa !!}
+                @elseif($data->sik->reason && $data->sik->reason->kelurahan != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              <td>@if($data->sik->reason && $data->sik->reason->kelurahan != '1') {{$data->sik->reason->kelurahan}} @endif</td>
+              <td><button class="btn btn-outline-danger btn-sm" onclick="reason('kelurahan', 'Kecamatan & Kelurahan Praktek')"><i class="fa fa-times"></i></button>&nbsp;
+                <button class="btn btn-outline-success btn-sm" onclick="ceklis('kelurahan', 'Kecamatan & Kelurahan Praktek')" id="ceklis"><i class="fa fa-check"></i></button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Foto KTP</td>
+              <td><a href="{{ asset('storage/'.$data->sik->ktp) }}" target="_blank">Lihat Berkas</a></td>
+              <td>
+                @if($data->sik->reason && $data->sik->reason->ktp =='1') {!! $terima !!}
+                @elseif($data->sik->reason && $data->sik->reason->ktp == '') {!! $belumperiksa !!}
+                @elseif($data->sik->reason && $data->sik->reason->ktp != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              <td>@if($data->sik->reason && $data->sik->reason->ktp != '1') {{$data->sik->reason->ktp}} @endif</td>
+              <td><button class="btn btn-outline-danger btn-sm" onclick="reason('ktp', 'KTP')"><i class="fa fa-times"></i></button>&nbsp;
+                <button class="btn btn-outline-success btn-sm" onclick="ceklis('ktp', 'KTP')" id="ceklis"><i class="fa fa-check"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Pas Foto</td>
+              <td><a href="{{ asset('storage/'.$data->sik->foto) }}" target="_blank">Lihat Berkas</a></td>
+              <td>
+               @if($data->sik->reason && $data->sik->reason->foto =='1') {!! $terima !!}
+               @elseif($data->sik->reason && $data->sik->reason->foto == '') {!! $belumperiksa !!}
+               @elseif($data->sik->reason && $data->sik->reason->foto != '1') {!! $tolak !!}
+               @else {!! $belumperiksa !!} @endif
+             </td>
+             <td>@if($data->sik->reason && $data->sik->reason->foto != '1') {{$data->sik->reason->foto}} @endif</td>
+             <td><button class="btn btn-outline-danger btn-sm" onclick="reason('foto', 'Pas Foto')"><i class="fa fa-times"></i></button>&nbsp;
+              <button class="btn btn-outline-success btn-sm" onclick="ceklis('foto', 'Pas Foto')" id="ceklis"><i class="fa fa-check"></i></button>
+            </td>
+          </tr>
+
+          <tr>
+            <td>{{$no = $no+1}}</td>
+            <td>File STR</td>
+            <td><a href="{{ asset('storage/'.$data->sik->str) }}" target="_blank">Lihat Berkas</a></td>
+            <td>
+              @if($data->sik->reason && $data->sik->reason->str =='1') {!! $terima !!}
+              @elseif($data->sik->reason && $data->sik->reason->str == '') {!! $belumperiksa !!}
+              @elseif($data->sik->reason && $data->sik->reason->str != '1') {!! $tolak !!}
+              @else {!! $belumperiksa !!} @endif
+            </td>
+            <td>@if($data->sik->reason && $data->sik->reason->str != '1') {{$data->sik->reason->str}} @endif</td>
+            <td><button class="btn btn-outline-danger btn-sm" onclick="reason('str', 'File STR')"><i class="fa fa-times"></i></button>&nbsp;
+              <button class="btn btn-outline-success btn-sm" onclick="ceklis('str', 'File STR')" id="ceklis"><i class="fa fa-check"></i></button>
+            </td>
+          </tr>
+
+          <tr>
+            <td>{{$no = $no+1}}</td>
+            <td>Ijazah</td>
+            <td><a href="{{ asset('storage/'.$data->sik->ijazah) }}" target="_blank">Lihat Berkas</a></td>
+            <td>
+              @if($data->sik->reason && $data->sik->reason->ijazah =='1') {!! $terima !!}
+              @elseif($data->sik->reason && $data->sik->reason->ijazah == '') {!! $belumperiksa !!}
+              @elseif($data->sik->reason && $data->sik->reason->ijazah != '1') {!! $tolak !!}
+              @else {!! $belumperiksa !!} @endif
+            </td>
+            <td>@if($data->sik->reason && $data->sik->reason->ijazah != '1') {{$data->sik->reason->ijazah}} @endif</td>
+            <td><button class="btn btn-outline-danger btn-sm" onclick="reason('ijazah', 'Ijazah')"><i class="fa fa-times"></i></button>&nbsp;
+              <button class="btn btn-outline-success btn-sm" onclick="ceklis('ijazah', 'Ijazah')" id="ceklis"><i class="fa fa-check"></i></button>
+            </td>
+          </tr>
+
+          <tr>
+            <td>{{$no = $no+1}}</td>
+            <td>Rekomendasi Organisasi Profesi</td>
+            <td><a href="{{ asset('storage/'.$data->sik->rekomendasi_org) }}" target="_blank">Lihat Berkas</a></td>
+            <td>
+              @if($data->sik->reason && $data->sik->reason->rekomendasi_org =='1') {!! $terima !!}
+              @elseif($data->sik->reason && $data->sik->reason->rekomendasi_org == '') {!! $belumperiksa !!}
+              @elseif($data->sik->reason && $data->sik->reason->rekomendasi_org != '1') {!! $tolak !!}
+              @else {!! $belumperiksa !!} @endif
+            </td>
+            <td>@if($data->sik->reason && $data->sik->reason->rekomendasi_org != '1') {{$data->sik->reason->rekomendasi_org}} @endif</td>
+            <td><button class="btn btn-outline-danger btn-sm" onclick="reason('rekomendasi_org', 'Rekomendasi Organisasi Profesi')"><i class="fa fa-times"></i></button>&nbsp;
+              <button class="btn btn-outline-success btn-sm" onclick="ceklis('rekomendasi_org', 'Rekomendasi Organisasi Profesi')" id="ceklis"><i class="fa fa-check"></i></button>
+            </td>
+          </tr>
+          <tr>
+            <td>{{$no = $no+1}}</td>
+            <td>Surat Keterangan Pimpinan Fasilitas Pelayanan Kesehatan</td>
+            <td><a href="{{ asset('storage/'.$data->sik->surat_keterangan) }}" target="_blank">Lihat Berkas</a></td>
+            <td>
+              @if($data->sik->reason && $data->sik->reason->surat_keterangan =='1') {!! $terima !!}
+              @elseif($data->sik->reason && $data->sik->reason->surat_keterangan == '') {!! $belumperiksa !!}
+              @elseif($data->sik->reason && $data->sik->reason->surat_keterangan != '1') {!! $tolak !!}
+              @else {!! $belumperiksa !!} @endif
+            </td>
+            <td>@if($data->sik->reason && $data->sik->reason->surat_keterangan != '1') {{$data->sik->reason->surat_keterangan}} @endif</td>
+            <td><button class="btn btn-outline-danger btn-sm" onclick="reason('surat_keterangan', 'Surat Keterangan Pelayanan Kesehatan')"><i class="fa fa-times"></i></button>&nbsp;
+              <button class="btn btn-outline-success btn-sm" onclick="ceklis('surat_keterangan', 'Surat Keterangan Pimpinan Fasilitas Pelayanan Kesehatan')" id="ceklis"><i class="fa fa-check"></i></button>
+            </td>
+          </tr>
+
+          <!-- OPSIONAL -->
+          @if($data->sik->surat_keluasan)
+          <tr>
+            <td>{{$no = $no+1}}</td>
+            <td>Surat Keterangan Keluasan</td>
+            <td><a href="{{ asset('storage/'.$data->sik->surat_keluasan) }}" target="_blank">Lihat Berkas</a></td>
+            <td>
+              @if($data->sik->reason && $data->sik->reason->surat_keluasan =='1') {!! $terima !!}
+              @elseif($data->sik->reason && $data->sik->reason->surat_keluasan == '') {!! $belumperiksa !!}
+              @elseif($data->sik->reason && $data->sik->reason->surat_keluasan != '1') {!! $tolak !!}
+              @else {!! $belumperiksa !!} @endif
+            </td>
+            <td>@if($data->sik->reason && $data->sik->reason->surat_keluasan != '1') {{$data->sik->reason->surat_keluasan}} @endif</td>
+            <td><button class="btn btn-outline-danger btn-sm" onclick="reason('surat_keluasan', 'Surat Keterangan Keluasan')"><i class="fa fa-times"></i></button>&nbsp;
+              <button class="btn btn-outline-success btn-sm" onclick="ceklis('surat_keluasan', 'Surat Keterangan Keluasan')" id="ceklis"><i class="fa fa-check"></i></button>
+            </td>
+          </tr>
+          @endif
+
+          @if($data->sik->berkas_pendukung)
+          <tr>
+            <td>{{$no = $no+1}}</td>
+            <td>Berkas Pendukung</td>
+            <td><a href="{{ asset('storage/'.$data->sik->berkas_pendukung) }}" target="_blank">Lihat Berkas</a></td>
+            <td>
+              @if($data->sik->reason && $data->sik->reason->berkas_pendukung =='1') {!! $terima !!}
+              @elseif($data->sik->reason && $data->sik->reason->berkas_pendukung == '') {!! $belumperiksa !!}
+              @elseif($data->sik->reason && $data->sik->reason->berkas_pendukung != '1') {!! $tolak !!}
+              @else {!! $belumperiksa !!} @endif
+            </td>
+            <td>@if($data->sik->reason && $data->sik->reason->berkas_pendukung != '1') {{$data->sik->reason->berkas_pendukung}} @endif</td>
+            <td><button class="btn btn-outline-danger btn-sm" onclick="reason('berkas_pendukung', 'Berkas Pendukung')"><i class="fa fa-times"></i></button>&nbsp;
+              <button class="btn btn-outline-success btn-sm" onclick="ceklis('berkas_pendukung', 'Berkas Pendukung')" id="ceklis"><i class="fa fa-check"></i></button>
+            </td>
+          </tr>
+          @endif
+        </tbody>
+      </table>
+    </div>
+    <br>
+    <div class="row align-items-center">
+      <div class="col-12 kt-align-right">
+        <button type="button" class="btn btn-danger btn-sm" onclick="tolak()" id="tolak">
+          <i class="fa fa-times"></i> Tolak Berkas</button>
+          <button type="button" class="btn btn-success btn-sm" id="verif" onclick="verifikasi()" title="Terima Berkas">
+            <i class="fa fa-check"></i> Verifikasi Berkas</button>
           </div>
-
-          <div class="table-responsive">
-            <!--begin: Datatable -->
-            <table class="table table-striped table-bordered table-hover belum no-footer dtr-inline" role="grid" aria-describedby="table" width="100%">
-              <thead>
-                <tr>
-                  <th>No.</th>
-                  <th>Formulir</th>
-                  <th>Isi</th>
-                  <th>Status</th>
-                  <th>Ket</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              @php 
-              $no = 1; 
-              $terima = '<span class="badge rounded-pill bg-success text-white"><i class="fa fa-check"></i> Terima</span>' ;
-              $tolak = '<span class="badge rounded-pill bg-danger text-white"><i class="fa flaticon-circle"></i> Ditolak</span>';
-              $belumperiksa = '<span class="badge rounded-pill bg-primary text-white"><i class="fa flaticon-info"></i> Belum diperiksa</span>';
-              @endphp
-              <tbody>
-                <tr>
-                  <td>{{$no}}</td>
-                  <td valign="center">Nama Sesuai STR</td>
-                  <td>{{ $data->sik->nama }}</td>
-                  <td>
-                    @if($data->sik->reason && $data->sik->reason->nama =='1') {!! $terima !!}
-                    @elseif($data->sik->reason && $data->sik->reason->nama == '') {!! $belumperiksa !!}
-                    @elseif($data->sik->reason && $data->sik->reason->nama != '1') {!! $tolak !!}
-                    @else {!! $belumperiksa !!} @endif
-                  </td>
-                  <td>@if($data->sik->reason && $data->sik->reason->nama != '1') {{$data->sik->reason->nama}} @endif</td>
-                  <td>
-                    <button class="btn btn-outline-primary btn-sm" onclick="reason('nama', 'Nama')"><i class="fa fa-comment"></i></button>&nbsp;
-                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('nama', 'Nama')" id="ceklis"><i class="fa fa-check"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>{{$no = $no+1}}</td>
-                  <td>Tempat Lahir</td>
-                  <td>{{ $data->sik->tempat_lahir }}</td>
-                  <td>
-                    @if($data->sik->reason && $data->sik->reason->tempat_lahir =='1') {!! $terima !!}
-                    @elseif($data->sik->reason && $data->sik->reason->tempat_lahir == '') {!! $belumperiksa !!}
-                    @elseif($data->sik->reason && $data->sik->reason->tempat_lahir != '1') {!! $tolak !!}
-                    @else {!! $belumperiksa !!} @endif
-                  </td>
-                  <td>@if($data->sik->reason && $data->sik->reason->tempat_lahir != '1') {{$data->sik->reason->tempat_lahir}} @endif</td>
-                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('tempat_lahir', 'Tempat Lahir')"><i class="fa fa-comment"></i></button>&nbsp;
-                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('tempat_lahir', 'Tempat Lahir')" id="ceklis"><i class="fa fa-check"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>{{$no = $no+1}}</td>
-                  <td>Tanggal Lahir</td>
-                  <td>{{ $data->sik->tanggal_lahir }}</td>
-                  <td>
-                    @if($data->sik->reason && $data->sik->reason->tanggal_lahir =='1') {!! $terima !!}
-                    @elseif($data->sik->reason && $data->sik->reason->tanggal_lahir == '') {!! $belumperiksa !!}
-                    @elseif($data->sik->reason && $data->sik->reason->tanggal_lahir != '1') {!! $tolak !!}
-                    @else {!! $belumperiksa !!} @endif
-                  </td>
-                  <td>@if($data->sik->reason && $data->sik->reason->tanggal_lahir != '1') {{$data->sik->reason->tanggal_lahir}} @endif</td>
-                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('tanggal_lahir', 'Tanggal Lahir')"><i class="fa fa-comment"></i></button>&nbsp;
-                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('tanggal_lahir', 'Tanggal Lahir')" id="ceklis"><i class="fa fa-check"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>{{$no = $no+1}}</td>
-                  <td>Alamat Rumah</td>
-                  <td>{{ $data->sik->alamat }}</td>
-                  <td>
-                    @if($data->sik->reason && $data->sik->reason->alamat =='1') {!! $terima !!}
-                    @elseif($data->sik->reason && $data->sik->reason->alamat == '') {!! $belumperiksa !!}
-                    @elseif($data->sik->reason && $data->sik->reason->alamat != '1') {!! $tolak !!}
-                    @else {!! $belumperiksa !!} @endif
-                  </td>
-                  <td>@if($data->sik->reason && $data->sik->reason->alamat != '1') {{$data->sik->reason->alamat}} @endif</td>
-                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('alamat', 'Alamat')"><i class="fa fa-comment"></i></button>&nbsp;
-                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('alamat', 'Alamat')" id="ceklis"><i class="fa fa-check"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>{{$no = $no+1}}</td>
-                  <td>Nomor STR</td>
-                  <td>{{ $data->sik->no_str }}</td>
-                  <td>
-                    @if($data->sik->reason && $data->sik->reason->no_str =='1') {!! $terima !!}
-                    @elseif($data->sik->reason && $data->sik->reason->no_str == '') {!! $belumperiksa !!}
-                    @elseif($data->sik->reason && $data->sik->reason->no_str != '1') {!! $tolak !!}
-                    @else {!! $belumperiksa !!} @endif
-                  </td>
-                  <td>@if($data->sik->reason && $data->sik->reason->no_str != '1') {{$data->sik->reason->no_str}} @endif</td>
-                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('no_str', 'Nomor STR')"><i class="fa fa-comment"></i></button>&nbsp;
-                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('no_str', 'Nomor STR')" id="ceklis"><i class="fa fa-check"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>{{$no = $no+1}}</td>
-                  <td>Tanggal Mulai Berlaku STR</td>
-                  <td>{{ $data->sik->awal_str }}</td>
-                  <td>
-                    @if($data->sik->reason && $data->sik->reason->awal_str =='1') {!! $terima !!}
-                    @elseif($data->sik->reason && $data->sik->reason->awal_str == '') {!! $belumperiksa !!}
-                    @elseif($data->sik->reason && $data->sik->reason->awal_str != '1') {!! $tolak !!}
-                    @else {!! $belumperiksa !!} @endif
-                  </td>
-                  <td>@if($data->sik->reason && $data->sik->reason->awal_str != '1') {{$data->sik->reason->awal_str}} @endif</td>
-                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('awal_str', 'Tanggal Mulai Berlaku STR')"><i class="fa fa-comment"></i></button>&nbsp;
-                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('awal_str', 'Tanggal Mulai Berlaku STR')" id="ceklis"><i class="fa fa-check"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>{{$no = $no+1}}</td>
-                  <td>Tanggal Berakhir STR</td>
-                  <td>{{ $data->sik->akhir_str }}</td>
-                  <td>
-                    @if($data->sik->reason && $data->sik->reason->akhir_str =='1') {!! $terima !!}
-                    @elseif($data->sik->reason && $data->sik->reason->akhir_str == '') {!! $belumperiksa !!}
-                    @elseif($data->sik->reason && $data->sik->reason->akhir_str != '1') {!! $tolak !!}
-                    @else {!! $belumperiksa !!} @endif
-                  </td>
-                  <td>@if($data->sik->reason && $data->sik->reason->akhir_str != '1') {{$data->sik->reason->akhir_str}} @endif</td>
-                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('akhir_str', 'Tanggal Berakhir STR')"><i class="fa fa-comment"></i></button>&nbsp;
-                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('akhir_str', 'Tanggal Berakhir STR')" id="ceklis"><i class="fa fa-check"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>{{$no = $no+1}}</td>
-                  <td>Nama Praktek </td>
-                  <td>{{ $data->sik->nama_praktek }}</td>
-                  <td>
-                    @if($data->sik->reason && $data->sik->reason->nama_praktek =='1') {!! $terima !!}
-                    @elseif($data->sik->reason && $data->sik->reason->nama_praktek == '') {!! $belumperiksa !!}
-                    @elseif($data->sik->reason && $data->sik->reason->nama_praktek != '1') {!! $tolak !!}
-                    @else {!! $belumperiksa !!} @endif
-                  </td>
-                  <td>@if($data->sik->reason && $data->sik->reason->nama_praktek != '1') {{$data->sik->reason->nama_praktek}} @endif</td>
-                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('nama_praktek', 'Nama Praktek')"><i class="fa fa-comment"></i></button>&nbsp;
-                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('nama_praktek', 'Nama Praktek')" id="ceklis"><i class="fa fa-check"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>{{$no = $no+1}}</td>
-                  <td>Jalan</td>
-                  <td>{{ $data->sik->jalan }}</td>
-                  <td>
-                    @if($data->sik->reason && $data->sik->reason->jalan =='1') {!! $terima !!}
-                    @elseif($data->sik->reason && $data->sik->reason->jalan == '') {!! $belumperiksa !!}
-                    @elseif($data->sik->reason && $data->sik->reason->jalan != '1') {!! $tolak !!}
-                    @else {!! $belumperiksa !!} @endif
-                  </td>
-                  <td>@if($data->sik->reason && $data->sik->reason->jalan != '1') {{$data->sik->reason->jalan}} @endif</td>
-                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('jalan', 'Jalan')"><i class="fa fa-comment"></i></button>&nbsp;
-                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('jalan', 'Jalan')" id="ceklis"><i class="fa fa-check"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>{{$no = $no+1}}</td>
-                  <td>Kecamatan & Kelurahan Praktek</td>
-                  <td>Kec. {{ $data->sik->klh->kelurahan }}, Kel. {{ $data->sik->klh->kelurahan }} </td>
-                  <td>
-                    @if($data->sik->reason && $data->sik->reason->kelurahan =='1') {!! $terima !!}
-                    @elseif($data->sik->reason && $data->sik->reason->kelurahan == '') {!! $belumperiksa !!}
-                    @elseif($data->sik->reason && $data->sik->reason->kelurahan != '1') {!! $tolak !!}
-                    @else {!! $belumperiksa !!} @endif
-                  </td>
-                  <td>@if($data->sik->reason && $data->sik->reason->kelurahan != '1') {{$data->sik->reason->kelurahan}} @endif</td>
-                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('kelurahan', 'Kecamatan & Kelurahan Praktek')"><i class="fa fa-comment"></i></button>&nbsp;
-                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('kelurahan', 'Kecamatan & Kelurahan Praktek')" id="ceklis"><i class="fa fa-check"></i></button>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>{{$no = $no+1}}</td>
-                  <td>Foto KTP</td>
-                  <td><a href="{{ asset('storage/'.$data->sik->ktp) }}" target="_blank">Lihat Berkas</a></td>
-                  <td>
-                    @if($data->sik->reason && $data->sik->reason->ktp =='1') {!! $terima !!}
-                    @elseif($data->sik->reason && $data->sik->reason->ktp == '') {!! $belumperiksa !!}
-                    @elseif($data->sik->reason && $data->sik->reason->ktp != '1') {!! $tolak !!}
-                    @else {!! $belumperiksa !!} @endif
-                  </td>
-                  <td>@if($data->sik->reason && $data->sik->reason->ktp != '1') {{$data->sik->reason->ktp}} @endif</td>
-                  <td><button class="btn btn-outline-primary btn-sm" onclick="reason('ktp', 'KTP')"><i class="fa fa-comment"></i></button>&nbsp;
-                    <button class="btn btn-outline-success btn-sm" onclick="ceklis('ktp', 'KTP')" id="ceklis"><i class="fa fa-check"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>{{$no = $no+1}}</td>
-                  <td>Pas Foto</td>
-                  <td><a href="{{ asset('storage/'.$data->sik->foto) }}" target="_blank">Lihat Berkas</a></td>
-                  <td>
-                   @if($data->sik->reason && $data->sik->reason->foto =='1') {!! $terima !!}
-                   @elseif($data->sik->reason && $data->sik->reason->foto == '') {!! $belumperiksa !!}
-                   @elseif($data->sik->reason && $data->sik->reason->foto != '1') {!! $tolak !!}
-                   @else {!! $belumperiksa !!} @endif
-                 </td>
-                 <td>@if($data->sik->reason && $data->sik->reason->foto != '1') {{$data->sik->reason->foto}} @endif</td>
-                 <td><button class="btn btn-outline-primary btn-sm" onclick="reason('foto', 'Pas Foto')"><i class="fa fa-comment"></i></button>&nbsp;
-                  <button class="btn btn-outline-success btn-sm" onclick="ceklis('foto', 'Pas Foto')" id="ceklis"><i class="fa fa-check"></i></button>
-                </td>
-              </tr>
-
-              <tr>
-                <td>{{$no = $no+1}}</td>
-                <td>File STR</td>
-                <td><a href="{{ asset('storage/'.$data->sik->str) }}" target="_blank">Lihat Berkas</a></td>
-                <td>
-                  @if($data->sik->reason && $data->sik->reason->str =='1') {!! $terima !!}
-                  @elseif($data->sik->reason && $data->sik->reason->str == '') {!! $belumperiksa !!}
-                  @elseif($data->sik->reason && $data->sik->reason->str != '1') {!! $tolak !!}
-                  @else {!! $belumperiksa !!} @endif
-                </td>
-                <td>@if($data->sik->reason && $data->sik->reason->str != '1') {{$data->sik->reason->str}} @endif</td>
-                <td><button class="btn btn-outline-primary btn-sm" onclick="reason('str', 'File STR')"><i class="fa fa-comment"></i></button>&nbsp;
-                  <button class="btn btn-outline-success btn-sm" onclick="ceklis('str', 'File STR')" id="ceklis"><i class="fa fa-check"></i></button>
-                </td>
-              </tr>
-
-              <tr>
-                <td>{{$no = $no+1}}</td>
-                <td>Ijazah</td>
-                <td><a href="{{ asset('storage/'.$data->sik->ijazah) }}" target="_blank">Lihat Berkas</a></td>
-                <td>
-                  @if($data->sik->reason && $data->sik->reason->ijazah =='1') {!! $terima !!}
-                  @elseif($data->sik->reason && $data->sik->reason->ijazah == '') {!! $belumperiksa !!}
-                  @elseif($data->sik->reason && $data->sik->reason->ijazah != '1') {!! $tolak !!}
-                  @else {!! $belumperiksa !!} @endif
-                </td>
-                <td>@if($data->sik->reason && $data->sik->reason->ijazah != '1') {{$data->sik->reason->ijazah}} @endif</td>
-                <td><button class="btn btn-outline-primary btn-sm" onclick="reason('ijazah', 'Ijazah')"><i class="fa fa-comment"></i></button>&nbsp;
-                  <button class="btn btn-outline-success btn-sm" onclick="ceklis('ijazah', 'Ijazah')" id="ceklis"><i class="fa fa-check"></i></button>
-                </td>
-              </tr>
-
-              <tr>
-                <td>{{$no = $no+1}}</td>
-                <td>Rekomendasi Organisasi Profesi</td>
-                <td><a href="{{ asset('storage/'.$data->sik->rekomendasi_org) }}" target="_blank">Lihat Berkas</a></td>
-                <td>
-                  @if($data->sik->reason && $data->sik->reason->rekomendasi_org =='1') {!! $terima !!}
-                  @elseif($data->sik->reason && $data->sik->reason->rekomendasi_org == '') {!! $belumperiksa !!}
-                  @elseif($data->sik->reason && $data->sik->reason->rekomendasi_org != '1') {!! $tolak !!}
-                  @else {!! $belumperiksa !!} @endif
-                </td>
-                <td>@if($data->sik->reason && $data->sik->reason->rekomendasi_org != '1') {{$data->sik->reason->rekomendasi_org}} @endif</td>
-                <td><button class="btn btn-outline-primary btn-sm" onclick="reason('rekomendasi_org', 'Rekomendasi Organisasi Profesi')"><i class="fa fa-comment"></i></button>&nbsp;
-                  <button class="btn btn-outline-success btn-sm" onclick="ceklis('rekomendasi_org', 'Rekomendasi Organisasi Profesi')" id="ceklis"><i class="fa fa-check"></i></button>
-                </td>
-              </tr>
-              <tr>
-                <td>{{$no = $no+1}}</td>
-                <td>Surat Keterangan Pimpinan Fasilitas Pelayanan Kesehatan</td>
-                <td><a href="{{ asset('storage/'.$data->sik->surat_keterangan) }}" target="_blank">Lihat Berkas</a></td>
-                <td>
-                  @if($data->sik->reason && $data->sik->reason->surat_keterangan =='1') {!! $terima !!}
-                  @elseif($data->sik->reason && $data->sik->reason->surat_keterangan == '') {!! $belumperiksa !!}
-                  @elseif($data->sik->reason && $data->sik->reason->surat_keterangan != '1') {!! $tolak !!}
-                  @else {!! $belumperiksa !!} @endif
-                </td>
-                <td>@if($data->sik->reason && $data->sik->reason->surat_keterangan != '1') {{$data->sik->reason->surat_keterangan}} @endif</td>
-                <td><button class="btn btn-outline-primary btn-sm" onclick="reason('surat_keterangan', 'Surat Keterangan Pelayanan Kesehatan')"><i class="fa fa-comment"></i></button>&nbsp;
-                  <button class="btn btn-outline-success btn-sm" onclick="ceklis('surat_keterangan', 'Surat Keterangan Pimpinan Fasilitas Pelayanan Kesehatan')" id="ceklis"><i class="fa fa-check"></i></button>
-                </td>
-              </tr>
-
-              <!-- OPSIONAL -->
-              @if($data->sik->surat_keluasan)
-              <tr>
-                <td>{{$no = $no+1}}</td>
-                <td>Surat Keterangan Keluasan</td>
-                <td><a href="{{ asset('storage/'.$data->sik->surat_keluasan) }}" target="_blank">Lihat Berkas</a></td>
-                <td>
-                  @if($data->sik->reason && $data->sik->reason->surat_keluasan =='1') {!! $terima !!}
-                  @elseif($data->sik->reason && $data->sik->reason->surat_keluasan == '') {!! $belumperiksa !!}
-                  @elseif($data->sik->reason && $data->sik->reason->surat_keluasan != '1') {!! $tolak !!}
-                  @else {!! $belumperiksa !!} @endif
-                </td>
-                <td>@if($data->sik->reason && $data->sik->reason->surat_keluasan != '1') {{$data->sik->reason->surat_keluasan}} @endif</td>
-                <td><button class="btn btn-outline-primary btn-sm" onclick="reason('surat_keluasan', 'Surat Keterangan Keluasan')"><i class="fa fa-comment"></i></button>&nbsp;
-                  <button class="btn btn-outline-success btn-sm" onclick="ceklis('surat_keluasan', 'Surat Keterangan Keluasan')" id="ceklis"><i class="fa fa-check"></i></button>
-                </td>
-              </tr>
-              @endif
-
-              @if($data->sik->berkas_pendukung)
-              <tr>
-                <td>{{$no = $no+1}}</td>
-                <td>Berkas Pendukung</td>
-                <td><a href="{{ asset('storage/'.$data->sik->berkas_pendukung) }}" target="_blank">Lihat Berkas</a></td>
-                <td>
-                  @if($data->sik->reason && $data->sik->reason->berkas_pendukung =='1') {!! $terima !!}
-                  @elseif($data->sik->reason && $data->sik->reason->berkas_pendukung == '') {!! $belumperiksa !!}
-                  @elseif($data->sik->reason && $data->sik->reason->berkas_pendukung != '1') {!! $tolak !!}
-                  @else {!! $belumperiksa !!} @endif
-                </td>
-                <td>@if($data->sik->reason && $data->sik->reason->berkas_pendukung != '1') {{$data->sik->reason->berkas_pendukung}} @endif</td>
-                <td><button class="btn btn-outline-primary btn-sm" onclick="reason('berkas_pendukung', 'Berkas Pendukung')"><i class="fa fa-comment"></i></button>&nbsp;
-                  <button class="btn btn-outline-success btn-sm" onclick="ceklis('berkas_pendukung', 'Berkas Pendukung')" id="ceklis"><i class="fa fa-check"></i></button>
-                </td>
-              </tr>
-              @endif
-            </tbody>
-          </table>
         </div>
       </div>
     </div>
@@ -429,7 +430,7 @@ function reason(key, head) {
 }
 
           $('#post-reason').submit(function(e){ // tolak kolom
-            const route= "{{ route('reason.teknis', ['id' => $data->id, 'jenis' => 'sik']) }}";
+            const route= "{{ route('reason.teknis', ['id' => $data->sik->id, 'jenis' => 'sik']) }}";
             e.preventDefault();
             var request = new FormData(this);
             var endpoint= route;
@@ -579,7 +580,7 @@ function reason(key, head) {
         }).then((result) => {
           if (result.value) {
             var me = $(this),
-            url = "{{ route('ceklis.teknis', ['id' => $data->id]) }}",
+            url = "{{ route('ceklis.teknis', ['id' => $data->sik->id, 'jenis' => 'sik']) }}",
             token = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
               url: url,

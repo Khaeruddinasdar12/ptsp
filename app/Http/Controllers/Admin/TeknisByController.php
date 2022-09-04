@@ -36,7 +36,7 @@ class TeknisByController extends Controller
 			return redirect()->route('error')->with('not_found','Kamu Tidak Memiliki Akses Teknis');
 		}
 		
-		$data = Perizinan::where('status', '0')->whereNotNull('bidang_by')->whereNull('teknis_by')->where('no_tiket', $no_tiket)->with('sip')->first();
+		$data = Perizinan::where('status', '0')->whereNotNull('bidang_by')->whereNull('teknis_by')->where('no_tiket', $no_tiket)->first();
 		if(!$data) {
 			abort(404);
 		}
@@ -185,10 +185,10 @@ class TeknisByController extends Controller
 				if($dt->nama == '' || $dt->tempat_lahir == '' || $dt->tanggal_lahir == '' || $dt->no_str == '' || $dt->awal_str == '' || $dt->akhir_str == '' || $dt->alamat == '' || $dt->nama_praktek == '' || $dt->jalan == '' || $dt->kelurahan == '' || $dt->ktp == '' || $dt->foto == '' || $dt->str == '' || $dt->ijazah == '' || $dt->rekomendasi_org == '' || $dt->surat_keterangan == '') {
 					return $err;
 				}
-				if ($dt->surat_keluasan == '') {
+				if ($data->sik->surat_keluasan && $dt->surat_keluasan == '') {
 					return $err;
 				}
-				if ($dt->berkas_pendukung == '') {
+				if ($data->sik->berkas_pendukung && $dt->berkas_pendukung == '') {
 					return $err;
 				}
 			} 
@@ -266,13 +266,13 @@ class TeknisByController extends Controller
 				if($dt->nama != '1' || $dt->tempat_lahir != '1' || $dt->tanggal_lahir != '1' || $dt->no_str != '1' || $dt->awal_str != '1' || $dt->akhir_str != '1' || $dt->alamat != '1' || $dt->nama_praktek != '1' || $dt->jalan != '1' || $dt->kelurahan != '1' || $dt->ktp != '1' || $dt->foto != '1' || $dt->str != '1' || $dt->ijazah != '1' || $dt->rekomendasi_org != '1' || $dt->surat_keterangan != '1') {
 					return $err;
 				}
-				if ($dt->surat_keluasan && $dt->surat_keluasan != '1') {
+				if ($data->sik->surat_keluasan && $dt->surat_keluasan != '1') {
 					return $err;
 				}
-				if ($dt->berkas_pendukung && $dt->berkas_pendukung != '1') {
+				if ($data->sik->berkas_pendukung && $dt->berkas_pendukung != '1') {
 					return $err;
 				}
-				// $dt->delete();
+				$dt->delete();	
 				$kode = $data->sik->subizin->kode; //kode SUBIZIN
 				$no_kode = $data->sik->latest()->first();//Nomor Kode Surat
 			} elseif($data->jenis_izin == 'sip') {
@@ -285,31 +285,31 @@ class TeknisByController extends Controller
 					
 					return $err;
 				}
-				if ($dt->nama_praktek2 && $dt->nama_praktek2 != '1') {
+				if ($data->sip->nama_praktek2 && $dt->nama_praktek2 != '1') {
 					return $err;
 				}
-				if ($dt->jalan2 && $dt->jalan2 != '1') {
+				if ($data->sip->jalan2 && $dt->jalan2 != '1') {
 					return $err;
 				}
-				if ($dt->kelurahan2 && $dt->kelurahan2 != '1') {
+				if ($data->sip->kelurahan2 && $dt->kelurahan2 != '1') {
 					return $err;
 				}
-				if ($dt->nama_praktek3 && $dt->nama_praktek3 != '1') {
+				if ($data->sip->nama_praktek3 && $dt->nama_praktek3 != '1') {
 					return $err;
 				}
-				if ($dt->jalan3 && $dt->jalan3 != '1') {
+				if ($data->sip->jalan3 && $dt->jalan3 != '1') {
 					return $err;
 				}
-				if ($dt->kelurahan3 && $dt->kelurahan3 != '1') {
+				if ($data->sip->kelurahan3 && $dt->kelurahan3 != '1') {
 					return $err;
 				}
-				if ($dt->surat_persetujuan && $dt->surat_persetujuan != '1') {
+				if ($data->sip->surat_persetujuan && $dt->surat_persetujuan != '1') {
 					return $err;
 				}
-				if ($dt->berkas_pendukung && $dt->berkas_pendukung != '1') {
+				if ($data->sip->berkas_pendukung && $dt->berkas_pendukung != '1') {
 					return $err;
 				}
-				$dt->delete();
+				// $dt->delete();
 				$kode = $data->sip->subizin->kode; //kode SUBIZIN
 				$no_kode = $data->sip->latest()->first();//Nomor Kode Surat
 			}
@@ -323,7 +323,7 @@ class TeknisByController extends Controller
 			$output_file = 'qr-code/' . $no_tiket . '.png';
 			Storage::disk('public')->put($output_file, $image);
 			// end generate qrcode
-// return $err;
+			
 			$time = Carbon::now();
 			$bulan = $time->month;
 			$tahun = $time->year;
@@ -334,9 +334,14 @@ class TeknisByController extends Controller
 			} elseif(strlen($uniqkode) == 1) {
 				$uniqkode = '0'.$uniqkode;
 			}
-			// return $err;
-			$no_rekomendasi = '440/'.$uniqkode.'/Rek.'.$kode.'/DKK/'.$bulan.'/'.$tahun;
-			$data->sik->update(array('no_rekomendasi' => $no_rekomendasi));
+
+			if($data->jenis_izin == 'sip') {
+				$no_rekomendasi = '440/'.$uniqkode.'/Rek.'.$kode.'/DKK/'.$bulan.'/'.$tahun;
+				$data->sip->update(array('no_rekomendasi' => $no_rekomendasi));
+			} elseif($data->jenis_izin == 'sik') {
+				$no_rekomendasi = '440/'.$uniqkode.'/Rek.'.$kode.'/DKK/'.$bulan.'/'.$tahun;
+				$data->sik->update(array('no_rekomendasi' => $no_rekomendasi));
+			}
 			$data->verif_by = Auth::guard('admin')->user()->id;
 			$data->teknis_by = Auth::guard('admin')->user()->id;
 			$data->status = '0';

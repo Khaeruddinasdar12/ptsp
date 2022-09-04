@@ -179,6 +179,65 @@ class SubizinSeeder extends Seeder
         ]);
 
 
+        // PENDIDIKAN
+        DB::table('subizins')->insert([
+            'nama' => 'Program Pendidikan Dasar',
+            'jenis' => 'pendidikan',
+            'kategori' => 'SD',
+            'dasar_hukum' => 'Peraturan Menteri Pendidikan dan Kebudayaan Nomor 36 Tahun 2014 tentang Pedoman Pendirian, Perubahan, dan Penutupan Satuan Pendidikan Dasar dan Menengah',
+            'kode' => 'PPD',
+        ]);
+
+        DB::table('subizins')->insert([
+            'nama' => 'Program Pendidikan Dasar',
+            'jenis' => 'pendidikan',
+            'kategori' => 'SMP',
+            'dasar_hukum' => 'Peraturan Menteri Pendidikan dan Kebudayaan Nomor 36 Tahun 2014 tentang Pedoman Pendirian, Perubahan, dan Penutupan Satuan Pendidikan Dasar dan Menengah',
+            'kode' => 'PPD',
+        ]);
+
+        DB::table('subizins')->insert([
+            'nama' => 'PAUD',
+            'jenis' => 'pendidikan',
+            'kategori' => 'Taman Kanak-Kanak (TK)',
+            'dasar_hukum' => 'Peraturan Menteri Pendidikan dan Kebudayaan Nomor 84 Tahun 2014
+            tentang Pendirian Satuan Pendidikan Anak Usia Dini',
+            'kode' => 'PPD',
+        ]);
+
+        DB::table('subizins')->insert([
+            'nama' => 'PAUD',
+            'jenis' => 'pendidikan',
+            'kategori' => 'Kelompok Belajar (KB)',
+            'dasar_hukum' => 'Peraturan Menteri Pendidikan dan Kebudayaan Nomor 36 Tahun 2014 tentang Pedoman Pendirian, Perubahan, dan Penutupan Satuan Pendidikan Dasar dan Menengah',
+            'kode' => 'PPD',
+        ]);
+
+        DB::table('subizins')->insert([
+            'nama' => 'PAUD',
+            'jenis' => 'pendidikan',
+            'kategori' => 'Tempat Pendidikan Anak (TPA)',
+            'dasar_hukum' => 'Peraturan Menteri Pendidikan dan Kebudayaan Nomor 36 Tahun 2014 tentang Pedoman Pendirian, Perubahan, dan Penutupan Satuan Pendidikan Dasar dan Menengah',
+            'kode' => 'PPD',
+        ]);
+
+        DB::table('subizins')->insert([
+            'nama' => 'Program Kegiatan Belajar Masyarakat',
+            'jenis' => 'pendidikan',
+            'dasar_hukum' => 'Peraturan Menteri Pendidikan dan Kebudayaan Nomor 81 Tahun 2013
+            tentang Pendirian Satuan Pendidikan Nonforma',
+            'kode' => 'PPD',
+        ]);
+
+        DB::table('subizins')->insert([
+            'nama' => 'Program Pendidikan Kursus Dan Pelatihan',
+            'jenis' => 'pendidikan',
+            'dasar_hukum' => 'Peraturan Menteri Pendidikan dan Kebudayaan Nomor 81 Tahun 2013
+            tentang Pendirian Satuan Pendidikan Nonforma',
+            'kode' => 'PPD',
+        ]);
+
+
 
 
 

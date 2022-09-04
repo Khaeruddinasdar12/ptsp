@@ -18,6 +18,10 @@
   @endsection
 
   @section('content')
+  <!-- LOADER -->
+  <div style="display: none;" id="loader" class="loader">
+  </div>
+  <!-- END LOADER -->
 
   <div class="row justify-content-center">
     <div class="col-md-12">
@@ -57,16 +61,6 @@
         <h3 class="kt-portlet__head-title">
           Detail Perizinan {{$izin}}
         </h3>
-      </div>
-      <div class="row align-items-center">
-        <div class="col-12 kt-align-right">
-          <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modal-verifikasi">
-            <i class="fa fa-eye"></i> Preview Sertifikat
-          </button>
-          <button type="button" class="btn btn-success btn-sm" id="verif" onclick="verifikasi()" title="Terima Berkas">
-            <i class="fa fa-check"></i> Terbitkan Sertifikat
-          </button>
-        </div>
       </div>
     </div>
 
@@ -236,6 +230,17 @@
           </tbody>
         </table>
       </div>
+      <br>
+      <div class="row align-items-center">
+        <div class="col-12 kt-align-right">
+         <!--  <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modal-verifikasi">
+            <i class="fa fa-eye"></i> Preview Sertifikat
+          </button> -->
+          <button type="button" class="btn btn-success btn-sm" id="verif" onclick="verifikasi()" title="Terima Berkas">
+            <i class="fa fa-check"></i> Terbitkan Sertifikat
+          </button>
+        </div>
+      </div>
     </div>
   </div>
   @endsection
@@ -266,12 +271,18 @@
                 '_method' : 'PUT',
                 '_token'  : token
               },
+              beforeSend: function(){
+                $('#loader').attr("style", "");
+              },
               success:function(data){
                 if(data.status == 'success') {
                   successToRelaoad(data.status, data.pesan)
                 } else {
                   berhasil(data.status, data.pesan);
                 }
+              },
+              complete:function(data) {
+                $('#loader').attr("style", "display:none");
               },
               error: function(xhr, status, error){
                 var error = xhr.responseJSON; 

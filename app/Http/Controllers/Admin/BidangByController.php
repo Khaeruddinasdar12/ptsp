@@ -147,7 +147,7 @@ class BidangByController extends Controller
 		if(!$data) {
 			abort(404);
 		}
-
+// return $data;
 		// return $data->sip->reason;
 		
 		if($data->jenis_izin == 'sik') {
@@ -190,10 +190,10 @@ class BidangByController extends Controller
 				if($dt->nama != '1' || $dt->tempat_lahir != '1' || $dt->tanggal_lahir != '1' || $dt->no_str != '1' || $dt->awal_str != '1' || $dt->akhir_str != '1' || $dt->alamat != '1' || $dt->nama_praktek != '1' || $dt->jalan != '1' || $dt->kelurahan != '1' || $dt->ktp != '1' || $dt->foto != '1' || $dt->str != '1' || $dt->ijazah != '1' || $dt->rekomendasi_org != '1' || $dt->surat_keterangan != '1') {
 					return $err;
 				}
-				if ($dt->surat_keluasan && $dt->surat_keluasan != '1') {
+				if($data->sik->surat_keluasan && $dt->surat_keluasan != '1') {
 					return $err;
 				}
-				if ($dt->berkas_pendukung && $dt->berkas_pendukung != '1') {
+				if ($data->sik->berkas_pendukung && $dt->berkas_pendukung != '1') {
 					return $err;
 				}
 				$dt->delete();
@@ -208,28 +208,28 @@ class BidangByController extends Controller
 					
 					return $err;
 				}
-				if ($dt->nama_praktek2 && $dt->nama_praktek2 != '1') {
+				if ($data->sip->nama_praktek2 && $dt->nama_praktek2 != '1') {
 					return $err;
 				}
-				if ($dt->jalan2 && $dt->jalan2 != '1') {
+				if ($data->sip->jalan2 && $dt->jalan2 != '1') {
 					return $err;
 				}
-				if ($dt->kelurahan2 && $dt->kelurahan2 != '1') {
+				if ($data->sip->kelurahan2 && $dt->kelurahan2 != '1') {
 					return $err;
 				}
-				if ($dt->nama_praktek3 && $dt->nama_praktek3 != '1') {
+				if ($data->sip->nama_praktek3 && $dt->nama_praktek3 != '1') {
 					return $err;
 				}
-				if ($dt->jalan3 && $dt->jalan3 != '1') {
+				if ($data->sip->jalan3 && $dt->jalan3 != '1') {
 					return $err;
 				}
-				if ($dt->kelurahan3 && $dt->kelurahan3 != '1') {
+				if ($data->sip->kelurahan3 && $dt->kelurahan3 != '1') {
 					return $err;
 				}
-				if ($dt->surat_persetujuan && $dt->surat_persetujuan != '1') {
+				if ($data->sip->surat_persetujuan && $dt->surat_persetujuan != '1') {
 					return $err;
 				}
-				if ($dt->berkas_pendukung && $dt->berkas_pendukung != '1') {
+				if ($data->sip->berkas_pendukung && $dt->berkas_pendukung != '1') {
 					return $err;
 				}
 				$dt->delete();
@@ -292,10 +292,10 @@ class BidangByController extends Controller
 				if($dt->nama == '' || $dt->tempat_lahir == '' || $dt->tanggal_lahir == '' || $dt->no_str == '' || $dt->awal_str == '' || $dt->akhir_str == '' || $dt->alamat == '' || $dt->nama_praktek == '' || $dt->jalan == '' || $dt->kelurahan == '' || $dt->ktp == '' || $dt->foto == '' || $dt->str == '' || $dt->ijazah == '' || $dt->rekomendasi_org == '' || $dt->surat_keterangan == '') {
 					return $err;
 				}
-				if ($dt->surat_keluasan == '') {
+				if ($data->sik->surat_keluasan && $dt->surat_keluasan == '') {
 					return $err;
 				}
-				if ($dt->berkas_pendukung == '') {
+				if ($data->sik->berkas_pendukung && $dt->berkas_pendukung == '') {
 					return $err;
 				}
 			} 

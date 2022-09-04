@@ -310,7 +310,7 @@ class SikController extends Controller
 					],$message,$attribute);
 					$sip = Sik::where('perizinan_id', $id)->first();
 					if ($sip->foto && file_exists(storage_path('app/public/' . $sip->foto))) {
-						\Storage::delete('public/' . $sip->ktp);
+						\Storage::delete('public/' . $sip->foto);
 					}
 					$path = $foto->store('sik', 'public');
 					$sip->foto = $path;

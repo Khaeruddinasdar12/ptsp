@@ -30,6 +30,7 @@ Route::get('qr', 'GuestController@qr');
 Route::namespace('User')->group(function(){
 
 	Route::get('/cek-kelurahan/{kec}', 'SipController@kelurahan');
+	Route::get('/cek-kategori/{jenis}', 'DashboardController@kategori');
 
 	Route::get('/home', 'DashboardController@index')->name('home');
 
@@ -47,6 +48,13 @@ Route::namespace('User')->group(function(){
 	Route::post('sik-store', 'SikController@store')->name('sik.store');
 	// PENDIDIKAN
 	Route::get('perizinan/izin-pendidikan/create', 'PendidikanController@create')->name('pendidikan.create');
+	Route::post('perizinan/izin-pendidikan/tab1', 'PendidikanController@tab1')->name('pendidikan.tab1');
+	Route::post('perizinan/izin-pendidikan/tab2', 'PendidikanController@tab2')->name('pendidikan.tab2');
+	Route::post('perizinan/izin-pendidikan/tab3', 'PendidikanController@tab3')->name('pendidikan.tab3');
+	Route::post('perizinan/izin-pendidikan/tab4', 'PendidikanController@tab4')->name('pendidikan.tab4');
+	Route::post('perizinan/izin-pendidikan/tab5', 'PendidikanController@tab5')->name('pendidikan.tab5');
+
+	Route::get('perizinan/reload/{id}', 'PendidikanController@reload')->name('pendidikan.reload'); //reload file create
 
 	// PERIZINAN ANDA
 	Route::get('perizinan', 'PerizinanController@index')->name('perizinan.index');

@@ -18,7 +18,10 @@
   @endsection
 
   @section('content')
-
+  <!-- LOADER -->
+  <div style="display: none;" id="loader" class="loader">
+  </div>
+  <!-- END LOADER -->
   <div class="row justify-content-center">
     <div class="col-md-12">
       @include('layouts.admin.alert')
@@ -229,12 +232,18 @@
                 '_method' : 'PUT',
                 '_token'  : token
               },
+              beforeSend: function(){
+                $('#loader').attr("style", "");
+              },
               success:function(data){
                 if(data.status == 'success') {
                   successToRelaoad(data.status, data.pesan)
                 } else {
                   berhasil(data.status, data.pesan);
                 }
+              },
+              complete:function(data) {
+                $('#loader').attr("style", "display:none");
               },
               error: function(xhr, status, error){
                 var error = xhr.responseJSON; 

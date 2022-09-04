@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Perizinan extends Model
 {
     use HasFactory;
+    protected $fillable = ['user_id', 'no_tiket', 'jenis_izin', 'status', 'bidang_by', 'teknis_by', 'kadis_by', 'ket', 'sertifikat', 'no_surat', 'verif_by', 'created_at', 'updated_at'];
+    
     public function getCreatedAtAttribute()
     {
         return \Carbon\Carbon::parse($this->attributes['created_at'])
@@ -30,6 +32,11 @@ class Perizinan extends Model
     public function sik()
     {
         return $this->hasOne(Sik::class);
+    }
+
+    public function pendidikan()
+    {
+        return $this->hasOne(Pendidikan::class);
     }
 
     public function user()
