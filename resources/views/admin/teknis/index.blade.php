@@ -79,11 +79,11 @@
                 <td>{{ $datas->jenis_izin}}</td>
                 <td>
                   @if($datas->bidang_by == '')
-                  <span class="badge rounded-pill bg-warning">Ditinjau Bidang</span>
+                  <span class="badge rounded-pill bg-warning">Verifikasi Bidang</span>
                   @elseif($datas->teknis_by == '')
-                  <span class="badge rounded-pill bg-warning">Ditinjau Teknis</span>
+                  <span class="badge rounded-pill bg-warning">Verifikasi Teknis</span>
                   @else
-                  <span class="badge rounded-pill bg-warning">Ditinjau Kadis</span>
+                  <span class="badge rounded-pill bg-warning">Verifikasi Kadis</span>
                   @endif
                 </td>
                 <td>{{ $datas->created_at }}</td>

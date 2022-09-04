@@ -17,6 +17,9 @@ class CreateSubizinsTable extends Migration
             $table->id();
             $table->string('nama');
             $table->string('jenis');
+            $table->string('kategori')->nullable();
+            $table->string('dasar_hukum');
+            $table->string('kode');
             $table->timestamps();
         });
     }

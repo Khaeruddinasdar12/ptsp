@@ -9,6 +9,8 @@ class Sip extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['perizinan_id', 'nama', 'tempat_lahir', 'tanggal_lahir', 'no_str', 'awal_str', 'akhir_str', 'no_rekomendasi', 'alamat', 'subizin_id', 'nama_praktek1', 'jalan1', 'kelurahan1', 'nama_praktek2', 'jalan2', 'kelurahan2', 'nama_praktek3', 'jalan3', 'kelurahan3', 'ktp', 'foto', 'str', 'rekomendasi_org', 'surat_keterangan', 'surat_persetujuan', 'berkas_pendukung', 'created_at', 'updated_at'];
+
     public function perizinan()
     {
         return $this->belongsTo(Perizinan::class);
@@ -32,6 +34,11 @@ class Sip extends Model
     public function subizin()
     {
         return $this->belongsTo(Subizin::class, 'subizin_id');
+    }
+
+    public function reason()
+    {
+        return $this->hasOne(Sipreason::class, 'sip_id', 'id');
     }
 
     public function getAwalStrAttribute()

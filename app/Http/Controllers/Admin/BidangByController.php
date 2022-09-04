@@ -5,13 +5,17 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Perizinan;
+use App\Models\Sipreason;
+use App\Models\Sikreason;
 use Auth;
 use App\Models\Admin;
 use App\Models\Sip;
+use App\Models\Sik;
 use Carbon\Carbon;
 use Mail;
-use File;
 use Storage;
+use QueryException;
+use Exception;
 class BidangByController extends Controller
 {
 	public function index()
@@ -21,8 +25,115 @@ class BidangByController extends Controller
 		}
 		
 		$data = Perizinan::where('status', '0')->whereNull('bidang_by')->paginate(10);
+
 		// return $data;
 		return view('admin.bidang.index', ['data' => $data]);
+	}
+
+	public function reason(Request $request, $id, $jenis)
+	{
+		try {
+			if (Auth::guard('admin')->user()->role != 'bidang') {
+				return $arrayName = array(
+					'status' => 'error',
+					'pesan' => 'Kamu Tidak Memiliki Akses Bidang'
+				);
+			}
+			if($request->pesan == '1') {
+				return $arrayName = array(
+					'status' => 'error',
+					'pesan' => 'Pesan tak dapat diproses!'
+				);
+			}
+			if($jenis == 'sip') { // JIKA SIP
+				$data = Sipreason::where('sip_id', $id)->first();
+				if($data) {
+					Sipreason::where('sip_id', $id)->update(array($request->key => $request->pesan));
+				} else {
+					$data = new Sipreason;
+					$data['sip_id'] = $id;
+					$data[$request->key] = $request->pesan;
+					$data->save();
+				}
+			} elseif($jenis == 'sik') { // JIKA SIK
+				$data = Sikreason::where('sik_id', $id)->first();
+				if($data) {
+					Sikreason::where('sik_id', $id)->update(array($request->key => $request->pesan));
+				} else {
+					$data = new Sikreason;
+					$data['sik_id'] = $id;
+					$data[$request->key] = $request->pesan;
+					$data->save();
+				}
+			}
+			
+			return $arrayName = array(
+				'status' => 'success',
+				'pesan' => 'Alasan ditambahkan!'
+			);
+		} catch(Exception $e){
+			return $arrayName = array(
+				'status' => 'error',
+				'pesan' => $e->getMessage()
+			);
+		}catch(QueryException $e){
+			return $arrayName = array(
+				'status' => 'error',
+				'pesan' => $e->getMessage()
+			);
+		}
+	}
+
+	public function ceklis(Request $request, $id)
+	{
+		try {
+			if (Auth::guard('admin')->user()->role != 'bidang') {
+				return $arrayName = array(
+					'status' => 'error',
+					'pesan' => 'Kamu Tidak Memiliki Akses Bidang'
+				);
+			}
+			
+			if($request->izin == 'sip') {
+				$data = Sipreason::where('sip_id', $id)->first();
+				if($data) {
+					$data->update(array($request->key => 1));
+				} else {
+					$data = new Sipreason;
+					$data['sip_id'] = $id;
+					$data[$request->key] = 1;
+					$data->save();
+				}
+			} else if ($request->izin == 'sik') {
+				$data = Sikreason::where('sik_id', $id)->first();
+				if($data) {
+					$data->update(array($request->key => 1));
+				} else {
+					$data = new Sikreason;
+					$data['sik_id'] = $id;
+					$data[$request->key] = 1;
+					$data->save();
+				}
+			}
+
+			return $arrayName = array(
+				'status' => 'success',
+				'pesan' => $request->head. ' diterima!'
+			);
+			
+			
+			
+		} catch(Exception $e){
+			return $arrayName = array(
+				'status' => 'error',
+				'pesan' => $e->getMessage()
+			);
+		} catch(QueryException $e){
+			return $arrayName = array(
+				'status' => 'error',
+				'pesan' => $e->getMessage()
+			);
+		}
 	}
 
 	public function show($no_tiket)
@@ -32,116 +143,204 @@ class BidangByController extends Controller
 		}
 		
 		$data = Perizinan::where('status', '0')->whereNull('bidang_by')->where('no_tiket', $no_tiket)->first();
-		// $data = Sip::find(1);
-		// return $data->klh1;
-		// return $data->sip->klh3->kelurahan;
-		// return $data->sip->subizin;
+		
 		if(!$data) {
 			abort(404);
 		}
-		// return $data;
-		return view('admin.bidang.show', ['data' => $data]);
+// return $data;
+		// return $data->sip->reason;
+		
+		if($data->jenis_izin == 'sik') {
+			return view('admin.bidang.sik-show', ['data' => $data]);
+		} elseif($data->jenis_izin == 'sip') {
+			return view('admin.bidang.sip-show', ['data' => $data]);
+		}
 	}
 
 	public function verif(Request $request, $no_tiket)
 	{
-		// return Carbon::now();
-		if (Auth::guard('admin')->user()->role != 'bidang') {
-			return redirect()->route('error')->with('not_found','Kamu Tidak Memiliki Akses Bidang');
-		}
-		
-		$data = Perizinan::where('status', '0')->whereNull('bidang_by')->where('no_tiket', $no_tiket)->first();
-		if(!$data) {
-			return redirect()->route('error')->with('not_found','Terjadi Kesalahan Data!');
-		}
+		try {
+			if (Auth::guard('admin')->user()->role != 'bidang') {
+				return $arrayName = array(
+					'status' => 'error',
+					'pesan' => 'Kamu Tidak Memiliki Akses Bidang'
+				);
+			}
 
-		$data->verif_by = null;
-		$data->ket = null;
-		$data->bidang_by = Auth::guard('admin')->user()->id;
-		$data->status = '0';
-		$data->updated_at = Carbon::now();
-		$data->save();
-		// return $data;
+			$data = Perizinan::where('status', '0')->whereNull('bidang_by')->where('no_tiket', $no_tiket)->first();
+			if(!$data) {
+				return $arrayName = array(
+					'status' => 'error',
+					'pesan' => 'Terjadi Kesalahan Data!'
+				);
+			}
 
-		return $arrayName = array(
-			'status' => 'success',
-			'pesan' => 'Berkas dengan no. tiket '.$no_tiket.' telah diverifikasi! Data berhasil dikirim!'
-		);
-		return redirect()->route('perizinan.bidang.index')->with('success','Pengajuan Izin Dengan No Tiket '.$no_tiket.' Telah Ditolak!');
+			$err =array(
+				'status' => 'warning',
+				'pesan' => 'Mohon centang setiap baris!'
+			);
+
+			if($data->jenis_izin == 'sik') {
+
+				if(!$data->sik->reason) {
+					return $err;
+				}
+
+				$dt = Sikreason::where('sik_id', $data->sik->id)->first();
+				if($dt->nama != '1' || $dt->tempat_lahir != '1' || $dt->tanggal_lahir != '1' || $dt->no_str != '1' || $dt->awal_str != '1' || $dt->akhir_str != '1' || $dt->alamat != '1' || $dt->nama_praktek != '1' || $dt->jalan != '1' || $dt->kelurahan != '1' || $dt->ktp != '1' || $dt->foto != '1' || $dt->str != '1' || $dt->ijazah != '1' || $dt->rekomendasi_org != '1' || $dt->surat_keterangan != '1') {
+					return $err;
+				}
+				if($data->sik->surat_keluasan && $dt->surat_keluasan != '1') {
+					return $err;
+				}
+				if ($data->sik->berkas_pendukung && $dt->berkas_pendukung != '1') {
+					return $err;
+				}
+				$dt->delete();
+			} elseif($data->jenis_izin == 'sip') {
+				
+				if(!$data->sip->reason) {
+					return $err;
+				}
+
+				$dt = Sipreason::where('sip_id', $data->sip->id)->first();
+				if($dt->nama != '1' || $dt->tempat_lahir != '1' || $dt->tanggal_lahir != '1' || $dt->no_str != '1' || $dt->awal_str != '1' || $dt->akhir_str != '1' || $dt->alamat != '1' || $dt->nama_praktek1 != '1' || $dt->jalan1 != '1' || $dt->kelurahan1 != '1' || $dt->ktp != '1' || $dt->foto != '1' || $dt->str != '1' || $dt->rekomendasi_org != '1' || $dt->surat_keterangan != '1') {
+					
+					return $err;
+				}
+				if ($data->sip->nama_praktek2 && $dt->nama_praktek2 != '1') {
+					return $err;
+				}
+				if ($data->sip->jalan2 && $dt->jalan2 != '1') {
+					return $err;
+				}
+				if ($data->sip->kelurahan2 && $dt->kelurahan2 != '1') {
+					return $err;
+				}
+				if ($data->sip->nama_praktek3 && $dt->nama_praktek3 != '1') {
+					return $err;
+				}
+				if ($data->sip->jalan3 && $dt->jalan3 != '1') {
+					return $err;
+				}
+				if ($data->sip->kelurahan3 && $dt->kelurahan3 != '1') {
+					return $err;
+				}
+				if ($data->sip->surat_persetujuan && $dt->surat_persetujuan != '1') {
+					return $err;
+				}
+				if ($data->sip->berkas_pendukung && $dt->berkas_pendukung != '1') {
+					return $err;
+				}
+				$dt->delete();
+			}
+			$data->verif_by = Auth::guard('admin')->user()->id;
+			$data->bidang_by = Auth::guard('admin')->user()->id;
+			$data->status = '0';
+			$data->updated_at = Carbon::now();
+			$data->save();
+
+			return $arrayName = array(
+				'status' => 'success',
+				'pesan' => 'Berkas dengan no. tiket '.$no_tiket.' telah diverifikasi! Data berhasil dikirim!'
+			);
+
+		} catch(Exception $e){
+			return $arrayName = array(
+				'status' => 'error',
+				'pesan' => $e->getMessage()
+			);
+		}catch(QueryException $e){
+			return $arrayName = array(
+				'status' => 'error',
+				'pesan' => $e->getMessage()
+			);
+		}
 	}
 
 	public function tolak(Request $request, $no_tiket)
 	{
-		// return Carbon::now();
-		if (Auth::guard('admin')->user()->role != 'bidang') {
-			return redirect()->route('error')->with('not_found','Kamu Tidak Memiliki Akses Bidang');
-		}
-		
-		$data = Perizinan::with('user')->where('status', '0')->whereNull('bidang_by')->where('no_tiket', $no_tiket)->first();
+		try{
+			if (Auth::guard('admin')->user()->role != 'bidang') {
+				return $arrayName = array(
+					'status' => 'error',
+					'pesan' => 'Kamu Tidak Memiliki Akses Bidang'
+				);
+			}
+
+			$data = Perizinan::with('user')->where('status', '0')->whereNull('bidang_by')->where('no_tiket', $no_tiket)->first();
 		// return $data;
-		if(!$data) {
-			return redirect()->route('error')->with('not_found','Terjadi Kesalahan Data!');
-		}
+			if(!$data) {
+				return $arrayName = array(
+					'status' => 'error',
+					'pesan' => 'Terjadi Kesalahan Data!'
+				);
+			}
 
-		$data->verif_by = Auth::guard('admin')->user()->id;
-		$data->status = '2';
-		$data->ket = $request->ket;
-		$data->updated_at = Carbon::now();
-		$data->save();
+			$err =array(
+				'status' => 'warning',
+				'pesan' => 'Mohon periksa setiap baris!'
+			);
+
+			if($data->jenis_izin == 'sik') {
+				
+				if(!$data->sik->reason) {
+					return $err;
+				}
+
+				$dt = Sikreason::where('sik_id', $data->sik->id)->first();
+				if($dt->nama == '' || $dt->tempat_lahir == '' || $dt->tanggal_lahir == '' || $dt->no_str == '' || $dt->awal_str == '' || $dt->akhir_str == '' || $dt->alamat == '' || $dt->nama_praktek == '' || $dt->jalan == '' || $dt->kelurahan == '' || $dt->ktp == '' || $dt->foto == '' || $dt->str == '' || $dt->ijazah == '' || $dt->rekomendasi_org == '' || $dt->surat_keterangan == '') {
+					return $err;
+				}
+				if ($data->sik->surat_keluasan && $dt->surat_keluasan == '') {
+					return $err;
+				}
+				if ($data->sik->berkas_pendukung && $dt->berkas_pendukung == '') {
+					return $err;
+				}
+			} 
+
+			$data->verif_by = Auth::guard('admin')->user()->id;
+			$data->status = '2';
+			$data->ket = $request->ket;
+			$data->updated_at = Carbon::now();
+			$data->save();
 		// return $data;
 
-		$email = $data->user->email;
-		$judul= "Notifikasi penolakan ". config('app.name');
-		$data_send = array(
-			'no_tiket' => $no_tiket,
-			'name' => $data->user->name,
-			'status' => 'TIDAK DISETUJUI',
-			'pesan' => 'Silakan Melakukan Perbaikan Berkas Pada Aplikasi',
-			'keterangan' => $request->ket,
-			'class' => 'danger',
-		);
-		Mail::send('email', $data_send, function($mail) use($email, $judul) {
-			$mail->to($email, 'no-reply')
-			->subject($judul);
-			$mail->from('ptsp@gmail.com', config('app.name'));        
-		});
-		if (Mail::failures()) {
-			return $arrayName = array('status' => 'error' , 'pesan' => 'Gagal menigirim email' );
+			$email = $data->user->email;
+			$judul= "Notifikasi penolakan ". config('app.name');
+			$data_send = array(
+				'no_tiket' => $no_tiket,
+				'name' => $data->user->name,
+				'status' => 'TIDAK DISETUJUI',
+				'pesan' => 'Silakan Melakukan Perbaikan Berkas Pada Aplikasi',
+				'keterangan' => $request->ket,
+				'class' => 'danger',
+			);
+			Mail::send('email', $data_send, function($mail) use($email, $judul) {
+				$mail->to($email, 'no-reply')
+				->subject($judul);
+				$mail->from('ptsp@gmail.com', config('app.name'));        
+			});
+			if (Mail::failures()) {
+				return $arrayName = array('status' => 'error' , 'pesan' => 'Gagal mengirim email' );
+			}
+
+			return $arrayName = array(
+				'status' => 'success',
+				'pesan' => 'Pengajuan Izin Dengan No Tiket '.$no_tiket.' Telah Ditolak!'
+			);
+		} catch(Exception $e){
+			return $arrayName = array(
+				'status' => 'error',
+				'pesan' => $e->getMessage()
+			);
+		}catch(QueryException $e){
+			return $arrayName = array(
+				'status' => 'error',
+				'pesan' => $e->getMessage()
+			);
 		}
-
-		return redirect()->route('perizinan.bidang.index')->with('success','Pengajuan Izin Dengan No Tiket '.$no_tiket.' Telah Ditolak!');
-	}
-
-	public function email(Request $request, $id) //post tolak alumni
-	{
-		$validasi = $this->validate($request, [
-			'pesan'     => 'required|string',
-		]);
-
-		$data = User::findOrFail($id);
-        // $data->is_active = 'tolak';
-		$data->komentar = $request->pesan;
-		$data->save();
-
-		$email = $data->email;
-		$judul= "Notifikasi penolakan ". config('app.name');
-		$data_send = array(
-			'name' => $data->name,
-			'status' => 'TIDAK DISETUJUI',
-			'pesan' => 'Silakan lakukan pendaftaran kembali pada aplikasi',
-			'keterangan' => $data->komentar,
-			'class' => 'danger',
-		);
-		Mail::send('email', $data_send, function($mail) use($email, $judul) {
-			$mail->to($email, 'no-reply')
-			->subject($judul);
-			$mail->from('ikadipa.id@gmail.com', config('app.name'));        
-		});
-		if (Mail::failures()) {
-			return $arrayName = array('status' => 'error' , 'pesan' => 'Gagal menigirim email' );
-		}
-
-		return redirect()->back()->with('success', 'Data ini telah ditolak');
 	}
 
 

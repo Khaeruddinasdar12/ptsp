@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Models\Subizin;
 class DashboardController extends Controller
 {
     public function __construct()
@@ -15,5 +15,11 @@ class DashboardController extends Controller
 	public function index()
 	{
 		return view('user.dashboard');
+	}
+
+	public function kategori($jenis) 
+	{
+		$data = Subizin::select('id', 'kategori')->where('nama', $jenis)->get();
+		return $data;
 	}
 }

@@ -54,8 +54,8 @@
         </h3>
       </div>
       </div>
-      <div class="kt-portlet__body">
 
+      <div class="kt-portlet__body">
         <div class="tab-content">
           <div class="table-responsive">
             <!--begin: Datatable -->

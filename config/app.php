@@ -25,10 +25,6 @@ return [
     'cipher' => 'AES-256-CBC',
 
     'providers' => [
-
-        /*
-         * Laravel Framework Service Providers...
-         */
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -51,14 +47,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
-        /*
-         * Package Service Providers...
-         */
-
-        /*
-         * Application Service Providers...
-         */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
@@ -66,19 +54,9 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Barryvdh\DomPDF\ServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
 
     ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Class Aliases
-    |--------------------------------------------------------------------------
-    |
-    | This array of class aliases will be registered when this application
-    | is started. However, feel free to register as many as you wish as
-    | the aliases are "lazy" loaded so they don't hinder performance.
-    |
-    */
 
     'aliases' => [
 
@@ -123,6 +101,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         // 'DB' => Illuminate\Support\Facades\DB::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,  
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         
     ],
 

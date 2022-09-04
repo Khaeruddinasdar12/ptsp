@@ -35,7 +35,7 @@
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
       <a href="{{route('index')}}" class="logo d-flex align-items-center">
-        <img src="{{asset('img/ptsp.png')}}" alt="">
+        <img src="{{asset('img/dpmptsp-mks.png')}}" alt="">
         <span>SOLATA' BOSS</span>
       </a>
 
@@ -86,7 +86,7 @@
         <div class="row gy-4">
           <div class="col-lg-5 col-md-12 footer-info">
             <a href="#" class="logo d-flex align-items-center">
-              <img src="{{asset('img/ptsp.png')}}" alt="">
+              <img src="{{asset('img/dpmptsp-mks.png')}}" alt="">
               <span>SOLATA' BOSS</span>
             </a>
             <p>Visi: Terwujudnya iklim investasi yang kondusif bagi semua, melalu penyelenggaraan perizinan dan penanaman modal yang berkelas dunia.</p>
