@@ -40,6 +40,8 @@ class KadisController extends Controller
 			return view('admin.kadis.sik-show', ['data' => $data]);
 		} elseif($data->jenis_izin == 'sip') {
 			return view('admin.kadis.sip-show', ['data' => $data]);
+		} elseif($data->jenis_izin == 'pendidikan') {
+			return view('admin.kadis.pendidikan-show', ['data' => $data]);
 		}
 	}
 
@@ -148,6 +150,28 @@ class KadisController extends Controller
 				];
 				
 				$pdf = PDF::loadView('sip-sik-pdf', $data_view);
+			} elseif($data->jenis_izin == 'pendidikan') {
+				$jenis_izin = $data->pendidikan->subizin->nama;
+				$no_surat = '503/xxx/LKP/DPM-PTSP/'.$bulan.'/'.$tahun;
+
+				$data_view = [
+					'barcode' => $data->no_tiket.'.png',
+					'no_surat' => $no_surat,
+					'no_rekomendasi' => $data->pendidikan->no_rekomendasi,
+					'nama' => $data->pendidikan->nama,
+					'nohp' => $data->pendidikan->nohp,
+					'jenis_izin' => $jenis_izin,
+					'subizin' => $data->pendidikan->subizin->nama,
+					'alamat' => $data->pendidikan->alamat,
+					'nama_pendidikan' => $data->pendidikan->nama_pendidikan,
+					'kelurahan' => $data->pendidikan->klh->kelurahan,
+					'kecamatan' => $data->pendidikan->klh->kecamatan,
+					'jalan' => $data->pendidikan->jalan,
+					'no_rekomendasi' => $data->pendidikan->no_rekomendasi,
+					'penetapan' => Carbon::now(),
+					'berlaku_sampai' => $time->addYears(3),
+				];
+				$pdf = PDF::loadView('pendidikan-pdf', $data_view);
 			}
 
 			$data->status = '1';
@@ -187,6 +211,9 @@ class KadisController extends Controller
 
 	public function sertifikat()
 	{
+		$pdf = PDF::loadView('pendidikan-pdf');
+
+		return $pdf->stream();
 
 		$now = Carbon::now();
 		$data_view = [

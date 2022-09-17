@@ -204,142 +204,142 @@ class SikController extends Controller
     	];
 
     	// try {
-    		if($request->key == 'nama') {
-    			$validasi = $this->validate($request, [
-    				'revisi' => 'required|string',
-    			],$message,$attribute);
-    			$data = Sik::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
-    			return redirect()->back()->with('success','Nama diperbarui');
-    		}
+    	if($request->key == 'nama') {
+    		$validasi = $this->validate($request, [
+    			'revisi' => 'required|string',
+    		],$message,$attribute);
+    		$data = Sik::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
+    		return redirect()->back()->with('success','Nama diperbarui');
+    	}
 
-    		if($request->key == 'tempat_lahir') {
-    			$validasi = $this->validate($request, [
-    				'revisi' => 'required|string',
-    			],$message,$attribute);
-    			$data = Sik::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
-    			return redirect()->back()->with('success','Tempat lahir diperbarui');
-    		}
+    	if($request->key == 'tempat_lahir') {
+    		$validasi = $this->validate($request, [
+    			'revisi' => 'required|string',
+    		],$message,$attribute);
+    		$data = Sik::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
+    		return redirect()->back()->with('success','Tempat lahir diperbarui');
+    	}
 
-    		if($request->key == 'tanggal_lahir') {
-    			$validasi = $this->validate($request, [
-    				'revisi' => 'required|date',
-    			],$message,$attribute);
-    			$data = Sik::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
-    			return redirect()->back()->with('success','Tanggal lahir diperbarui');
-    		}
+    	if($request->key == 'tanggal_lahir') {
+    		$validasi = $this->validate($request, [
+    			'revisi' => 'required|date',
+    		],$message,$attribute);
+    		$data = Sik::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
+    		return redirect()->back()->with('success','Tanggal lahir diperbarui');
+    	}
 
-    		if($request->key == 'alamat') {
-    			$validasi = $this->validate($request, [
-    				'revisi' => 'required|string',
-    			],$message,$attribute);
-    			$data = Sik::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
-    			return redirect()->back()->with('success','Alamat diperbarui');
-    		}
+    	if($request->key == 'alamat') {
+    		$validasi = $this->validate($request, [
+    			'revisi' => 'required|string',
+    		],$message,$attribute);
+    		$data = Sik::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
+    		return redirect()->back()->with('success','Alamat diperbarui');
+    	}
 
-    		if($request->key == 'no_str') {
-    			$validasi = $this->validate($request, [
-    				'revisi' => 'required|string',
-    			],$message,$attribute);
-    			$data = Sik::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
-    			return redirect()->back()->with('success','Nomor STR diperbarui');
-    		}
+    	if($request->key == 'no_str') {
+    		$validasi = $this->validate($request, [
+    			'revisi' => 'required|string',
+    		],$message,$attribute);
+    		$data = Sik::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
+    		return redirect()->back()->with('success','Nomor STR diperbarui');
+    	}
 
-    		if($request->key == 'awal_str') {
-    			$validasi = $this->validate($request, [
-    				'revisi' => 'required|date',
-    			],$message,$attribute);
-    			$data = Sik::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
-    			return redirect()->back()->with('success','Tanggal mulai berlaku STR diperbarui');
-    		}
+    	if($request->key == 'awal_str') {
+    		$validasi = $this->validate($request, [
+    			'revisi' => 'required|date',
+    		],$message,$attribute);
+    		$data = Sik::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
+    		return redirect()->back()->with('success','Tanggal mulai berlaku STR diperbarui');
+    	}
 
-    		if($request->key == 'akhir_str') {
-    			$validasi = $this->validate($request, [
-    				'revisi' => 'required|date',
-    			],$message,$attribute);
-    			$data = Sik::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
-    			return redirect()->back()->with('success','Tanggal berakhir STR diperbarui');
-    		}
+    	if($request->key == 'akhir_str') {
+    		$validasi = $this->validate($request, [
+    			'revisi' => 'required|date',
+    		],$message,$attribute);
+    		$data = Sik::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
+    		return redirect()->back()->with('success','Tanggal berakhir STR diperbarui');
+    	}
 
-    		if($request->key == 'nama_praktek') {
-    			$validasi = $this->validate($request, [
-    				'revisi' => 'required|string',
-    			],$message,$attribute);
-    			$data = Sik::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
-    			return redirect()->back()->with('success','Nama Praktek diperbarui');
-    		}
+    	if($request->key == 'nama_praktek') {
+    		$validasi = $this->validate($request, [
+    			'revisi' => 'required|string',
+    		],$message,$attribute);
+    		$data = Sik::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
+    		return redirect()->back()->with('success','Nama Praktek diperbarui');
+    	}
 
-    		if($request->key == 'jalan') {
-    			$validasi = $this->validate($request, [
-    				'revisi' => 'required|string',
-    			],$message,$attribute);
-    			$data = Sik::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
-    			return redirect()->back()->with('success','Jalan diperbarui');
-    		}
+    	if($request->key == 'jalan') {
+    		$validasi = $this->validate($request, [
+    			'revisi' => 'required|string',
+    		],$message,$attribute);
+    		$data = Sik::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
+    		return redirect()->back()->with('success','Jalan diperbarui');
+    	}
 
-    		if($request->key == 'kelurahan') {
-    			$validasi = $this->validate($request, [
-    				'revisi' => 'required|string',
-    			],$message,$attribute);
-    			$data = Sik::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
-    			return redirect()->back()->with('success','Kelurahan Dan Kecamatan diperbarui');
-    		}
+    	if($request->key == 'kelurahan') {
+    		$validasi = $this->validate($request, [
+    			'revisi' => 'required|string',
+    		],$message,$attribute);
+    		$data = Sik::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
+    		return redirect()->back()->with('success','Kelurahan Dan Kecamatan diperbarui');
+    	}
 
-    		if($request->key == 'ktp') {
-				$ktp = $request->file('ktp'); // upload KTP
-				if ($ktp) {
-					$validasi = $this->validate($request, [
-						'ktp' => 'image|mimes:jpeg,png,jpg|max:1024',
-					],$message,$attribute);
-					$sip = Sik::where('perizinan_id', $id)->first();
-					if ($sip->ktp && file_exists(storage_path('app/public/' . $sip->ktp))) {
-						\Storage::delete('public/' . $sip->ktp);
-					}
-					$path = $ktp->store('sik', 'public');
-					$sip->ktp = $path;
-					$sip->save();
-					return redirect()->back()->with('success','KTP diperbarui');
+    	if($request->key == 'ktp') {
+			$ktp = $request->file('ktp'); // upload KTP
+			if ($ktp) {
+				$validasi = $this->validate($request, [
+					'ktp' => 'image|mimes:jpeg,png,jpg|max:1024',
+				],$message,$attribute);
+				$sip = Sik::where('perizinan_id', $id)->first();
+				if ($sip->ktp && file_exists(storage_path('app/public/' . $sip->ktp))) {
+					\Storage::delete('public/' . $sip->ktp);
 				}
-				return redirect()->back()->with('not_found','KTP tidak diproses');	
+				$path = $ktp->store('sik', 'public');
+				$sip->ktp = $path;
+				$sip->save();
+				return redirect()->back()->with('success','KTP diperbarui');
 			}
+			return redirect()->back()->with('not_found','KTP tidak diproses');	
+		}
 
-			if($request->key == 'foto') {
-				$foto = $request->file('foto'); // upload Pas Foto
-				if ($foto) {
-					$validasi = $this->validate($request, [
-						'foto' => 'image|mimes:jpeg,png,jpg|max:1024',
-					],$message,$attribute);
-					$sip = Sik::where('perizinan_id', $id)->first();
-					if ($sip->foto && file_exists(storage_path('app/public/' . $sip->foto))) {
-						\Storage::delete('public/' . $sip->foto);
-					}
-					$path = $foto->store('sik', 'public');
-					$sip->foto = $path;
-					$sip->save();
-					return redirect()->back()->with('success','Pas foto diperbarui');
+		if($request->key == 'foto') {
+			$foto = $request->file('foto'); // upload Pas Foto
+			if ($foto) {
+				$validasi = $this->validate($request, [
+					'foto' => 'image|mimes:jpeg,png,jpg|max:1024',
+				],$message,$attribute);
+				$sip = Sik::where('perizinan_id', $id)->first();
+				if ($sip->foto && file_exists(storage_path('app/public/' . $sip->foto))) {
+					\Storage::delete('public/' . $sip->foto);
 				}
-				return redirect()->back()->with('not_found','Pas Foto tidak diproses');	
+				$path = $foto->store('sik', 'public');
+				$sip->foto = $path;
+				$sip->save();
+				return redirect()->back()->with('success','Pas foto diperbarui');
 			}
+			return redirect()->back()->with('not_found','Pas Foto tidak diproses');	
+		}
 
-			if($request->key == 'ijazah') {
-				$ijazah = $request->file('ijazah'); // upload IJAZAH
-				if ($ijazah) {
-					$validasi = $this->validate($request, [
-						'ijazah' => 'image|mimes:jpeg,png,jpg|max:1024',
-					],$message,$attribute);
-					$sip = Sik::where('perizinan_id', $id)->first();
-					if ($sip->ijazah && file_exists(storage_path('app/public/' . $sip->ijazah))) {
-						\Storage::delete('public/' . $sip->ijazah);
-					}
-					$path = $ijazah->store('sik', 'public');
-					$sip->ijazah = $path;
-					$sip->save();
-					return redirect()->back()->with('success','Ijazah diperbarui');
+		if($request->key == 'ijazah') {
+			$ijazah = $request->file('ijazah'); // upload IJAZAH
+			if ($ijazah) {
+				$validasi = $this->validate($request, [
+					'ijazah' => 'image|mimes:jpeg,png,jpg|max:1024',
+				],$message,$attribute);
+				$sip = Sik::where('perizinan_id', $id)->first();
+				if ($sip->ijazah && file_exists(storage_path('app/public/' . $sip->ijazah))) {
+					\Storage::delete('public/' . $sip->ijazah);
 				}
-				return redirect()->back()->with('not_found','Ijazah tidak diproses');	
+				$path = $ijazah->store('sik', 'public');
+				$sip->ijazah = $path;
+				$sip->save();
+				return redirect()->back()->with('success','Ijazah diperbarui');
 			}
+			return redirect()->back()->with('not_found','Ijazah tidak diproses');	
+		}
 
-			if($request->key == 'str') {
-				$str = $request->file('str'); // upload STR
+		if($request->key == 'str') {
+			$str = $request->file('str'); // upload STR
 				if ($str) {
 					$validasi = $this->validate($request, [
 						'str' => 'mimes:pdf|max:1024',
@@ -428,13 +428,6 @@ class SikController extends Controller
 				}
 				return redirect()->back()->with('not_found','Berkas pendukung tidak diproses');	
 			}
+		}
 
-		// } catch(Exception $e) {
-		// 	return redirect()->back()->with('not_found', $e->getMessage());
-		// } catch(QueryException $e) {
-		// 	return redirect()->back()->with('not_found', $e->getMessage());
-			
-		// }
 	}
-
-}

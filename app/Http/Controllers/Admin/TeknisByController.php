@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\Perizinan;
 use App\Models\Sip;
 use App\Models\Sik;
+use App\Models\Pendidikan;
 use App\Models\Sipreason;
 use App\Models\Sikreason;
+use App\Models\Pddreason;
 use QueryException;
 use Exception;
 use App\Models\Admin;
@@ -44,7 +46,10 @@ class TeknisByController extends Controller
 			return view('admin.teknis.sik-show', ['data' => $data]);
 		} elseif($data->jenis_izin == 'sip') {
 			return view('admin.teknis.sip-show', ['data' => $data]);
+		} elseif($data->jenis_izin == 'pendidikan') {
+			return view('admin.teknis.pendidikan-show', ['data' => $data]);
 		}
+
 		return view('admin.teknis.show', ['data' => $data]);
 	}
 
@@ -80,6 +85,16 @@ class TeknisByController extends Controller
 				} else {
 					$data = new Sikreason;
 					$data['sik_id'] = $id;
+					$data[$request->key] = $request->pesan;
+					$data->save();
+				}
+			} elseif($jenis == 'pendidikan') { // JIKA PENDIDIKAN
+				$data = Pddreason::where('pendidikan_id', $id)->first();
+				if($data) {
+					Pddreason::where('pendidikan_id', $id)->update(array($request->key => $request->pesan));
+				} else {
+					$data = new Pddreason;
+					$data['pendidikan_id'] = $id;
 					$data[$request->key] = $request->pesan;
 					$data->save();
 				}
@@ -129,6 +144,16 @@ class TeknisByController extends Controller
 				} else {
 					$data = new Sikreason;
 					$data['sik_id'] = $id;
+					$data[$request->key] = 1;
+					$data->save();
+				}
+			} else if ($request->izin == 'pendidikan') {
+				$data = Pddreason::where('pendidikan_id', $id)->first();
+				if($data) {
+					$data->update(array($request->key => 1));
+				} else {
+					$data = new Pddreason;
+					$data['pendidikan_id'] = $id;
 					$data[$request->key] = 1;
 					$data->save();
 				}
@@ -191,7 +216,26 @@ class TeknisByController extends Controller
 				if ($data->sik->berkas_pendukung && $dt->berkas_pendukung == '') {
 					return $err;
 				}
-			} 
+			} elseif($data->jenis_izin == 'pendidikan') {
+				
+				if(!$data->pendidikan->reason) {
+					return $err;
+				}
+
+				$dt = Pddreason::where('pendidikan_id', $data->pendidikan->id)->first();
+				if($dt->nama == '' || $dt->alamat == '' || $dt->nama_pendidikan == '' || $dt->kelurahan == '' || $dt->jalan == '' || $dt->ktp == '' || $dt->pas_foto == '' || $dt->akta == '' || $dt->kurikulum == '' || $dt->struktur_organisasi == '' || $dt->sk == '' || $dt->nib == '') {
+					return $err;
+				}
+				if ($data->pendidikan->npsn && $dt->npsn == '') {
+					return $err;
+				}
+				if ($data->pendidikan->izin_lama && $dt->izin_lama == '') {
+					return $err;
+				}
+				if ($data->pendidikan->berkas_pendukung && $dt->berkas_pendukung == '') {
+					return $err;
+				}
+			}
 
 			$data->verif_by = Auth::guard('admin')->user()->id;
 			$data->status = '2'; //tolak
@@ -309,9 +353,30 @@ class TeknisByController extends Controller
 				if ($data->sip->berkas_pendukung && $dt->berkas_pendukung != '1') {
 					return $err;
 				}
-				// $dt->delete();
+				$dt->delete();
 				$kode = $data->sip->subizin->kode; //kode SUBIZIN
 				$no_kode = $data->sip->latest()->first();//Nomor Kode Surat
+			} if($data->jenis_izin == 'pendidikan') {
+
+				if(!$data->pendidikan->reason) {
+					return $err;
+				}
+				$dt = Pddreason::where('pendidikan_id', $data->pendidikan->id)->first();
+				if($dt->nama != '1' || $dt->alamat != '1' || $dt->nama_pendidikan != '1' || $dt->kelurahan != '1' || $dt->jalan != '1' || $dt->ktp != '1' || $dt->pas_foto != '1' || $dt->akta != '1' || $dt->kurikulum != '1' || $dt->struktur_organisasi != '1' || $dt->sk != '1' || $dt->nib != '1') {
+					return $err;
+				}
+				if ($data->pendidikan->npsn && $dt->npsn != '1') {
+					return $err;
+				}
+				if ($data->pendidikan->izin_lama && $dt->izin_lama != '1') {
+					return $err;
+				}
+				if ($data->pendidikan->berkas_pendukung && $dt->berkas_pendukung != '1') {
+					return $err;
+				}
+				$dt->delete();
+				$kode = 'PDD'; //kode SUBIZIN
+				$no_kode = $data->pendidikan->latest()->first();//Nomor Kode Surat
 			}
 
 // return $err;
@@ -341,7 +406,10 @@ class TeknisByController extends Controller
 			} elseif($data->jenis_izin == 'sik') {
 				$no_rekomendasi = '440/'.$uniqkode.'/Rek.'.$kode.'/DKK/'.$bulan.'/'.$tahun;
 				$data->sik->update(array('no_rekomendasi' => $no_rekomendasi));
-			}
+			} elseif($data->jenis_izin == 'pendidikan') {
+				$no_rekomendasi = '650/'.$uniqkode.'.'.$kode.'/PDD/'.$bulan.'/'.$tahun;
+				$data->pendidikan->update(array('no_rekomendasi' => $no_rekomendasi));
+			} 
 			$data->verif_by = Auth::guard('admin')->user()->id;
 			$data->teknis_by = Auth::guard('admin')->user()->id;
 			$data->status = '0';

@@ -116,7 +116,7 @@ $('#ktp').submit(function(e) {
     success:function(data) {
       document.getElementById('ktp').reset();
       if(data.status == 'success') {
-        reload(pendidikan_id, 'reload-ktp', 'ktp');
+        reload(krk_id, 'reload-ktp', 'ktp');
       }
       berhasil(data.status, data.pesan);
     },
@@ -154,7 +154,7 @@ $('#ktp').submit(function(e) {
       success:function(data) {
         document.getElementById('foto').reset();
         if(data.status == 'success') {
-          reload(pendidikan_id, 'reload-foto', 'pas_foto');
+          reload(krk_id, 'reload-foto', 'pas_foto');
         }
         berhasil(data.status, data.pesan);
       },
@@ -174,8 +174,8 @@ $('#ktp').submit(function(e) {
   });
   // END UPLOAD FOTO
 
-  // UPLOAD AKTA
-  $('#akta').submit(function(e) {
+  // UPLOAD PBB
+  $('#pbb').submit(function(e) {
     e.preventDefault();
     var request = new FormData(this);
     var endpoint= route4;
@@ -190,9 +190,9 @@ $('#ktp').submit(function(e) {
         $('#loader').attr("style", "");
       },
       success:function(data) {
-        document.getElementById('akta').reset();
+        document.getElementById('pbb').reset();
         if(data.status == 'success') {
-          reload(pendidikan_id, 'reload-akta', 'akta');
+          reload(krk_id, 'reload-pbb', 'pbb');
         }
         berhasil(data.status, data.pesan);
       },
@@ -210,10 +210,10 @@ $('#ktp').submit(function(e) {
     }); 
     return false;
   });
-  // END UPLOAD AKTA
+  // END UPLOAD PBB
 
-  // UPLOAD KURIKULUM
-  $('#kurikulum').submit(function(e) {
+  // UPLOAD SURAT TANAH
+  $('#surat_tanah').submit(function(e) {
     e.preventDefault();
     var request = new FormData(this);
     var endpoint= route4;
@@ -228,9 +228,9 @@ $('#ktp').submit(function(e) {
         $('#loader').attr("style", "");
       },
       success:function(data) {
-        document.getElementById('kurikulum').reset();
+        document.getElementById('surat_tanah').reset();
         if(data.status == 'success') {
-          reload(pendidikan_id, 'reload-kurikulum', 'kurikulum');
+          reload(krk_id, 'reload-surat_tanah', 'surat_tanah');
         }
         berhasil(data.status, data.pesan);
       },
@@ -248,10 +248,10 @@ $('#ktp').submit(function(e) {
     }); 
     return false;
   });
-  // END UPLOAD KURIKULUM
+  // END UPLOAD SURAT TANAH
 
-  // UPLOAD STRUKTUR ORGANISASI
-  $('#struktur-organisasi').submit(function(e) {
+  // UPLOAD PETA
+  $('#peta').submit(function(e) {
     e.preventDefault();
     var request = new FormData(this);
     var endpoint= route4;
@@ -266,9 +266,9 @@ $('#ktp').submit(function(e) {
         $('#loader').attr("style", "");
       },
       success:function(data) {
-        document.getElementById('struktur-organisasi').reset();
+        document.getElementById('peta').reset();
         if(data.status == 'success') {
-          reload(pendidikan_id, 'reload-struktur-organisasi', 'struktur_organisasi');
+          reload(krk_id, 'reload-peta', 'peta');
         }
         berhasil(data.status, data.pesan);
       },
@@ -286,10 +286,10 @@ $('#ktp').submit(function(e) {
     }); 
     return false;
   });
-  // END UPLOAD STRUKTUR ORGANISASI
+  // END UPLOAD PETA
 
-  // UPLOAD SK
-  $('#sk').submit(function(e) {
+  // UPLOAD GAMBAR
+  $('#gambar').submit(function(e) {
     e.preventDefault();
     var request = new FormData(this);
     var endpoint= route4;
@@ -304,9 +304,9 @@ $('#ktp').submit(function(e) {
         $('#loader').attr("style", "");
       },
       success:function(data) {
-        document.getElementById('sk').reset();
+        document.getElementById('gambar').reset();
         if(data.status == 'success') {
-          reload(pendidikan_id, 'reload-sk', 'sk');
+          reload(krk_id, 'reload-gambar', 'gambar');
         }
         berhasil(data.status, data.pesan);
       },
@@ -324,159 +324,7 @@ $('#ktp').submit(function(e) {
     }); 
     return false;
   });
-  // END UPLOAD SK
-
-  // UPLOAD SERTIFIKAT TANAH
-  $('#sertifikat-tanah').submit(function(e) {
-    e.preventDefault();
-    var request = new FormData(this);
-    var endpoint= route4;
-    $.ajax({
-      url: endpoint,
-      method: "POST",
-      data: request,
-      contentType: false,
-      cache: false,
-      processData: false,
-      beforeSend: function(){
-        $('#loader').attr("style", "");
-      },
-      success:function(data) {
-        document.getElementById('sertifikat-tanah').reset();
-        if(data.status == 'success') {
-          reload(pendidikan_id, 'reload-sertifikat-tanah', 'sertifikat_tanah');
-        }
-        berhasil(data.status, data.pesan);
-      },
-      complete:function(data) {
-        $('#loader').attr("style", "display:none");
-      },
-      error: function(xhr, status, error){
-        var error = xhr.responseJSON; 
-        if ($.isEmptyObject(error) == false) {
-          $.each(error.errors, function(key, value) {
-            gagal(key, value);
-          });
-        }
-      } 
-    }); 
-    return false;
-  });
-  // END UPLOAD SERTIFIKAT TANAH
-
-  // UPLOAD NIB
-  $('#nib').submit(function(e) {
-    e.preventDefault();
-    var request = new FormData(this);
-    var endpoint= route4;
-    $.ajax({
-      url: endpoint,
-      method: "POST",
-      data: request,
-      contentType: false,
-      cache: false,
-      processData: false,
-      beforeSend: function(){
-        $('#loader').attr("style", "");
-      },
-      success:function(data) {
-        document.getElementById('nib').reset();
-        if(data.status == 'success') {
-          reload(pendidikan_id, 'reload-nib', 'nib');
-        }
-        berhasil(data.status, data.pesan);
-      },
-      complete:function(data) {
-        $('#loader').attr("style", "display:none");
-      },
-      error: function(xhr, status, error){
-        var error = xhr.responseJSON; 
-        if ($.isEmptyObject(error) == false) {
-          $.each(error.errors, function(key, value) {
-            gagal(key, value);
-          });
-        }
-      } 
-    }); 
-    return false;
-  });
-  // END UPLOAD NIB
-
-  // UPLOAD NPSN
-  $('#npsn').submit(function(e) {
-    e.preventDefault();
-    var request = new FormData(this);
-    var endpoint= route4;
-    $.ajax({
-      url: endpoint,
-      method: "POST",
-      data: request,
-      contentType: false,
-      cache: false,
-      processData: false,
-      beforeSend: function(){
-        $('#loader').attr("style", "");
-      },
-      success:function(data) {
-        document.getElementById('npsn').reset();
-        if(data.status == 'success') {
-          reload(pendidikan_id, 'reload-npsn', 'npsn');
-        }
-        berhasil(data.status, data.pesan);
-      },
-      complete:function(data) {
-        $('#loader').attr("style", "display:none");
-      },
-      error: function(xhr, status, error){
-        var error = xhr.responseJSON; 
-        if ($.isEmptyObject(error) == false) {
-          $.each(error.errors, function(key, value) {
-            gagal(key, value);
-          });
-        }
-      } 
-    }); 
-    return false;
-  });
-  // END UPLOAD NPSN
-
-  // UPLOAD IZIN LAMA
-  $('#izin_lama').submit(function(e) {
-    e.preventDefault();
-    var request = new FormData(this);
-    var endpoint= route4;
-    $.ajax({
-      url: endpoint,
-      method: "POST",
-      data: request,
-      contentType: false,
-      cache: false,
-      processData: false,
-      beforeSend: function(){
-        $('#loader').attr("style", "");
-      },
-      success:function(data) {
-        document.getElementById('izin_lama').reset();
-        if(data.status == 'success') {
-          reload(pendidikan_id, 'reload-izin_lama', 'izin_lama');
-        }
-        berhasil(data.status, data.pesan);
-      },
-      complete:function(data) {
-        $('#loader').attr("style", "display:none");
-      },
-      error: function(xhr, status, error){
-        var error = xhr.responseJSON; 
-        if ($.isEmptyObject(error) == false) {
-          $.each(error.errors, function(key, value) {
-            gagal(key, value);
-          });
-        }
-      } 
-    }); 
-    return false;
-  });
-  // END UPLOAD IZIN LAMA
+  // END UPLOAD GAMBAR
 
   // UPLOAD BERKAS PENDUKUNG
   $('#berkas_pendukung').submit(function(e) {
@@ -496,7 +344,7 @@ $('#ktp').submit(function(e) {
       success:function(data) {
         document.getElementById('berkas_pendukung').reset();
         if(data.status == 'success') {
-          reload(pendidikan_id, 'reload-berkas_pendukung', 'berkas_pendukung');
+          reload(krk_id, 'reload-berkas_pendukung', 'berkas_pendukung');
         }
         berhasil(data.status, data.pesan);
       },
@@ -520,7 +368,7 @@ $('#ktp').submit(function(e) {
    function reload(id, load, field) {
     $('#'+load).empty();
     $.ajax({
-      'url': '../pendidikan-reload/' + id,
+      'url': '../krk-reload/' + id,
       'dataType': 'json',
       success: function(data) {
         $('#'+load).append('<a href="../../storage/'+data[field]+'" target="_blank">Lihat berkas</a>');
@@ -685,7 +533,10 @@ $('#ktp').submit(function(e) {
 
   $(document).ready(function () {
     var kec1 = $('#kecamatan').val();
-    show_kelurahan1(kec1);
+    if(kec1 != '') {
+      show_kelurahan1(kec1);  
+    }
+    
   });
 
       // menampilkan kelurahan1 setelah memilih kecamatan1

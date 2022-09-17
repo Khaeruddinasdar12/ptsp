@@ -54,7 +54,22 @@ Route::namespace('User')->group(function(){
 	Route::post('perizinan/izin-pendidikan/tab4', 'PendidikanController@tab4')->name('pendidikan.tab4');
 	Route::post('perizinan/izin-pendidikan/tab5', 'PendidikanController@tab5')->name('pendidikan.tab5');
 
-	Route::get('perizinan/reload/{id}', 'PendidikanController@reload')->name('pendidikan.reload'); //reload file create
+	Route::put('perizinan/update-pendidikan/{id}', 'PendidikanController@update')->name('pendidikan.update');
+
+	Route::get('perizinan/pendidikan-reload/{id}', 'PendidikanController@reload')->name('pendidikan.reload'); //reload file create
+
+
+	// KRK
+	Route::get('perizinan/izin-krk/create', 'KrkController@create')->name('krk.create');
+	Route::post('perizinan/izin-krk/tab1', 'KrkController@tab1')->name('krk.tab1');
+	Route::post('perizinan/izin-krk/tab2', 'KrkController@tab2')->name('krk.tab2');
+	Route::post('perizinan/izin-krk/tab3', 'KrkController@tab3')->name('krk.tab3');
+	Route::post('perizinan/izin-krk/tab4', 'KrkController@tab4')->name('krk.tab4');
+	Route::post('perizinan/izin-krk/tab5', 'KrkController@tab5')->name('krk.tab5');
+
+	Route::put('perizinan/{id}/update-krk', 'KrkController@update')->name('krk.update');
+
+	Route::get('perizinan/krk-reload/{id}', 'KrkController@reload')->name('krk.reload'); //reload file create
 
 	// PERIZINAN ANDA
 	Route::get('perizinan', 'PerizinanController@index')->name('perizinan.index');

@@ -39,6 +39,11 @@ class Perizinan extends Model
         return $this->hasOne(Pendidikan::class);
     }
 
+    public function krk()
+    {
+        return $this->hasOne(Krk::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
