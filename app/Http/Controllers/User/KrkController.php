@@ -9,6 +9,7 @@ use App\Models\Krk;
 use Auth;
 use App\Models\Kelurahan;
 use QueryException;
+use Carbon\Carbon;
 use Exception;
 class KrkController extends Controller
 {
@@ -255,11 +256,7 @@ class KrkController extends Controller
     public function tab4(Request $request)
     {
         $message = [];
-        $attribute = [
-            'kelurahan' => 'Kelurahan', 
-            'jalan' => 'Jalan',
-
-        ];
+        $attribute = [];
         
         $auth = Auth::user()->id;
         $perizinan = Perizinan::where('user_id', $auth)->where('jenis_izin', 'krk')->get();
@@ -425,45 +422,37 @@ class KrkController extends Controller
         }
     } //END TAB 4
 
-    public function reload($id)
-    {
-        $data = Krk::find($id);
-        return $data;
-
-    }
 
     public function tab5(Request $request)
     {
         try {
+            $time = Carbon::now();
             $auth = Auth::user()->id;
             $perizinan = Perizinan::where('user_id', $auth)->where('jenis_izin', 'krk')->get();
             foreach($perizinan as $i) {
                 if($i->status == null) {
-                    $err = array(
-                        'status' => 'error',
-                        'pesan' => 'Mohon lengkapi semua data yang bertanda *(wajib)!'
-                    );
                     $cek = krk::where('perizinan_id', $i->id)->first();
-                    if($cek->nama == '') { return $err; }
-                    if($cek->nik == '') { return $err; }
-                    if($cek->nohp == '') { return $err; }
-                    if($cek->alamat == '') { return $err; }
-                    if($cek->luas == '') { return $err; }
-                    if($cek->nama_surat == '') { return $err; }
-                    if($cek->nomor_surat == '') { return $err; }
-                    if($cek->penggunaan == '') { return $err; }
-                    if($cek->jenis == '') { return $err; }
-                    if($cek->jml_lantai == '') { return $err; }
-                    if($cek->jml_bangunan == '') { return $err; }
-                    if($cek->kelurahan == '') { return $err; }
-                    if($cek->jalan == '') { return $err; }
-                    if($cek->ktp == '') { return $err; }
-                    if($cek->pbb == '') { return $err; }
-                    if($cek->surat_tanah == '') { return $err; }
-                    if($cek->peta == '') { return $err; }
-                    if($cek->gambar == '') { return $err; }
+                    if($cek->nama == '') { return $this->err('Nama'); }
+                    if($cek->nik == '') { return $this->err('Nomor KTP (NIK)'); }
+                    if($cek->nohp == '') { return $this->err('No HP'); }
+                    if($cek->alamat == '') { return $this->err('Alamat'); }
+                    if($cek->luas == '') { return $this->err('Luasan Tanah'); }
+                    if($cek->nama_surat == '') { return $this->err('Nama Pada Surat Tanah'); }
+                    if($cek->nomor_surat == '') { return $this->err('Nomor/Tanggal Pada Surat Tanah'); }
+                    if($cek->penggunaan == '') { return $this->err('Penggunaan'); }
+                    if($cek->jenis == '') { return $this->err('Jenis'); }
+                    if($cek->jml_lantai == '') { return $this->err('Jumlah Lantai'); }
+                    if($cek->jml_bangunan == '') { return $this->err('Jumlah Bangunan'); }
+                    if($cek->kelurahan == '') { return $this->err('Kelurahan'); }
+                    if($cek->jalan == '') { return $this->err('Jalan'); }
+                    if($cek->ktp == '') { return $this->err('KTP'); }
+                    if($cek->pbb == '') { return $this->err('PBB Terakhir'); }
+                    if($cek->surat_tanah == '') { return $this->err('Surat Tanah'); }
+                    if($cek->peta == '') { return $this->err('Peta Lokasi (Koordinat X dan Y)'); }
+                    if($cek->gambar == '') { return $this->err('Gambar Bangunan Rencana'); }
                     Perizinan::where('id', $i->id)->update(array(
                         'status' => '0',
+                        'created_at' => $time
                     ));
                     return $arrayName = array(
                         'status' => 'success',
@@ -473,7 +462,7 @@ class KrkController extends Controller
                 } elseif($i->status == '0' || $i->status == '2') {
                     return $arrayName = array(
                         'status' => 'error',
-                        'pesan' => 'Saat ini Anda memiliki pengajuan perizinan Pendidikan! Silakan Cek di tab Surat Perizinan Anda!'
+                        'pesan' => 'Saat ini Anda memiliki pengajuan perizinan Keterangan Rencana Kota (KRK)! Silakan Cek di tab Surat Perizinan Anda!'
                     );
                 }
             }
@@ -496,4 +485,19 @@ class KrkController extends Controller
         
     }
     // END TAB 5
+
+    public function reload($id)
+    {
+        $data = Krk::find($id);
+        return $data;
+
+    }
+
+    private function err($pesan) 
+    {   
+        return $err = array(
+            'status' => 'error',
+            'pesan' => 'Mohon mengisi '.$pesan
+        );
+    }
 }

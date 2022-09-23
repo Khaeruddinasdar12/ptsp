@@ -8,9 +8,11 @@ use App\Models\Perizinan;
 use App\Models\Sip;
 use App\Models\Sik;
 use App\Models\Pendidikan;
+use App\Models\Krk;
 use App\Models\Sipreason;
 use App\Models\Sikreason;
 use App\Models\Pddreason;
+use App\Models\Krkreason;
 use QueryException;
 use Exception;
 use App\Models\Admin;
@@ -48,9 +50,9 @@ class TeknisByController extends Controller
 			return view('admin.teknis.sip-show', ['data' => $data]);
 		} elseif($data->jenis_izin == 'pendidikan') {
 			return view('admin.teknis.pendidikan-show', ['data' => $data]);
-		}
-
-		return view('admin.teknis.show', ['data' => $data]);
+		} elseif($data->jenis_izin == 'krk') {
+			return view('admin.teknis.krk-show', ['data' => $data]);
+		}	
 	}
 
 	public function reason(Request $request, $id, $jenis)
@@ -95,6 +97,16 @@ class TeknisByController extends Controller
 				} else {
 					$data = new Pddreason;
 					$data['pendidikan_id'] = $id;
+					$data[$request->key] = $request->pesan;
+					$data->save();
+				}
+			} elseif($jenis == 'krk') { // JIKA PENDIDIKAN
+				$data = Krkreason::where('krk_id', $id)->first();
+				if($data) {
+					Krkreason::where('krk_id', $id)->update(array($request->key => $request->pesan));
+				} else {
+					$data = new Krkreason;
+					$data['krk_id'] = $id;
 					$data[$request->key] = $request->pesan;
 					$data->save();
 				}
@@ -154,6 +166,16 @@ class TeknisByController extends Controller
 				} else {
 					$data = new Pddreason;
 					$data['pendidikan_id'] = $id;
+					$data[$request->key] = 1;
+					$data->save();
+				}
+			} else if ($request->izin == 'krk') {
+				$data = Krkreason::where('krk_id', $id)->first();
+				if($data) {
+					$data->update(array($request->key => 1));
+				} else {
+					$data = new Krkreason;
+					$data['krk_id'] = $id;
 					$data[$request->key] = 1;
 					$data->save();
 				}
@@ -235,13 +257,12 @@ class TeknisByController extends Controller
 				if ($data->pendidikan->berkas_pendukung && $dt->berkas_pendukung == '') {
 					return $err;
 				}
-			}
+			} 
 
 			$data->verif_by = Auth::guard('admin')->user()->id;
 			$data->status = '2'; //tolak
 			$data->ket = $request->ket;
 			$data->updated_at = Carbon::now();
-			$data->save();
 		// return $data;
 
 			$email = $data->user->email;
@@ -262,6 +283,7 @@ class TeknisByController extends Controller
 			if (Mail::failures()) {
 				return $arrayName = array('status' => 'error' , 'pesan' => 'Gagal menigirim email' );
 			}
+			$data->save();
 
 			return $arrayName = array(
 				'status' => 'success',
@@ -377,6 +399,29 @@ class TeknisByController extends Controller
 				$dt->delete();
 				$kode = 'PDD'; //kode SUBIZIN
 				$no_kode = $data->pendidikan->latest()->first();//Nomor Kode Surat
+			} if($data->jenis_izin == 'krk') {
+
+				if(!$data->krk->reason) {
+					return $err;
+				}
+				$dt = Krkreason::where('krk_id', $data->krk->id)->first();
+				if($dt->nama != '1' || $dt->nik != '1' || $dt->alamat != '1' || $dt->luas != '1' || $dt->nama_surat != '1' || $dt->nomor_surat != '1' 	|| $dt->jml_lantai != '1' || $dt->jml_bangunan != '1' || $dt->kelurahan != '1' || $dt->jalan != '1' || $dt->ktp != '1' || $dt->pbb != '1' || $dt->surat_tanah != '1' || $dt->peta != '1' || $dt->gambar != '1') {
+					return $err;
+				}
+				if ($data->krk->berkas_pendukung && $dt->berkas_pendukung != '1') {
+					return $err;
+				}
+
+				if($data->krk->kdb == '' || $data->krk->klb == '' || $data->krk->kdh == '' || $data->krk->jml_lantai_max == '' || $data->krk->lebar_jalan == '' || $data->krk->gsp == '' || $data->krk->gsb == '' || $data->krk->klasifikasi == '') {
+					return $err =array(
+						'status' => 'warning',
+						'pesan' => 'Setiap Data KRK Wajib diisi!'
+					);
+				}
+				// $dt->delete();
+				$kode = '';
+				$no_kode = $data->krk->latest()->first();//Nomor Kode Surat
+
 			}
 
 // return $err;
@@ -409,6 +454,9 @@ class TeknisByController extends Controller
 			} elseif($data->jenis_izin == 'pendidikan') {
 				$no_rekomendasi = '650/'.$uniqkode.'.'.$kode.'/PDD/'.$bulan.'/'.$tahun;
 				$data->pendidikan->update(array('no_rekomendasi' => $no_rekomendasi));
+			}  elseif($data->jenis_izin == 'krk') {
+				$no_rekomendasi = $uniqkode.'/RekoTeknis/'.$bulan.'/'.$tahun;
+				$data->krk->update(array('no_rekomendasi' => $no_rekomendasi));
 			} 
 			$data->verif_by = Auth::guard('admin')->user()->id;
 			$data->teknis_by = Auth::guard('admin')->user()->id;
@@ -432,5 +480,60 @@ class TeknisByController extends Controller
 				'pesan' => $e->getMessage()
 			);
 		}
+	}
+
+	public function storedata(Request $request, $id)
+	{
+		$rules = [
+			'kdb' => 'required|string',
+			'klb' => 'required|string',
+			'kdh' => 'required|string',
+			'jml_lantai_max' => 'required|string',
+			'lebar_jalan' => 'required|string',
+			'gsp' => 'required|string',
+			'gsb' => 'required|string',
+			'klasifikasi' => 'required|string',
+
+		];
+		$message = [];
+		$attribute = [
+			'kdb' => 'Koefisien Dasar Bangunan (KDB) Maximum',
+			'klb' => 'Koefisien Lantai Bangunan (KLB) Maximum',
+			'kdh' => 'Koefisien Dasar Hijau (KDH) Maximum',
+			'jml_lantai_max' => 'Jumlah Lantai Bangunan Maximum',
+			'lebar_jalan' => 'Lebar Jalan',
+			'gsp' => 'Garis Sempadan Pagar (GSP)',
+			'gsb' => 'Garis Sempadan Bangunan (GSB)',
+			'klasifikasi' => 'Klasifikasi Kegiatan',
+		];
+		$validasi = $this->validate($request,$rules,$message,$attribute);
+		try {
+			$auth = Auth::user()->id;
+			$data = Krk::find($id);
+			$data->kdb = $request->kdb;
+			$data->klb = $request->klb; 
+			$data->kdh = $request->kdh;
+			$data->jml_lantai_max = $request->jml_lantai_max;
+			$data->lebar_jalan = $request->lebar_jalan;
+			$data->gsp = $request->gsp;
+			$data->gsb = $request->gsb;
+			$data->klasifikasi = $request->klasifikasi;
+			$data->save();
+			return $arrayName = array(
+				'status' => 'success',
+				'pesan' => 'Data ditambahkan'
+			);
+		} catch(Exception $e){
+			return $arrayName = array(
+				'status' => 'error',
+				'pesan' => $e->getMessage()
+			);
+		}catch(QueryException $e){
+			return $arrayName = array(
+				'status' => 'error',
+				'pesan' => $e->getMessage()
+			);
+		}
+		
 	}
 }

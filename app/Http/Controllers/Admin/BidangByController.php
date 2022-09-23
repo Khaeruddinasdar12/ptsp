@@ -303,6 +303,19 @@ class BidangByController extends Controller
 					return $err;
 				}
 				$dt->delete();
+			} if($data->jenis_izin == 'krk') {
+
+				if(!$data->krk->reason) {
+					return $err;
+				}
+				$dt = Krkreason::where('krk_id', $data->krk->id)->first();
+				if($dt->nama != '1' || $dt->nik != '1' || $dt->alamat != '1' || $dt->luas != '1' || $dt->nama_surat != '1' || $dt->nomor_surat != '1' || $dt->penggunaan != '1' || $dt->jenis != '1' || $dt->jml_lantai != '1' || $dt->jml_bangunan != '1' || $dt->kelurahan != '1' || $dt->jalan != '1' || $dt->ktp != '1' || $dt->pbb != '1' || $dt->surat_tanah != '1' || $dt->peta != '1' || $dt->gambar != '1') {
+					return $err;
+				}
+				if ($data->krk->berkas_pendukung && $dt->berkas_pendukung != '1') {
+					return $err;
+				}
+				$dt->delete();
 			}
 
 			$data->verif_by = Auth::guard('admin')->user()->id;
@@ -407,7 +420,6 @@ class BidangByController extends Controller
 			$data->status = '2';
 			$data->ket = $request->ket;
 			$data->updated_at = Carbon::now();
-			$data->save();
 		// return $data;
 
 			$email = $data->user->email;
@@ -428,6 +440,8 @@ class BidangByController extends Controller
 			if (Mail::failures()) {
 				return $arrayName = array('status' => 'error' , 'pesan' => 'Gagal mengirim email' );
 			}
+			$data->save();
+			
 
 			return $arrayName = array(
 				'status' => 'success',

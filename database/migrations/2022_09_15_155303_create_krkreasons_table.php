@@ -22,8 +22,6 @@ class CreateKrkreasonsTable extends Migration
             $table->string('luas')->nullable();
             $table->string('nama_surat')->nullable();
             $table->string('nomor_surat')->nullable();
-            $table->string('penggunaan')->nullable();
-            $table->string('jenis')->nullable();
             $table->string('jml_lantai')->nullable();
             $table->string('jml_bangunan')->nullable();
             $table->string('kelurahan')->nullable();

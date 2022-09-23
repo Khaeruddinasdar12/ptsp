@@ -53,7 +53,7 @@
           </span>
         </span>
         <h3 class="kt-portlet__head-title">
-          Detail Perizinan Keterangan Rencana Kota (KRK)
+          Detail Perizinan Keterangan Rencana Kota (KRK) - Tim Teknis
         </h3>
       </div>
 
@@ -127,7 +127,7 @@
               </td>
             </tr>
             <tr>
-              <td>{{$no}}</td>
+              <td>{{$no = $no+1}}</td>
               <td valign="center">Alamat Pemohon</td>
               <td>{{ $data->krk->alamat }}</td>
               <td>
@@ -185,36 +185,6 @@
               <td>@if($data->krk->reason && $data->krk->reason->nomor_surat != '1') {{$data->krk->reason->nomor_surat}} @endif</td>
               <td><button class="btn btn-outline-danger btn-sm" onclick="reason('nomor_surat', 'Nomor/Tanggal Pada Surat Tanah')"><i class="fa fa-times"></i></button>&nbsp;
                 <button class="btn btn-outline-success btn-sm" onclick="ceklis('nomor_surat', 'Nomor/Tanggal Pada Surat Tanah')" id="ceklis"><i class="fa fa-check"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>{{$no = $no+1}}</td>
-              <td>Penggunaan/Fungsi Bangunan</td>
-              <td>{{ $data->krk->penggunaan }}</td>
-              <td>
-                @if($data->krk->reason && $data->krk->reason->penggunaan =='1') {!! $terima !!}
-                @elseif($data->krk->reason && $data->krk->reason->penggunaan == '') {!! $belumperiksa !!}
-                @elseif($data->krk->reason && $data->krk->reason->penggunaan != '1') {!! $tolak !!}
-                @else {!! $belumperiksa !!} @endif
-              </td>
-              <td>@if($data->krk->reason && $data->krk->reason->penggunaan != '1') {{$data->krk->reason->penggunaan}} @endif</td>
-              <td><button class="btn btn-outline-danger btn-sm" onclick="reason('penggunaan', 'Penggunaan/Fungsi Bangunan')"><i class="fa fa-times"></i></button>&nbsp;
-                <button class="btn btn-outline-success btn-sm" onclick="ceklis('penggunaan', 'Penggunaan/Fungsi Bangunan')" id="ceklis"><i class="fa fa-check"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>{{$no = $no+1}}</td>
-              <td>Jenis Bangunan</td>
-              <td>{{ $data->krk->jenis }}</td>
-              <td>
-                @if($data->krk->reason && $data->krk->reason->jenis =='1') {!! $terima !!}
-                @elseif($data->krk->reason && $data->krk->reason->jenis == '') {!! $belumperiksa !!}
-                @elseif($data->krk->reason && $data->krk->reason->jenis != '1') {!! $tolak !!}
-                @else {!! $belumperiksa !!} @endif
-              </td>
-              <td>@if($data->krk->reason && $data->krk->reason->jenis != '1') {{$data->krk->reason->jenis}} @endif</td>
-              <td><button class="btn btn-outline-danger btn-sm" onclick="reason('jenis', 'Jenis Bangunan')"><i class="fa fa-times"></i></button>&nbsp;
-                <button class="btn btn-outline-success btn-sm" onclick="ceklis('jenis', 'Jenis Bangunan')" id="ceklis"><i class="fa fa-check"></i></button>
               </td>
             </tr>
             <tr>
@@ -378,7 +348,74 @@
         </tbody>
       </table>
     </div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="container">
+      <h5>Data Keterangan Rencana Kota</h5>
+      <form method="POST" id="storedata">
+        @csrf
+        <div class="form-group row">
+          <label class="col-lg-3 col-form-label">Koefisien Dasar Bangunan (KDB) Maximum*</label>
+          <div class="col-lg-9">
+            <input type="text" class="form-control" name="kdb" value="{{$data->krk->kdb}}">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-lg-3 col-form-label">Koefisien Lantai Bangunan (KLB) Maximum *</label>
+          <div class="col-lg-9">
+            <input type="text" class="form-control" name="klb" value="{{$data->krk->klb}}">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-lg-3 col-form-label">Koefisien Dasar Hijau (KDH) Maximum *</label>
+          <div class="col-lg-9">
+            <input type="text" class="form-control" name="kdh" value="{{$data->krk->kdh}}">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-lg-3 col-form-label">Jumlah Lantai Bangunan Maximum *</label>
+          <div class="col-lg-9">
+            <input type="text" class="form-control" name="jml_lantai_max" value="{{$data->krk->jml_lantai_max}}">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-lg-3 col-form-label">Lebar Jalan *</label>
+          <div class="col-lg-9">
+            <input type="text" class="form-control" name="lebar_jalan" value="{{$data->krk->lebar_jalan}}">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-lg-3 col-form-label">Garis Sempadan Pagar (GSP) *</label>
+          <div class="col-lg-9">
+            <input type="text" class="form-control" name="gsp" value="{{$data->krk->gsp}}">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-lg-3 col-form-label">Garis Sempadan Bangunan (GSB) *</label>
+          <div class="col-lg-9">
+            <input type="text" class="form-control" name="gsb" value="{{$data->krk->gsb}}">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-lg-3 col-form-label">Klasifikasi Kegiatan *</label>
+          <div class="col-lg-9">
+            <input type="text" class="form-control" name="klasifikasi" value="{{$data->krk->klasifikasi}}">
+          </div>
+        </div>
+        <div class="row align-items-center">
+          <div class="col-12 kt-align-right">
+            <button type="submit" class="btn btn-outline-info btn-sm">
+              <i class="fa fa-check"></i> Simpan
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    </div>
+  </div>
     <br>
+    <hr>
     <div class="row align-items-center">
       <div class="col-12 kt-align-right">
         <button type="button" class="btn btn-danger btn-sm" onclick="tolak()" id="tolak">
@@ -390,9 +427,9 @@
       </div>
     </div>
   </div>
-  <!-- <div class="kt-portlet__footer"> -->
+<!--   <div class="kt-portlet__footer">
 
-  <!-- </div> -->
+</div> -->
 </div>
 
 
@@ -437,7 +474,7 @@ function reason(key, head) {
 }
 
           $('#post-reason').submit(function(e){ // tolak kolom
-            const route= "{{ route('reason.bidang', ['id' => $data->krk->id, 'jenis' => 'krk']) }}";
+            const route= "{{ route('reason.teknis', ['id' => $data->krk->id, 'jenis' => 'krk']) }}";
             e.preventDefault();
             var request = new FormData(this);
             var endpoint= route;
@@ -474,6 +511,40 @@ function reason(key, head) {
             }); 
           });
 
+
+          // STORE DATA
+          $('#storedata').submit(function(e){ // tolak kolom
+            const route= "{{route('storedata.teknis', ['id' => $data->krk->id])}}";
+            e.preventDefault();
+            var request = new FormData(this);
+            var endpoint= route;
+            $.ajax({
+              url: endpoint,
+              method: "POST",
+              data: request,
+              contentType: false,
+              cache: false,
+              processData: false,
+              beforeSend: function(){
+                $('#loader').attr("style", "");
+              },
+              success:function(data){
+                  berhasil(data.status, data.pesan);
+              },
+              complete:function(data) {
+                $('#loader').attr("style", "display:none");
+              },
+              error: function(xhr, status, error){
+                var error = xhr.responseJSON; 
+                if ($.isEmptyObject(error) == false) {
+                  $.each(error.errors, function(key, value) {
+                    gagal(key, value);
+                  });
+                }
+              } 
+            }); 
+          });
+
     function tolak() { // kirim tolak 
       $(document).on('click', '#tolak', function(){
         Swal.fire({
@@ -487,7 +558,7 @@ function reason(key, head) {
         }).then((result) => {
           if (result.value) {
             var me = $(this),
-            url = "{{ route('perizinan.bidang.tolak', ['no_tiket' => $data->no_tiket]) }}",
+            url = "{{ route('perizinan.teknis.tolak', ['no_tiket' => $data->no_tiket]) }}",
             token = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
               url: url,
@@ -537,7 +608,7 @@ function reason(key, head) {
         }).then((result) => {
           if (result.value) {
             var me = $(this),
-            url = "{{ route('perizinan.bidang.verif', ['no_tiket' => $data->no_tiket]) }}",
+            url = "{{ route('perizinan.teknis.verif', ['no_tiket' => $data->no_tiket]) }}",
             token = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
               url: url,
@@ -587,7 +658,7 @@ function reason(key, head) {
         }).then((result) => {
           if (result.value) {
             var me = $(this),
-            url = "{{ route('ceklis.bidang', ['id' => $data->krk->id, 'jenis' => 'krk']) }}",
+            url = "{{ route('ceklis.teknis', ['id' => $data->krk->id, 'jenis' => 'krk']) }}",
             token = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
               url: url,
@@ -645,7 +716,7 @@ function reason(key, head) {
         showConfirmButton: true,
         button: "Ok"
       }).then((result) => {
-        window.location.href = "{{URL::to('admin/perizinan-bidang')}}"
+        window.location.href = "{{URL::to('admin/perizinan-teknis')}}"
       })
     }
 

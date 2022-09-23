@@ -73,6 +73,7 @@
                 </ul>
               </div>
             </div>
+            
             <div class="card-body">
               <div class="tab-content">
                 <!-- TAB 1 -->

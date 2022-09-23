@@ -38,15 +38,35 @@ Route::namespace('User')->group(function(){
 	Route::post('keluhan', 'KeluhanController@store')->name('keluhan.store');
 	Route::delete('keluhan/{id}/delete', 'KeluhanController@destroy')->name('keluhan.delete');
 
-	// SIP
+	// =====SIP=====
 	Route::get('perizinan/surat-izin-praktik/create', 'SipController@create')->name('sip.create');
+	Route::post('perizinan/izin-praktik/tab1', 'SipController@tab1')->name('sip.tab1');
+	Route::post('perizinan/izin-praktik/tab2', 'SipController@tab2')->name('sip.tab2');
+	Route::post('perizinan/izin-praktik/tab3', 'SipController@tab3')->name('sip.tab3');
+	Route::post('perizinan/izin-praktik/tab4', 'SipController@tab4')->name('sip.tab4');
+	Route::post('perizinan/izin-praktik/tab5', 'SipController@tab5')->name('sip.tab5');
+
 	Route::put('perizinan/{id}/update-sip', 'SipController@update')->name('sip.update');
 	Route::post('sip-store', 'SipController@store')->name('sip.store');
-	// SIK
+
+	Route::get('perizinan/sip-reload/{id}', 'SipController@reload')->name('sip.reload'); //reload file create
+
+	// =====SIK=====
 	Route::get('perizinan/surat-izin-kerja/create', 'SikController@create')->name('sik.create');
+	Route::post('perizinan/izin-kerja/tab1', 'SikController@tab1')->name('sik.tab1');
+	Route::post('perizinan/izin-kerja/tab2', 'SikController@tab2')->name('sik.tab2');
+	Route::post('perizinan/izin-kerja/tab3', 'SikController@tab3')->name('sik.tab3');
+	Route::post('perizinan/izin-kerja/tab4', 'SikController@tab4')->name('sik.tab4');
+	Route::post('perizinan/izin-kerja/tab5', 'SikController@tab5')->name('sik.tab5');
+
 	Route::put('perizinan/{id}/update-sik', 'SikController@update')->name('sik.update');
 	Route::post('sik-store', 'SikController@store')->name('sik.store');
-	// PENDIDIKAN
+
+	Route::get('perizinan/sik-reload/{id}', 'SikController@reload')->name('sik.reload'); //reload file create
+
+
+
+	// =======PENDIDIKAN=======
 	Route::get('perizinan/izin-pendidikan/create', 'PendidikanController@create')->name('pendidikan.create');
 	Route::post('perizinan/izin-pendidikan/tab1', 'PendidikanController@tab1')->name('pendidikan.tab1');
 	Route::post('perizinan/izin-pendidikan/tab2', 'PendidikanController@tab2')->name('pendidikan.tab2');
@@ -59,7 +79,8 @@ Route::namespace('User')->group(function(){
 	Route::get('perizinan/pendidikan-reload/{id}', 'PendidikanController@reload')->name('pendidikan.reload'); //reload file create
 
 
-	// KRK
+
+	// =====KRK=====
 	Route::get('perizinan/izin-krk/create', 'KrkController@create')->name('krk.create');
 	Route::post('perizinan/izin-krk/tab1', 'KrkController@tab1')->name('krk.tab1');
 	Route::post('perizinan/izin-krk/tab2', 'KrkController@tab2')->name('krk.tab2');
@@ -71,12 +92,12 @@ Route::namespace('User')->group(function(){
 
 	Route::get('perizinan/krk-reload/{id}', 'KrkController@reload')->name('krk.reload'); //reload file create
 
-	// PERIZINAN ANDA
+	// =====PERIZINAN ANDA=====
 	Route::get('perizinan', 'PerizinanController@index')->name('perizinan.index');
 	Route::get('perizinan/{no_tiket}', 'PerizinanController@show')->name('perizinan.ditolak.show');
 	Route::post('perizinan/{no_tiket}/update', 'PerizinanController@update')->name('perizinan.ditolak.update');
 
-	// DOWNLOAD
+	// =====DOWNLOAD=====
 	Route::get('download', 'DownloadController@index')->name('download.index');
 
 });
@@ -109,6 +130,8 @@ Route::middleware('auth:admin')->prefix('admin')->namespace('Admin')->group(func
 	Route::put('perizinan-teknis/{no_tiket}/verif', 'TeknisByController@verif')->name('perizinan.teknis.verif');
 	Route::put('perizinan-teknis/reason/{id}/{jenis}', 'TeknisByController@reason')->name('reason.teknis');
 	Route::put('perizinan-teknis/ceklis/{id}', 'TeknisByController@ceklis')->name('ceklis.teknis');
+
+	Route::post('perizinan-teknis/store-data/{id}', 'TeknisByController@storedata')->name('storedata.teknis');
 
 	// KADIS
 	Route::get('perizinan-kadis', 'KadisController@index')->name('perizinan.kadis.index');

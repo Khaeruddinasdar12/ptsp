@@ -414,7 +414,11 @@ $('#ktp').submit(function(e) {
             $('#loader').attr("style", "");
           },
           success:function(data){
-            berhasil(data.status, data.pesan);
+            if(data.status == 'success') {
+              successToRelaoad(data.status, data.pesan);
+            } else {
+              berhasil(data.status, data.pesan);
+            }
           },
           complete:function(data) {
             $('#loader').attr("style", "display:none");
@@ -432,58 +436,7 @@ $('#ktp').submit(function(e) {
 
     });
   });
-
-
-  // function updateberkas() { // verifikasi berkas berhasil
-  //   $(document).on('click', '#update-button', function(){
-  //     Swal.fire({
-  //       title: 'Kirim Berkas ?',
-  //       text: "Pastikan semua berkas pada form telah diisi!",
-  //       type: 'warning',
-  //       showCancelButton: true,
-  //       confirmButtonColor: '#3085d6',
-  //       cancelButtonColor: '#d33',
-  //       confirmButtonText: 'Ya, Kirim!',
-  //       timer: 6500
-  //     }).then((result) => {
-  //       if (result.value) {
-  //         token = $('meta[name="csrf-token"]').attr('content');
-  //         var endpoint= route5;
-  //         $.ajax({
-  //           url: endpoint,
-  //           method: "POST",
-  //           data : {
-  //             '_method' : 'POST',
-  //             '_token'  : token
-  //           },
-  //           beforeSend: function(){
-  //             $('#loader').attr("style", "");
-  //           },
-  //           success:function(data){
-  //             if(data.status == 'success') {
-  //               successToRelaoad(data.status, data.pesan);
-  //             } else {
-  //               berhasil(data.status, data.pesan);
-  //             }
-  //           },
-  //           complete:function(data) {
-  //             $('#loader').attr("style", "display:none");
-  //           },
-  //           error: function(xhr, status, error){
-  //             var error = xhr.responseJSON; 
-  //             if ($.isEmptyObject(error) == false) {
-  //               $.each(error.errors, function(key, value) {
-  //                 gagal(key, value);
-  //               });
-  //             }
-  //           } 
-  //         }); 
-  //       }
-  //     });
-  //   });
-  // }
   // END TAB 5
-
 
   function jenis(jenis) {
     if(jenis == '') {

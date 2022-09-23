@@ -8,6 +8,7 @@ use App\Models\Subizin;
 use App\Models\Perizinan;
 use App\Models\Pendidikan;
 use Auth;
+use Carbon\Carbon;
 use App\Models\Kelurahan;
 use QueryException;
 use Exception;
@@ -537,12 +538,7 @@ class PendidikanController extends Controller
 	public function tab4(Request $request)
 	{
 		$message = [];
-		$attribute = [
-			'kelurahan' => 'Kelurahan',	
-			'jalan' => 'Jalan',
-
-		];
-		
+		$attribute = [];
 		$auth = Auth::user()->id;
 		$perizinan = Perizinan::where('user_id', $auth)->where('jenis_izin', 'pendidikan')->get();
 		foreach($perizinan as $i) {
@@ -834,49 +830,64 @@ class PendidikanController extends Controller
 
 	public function tab5(Request $request)
 	{
-		$auth = Auth::user()->id;
-		$perizinan = Perizinan::where('user_id', $auth)->where('jenis_izin', 'pendidikan')->get();
-		foreach($perizinan as $i) {
-			if($i->status == null) {
-				$err = array(
-					'status' => 'error',
-					'pesan' => 'Mohon lengkapi semua data yang bertanda *(wajib)!'
-				);
-				$cek = Pendidikan::where('perizinan_id', $i->id)->first();
-				if($cek->subizin_id == '') { return $err; }
-				if($cek->nama == '') { return $err; }
-				if($cek->nohp == '') { return $err; }
-				if($cek->alamat == '') { return $err; }
-				if($cek->nama_pendidikan == '') { return $err; }
-				if($cek->jalan == '') { return $err; }
-				if($cek->ktp == '') { return $err; }
-				if($cek->pas_foto == '') { return $err; }
-				if($cek->akta == '') { return $err; }
-				if($cek->struktur_organisasi == '') { return $err; }
-				if($cek->sk == '') { return $err; }
-				if($cek->sertifikat_tanah == '') { return $err; }
-				if($cek->nib == '') { return $err; }
+		try {
+			$time = Carbon::now();
+			$auth = Auth::user()->id;
+			$perizinan = Perizinan::where('user_id', $auth)->where('jenis_izin', 'pendidikan')->get();
+			foreach($perizinan as $i) {
+				if($i->status == null) {
+					$err = array(
+						'status' => 'error',
+						'pesan' => 'Mohon lengkapi semua data yang bertanda *(wajib)!'
+					);
+					$cek = Pendidikan::where('perizinan_id', $i->id)->first();
+					if($cek->subizin_id == '') { return $this->err('Jenis Izin'); }
+					if($cek->nama == '') { return $this->err('Nama'); }
+					if($cek->nohp == '') { return $this->err('No HP'); }
+					if($cek->alamat == '') { return $this->err('Alamat'); }
+					if($cek->nama_pendidikan == '') { return $this->err('Nama Pendidikan'); }
+					if($cek->jalan == '') { return $this->err('Jalan'); }
+					if($cek->ktp == '') { return $this->err('KTP'); }
+					if($cek->pas_foto == '') { return $this->err('Foto'); }
+					if($cek->akta == '') { return $this->err('Akta'); }
+					if($cek->struktur_organisasi == '') { return $this->err('Struktur Organiasasi'); }
+					if($cek->sk == '') { return $this->err('SK'); }
+					if($cek->sertifikat_tanah == '') { return $this->err('Sertifikat Tanah'); }
+					if($cek->nib == '') { return $this->err('NIB'); }
 
-				Perizinan::where('id', $i->id)->update(array(
-					'status' => '0',
-				));
-				return $arrayName = array(
-					'status' => 'success',
-					'pesan' => 'Berhasil Mengirim Berkas!'
-				);
+					Perizinan::where('id', $i->id)->update(array(
+						'status' => '0',
+						'created_at' => $time
+					));
+					return $arrayName = array(
+						'status' => 'success',
+						'pesan' => 'Berhasil Mengirim Berkas!'
+					);
 
-			} elseif($i->status == '0' || $i->status == '2') {
-				return $arrayName = array(
-					'status' => 'error',
-					'pesan' => 'Saat ini Anda memiliki pengajuan perizinan Pendidikan! Silakan Cek di tab Surat Perizinan Anda!'
-				);
+				} elseif($i->status == '0' || $i->status == '2') {
+					return $arrayName = array(
+						'status' => 'error',
+						'pesan' => 'Saat ini Anda memiliki pengajuan perizinan Pendidikan! Silakan Cek di tab Surat Perizinan Anda!'
+					);
+				}
 			}
-		}
 
-		return $arrayName = array(
-			'status' => 'error',
-			'pesan' => 'Mohon isi semua form!'
-		);
+			return $arrayName = array(
+				'status' => 'error',
+				'pesan' => 'Mohon isi semua form!'
+			);
+		} catch(Exception $e) {
+			return $arrayName = array(
+				'status' => 'error',
+				'pesan' => $e->getMessage()
+			);
+		} catch(QueryException $e) {
+			return $arrayName = array(
+				'status' => 'error',
+				'pesan' => $e->getMessage()
+			);
+		}
+		
 	}
 	// END TAB 5
 
@@ -884,6 +895,13 @@ class PendidikanController extends Controller
 	{
 		$data = Pendidikan::find($id);
 		return $data;
+	}
 
+	private function err($pesan) 
+	{	
+		return $err = array(
+			'status' => 'error',
+			'pesan' => 'Mohon mengisi '.$pesan
+		);
 	}
 }

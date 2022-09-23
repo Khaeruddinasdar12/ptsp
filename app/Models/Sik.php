@@ -31,17 +31,17 @@ class Sik extends Model
         return $this->hasOne(Sikreason::class, 'sik_id', 'id');
     }
     
-    public function getAwalStrAttribute()
-    {
-        return \Carbon\Carbon::parse($this->attributes['awal_str'])
-        // ->diffForHumans();
-        ->translatedFormat('d F Y');
-    }
+    // public function getAwalStrAttribute()
+    // {
+    //     return \Carbon\Carbon::parse($this->attributes['awal_str'])
+    //     // ->diffForHumans();
+    //     ->translatedFormat('d F Y');
+    // }
 
-    public function getAkhirStrAttribute()
-    {
-        return \Carbon\Carbon::parse($this->attributes['akhir_str'])
-        // ->diffForHumans();
-        ->translatedFormat('d F Y');
-    }
+    // public function getAkhirStrAttribute()
+    // {
+    //     return \Carbon\Carbon::parse($this->attributes['akhir_str'])
+    //     // ->diffForHumans();
+    //     ->translatedFormat('d F Y');
+    // }
 }

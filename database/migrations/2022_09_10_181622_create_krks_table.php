@@ -36,6 +36,15 @@ class CreateKrksTable extends Migration
             $table->string('peta')->nullable(); //peta lokasi kordinat x y
             $table->string('gambar')->nullable(); //gambar bangunan rencana
             $table->string('berkas_pendukung')->nullable(); // opsional
+            // diisi oleh tim teknis
+            $table->string('kdb')->nullable();
+            $table->string('klb')->nullable();
+            $table->string('kdh')->nullable();
+            $table->string('jml_lantai_max')->nullable();
+            $table->string('lebar_jalan')->nullable();
+            $table->string('gsp')->nullable();
+            $table->string('gsb')->nullable();
+            $table->string('klasifikasi')->nullable();
             $table->timestamps();
         });
     }
