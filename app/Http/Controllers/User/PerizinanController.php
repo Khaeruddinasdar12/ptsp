@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Perizinan;
 use App\Models\Sip;
 use App\Models\Sik;
+use App\Models\Pendidikan;
+use App\Models\Krk;
 use App\Models\Subizin;
 use Auth;
 use QueryException;
@@ -21,7 +23,7 @@ class PerizinanController extends Controller
 	public function index()
 	{
 		$user_id = Auth::user()->id;
-		$data = Perizinan::where('user_id', $user_id)->paginate(10);
+		$data = Perizinan::where('status', '!=', '1')->where('user_id', $user_id)->paginate(10);
 		return view('user.perizinan.index', ['data' => $data]);
 	}
 
@@ -42,6 +44,12 @@ class PerizinanController extends Controller
 		} elseif($data->jenis_izin == 'sip') {
 			$subizin = Subizin::where('jenis', 'sik')->get();
 			return view('user.sip.sip-show', ['data' => $data, 'subizin' => $subizin]);
+		} elseif($data->jenis_izin == 'pendidikan') {
+			// $subizin = Subizin::where('jenis', 'pendidikan')->get();
+			return view('user.pendidikan.pendidikan-show', ['data' => $data]);
+		} elseif($data->jenis_izin == 'krk') {
+			// $subizin = Subizin::where('jenis', 'pendidikan')->get();
+			return view('user.krk.krk-show', ['data' => $data]);
 		}
 		// return $data;
 		
@@ -74,6 +82,28 @@ class PerizinanController extends Controller
 				$izin->status = '0';
 				$izin->save();
 				$sik->save();
+			} elseif($izin->jenis_izin == 'pendidikan') {
+				$pdd = Pendidikan::where('perizinan_id', $izin->id)->first();
+				if(!$izin && !$pdd) {
+					return $arrayName = array(
+						'status' => 'error',
+						'pesan' => 'Data tidak ditemukan'
+					);
+				}
+				$izin->status = '0';
+				$izin->save();
+				$pdd->save();
+			} elseif($izin->jenis_izin == 'krk') {
+				$krk = Krk::where('perizinan_id', $izin->id)->first();
+				if(!$izin && !$pdd) {
+					return $arrayName = array(
+						'status' => 'error',
+						'pesan' => 'Data tidak ditemukan'
+					);
+				}
+				$izin->status = '0';
+				$izin->save();
+				// $krk->save();
 			}
 			
 			return $arrayName = array(

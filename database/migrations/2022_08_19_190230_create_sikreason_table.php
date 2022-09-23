@@ -34,6 +34,6 @@ class CreateSikreasonTable extends Migration
     }
     public function down()
     {
-        Schema::dropIfExists('sikreason');
+        Schema::dropIfExists('sikreasons');
     }
 }

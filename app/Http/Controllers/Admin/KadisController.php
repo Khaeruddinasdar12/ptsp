@@ -40,6 +40,10 @@ class KadisController extends Controller
 			return view('admin.kadis.sik-show', ['data' => $data]);
 		} elseif($data->jenis_izin == 'sip') {
 			return view('admin.kadis.sip-show', ['data' => $data]);
+		} elseif($data->jenis_izin == 'pendidikan') {
+			return view('admin.kadis.pendidikan-show', ['data' => $data]);
+		} elseif($data->jenis_izin == 'krk') {
+			return view('admin.kadis.krk-show', ['data' => $data]);
 		}
 	}
 
@@ -68,7 +72,7 @@ class KadisController extends Controller
 			if($data->jenis_izin == 'sip') {
 				$jenis_izin = 'Surat Izin Praktik (SIP)';
 				$kode = $data->sip->subizin->kode;
-				$no_surat = '503/xxx.yy.z/SIP.'.$kode.'/DPM-PTSP/'.$bulan.'/'.$tahun;
+				$no_surat = '503/xxx/SIP.'.$kode.'/DPM-PTSP/'.$bulan.'/'.$tahun;
 				$dasar_hukum = $data->sip->subizin->dasar_hukum;
 
 				$kelurahan2 = ''; $kecamatan2 = ''; $kelurahan3 = ''; $kecamatan3 = '';
@@ -115,7 +119,7 @@ class KadisController extends Controller
 			} elseif($data->jenis_izin == 'sik') {
 				$jenis_izin = 'Surat Izin Kerja (SIK)';
 				$kode = $data->sik->subizin->kode;
-				$no_surat = '503/xxx.yy.z/SIK.'.$kode.'/DPM-PTSP/'.$bulan.'/'.$tahun;
+				$no_surat = '503/xxx/SIK.'.$kode.'/DPM-PTSP/'.$bulan.'/'.$tahun;
 				$dasar_hukum = $data->sik->subizin->dasar_hukum;
 
 				$data_view = [
@@ -148,6 +152,55 @@ class KadisController extends Controller
 				];
 				
 				$pdf = PDF::loadView('sip-sik-pdf', $data_view);
+			} elseif($data->jenis_izin == 'pendidikan') {
+				$jenis_izin = $data->pendidikan->subizin->nama;
+				$no_surat = '503/xxx/LKP/DPM-PTSP/'.$bulan.'/'.$tahun;
+
+				$data_view = [
+					'barcode' => $data->no_tiket.'.png',
+					'no_surat' => $no_surat,
+					'no_rekomendasi' => $data->pendidikan->no_rekomendasi,
+					'nama' => $data->pendidikan->nama,
+					'nohp' => $data->pendidikan->nohp,
+					'jenis_izin' => $jenis_izin,
+					'subizin' => $data->pendidikan->subizin->nama,
+					'alamat' => $data->pendidikan->alamat,
+					'nama_pendidikan' => $data->pendidikan->nama_pendidikan,
+					'kelurahan' => $data->pendidikan->klh->kelurahan,
+					'kecamatan' => $data->pendidikan->klh->kecamatan,
+					'jalan' => $data->pendidikan->jalan,
+					'penetapan' => Carbon::now(),
+					'berlaku_sampai' => $time->addYears(3),
+				];
+				$pdf = PDF::loadView('pendidikan-pdf', $data_view);
+			} elseif($data->jenis_izin == 'krk') {
+				$no_surat = '650/xxx/DPMPTSP/'.$bulan.'/'.$tahun;
+
+				$data_view = [
+					'barcode' => $data->no_tiket.'.png',
+					'no_surat' => $no_surat,
+					'no_rekomendasi' => $data->krk->no_rekomendasi,
+					'penggunaan' => $data->krk->penggunaan,
+					'jenis' => $data->krk->jenis,
+					'nama' => $data->krk->nama,
+					'alamat' => $data->krk->alamat,
+					'luas' => $data->krk->luas,
+					'jalan' => $data->krk->jalan,
+					'kelurahan' => $data->krk->klh->kelurahan,
+					'kecamatan' => $data->krk->klh->kecamatan,
+					'jml_lantai' => $data->krk->jml_lantai,
+					'jml_bangunan' => $data->krk->jml_bangunan,
+					'kdb' => $data->krk->kdb,
+					'klb' => $data->krk->klb,
+					'kdh' => $data->krk->kdh,
+					'jml_lantai_max' => $data->krk->jml_lantai_max,
+					'lebar_jalan' => $data->krk->lebar_jalan,
+					'gsp' => $data->krk->gsp,
+					'gsb' => $data->krk->gsb,
+					'klasifikasi' => $data->krk->klasifikasi,
+					'penetapan' => Carbon::now(),
+				];
+				$pdf = PDF::loadView('krk-pdf', $data_view);
 			}
 
 			$data->status = '1';
@@ -187,6 +240,9 @@ class KadisController extends Controller
 
 	public function sertifikat()
 	{
+		$pdf = PDF::loadView('krk-pdf');
+
+		return $pdf->stream();
 
 		$now = Carbon::now();
 		$data_view = [
@@ -220,7 +276,6 @@ class KadisController extends Controller
 			'penetapan' => $now,
 
 		];
-
         // return view('pdf', $data_view);
 		$pdf = PDF::loadView('sip-sik-pdf', $data_view);
 

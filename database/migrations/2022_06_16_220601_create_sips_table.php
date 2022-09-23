@@ -11,30 +11,33 @@ class CreateSipsTable extends Migration
         Schema::create('sips', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('perizinan_id');
-            $table->string('nama');
-            $table->string('tempat_lahir');
-            $table->date('tanggal_lahir');
-            $table->string('no_str');
-            $table->date('awal_str');
-            $table->date('akhir_str');
+            $table->string('nama')->nullable();
+            $table->string('nohp')->nullable();
+            $table->string('tempat_lahir')->nullable();
+            $table->date('tanggal_lahir')->nullable();
+            $table->string('no_str')->nullable();
+            $table->date('awal_str')->nullable();
+            $table->date('akhir_str')->nullable();
             $table->string('no_rekomendasi')->nullable();
-            $table->string('alamat');
-            $table->bigInteger('subizin_id');
-            $table->string('nama_praktek1');
-            $table->string('jalan1');
-            $table->string('kelurahan1');
+            $table->string('alamat')->nullable();
+            $table->bigInteger('subizin_id')->nullable();
+            $table->string('nama_praktek1')->nullable();
+            $table->string('jalan1')->nullable();
+            $table->string('kelurahan1')->nullable();
             $table->string('nama_praktek2')->nullable();
             $table->string('jalan2')->nullable();
             $table->string('kelurahan2')->nullable();
             $table->string('nama_praktek3')->nullable();
             $table->string('jalan3')->nullable();
             $table->string('kelurahan3')->nullable();
-            $table->string('ktp');
-            $table->string('foto');
-            $table->string('str');
-            $table->string('rekomendasi_org');
-            $table->string('surat_keterangan');
-            $table->string('surat_persetujuan')->nullable();
+            $table->string('ktp')->nullable();
+            $table->string('foto')->nullable();
+            $table->string('str')->nullable();
+            $table->string('rekomendasi_org')->nullable();
+            $table->string('surat_keterangan')->nullable();
+            
+            // Opsional
+            $table->string('surat_persetujuan')->nullable(); 
             $table->string('berkas_pendukung')->nullable();
 
             $table->timestamps();

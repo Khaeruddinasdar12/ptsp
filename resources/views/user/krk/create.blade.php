@@ -1,6 +1,6 @@
 @extends('layouts.user.app')
 
-@section('title', 'Buat Izin Pendidikan')
+@section('title', 'Buat Izin KRK')
 
 @section('subheader')
 <link href="{{ asset('css/pages/wizard/wizard-1.css') }} " rel="stylesheet" type="text/css" />
@@ -12,7 +12,7 @@
   <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
   <span class="kt-subheader__breadcrumbs-separator"></span>
   <a href="" class="kt-subheader__breadcrumbs-link">
-  Buat Surat Izin Pendidikan </a>
+  Buat Surat Izin Keterangan Rencana Kota (KRK) </a>
   <!-- <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">Active link</span> -->
 </div>
 
@@ -49,7 +49,7 @@
                   <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2">
                       <span class="nav-icon"><i class="fa fa-tag"></i></span>
-                      <span class="nav-text">Data Perizinan Pendidikan</span>
+                      <span class="nav-text">Data Pertanahan</span>
                     </a>
                   </li>
                   <li class="nav-item">
@@ -73,31 +73,36 @@
                 </ul>
               </div>
             </div>
-            
             <div class="card-body">
               <div class="tab-content">
                 <!-- TAB 1 -->
                 <div class="tab-pane fade show active" id="kt_tab_pane_1" role="tabpanel" aria-labelledby="kt_tab_pane_1_3">
                   <div class="kt-wizard-v1__content" data-ktwizard-type="step-content" data-ktwizard-state="current">
                     <div class="container">
-                      <form action="{{route('pendidikan.tab1')}}" method="POST" id="tab1">
+                      <form action="{{route('krk.tab1')}}" method="POST" id="tab1">
                         @csrf
                         <div class="form-group row">
-                          <label class="col-lg-3 col-form-label">Nama Penanggung Jawab:*</label>
+                          <label class="col-lg-3 col-form-label">Nama Pemohon:*</label>
                           <div class="col-lg-9">
-                            <input type="text" class="form-control" name="nama" value="@if($old){{$old->pendidikan->nama}}@endif" >
+                            <input type="text" class="form-control" name="nama" value="@if($old){{$old->krk->nama}}@endif" >
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-lg-3 col-form-label">Nomor KTP (NIK):*</label>
+                          <div class="col-lg-9">
+                            <input type="text" class="form-control" name="nik" value="@if($old){{$old->krk->nik}}@endif">
                           </div>
                         </div>
                         <div class="form-group row">
                           <label class="col-lg-3 col-form-label">Nomor HP:*</label>
                           <div class="col-lg-9">
-                            <input type="text" class="form-control" name="nohp" value="@if($old){{$old->pendidikan->nohp}}@endif">
+                            <input type="text" class="form-control" name="nohp" value="@if($old){{$old->krk->nohp}}@endif">
                           </div>
                         </div> 
                         <div class="form-group row">
-                          <label class="col-lg-3 col-form-label">Alamat Rumah:*</label>
+                          <label class="col-lg-3 col-form-label">Alamat Pemohon:*</label>
                           <div class="col-lg-9">
-                            <textarea class="form-control" name="alamat" >@if($old){{$old->pendidikan->alamat}}@endif</textarea>
+                            <textarea class="form-control" name="alamat" >@if($old){{$old->krk->alamat}}@endif</textarea>
                           </div>
                         </div>
                         <div class="row align-items-center">
@@ -113,33 +118,87 @@
                 </div>
                 <!-- END TAB 1 -->
 
+                <script type="text/javascript">
+                  kel_id = null;
+                </script>
+                @if($old && $old->krk && $old->krk->klh)
+                <script type="text/javascript">
+                  kel_id = '{!! $old->krk->klh->id !!}';
+                </script>
+                @php $kec = $old->krk->klh->kecamatan; @endphp
+                @else
+                @php $kec=null; @endphp
+                @endif
+
                 <!-- TAB 2 -->
                 <div class="tab-pane fade" id="kt_tab_pane_2" role="tabpanel" aria-labelledby="kt_tab_pane_2_3">
                  <div class="container">
-                  <form method="POST" action="{{route('pendidikan.tab2')}}" id="tab2">
+                  <form method="POST" action="{{route('krk.tab2')}}" id="tab2">
                     @csrf
                     <div class="form-group row">
-                      <label class="col-lg-3 col-form-label">Jenis Perizinan:*</label>
+                      <label class="col-lg-3 col-form-label">Surat Tanah/Luasan Tanah/ : SHM / HGB / Akta Jual Beli (m<sup>2</sup>) *</label>
                       <div class="col-lg-9">
-                        <select class="form-control" id="jenis_izin" onchange="jenis(this.value)">
-                          <option value="">pilih jenis perizinan</option>
-                          @foreach($data as $datas)
-                          <option value="{{$datas->nama}}" @if($old && $old->pendidikan && $old->pendidikan->subizin->nama == $datas->nama)selected @endif>{{$datas->nama}}</option>
-                          @endforeach
+                        <input type="text" class="form-control" name="luas" value="@if($old){{$old->krk->luas}}@endif">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-lg-3 col-form-label">Nama Pada Surat Tanah:*</label>
+                      <div class="col-lg-9">
+                        <input type="text" class="form-control" name="nama_surat" value="@if($old){{$old->krk->nama_surat}}@endif">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-lg-3 col-form-label">Nomor/Tanggal Pada Surat Tanah:*</label>
+                      <div class="col-lg-9">
+                        <input type="text" class="form-control" name="nomor_surat" value="@if($old){{$old->krk->nomor_surat}}@endif">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-lg-3 col-form-label">Penggunaan/Fungsi Bangunan:*</label>
+                      <div class="col-lg-9">
+                        <select class="form-control" name="penggunaan">
+                          <option value="Rumah Tinggal" @if($old && $old->krk->penggunaan == 'Rumah Tinggal') selected @endif>Rumah Tinggal</option>
+                          <option value="Perumahan" @if($old && $old->krk->penggunaan == 'Perumahan') selected @endif>Perumahan</option>
+                          <option value="Perkantoran" @if($old && $old->krk->penggunaan == 'Perkantoran') selected @endif>Perkantoran</option>
+                          <option value="Perkantoran/kantor" @if($old && $old->krk->penggunaan == 'Perkantoran/kantor') selected @endif>Perkantoran/kantor</option>
+                          <option value="Bank" @if($old && $old->krk->penggunaan == 'Bank') selected @endif>Bank</option>
+                          <option value="Pertokoan/toko" @if($old && $old->krk->penggunaan == 'Pertokoan/toko') selected @endif>Pertokoan/toko</option>
+                          <option value="Mall" @if($old && $old->krk->penggunaan == 'Mall') selected @endif>Mall</option>
+                          <option value="Gudang" @if($old && $old->krk->penggunaan == 'Gudang') selected @endif>Gudang</option>
+                          <option value="Hotel" @if($old && $old->krk->penggunaan == 'Hotel') selected @endif>Hotel</option>
+                          <option value="Rumah Kost" @if($old && $old->krk->penggunaan == 'Rumah Kost') selected @endif>Rumah Kost</option>
+                          <option value="Sekolah" @if($old && $old->krk->penggunaan == 'Sekolah') selected @endif>Sekolah</option>
+                          <option value="Rumah Sakit" @if($old && $old->krk->penggunaan == 'Rumah Sakit') selected @endif>Rumah Sakit</option>
+                          <option value="Rumah Ibadah" @if($old && $old->krk->penggunaan == 'Rumah Ibadah') selected @endif>Rumah Ibadah</option>
+                          <option value="Pelataran" @if($old && $old->krk->penggunaan == 'Pelataran') selected @endif>Pelataran</option>
+                          <option value="Pagar" @if($old && $old->krk->penggunaan == 'Pagar') selected @endif>Pagar</option>  
+                          <option value="Menara" @if($old && $old->krk->penggunaan == 'Menara') selected @endif>Menara</option>
                         </select>
                       </div>
                     </div>
-
-                    <div class="form-group row" style="display: none;" id="layout-kategori">
-                      <label class="col-lg-3 col-form-label">Kategori:*</label>
-                      <div class="col-lg-9" id="kategori">
+                    <div class="form-group row">
+                      <label class="col-lg-3 col-form-label">Jenis Bangunan:*</label>
+                      <div class="col-lg-9">
+                        <select class="form-control" name="jenis">
+                          <option value="Membangun Baru" @if($old && $old->krk->jenis == 'Membangun Baru') selected @endif>Membangun Baru</option>
+                          <option value="Menambah" @if($old && $old->krk->jenis == 'Menambah') selected @endif>Menambah</option>
+                          <option value="Merenovasi" @if($old && $old->krk->jenis == 'Merenovasi') selected @endif>Merenovasi</option>
+                          <option value="Pemutihan" @if($old && $old->krk->jenis == 'Pemutihan') selected @endif>Pemutihan</option>
+                          <option value="Balik Nama" @if($old && $old->krk->jenis == 'Balik Nama') selected @endif>Balik Nama</option>
+                          <option value="Pergantian/salinan Izin" @if($old && $old->krk->jenis == 'Pergantian/salinan Izin') selected @endif>Pergantian/salinan Izin</option>
+                        </select>
                       </div>
                     </div>
-
                     <div class="form-group row">
-                      <label class="col-lg-3 col-form-label">Nama Pendidikan:*</label>
+                      <label class="col-lg-3 col-form-label">Jumlah Lantai:*</label>
                       <div class="col-lg-9">
-                        <input type="text" class="form-control" name="nama_pendidikan" value="@if($old){{$old->pendidikan->nama_pendidikan}}@endif">
+                        <input type="text" class="form-control" name="jml_lantai" value="@if($old){{$old->krk->jml_lantai}}@endif">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-lg-3 col-form-label">Jumlah Bangunan:*</label>
+                      <div class="col-lg-9">
+                        <input type="text" class="form-control" name="jml_bangunan" value="@if($old){{$old->krk->jml_bangunan}}@endif">
                       </div>
                     </div>
                     <div class="row align-items-center">
@@ -156,11 +215,11 @@
               <script type="text/javascript">
                 kel_id = null;
               </script>
-              @if($old && $old->pendidikan && $old->pendidikan->klh)
+              @if($old && $old->krk && $old->krk->klh)
               <script type="text/javascript">
-                kel_id = '{!! $old->pendidikan->klh->id !!}';
+                kel_id = '{!! $old->krk->klh->id !!}';
               </script>
-              @php $kec = $old->pendidikan->klh->kecamatan; @endphp
+              @php $kec = $old->krk->klh->kecamatan; @endphp
               @else
               @php $kec=null; @endphp
               @endif
@@ -168,7 +227,7 @@
               <!-- TAB 3 -->
               <div class="tab-pane fade" id="kt_tab_pane_3" role="tabpanel" aria-labelledby="kt_tab_pane_3_3">
                 <div class="container">
-                  <form action="{{route('pendidikan.tab3')}}" method="POST" id="tab3">@csrf
+                  <form action="{{route('krk.tab3')}}" method="POST" id="tab3">@csrf
                     @csrf
                     <div class="form-group row">
                       <label class="col-lg-3 col-form-label">Kecamatan:*</label>
@@ -204,7 +263,7 @@
                     <div class="form-group row">
                       <label class="col-lg-3 col-form-label">Jalan:*</label>
                       <div class="col-lg-9">
-                        <input type="text" class="form-control" name="jalan" value="@if($old){{$old->pendidikan->jalan}}@endif" required>
+                        <input type="text" class="form-control" name="jalan" value="@if($old){{$old->krk->jalan}}@endif" required>
                       </div>
                     </div>
                     <div class="row align-items-center">
@@ -223,9 +282,9 @@
               <div class="tab-pane fade" id="kt_tab_pane_4" role="tabpanel" aria-labelledby="kt_tab_pane_4">
                 <div class="container">
                   <div class="form-group row">
-                    <label class="col-lg-3 col-form-label">Foto KTP Penanggung Jawab: (jpeg, jpg, png) max 1MB*</label>
+                    <label class="col-lg-3 col-form-label">Foto KTP Pemohon: (jpeg, jpg, png) max 1MB*</label>
                     <div class="col-lg-9">
-                      <form action="{{route('pendidikan.tab4')}}" method="POST" id="ktp">
+                      <form action="{{route('krk.tab4')}}" method="POST" id="ktp">
                         <div class="input-group">
                           @csrf
                           <input type="file" class="form-control" name="ktp" required accept="image/jpeg,image/jpg,image/png">
@@ -236,187 +295,84 @@
                       </form>
                       
                       <div id="reload-ktp">
-                        @if($old && $old->pendidikan->ktp)
-                        <a href="{{asset('storage/'.$old->pendidikan->ktp)}}" target="_blank">Lihat berkas</a>
+                        @if($old && $old->krk->ktp)
+                        <a href="{{asset('storage/'.$old->krk->ktp)}}" target="_blank">Lihat berkas</a>
                         @endif
                       </div>
-                      
                     </div>
-
                   </div>
                   <div class="form-group row">
-                    <label class="col-lg-3 col-form-label">Pas Foto Penanggung Jawab: (jpeg, jpg, png) max 1MB*</label>
+                    <label class="col-lg-3 col-form-label">PBB Terakhir: (jpeg, jpg, png) max 1MB*</label>
                     <div class="col-lg-9">
-                      <form action="" method="POST" id="foto">
+                      <form action="" method="POST" id="pbb">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="foto" required accept="image/png, image/gif, image/jpeg">
-                          <input type="hidden" class="form-control" name="key" value="foto">
+                          <input type="file" class="form-control" name="pbb" required accept="image/png, image/gif, image/jpeg">
+                          <input type="hidden" class="form-control" name="key" value="pbb">
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
                         </div>
                       </form>
-
-                      <div id="reload-foto">
-                        @if($old && $old->pendidikan->pas_foto)
-                        <a href="{{asset('storage/'.$old->pendidikan->pas_foto)}}" target="_blank">Lihat berkas</a>
+                      <div id="reload-pbb">
+                        @if($old && $old->krk->pbb)
+                        <a href="{{asset('storage/'.$old->krk->pbb)}}" target="_blank">Lihat berkas</a>
                         @endif
                       </div>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-lg-3 col-form-label">Akta Pendirian Yayasan: (pdf) max 1MB*</label>
+                    <label class="col-lg-3 col-form-label">Surat Tanah: (jpeg, jpg, png) max 1MB*</label>
                     <div class="col-lg-9">
-                      <form action="" method="POST" id="akta">
+                      <form action="" method="POST" id="surat_tanah">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="akta" required accept="application/pdf">
-                          <input type="hidden" class="form-control" name="key" value="akta">
-                          <button type="submit" class="btn btn-outline-secondary">Simpan 
-                          </button>
-                        </div>
-                      </form>
-
-                      <div id="reload-akta">
-                        @if($old && $old->pendidikan->akta)
-                        <a href="{{asset('storage/'.$old->pendidikan->akta)}}" target="_blank">Lihat berkas</a>
-                        @endif
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-lg-3 col-form-label">Kurikulum: (pdf) max 1MB*</label>
-                    <div class="col-lg-9">
-                      <form id="kurikulum">
-                        <div class="input-group">
-                          @csrf
-                          <input type="file" class="form-control" name="kurikulum" accept="application/pdf" required>
-                          <input type="hidden" class="form-control" name="key" value="kurikulum" >
+                          <input type="file" class="form-control" name="surat_tanah" required accept="image/png, image/gif, image/jpeg">
+                          <input type="hidden" class="form-control" name="key" value="surat_tanah">
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
                         </div>
                       </form>
-
-                      <div id="reload-kurikulum">
-                        @if($old && $old->pendidikan->kurikulum)
-                        <a href="{{asset('storage/'.$old->pendidikan->kurikulum)}}" target="_blank">Lihat berkas</a>
+                      <div id="reload-surat_tanah">
+                        @if($old && $old->krk->surat_tanah)
+                        <a href="{{asset('storage/'.$old->krk->surat_tanah)}}" target="_blank">Lihat berkas</a>
                         @endif
                       </div>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-lg-3 col-form-label">Struktur Organisasi: (pdf) max 1MB*</label>
+                    <label class="col-lg-3 col-form-label">Peta Lokasi (Koordinat X dan Y): (jpeg, jpg, png) max 1MB*</label>
                     <div class="col-lg-9">
-                      <form id="struktur-organisasi">
+                      <form action="" method="POST" id="peta">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="struktur_organisasi" accept="application/pdf" required>
-                          <input type="hidden" class="form-control" name="key" value="struktur_organisasi" >
+                          <input type="file" class="form-control" name="peta" required accept="image/png, image/gif, image/jpeg">
+                          <input type="hidden" class="form-control" name="key" value="peta">
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
                         </div>
                       </form>
-                      <div id="reload-struktur-organisasi">
-                        @if($old && $old->pendidikan->struktur_organisasi)
-                        <a href="{{asset('storage/'.$old->pendidikan->struktur_organisasi)}}" target="_blank">Lihat berkas</a>
+                      <div id="reload-peta">
+                        @if($old && $old->krk->peta)
+                        <a href="{{asset('storage/'.$old->krk->peta)}}" target="_blank">Lihat berkas</a>
                         @endif
                       </div>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-lg-3 col-form-label">SK Penanggung Jawab Dan Pengajar: (pdf) max 1MB</label>
+                    <label class="col-lg-3 col-form-label">Gambar Bangunan Rencana: (jpeg, jpg, png) max 1MB*</label>
                     <div class="col-lg-9">
-                      <form id="sk">
+                      <form action="" method="POST" id="gambar">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="sk" accept="application/pdf" required>
-                          <input type="hidden" class="form-control" name="key" value="sk">
+                          <input type="file" class="form-control" name="gambar" required accept="image/png, image/gif, image/jpeg">
+                          <input type="hidden" class="form-control" name="key" value="gambar">
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
                         </div>
                       </form>
-                      <div id="reload-sk">
-                        @if($old && $old->pendidikan->sk)
-                        <a href="{{asset('storage/'.$old->pendidikan->sk)}}" target="_blank">Lihat berkas</a>
-                        @endif
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-lg-3 col-form-label">Sertifikat Tanah / Surat Perjanjian Sewa: (pdf) max 1MB</label>
-                    <div class="col-lg-9">
-                      <form id="sertifikat-tanah">
-                        <div class="input-group">
-                          @csrf
-                          <input type="file" class="form-control" name="sertifikat_tanah" accept="application/pdf" required>
-                          <input type="hidden" class="form-control" name="key" value="sertifikat_tanah">
-                          <button type="submit" class="btn btn-outline-secondary">Simpan
-                          </button>
-                        </div>
-                      </form>
-                      <div id="reload-sertifikat-tanah">
-                        @if($old && $old->pendidikan->sertifikat_tanah)
-                        <a href="{{asset('storage/'.$old->pendidikan->sertifikat_tanah)}}" target="_blank">Lihat berkas</a>
-                        @endif
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-lg-3 col-form-label">Nomor Induk Berusaha (NIB): (pdf) max 1MB</label>
-                    <div class="col-lg-9">
-                      <form id="nib">
-                        <div class="input-group">
-                          @csrf
-                          <input type="file" class="form-control" name="nib" accept="application/pdf" required>
-                          <input type="hidden" class="form-control" name="key" value="nib">
-                          <button type="submit" class="btn btn-outline-secondary">Simpan
-                          </button>
-                        </div>
-                      </form>
-                      <div id="reload-nib">
-                        @if($old && $old->pendidikan->nib)
-                        <a href="{{asset('storage/'.$old->pendidikan->nib)}}" target="_blank">Lihat berkas</a>
-                        @endif
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- OPSIONAL -->
-                  <hr>
-                  <div class="form-group row">
-                    <label class="col-lg-3 col-form-label">NPSN (Perpanjangan): (pdf) max 1MB</label>
-                    <div class="col-lg-9">
-                      <form id="npsn">
-                        <div class="input-group">
-                          @csrf
-                          <input type="file" class="form-control" name="npsn" accept="application/pdf" required>
-                          <input type="hidden" class="form-control" name="key" value="npsn">
-                          <button type="submit" class="btn btn-outline-secondary">Simpan
-                          </button>
-                        </div>
-                      </form>
-                      <div id="reload-npsn">
-                        @if($old && $old->pendidikan->npsn)
-                        <a href="{{asset('storage/'.$old->pendidikan->npsn)}}" target="_blank">Lihat berkas</a>
-                        @endif
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-lg-3 col-form-label">Izin Lama (Perpanjangan): (pdf) max 1MB</label>
-                    <div class="col-lg-9">
-                      <form id="izin_lama">
-                        <div class="input-group">
-                          @csrf
-                          <input type="file" class="form-control" name="izin_lama" accept="application/pdf" required>
-                          <input type="hidden" class="form-control" name="key" value="izin_lama">
-                          <button type="submit" class="btn btn-outline-secondary">Simpan
-                          </button>
-                        </div>
-                      </form>
-                      <div id="reload-izin_lama">
-                        @if($old && $old->pendidikan->izin_lama)
-                        <a href="{{asset('storage/'.$old->pendidikan->izin_lama)}}" target="_blank">Lihat berkas</a>
+                      <div id="reload-gambar">
+                        @if($old && $old->krk->gambar)
+                        <a href="{{asset('storage/'.$old->krk->gambar)}}" target="_blank">Lihat berkas</a>
                         @endif
                       </div>
                     </div>
@@ -434,8 +390,8 @@
                         </div>
                       </form>
                       <div id="reload-berkas_pendukung">
-                        @if($old && $old->pendidikan->berkas_pendukung)
-                        <a href="{{asset('storage/'.$old->pendidikan->berkas_pendukung)}}" target="_blank">Lihat berkas</a>
+                        @if($old && $old->krk->berkas_pendukung)
+                        <a href="{{asset('storage/'.$old->krk->berkas_pendukung)}}" target="_blank">Lihat berkas</a>
                         @endif
                       </div>
                     </div>
@@ -491,26 +447,24 @@
   jenis_izin_old = null;
   id_jenis_izin_old = null;
 </script>
-@if($old && $old->pendidikan && $old->pendidikan->subizin)
+@if($old && $old->krk)
 <script type="text/javascript">
-  jenis_izin_old = '{!! $old->pendidikan->subizin->nama !!}';
-  id_jenis_izin_old = '{!! $old->pendidikan->subizin->id !!}';
-  pendidikan_id = '{!! $old->pendidikan->id !!}';
+  krk_id = '{!! $old->krk->id !!}';
 </script>
 @endif
 
 @section('page_script')
 <script type="text/javascript">
 
-  const route1= "{{ route('pendidikan.tab1') }}";
-  const route2= "{{ route('pendidikan.tab2') }}";
-  const route3= "{{ route('pendidikan.tab3') }}";
-  const route4= "{{ route('pendidikan.tab4') }}";
-  const route5= "{{ route('pendidikan.tab5') }}";
+  const route1= "{{ route('krk.tab1') }}";
+  const route2= "{{ route('krk.tab2') }}";
+  const route3= "{{ route('krk.tab3') }}";
+  const route4= "{{ route('krk.tab4') }}";
+  const route5= "{{ route('krk.tab5') }}";
   
 </script>
 
-<script type="text/javascript" src="{{asset('js/user/pendidikan-create.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/user/krk-create.js')}}"></script>
 
 <script type="text/javascript">
   function successToRelaoad(status, pesan) {

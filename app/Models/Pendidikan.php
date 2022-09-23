@@ -21,6 +21,11 @@ class Pendidikan extends Model
         return $this->belongsTo(Subizin::class, 'subizin_id');
     }
 
+    public function reason()
+    {
+        return $this->hasOne(Pddreason::class, 'pendidikan_id', 'id');
+    }
+
     public function klh()
     {
         return $this->belongsTo(Kelurahan::class, 'kelurahan');

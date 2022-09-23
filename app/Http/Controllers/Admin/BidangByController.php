@@ -7,10 +7,14 @@ use Illuminate\Http\Request;
 use App\Models\Perizinan;
 use App\Models\Sipreason;
 use App\Models\Sikreason;
+use App\Models\Pddreason;
+use App\Models\Krkreason;
 use Auth;
 use App\Models\Admin;
 use App\Models\Sip;
 use App\Models\Sik;
+use App\Models\Pendidikan;
+use App\Models\Krk;
 use Carbon\Carbon;
 use Mail;
 use Storage;
@@ -45,6 +49,7 @@ class BidangByController extends Controller
 					'pesan' => 'Pesan tak dapat diproses!'
 				);
 			}
+
 			if($jenis == 'sip') { // JIKA SIP
 				$data = Sipreason::where('sip_id', $id)->first();
 				if($data) {
@@ -62,6 +67,28 @@ class BidangByController extends Controller
 				} else {
 					$data = new Sikreason;
 					$data['sik_id'] = $id;
+					$data[$request->key] = $request->pesan;
+					$data->save();
+				}
+			} elseif($jenis == 'pendidikan') { // JIKA PENDIDIKAN
+				$data = Pddreason::where('pendidikan_id', $id)->first();
+				if($data) {
+					Pddreason::where('pendidikan_id', $id)->update(array($request->key => $request->pesan));
+				} else {
+					$data = new Pddreason;
+					$data['pendidikan_id'] = $id;
+					$data[$request->key] = $request->pesan;
+					$data->save();
+				}
+			} elseif($jenis == 'krk') { // JIKA KRK
+
+				$data = Krkreason::where('krk_id', $id)->first();
+				
+				if($data) {
+					Krkreason::where('krk_id', $id)->update(array($request->key => $request->pesan));
+				} else {
+					$data = new Krkreason;
+					$data['krk_id'] = $id;
 					$data[$request->key] = $request->pesan;
 					$data->save();
 				}
@@ -114,6 +141,26 @@ class BidangByController extends Controller
 					$data[$request->key] = 1;
 					$data->save();
 				}
+			} else if ($request->izin == 'pendidikan') {
+				$data = Pddreason::where('pendidikan_id', $id)->first();
+				if($data) {
+					$data->update(array($request->key => 1));
+				} else {
+					$data = new Pddreason;
+					$data['pendidikan_id'] = $id;
+					$data[$request->key] = 1;
+					$data->save();
+				}
+			} else if ($request->izin == 'krk') {
+				$data = Krkreason::where('krk_id', $id)->first();
+				if($data) {
+					$data->update(array($request->key => 1));
+				} else {
+					$data = new Krkreason;
+					$data['krk_id'] = $id;
+					$data[$request->key] = 1;
+					$data->save();
+				}
 			}
 
 			return $arrayName = array(
@@ -154,7 +201,11 @@ class BidangByController extends Controller
 			return view('admin.bidang.sik-show', ['data' => $data]);
 		} elseif($data->jenis_izin == 'sip') {
 			return view('admin.bidang.sip-show', ['data' => $data]);
-		}
+		} elseif($data->jenis_izin == 'pendidikan') {
+			return view('admin.bidang.pendidikan-show', ['data' => $data]);
+		} elseif($data->jenis_izin == 'krk') {
+			return view('admin.bidang.krk-show', ['data' => $data]);
+		} 
 	}
 
 	public function verif(Request $request, $no_tiket)
@@ -233,7 +284,40 @@ class BidangByController extends Controller
 					return $err;
 				}
 				$dt->delete();
+			} if($data->jenis_izin == 'pendidikan') {
+
+				if(!$data->pendidikan->reason) {
+					return $err;
+				}
+				$dt = Pddreason::where('pendidikan_id', $data->pendidikan->id)->first();
+				if($dt->nama != '1' || $dt->alamat != '1' || $dt->nama_pendidikan != '1' || $dt->kelurahan != '1' || $dt->jalan != '1' || $dt->ktp != '1' || $dt->pas_foto != '1' || $dt->akta != '1' || $dt->kurikulum != '1' || $dt->struktur_organisasi != '1' || $dt->sk != '1' || $dt->nib != '1') {
+					return $err;
+				}
+				if ($data->pendidikan->npsn && $dt->npsn != '1') {
+					return $err;
+				}
+				if ($data->pendidikan->izin_lama && $dt->izin_lama != '1') {
+					return $err;
+				}
+				if ($data->pendidikan->berkas_pendukung && $dt->berkas_pendukung != '1') {
+					return $err;
+				}
+				$dt->delete();
+			} if($data->jenis_izin == 'krk') {
+
+				if(!$data->krk->reason) {
+					return $err;
+				}
+				$dt = Krkreason::where('krk_id', $data->krk->id)->first();
+				if($dt->nama != '1' || $dt->nik != '1' || $dt->alamat != '1' || $dt->luas != '1' || $dt->nama_surat != '1' || $dt->nomor_surat != '1' || $dt->penggunaan != '1' || $dt->jenis != '1' || $dt->jml_lantai != '1' || $dt->jml_bangunan != '1' || $dt->kelurahan != '1' || $dt->jalan != '1' || $dt->ktp != '1' || $dt->pbb != '1' || $dt->surat_tanah != '1' || $dt->peta != '1' || $dt->gambar != '1') {
+					return $err;
+				}
+				if ($data->krk->berkas_pendukung && $dt->berkas_pendukung != '1') {
+					return $err;
+				}
+				$dt->delete();
 			}
+
 			$data->verif_by = Auth::guard('admin')->user()->id;
 			$data->bidang_by = Auth::guard('admin')->user()->id;
 			$data->status = '0';
@@ -298,13 +382,44 @@ class BidangByController extends Controller
 				if ($data->sik->berkas_pendukung && $dt->berkas_pendukung == '') {
 					return $err;
 				}
-			} 
+			} elseif($data->jenis_izin == 'pendidikan') {
+				
+				if(!$data->pendidikan->reason) {
+					return $err;
+				}
+
+				$dt = Pddreason::where('pendidikan_id', $data->pendidikan->id)->first();
+				if($dt->nama == '' || $dt->alamat == '' || $dt->nama_pendidikan == '' || $dt->kelurahan == '' || $dt->jalan == '' || $dt->ktp == '' || $dt->pas_foto == '' || $dt->akta == '' || $dt->kurikulum == '' || $dt->struktur_organisasi == '' || $dt->sk == '' || $dt->nib == '') {
+					return $err;
+				}
+				if ($data->pendidikan->npsn && $dt->npsn == '') {
+					return $err;
+				}
+				if ($data->pendidikan->izin_lama && $dt->izin_lama == '') {
+					return $err;
+				}
+				if ($data->pendidikan->berkas_pendukung && $dt->berkas_pendukung == '') {
+					return $err;
+				}
+			} elseif($data->jenis_izin == 'krk') {
+				
+				if(!$data->krk->reason) {
+					return $err;
+				}
+
+				$dt = Krkreason::where('krk_id', $data->krk->id)->first();
+				if($dt->nama == '' || $dt->nik == '' ||  $dt->alamat == '' || $dt->luas == '' || $dt->nama_surat == '' || $dt->nomor_surat == '' || $dt->penggunaan == '' || $dt->jenis == '' || $dt->jml_lantai == '' || $dt->jml_bangunan == '' || $dt->kelurahan == '' || $dt->jalan == '' || $dt->ktp == '' || $dt->pbb == '' || $dt->surat_tanah == '' || $dt->peta == '' || $dt->gambar == '') {
+					return $err;
+				}
+				if ($data->krk->berkas_pendukung && $dt->berkas_pendukung == '') {
+					return $err;
+				}
+			}
 
 			$data->verif_by = Auth::guard('admin')->user()->id;
 			$data->status = '2';
 			$data->ket = $request->ket;
 			$data->updated_at = Carbon::now();
-			$data->save();
 		// return $data;
 
 			$email = $data->user->email;
@@ -325,6 +440,8 @@ class BidangByController extends Controller
 			if (Mail::failures()) {
 				return $arrayName = array('status' => 'error' , 'pesan' => 'Gagal mengirim email' );
 			}
+			$data->save();
+			
 
 			return $arrayName = array(
 				'status' => 'success',
