@@ -72,18 +72,18 @@
               </tr>
             </thead>
             <tbody>
-              @php $no=1; @endphp
+              @php $no=1; $ext = '.pdf'; @endphp
               @foreach($data as $datas)
               <tr>
                 <td>{{ $no++; }}</td>
                 <td>{{ $datas->no_tiket}}</td>
-                <td>{{ $datas->sip->subizin->jenis}}</td>
-                <td>{{ $datas->sip->subizin->nama}}</td>
+                <td>{{ $datas->jenis_izin}} </td>
+                <td></td>
                 <td>
                   <span class="badge rounded-pill bg-success">Telah Terbit</span>
                 </td>
                 <td>{{ $datas->updated_at }}</td>
-                <td><a href="{{route('perizinan.ditolak.show', ['no_tiket' => $datas->no_tiket]) }}" class="btn btn-outline-danger btn-sm" title="sertifikat">
+                <td><a href="{{asset('storage/sertifikat/'.$datas->no_tiket.$ext) }}" target="_blank" class="btn btn-outline-danger btn-sm" title="sertifikat">
                   <i class="fa fa-file-pdf"></i>
                 </a></td>
               </tr>

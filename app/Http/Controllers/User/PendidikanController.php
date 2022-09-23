@@ -318,7 +318,7 @@ class PendidikanController extends Controller
 		{
 			$auth = Auth::user()->id;
 			$data = Subizin::where('jenis', 'pendidikan')->distinct()->get('nama');
-		// return $data;
+// 		return $data;
 			$old = Perizinan::where('user_id', $auth)->where('jenis_izin', 'pendidikan')->where('status', null)->first();
 			if(!$old) {
 				$old = null;

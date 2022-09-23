@@ -121,7 +121,7 @@
                     <div class="form-group row">
                       <label class="col-lg-3 col-form-label">Jenis Perizinan:*</label>
                       <div class="col-lg-9">
-                        <select class="form-control" id="jenis_izin" onchange="jenis(this.value)">
+                        <select class="form-control" id="jenis_izin" onchange="jenis(this.value)" name="jenis_izin">
                           <option value="">pilih jenis perizinan</option>
                           @foreach($data as $datas)
                           <option value="{{$datas->nama}}" @if($old && $old->pendidikan && $old->pendidikan->subizin->nama == $datas->nama)selected @endif>{{$datas->nama}}</option>
