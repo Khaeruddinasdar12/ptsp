@@ -40,7 +40,7 @@ class AdminAuthController extends Controller
             return redirect()
                 ->back()
                 ->withInput()
-                ->withErrors(["Incorrect user login details!"]);
+                ->withErrors(['email' => 'Data tidak ditemukan!']);
         }
     }
 

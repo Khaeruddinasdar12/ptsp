@@ -240,6 +240,23 @@
                 <button class="btn btn-outline-success btn-sm" onclick="ceklis('kelurahan1', 'Kecamatan & Kelurahan Praktek 1')" id="ceklis"><i class="fa fa-check"></i></button>
               </td>
             </tr>
+            @if($data->sip->subizin_id == '7')
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Jadwal Praktek 1</td>
+              <td>{{ $data->sip->hari_buka1 }} s/d {{ $data->sip->hari_tutup1 }}, {{$data->sip->jam_buka1}} - {{$data->sip->jam_tutup1}} WITA</td>
+              <td>
+                @if($data->sip->reason && $data->sip->reason->jadwal1 =='1') {!! $terima !!}
+                @elseif($data->sip->reason && $data->sip->reason->jadwal1 == '') {!! $belumperiksa !!}
+                @elseif($data->sip->reason && $data->sip->reason->jadwal1 != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              <td>@if($data->sip->reason && $data->sip->reason->jadwal1 != '1') {{$data->sip->reason->jadwal1}} @endif</td>
+              <td><button class="btn btn-outline-danger btn-sm" onclick="reason('jadwal1', 'Jadwal Praktek 1')"><i class="fa fa-times"></i></button>&nbsp;
+                <button class="btn btn-outline-success btn-sm" onclick="ceklis('jadwal1', 'Jadwal Praktek 1')" id="ceklis"><i class="fa fa-check"></i></button>
+              </td>
+            </tr>
+            @endif
 
             <!-- JALAN 2 -->
             @if($data->sip->jalan2 && $data->sip->nama_praktek2 && $data->sip->kelurahan2)
@@ -288,6 +305,23 @@
                 <button class="btn btn-outline-success btn-sm" onclick="ceklis('kelurahan2', 'Kecamatan & Kelurahan Praktek 2')" id="ceklis"><i class="fa fa-check"></i></button>
               </td>
             </tr>
+            @if($data->sip->subizin_id == '7')
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Jadwal Praktek 2</td>
+              <td>{{ $data->sip->hari_buka2 }} s/d {{ $data->sip->hari_tutup2 }}, {{$data->sip->jam_buka2}} - {{$data->sip->jam_tutup2}} WITA</td>
+              <td>
+                @if($data->sip->reason && $data->sip->reason->jadwal2 =='1') {!! $terima !!}
+                @elseif($data->sip->reason && $data->sip->reason->jadwal2 == '') {!! $belumperiksa !!}
+                @elseif($data->sip->reason && $data->sip->reason->jadwal2 != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              <td>@if($data->sip->reason && $data->sip->reason->jadwal2 != '1') {{$data->sip->reason->jadwal2}} @endif</td>
+              <td><button class="btn btn-outline-danger btn-sm" onclick="reason('jadwal2', 'Jadwal Praktek 2')"><i class="fa fa-times"></i></button>&nbsp;
+                <button class="btn btn-outline-success btn-sm" onclick="ceklis('jadwal2', 'Jadwal Praktek 2')" id="ceklis"><i class="fa fa-check"></i></button>
+              </td>
+            </tr>
+            @endif
             @endif
             <!-- END JALAN 2 -->
 
@@ -339,6 +373,23 @@
                 <button class="btn btn-outline-success btn-sm" onclick="ceklis('kelurahan3', 'Kecamatan & Kelurahan Praktek 3')" id="ceklis"><i class="fa fa-check"></i></button>
               </td>
             </tr>
+            @if($data->sip->subizin_id == '7')
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Jadwal Praktek 3</td>
+              <td>{{ $data->sip->hari_buka3 }} s/d {{ $data->sip->hari_tutup3 }}, {{$data->sip->jam_buka3}} - {{$data->sip->jam_tutup3}} WITA</td>
+              <td>
+                @if($data->sip->reason && $data->sip->reason->jadwal3 =='1') {!! $terima !!}
+                @elseif($data->sip->reason && $data->sip->reason->jadwal3 == '') {!! $belumperiksa !!}
+                @elseif($data->sip->reason && $data->sip->reason->jadwal3 != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              <td>@if($data->sip->reason && $data->sip->reason->jadwal3 != '1') {{$data->sip->reason->jadwal3}} @endif</td>
+              <td><button class="btn btn-outline-danger btn-sm" onclick="reason('jadwal3', 'Jadwal Praktek 3')"><i class="fa fa-times"></i></button>&nbsp;
+                <button class="btn btn-outline-success btn-sm" onclick="ceklis('jadwal3', 'Jadwal Praktek 3')" id="ceklis"><i class="fa fa-check"></i></button>
+              </td>
+            </tr>
+            @endif
             @endif
             <!-- END JALAN 3 -->
 
@@ -461,7 +512,7 @@
     <br>
     <div class="row align-items-center">
       <div class="col-12 kt-align-right">
-        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-verifikasi">
+        <button type="button" class="btn btn-danger btn-sm" id="tolak" onclick="tolak()" title="Tolak Berkas">
           <i class="fa fa-times"></i> Tolak Berkas
         </button>
         <button type="button" class="btn btn-success btn-sm" id="verif" onclick="verifikasi()" title="Terima Berkas">
@@ -525,11 +576,11 @@
               cache: false,
               processData: false,
               beforeSend: function(){
+                $('#modal-reason').modal("hide");
                 $('#loader').attr("style", "");
               },
               success:function(data){
                 $('#post-reason')[0].reset();
-                $('#modal-reason').modal("hide");
                 if(data.status == 'success') {
                   ceklisSuccess(data.status, data.pesan)
                 } else {

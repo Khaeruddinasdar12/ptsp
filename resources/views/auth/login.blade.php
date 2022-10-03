@@ -33,6 +33,7 @@
                                 <div class="input-group">
                                     <input class="form-control @error('email') is-invalid @enderror" type="text" 
                                         placeholder="Email Atau NIK" name="email" value="{{ old('email') }}" required>
+                                        
                                     @error('email')
                                     <div id="email-error" class="error invalid-feedback">
                                         {{ $message }}</div>

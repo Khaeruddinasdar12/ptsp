@@ -103,7 +103,7 @@
           $no = 1; 
           $terima = '<span class="badge rounded-pill bg-success text-white"><i class="fa fa-check"></i> Terima</span>' ;
           $tolak = '<span class="badge rounded-pill bg-danger text-white"><i class="fa flaticon-circle"></i> Ditolak</span>';
-          $belumperiksa = '<span class="badge rounded-pill bg-primary text-white"><i class="fa flaticon-info"></i> Belum diperiksa</span>';
+          $belumperiksa = '<span class="badge rounded-pill bg-warning"><i class="fa flaticon-info"></i> Belum diperiksa</span>';
           @endphp
           <tbody>
 
@@ -420,403 +420,468 @@
               <td></td>
               @endif
             </tr>
-            <!-- END OF PRAKTEK 1, JALAN 1, KELURAHAN & KECAMATAN 1 -->
 
+            @if($data->sip->subizin_id == '7')
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Jadwal Praktek 1</td>
+              <td>{{ $data->sip->hari_buka1 }} s/d {{ $data->sip->hari_tutup1 }}, {{$data->sip->jam_buka1}} - {{$data->sip->jam_tutup1}}</td>
+              <td>
+                @if($data->sip->reason && $data->sip->reason->jadwal1 =='1') {!! $terima !!}
+                @elseif($data->sip->reason && $data->sip->reason->jadwal1 == '') {!! $belumperiksa !!}
+                @elseif($data->sip->reason && $data->sip->reason->jadwal1 != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              @if($data->sip->reason && $data->sip->reason->jadwal1 != '1')
+              <td> {{$data->sip->reason->jadwal1}} </td>
+              <td>
 
-            <!-- PRAKTEK 2, JALAN 2, KELURAHAN & KECAMATAN 2 -->
-            @if($data->sip->nama_praktek2 && $data->sip->jalan2 && $data->sip->kelurahan2)
-            <tr>
-              <td>{{$no = $no+1}}</td>
-              <td>Nama Praktek 2</td>
-              <td>{{ $data->sip->nama_praktek2 }}</td>
-              <td>
-                @if($data->sip->reason && $data->sip->reason->nama_praktek2 =='1') {!! $terima !!}
-                @elseif($data->sip->reason && $data->sip->reason->nama_praktek2 == '') {!! $belumperiksa !!}
-                @elseif($data->sip->reason && $data->sip->reason->nama_praktek2 != '1') {!! $tolak !!}
-                @else {!! $belumperiksa !!} @endif
-              </td>
-              @if($data->sip->reason && $data->sip->reason->nama_praktek2 != '1')
-              <td> {{$data->sip->reason->nama_praktek2}} </td>
-              <td>
                 <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}">
-                  <div class="input-group">
-                    @csrf
-                    @method('PUT')
-                    <input type="text" class="form-control" name="revisi" required>
-                    <input type="hidden" class="form-control" name="key" value="nama_praktek2">
-                    <button type="submit" class="btn btn-outline-secondary">Update
-                    </button>
-                  </div>
-                </form>
-              </td>
-              @else
-              <td></td>
-              <td></td>
-              @endif
-            </tr>
-            <tr>
-              <td>{{$no = $no+1}}</td>
-              <td>Jalan 2</td>
-              <td>{{ $data->sip->jalan2 }}</td>
-              <td>
-                @if($data->sip->reason && $data->sip->reason->jalan2 =='1') {!! $terima !!}
-                @elseif($data->sip->reason && $data->sip->reason->jalan2 == '') {!! $belumperiksa !!}
-                @elseif($data->sip->reason && $data->sip->reason->jalan2 != '1') {!! $tolak !!}
-                @else {!! $belumperiksa !!} @endif
-              </td>
-              @if($data->sip->reason && $data->sip->reason->jalan2 != '1')
-              <td> {{$data->sip->reason->jalan2}} </td>
-              <td>
-                <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}">
-                  <div class="input-group">
-                    @csrf
-                    @method('PUT')
-                    <input type="text" class="form-control" name="revisi" required>
-                    <input type="hidden" class="form-control" name="key" value="jalan2">
-                    <button type="submit" class="btn btn-outline-secondary">Update
-                    </button>
-                  </div>
-                </form>
-              </td>
-              @else
-              <td></td>
-              <td></td>
-              @endif
-            </tr>
-            <tr>
-              <td>{{$no = $no+1}}</td>
-              <td>Kecamatan & Kelurahan Praktek 2</td>
-              <td>Kec. {{ $data->sip->klh2->kecamatan }}, Kel. {{ $data->sip->klh2->kelurahan }} </td>
-              <td>
-                @if($data->sip->reason && $data->sip->reason->kelurahan2 =='1') {!! $terima !!}
-                @elseif($data->sip->reason && $data->sip->reason->kelurahan2 == '') {!! $belumperiksa !!}
-                @elseif($data->sip->reason && $data->sip->reason->kelurahan2 != '1') {!! $tolak !!}
-                @else {!! $belumperiksa !!} @endif
-              </td>
-              @if($data->sip->reason && $data->sip->reason->kelurahan2 != '1')
-              <td> {{$data->sip->reason->jalan2}} </td>
-              <td>
-                <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}">
-                  <div class="input-group">                  
-                    @csrf
-                    @method('PUT')
-                    <!-- PILIH KACAMATAN -->
-                    <select class="form-control" name="kecamatan2" id="kecamatan2" onchange="show_kelurahan2(this.value)" required>
-                      <option value="Biringkanaya" @if($data->sip->klh2->kecamatan == 'Biringkanaya') selected @endif>Biringkanaya</option>
-                      <option value="Bontoala" @if($data->sip->klh2->kecamatan == 'Bontoala') selected @endif>Bontoala</option>
-                      <option value="Kepulauan Sangkarrang" @if($data->sip->klh2->kecamatan == 'Kepulauan Sangkarrang') selected @endif>Kepulauan Sangkarrang</option>
-                      <option value="Makassar" @if($data->sip->klh2->kecamatan == 'Makassar') selected @endif>Makassar</option>
-                      <option value="Mamajang" @if($data->sip->klh2->kecamatan == 'Mamajang') selected @endif>Mamajang</option>
-                      <option value="Manggala" @if($data->sip->klh2->kecamatan == 'Manggala') selected @endif>Manggala</option>
-                      <option value="Mariso" @if($data->sip->klh2->kecamatan == 'Mariso') selected @endif>Mariso</option>
-                      <option value="Panakkukang" @if($data->sip->klh2->kecamatan == 'Panakkukang') selected @endif>Panakkukang</option>
-                      <option value="Rappocini" @if($data->sip->klh2->kecamatan == 'Rappocini') selected @endif>Rappocini</option>
-                      <option value="Tallo" @if($data->sip->klh2->kecamatan == 'Tallo') selected @endif>Tallo</option>
-                      <option value="Tamalanrea" @if($data->sip->klh2->kecamatan == 'Tamalanrea') selected @endif>Tamalanrea</option>
-                      <option value="Tamalate" @if($data->sip->klh2->kecamatan == 'Tamalate') selected @endif>Tamalate</option>
-                      <option value="Ujung Pandang" @if($data->sip->klh2->kecamatan == 'Ujung Pandang') selected @endif>Ujung Pandang</option>
-                      <option value="Ujung Tanah" @if($data->sip->klh2->kecamatan == 'Ujung Tanah') selected @endif>Ujung Tanah</option>
-                      <option value="Wajo" @if($data->sip->klh2->kecamatan == 'Wajo') selected @endif>Wajo</option>
-                    </select>
-                    <select class="form-control" name="revisi" id="kelurahan2">
-                      <option></option>
-                    </select>
-                    <input type="hidden" name="key" value="kelurahan2" required>
-                    <button type="submit" class="btn btn-outline-secondary">Update
-                    </button>
-                  </div>
-                </form>
-              </td>
-              @else
-              <td></td>
-              <td></td>
-              @endif
-            </tr>
-            @endif
-            <!-- END OF PRAKTEK 2, JALAN 2, KELURAHAN & KECAMATAN 2-->
-
-
-            <!-- PRAKTEK 3, JALAN 3, KELURAHAN & KECAMATAN 3 -->
-            @if($data->sip->nama_praktek3 && $data->sip->jalan3 && $data->sip->kelurahan3)
-            <tr>
-              <td>{{$no = $no+1}}</td>
-              <td>Nama Praktek 3</td>
-              <td>{{ $data->sip->nama_praktek3 }}</td>
-              <td>
-                @if($data->sip->reason && $data->sip->reason->nama_praktek3 =='1') {!! $terima !!}
-                @elseif($data->sip->reason && $data->sip->reason->nama_praktek3 == '') {!! $belumperiksa !!}
-                @elseif($data->sip->reason && $data->sip->reason->nama_praktek3 != '1') {!! $tolak !!}
-                @else {!! $belumperiksa !!} @endif
-              </td>
-              @if($data->sip->reason && $data->sip->reason->nama_praktek3 != '1')
-              <td> {{$data->sip->reason->nama_praktek3}} </td>
-              <td>
-                <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}">
-                  <div class="input-group">
-                    @csrf
-                    @method('PUT')
-                    <input type="text" class="form-control" name="revisi" required>
-                    <input type="hidden" class="form-control" name="key" value="nama_praktek3">
-                    <button type="submit" class="btn btn-outline-secondary">Update
-                    </button>
-                  </div>
-                </form>
-              </td>
-              @else
-              <td></td>
-              <td></td>
-              @endif
-            </tr>
-            <tr>
-              <td>{{$no = $no+1}}</td>
-              <td>Jalan 3</td>
-              <td>{{ $data->sip->jalan3 }}</td>
-              <td>
-                @if($data->sip->reason && $data->sip->reason->jalan3 =='1') {!! $terima !!}
-                @elseif($data->sip->reason && $data->sip->reason->jalan3 == '') {!! $belumperiksa !!}
-                @elseif($data->sip->reason && $data->sip->reason->jalan3 != '1') {!! $tolak !!}
-                @else {!! $belumperiksa !!} @endif
-              </td>
-              @if($data->sip->reason && $data->sip->reason->jalan3 != '1')
-              <td> {{$data->sip->reason->jalan3}} </td>
-              <td>
-                <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}">
-                  <div class="input-group">
-                    @csrf
-                    @method('PUT')
-                    <input type="text" class="form-control" name="revisi" required>
-                    <input type="hidden" class="form-control" name="key" value="jalan3">
-                    <button type="submit" class="btn btn-outline-secondary">Update
-                    </button>
-                  </div>
-                </form>
-              </td>
-              @else
-              <td></td>
-              <td></td>
-              @endif
-            </tr>
-            <tr>
-              <td>{{$no = $no+1}}</td>
-              <td>Kecamatan & Kelurahan Praktek 3</td>
-              <td>Kec. {{ $data->sip->klh3->kecamatan }}, Kel. {{ $data->sip->klh3->kelurahan }} </td>
-              <td>
-                @if($data->sip->reason && $data->sip->reason->kelurahan3 =='1') {!! $terima !!}
-                @elseif($data->sip->reason && $data->sip->reason->kelurahan3 == '') {!! $belumperiksa !!}
-                @elseif($data->sip->reason && $data->sip->reason->kelurahan3 != '1') {!! $tolak !!}
-                @else {!! $belumperiksa !!} @endif
-              </td>
-              @if($data->sip->reason && $data->sip->reason->kelurahan3 != '1')
-              <td> {{$data->sip->reason->jalan3}} </td>
-              <td>
-                <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}">
-                  <div class="input-group">                  
-                    @csrf
-                    @method('PUT')
-                    <!-- PILIH KACAMATAN -->
-                    <select class="form-control" name="kecamatan3" id="kecamatan3" onchange="show_kelurahan3(this.value)" required>
-                      <option value="Biringkanaya" @if($data->sip->klh3->kecamatan == 'Biringkanaya') selected @endif>Biringkanaya</option>
-                      <option value="Bontoala" @if($data->sip->klh3->kecamatan == 'Bontoala') selected @endif>Bontoala</option>
-                      <option value="Kepulauan Sangkarrang" @if($data->sip->klh3->kecamatan == 'Kepulauan Sangkarrang') selected @endif>Kepulauan Sangkarrang</option>
-                      <option value="Makassar" @if($data->sip->klh3->kecamatan == 'Makassar') selected @endif>Makassar</option>
-                      <option value="Mamajang" @if($data->sip->klh3->kecamatan == 'Mamajang') selected @endif>Mamajang</option>
-                      <option value="Manggala" @if($data->sip->klh3->kecamatan == 'Manggala') selected @endif>Manggala</option>
-                      <option value="Mariso" @if($data->sip->klh3->kecamatan == 'Mariso') selected @endif>Mariso</option>
-                      <option value="Panakkukang" @if($data->sip->klh3->kecamatan == 'Panakkukang') selected @endif>Panakkukang</option>
-                      <option value="Rappocini" @if($data->sip->klh3->kecamatan == 'Rappocini') selected @endif>Rappocini</option>
-                      <option value="Tallo" @if($data->sip->klh3->kecamatan == 'Tallo') selected @endif>Tallo</option>
-                      <option value="Tamalanrea" @if($data->sip->klh3->kecamatan == 'Tamalanrea') selected @endif>Tamalanrea</option>
-                      <option value="Tamalate" @if($data->sip->klh3->kecamatan == 'Tamalate') selected @endif>Tamalate</option>
-                      <option value="Ujung Pandang" @if($data->sip->klh3->kecamatan == 'Ujung Pandang') selected @endif>Ujung Pandang</option>
-                      <option value="Ujung Tanah" @if($data->sip->klh3->kecamatan == 'Ujung Tanah') selected @endif>Ujung Tanah</option>
-                      <option value="Wajo" @if($data->sip->klh3->kecamatan == 'Wajo') selected @endif>Wajo</option>
-                    </select>
-                    <select class="form-control" name="revisi" id="kelurahan3">
-                      <option></option>
-                    </select>
-                    <input type="hidden" name="key" value="kelurahan3" required>
-                    <button type="submit" class="btn btn-outline-secondary">Update
-                    </button>
-                  </div>
-                </form>
-              </td>
-              @else
-              <td></td>
-              <td></td>
-              @endif
-            </tr>
-            @endif
-            <!-- END OF PRAKTEK 3, JALAN 3, KELURAHAN & KECAMATAN 3-->
-
-
-            <tr>
-              <td>{{$no = $no+1}}</td>
-              <td>Foto KTP</td>
-              <td><a href="{{ asset('storage/'.$data->sip->ktp) }}" target="_blank">Lihat Berkas</a></td>
-              <td>
-                @if($data->sip->reason && $data->sip->reason->ktp =='1') {!! $terima !!}
-                @elseif($data->sip->reason && $data->sip->reason->ktp == '') {!! $belumperiksa !!}
-                @elseif($data->sip->reason && $data->sip->reason->ktp != '1') {!! $tolak !!}
-                @else {!! $belumperiksa !!} @endif
-              </td>
-              @if($data->sip->reason && $data->sip->reason->ktp != '1')
-              <td> {{$data->sip->reason->ktp}} </td>
-              <td>
-                <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}" enctype="multipart/form-data">
+                 <input type="hidden" name="key" value="jadwal1">
+                 <div class="row">
                   @csrf
                   @method('PUT')
-                  <div class="input-group">
-                    <input type="file" class="form-control" name="ktp" accept="image/jpeg,image/jpg,image/png" required>
-                    <input type="hidden" class="form-control" name="key" value="ktp">
-                    <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Update
+                  <div class="col-lg-6 form-floating">
+                    @php $hari_buka1 = null; @endphp
+                    @if($data->sip->hari_buka1)
+                    @php $hari_buka1 = $data->sip->hari_buka1; @endphp
+                    @endif
+                    <label for="floatingInputInvalid">Hari Buka</label>
+                    <select class="form-control" name="hari_buka1" required="" id="hari_buka1">
+                      <option value="">Pilih hari</option>
+                      <option value="Senin" @if($hari_buka1 == 'Senin') selected @endif>Senin</option>
+                      <option value="Selasa" @if($hari_buka1 == 'Selasa') selected @endif>Selasa</option>
+                      <option value="Rabu" @if($hari_buka1 == 'Rabu') selected @endif>Rabu</option>
+                      <option value="Kamis" @if($hari_buka1 == 'Kamis') selected @endif>Kamis</option>
+                      <option value="Jumat" @if($hari_buka1 == 'Jumat') selected @endif>Jumat</option>
+                      <option value="Sabtu" @if($hari_buka1 == 'Sabtu') selected @endif>Sabtu</option>
+                      <option value="Minggu" @if($hari_buka1 == 'Minggu') selected @endif>Minggu</option>
+                    </select>
+                  </div>
+                  <div class="col-lg-6 form-floating">
+                    @php $hari_tutup1 = null; @endphp
+                    @if($data->sip->hari_tutup1)
+                    @php $hari_tutup1 = $data->sip->hari_tutup1; @endphp
+                    @endif
+                    <label for="floatingInputInvalid">Hari Tutup</label>
+                    <select class="form-control" name="hari_tutup1" required="" id="hari_tutup1">
+                      <option value="">Pilih hari</option>
+                      <option value="Senin" @if($hari_tutup1 == 'Senin') selected @endif>Senin</option>
+                      <option value="Selasa" @if($hari_tutup1 == 'Selasa') selected @endif>Selasa</option>
+                      <option value="Rabu" @if($hari_tutup1 == 'Rabu') selected @endif>Rabu</option>
+                      <option value="Kamis" @if($hari_tutup1 == 'Kamis') selected @endif>Kamis</option>
+                      <option value="Jumat" @if($hari_tutup1 == 'Jumat') selected @endif>Jumat</option>
+                      <option value="Sabtu" @if($hari_tutup1 == 'Sabtu') selected @endif>Sabtu</option>
+                      <option value="Minggu" @if($hari_tutup1 == 'Minggu') selected @endif>Minggu</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6 form-floating">
+                    @php $jam_buka1 = null; $menitbuka1 = null; @endphp
+                    @if($data->sip->jam_buka1)
+                    @php 
+                    $jam_buka1 = strtok($data->sip->jam_buka1, ':');  
+                    $menitbuka1 = substr($data->sip->jam_buka1, strpos($data->sip->jam_buka1, ":") + 1);
+                    @endphp
+                    @endif
+                    <label for="floatingInputInvalid">Jam Buka</label>
+                    <div class="input-group mb-3">
+                      <select class="form-control" name="jam_buka1">
+                        @php $i = 0; @endphp
+                        @for($i; $i < 24; $i++)
+                        <option value="{{$i}}" @if($jam_buka1 == $i) selected @endif>{{$i}}</option>
+                        @endfor
+                      </select>
+                      <select class="form-control" name="menitbuka1">
+                        <option value="00" @if($menitbuka1 == '00') selected @endif>00</option>
+                        <option value="15" @if($menitbuka1 == '15') selected @endif>15</option>
+                        <option value="30" @if($menitbuka1 == '30') selected @endif>30</option>
+                        <option value="45" @if($menitbuka1 == '45') selected @endif>45</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 form-floating">
+                    @php $jam_tutup1 = null; $menittutup1 = null; @endphp
+                    @if($data->sip->jam_tutup1)
+                    @php 
+                    $jam_tutup1 = strtok($data->sip->jam_tutup1, ':');  
+                    $menittutup1 = substr($data->sip->jam_tutup1, strpos($data->sip->jam_tutup1, ":") + 1);
+                    @endphp
+                    @endif
+                    <label for="floatingInputInvalid">Jam Tutup</label>
+                    <div class="input-group mb-3">
+                      <select class="form-control" name="jam_tutup1">
+                        @php $i = 0; @endphp
+                        @for($i; $i < 24; $i++)
+                        <option value="{{$i}}" @if($jam_tutup1 == $i) selected @endif>{{$i}}</option>
+                        @endfor
+                      </select>
+                      <select class="form-control" name="menittutup1">
+                        <option value="00" @if($menittutup1 == '00') selected @endif>00</option>
+                        <option value="15" @if($menittutup1 == '15') selected @endif>15</option>
+                        <option value="30" @if($menittutup1 == '30') selected @endif>30</option>
+                        <option value="45" @if($menittutup1 == '45') selected @endif>45</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row align-items-center">
+                  <div class="col-12 kt-align-right">
+                    <button type="submit" class="btn btn-outline-secondary">
+                       Update
                     </button>
                   </div>
-                </form>
-              </td>
-              @else
-              <td></td>
-              <td></td>
-              @endif
-            </tr>
+                </div>
+              </form>
+            </td>
+            @else
+            <td></td>
+            <td></td>
+            @endif
+          </tr>
+          @else
+          @endif
+          <!-- END OF PRAKTEK 1, JALAN 1, KELURAHAN & KECAMATAN 1 -->
+
+
+          <!-- PRAKTEK 2, JALAN 2, KELURAHAN & KECAMATAN 2 -->
+          @if($data->sip->nama_praktek2 && $data->sip->jalan2 && $data->sip->kelurahan2)
+          <tr>
+            <td>{{$no = $no+1}}</td>
+            <td>Nama Praktek 2</td>
+            <td>{{ $data->sip->nama_praktek2 }}</td>
+            <td>
+              @if($data->sip->reason && $data->sip->reason->nama_praktek2 =='1') {!! $terima !!}
+              @elseif($data->sip->reason && $data->sip->reason->nama_praktek2 == '') {!! $belumperiksa !!}
+              @elseif($data->sip->reason && $data->sip->reason->nama_praktek2 != '1') {!! $tolak !!}
+              @else {!! $belumperiksa !!} @endif
+            </td>
+            @if($data->sip->reason && $data->sip->reason->nama_praktek2 != '1')
+            <td> {{$data->sip->reason->nama_praktek2}} </td>
+            <td>
+              <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}">
+                <div class="input-group">
+                  @csrf
+                  @method('PUT')
+                  <input type="text" class="form-control" name="revisi" required>
+                  <input type="hidden" class="form-control" name="key" value="nama_praktek2">
+                  <button type="submit" class="btn btn-outline-secondary">Update
+                  </button>
+                </div>
+              </form>
+            </td>
+            @else
+            <td></td>
+            <td></td>
+            @endif
+          </tr>
+          <tr>
+            <td>{{$no = $no+1}}</td>
+            <td>Jalan 2</td>
+            <td>{{ $data->sip->jalan2 }}</td>
+            <td>
+              @if($data->sip->reason && $data->sip->reason->jalan2 =='1') {!! $terima !!}
+              @elseif($data->sip->reason && $data->sip->reason->jalan2 == '') {!! $belumperiksa !!}
+              @elseif($data->sip->reason && $data->sip->reason->jalan2 != '1') {!! $tolak !!}
+              @else {!! $belumperiksa !!} @endif
+            </td>
+            @if($data->sip->reason && $data->sip->reason->jalan2 != '1')
+            <td> {{$data->sip->reason->jalan2}} </td>
+            <td>
+              <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}">
+                <div class="input-group">
+                  @csrf
+                  @method('PUT')
+                  <input type="text" class="form-control" name="revisi" required>
+                  <input type="hidden" class="form-control" name="key" value="jalan2">
+                  <button type="submit" class="btn btn-outline-secondary">Update
+                  </button>
+                </div>
+              </form>
+            </td>
+            @else
+            <td></td>
+            <td></td>
+            @endif
+          </tr>
+          <tr>
+            <td>{{$no = $no+1}}</td>
+            <td>Kecamatan & Kelurahan Praktek 2</td>
+            <td>Kec. {{ $data->sip->klh2->kecamatan }}, Kel. {{ $data->sip->klh2->kelurahan }} </td>
+            <td>
+              @if($data->sip->reason && $data->sip->reason->kelurahan2 =='1') {!! $terima !!}
+              @elseif($data->sip->reason && $data->sip->reason->kelurahan2 == '') {!! $belumperiksa !!}
+              @elseif($data->sip->reason && $data->sip->reason->kelurahan2 != '1') {!! $tolak !!}
+              @else {!! $belumperiksa !!} @endif
+            </td>
+            @if($data->sip->reason && $data->sip->reason->kelurahan2 != '1')
+            <td> {{$data->sip->reason->jalan2}} </td>
+            <td>
+              <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}">
+                <div class="input-group">                  
+                  @csrf
+                  @method('PUT')
+                  <!-- PILIH KACAMATAN -->
+                  <select class="form-control" name="kecamatan2" id="kecamatan2" onchange="show_kelurahan2(this.value)" required>
+                    <option value="Biringkanaya" @if($data->sip->klh2->kecamatan == 'Biringkanaya') selected @endif>Biringkanaya</option>
+                    <option value="Bontoala" @if($data->sip->klh2->kecamatan == 'Bontoala') selected @endif>Bontoala</option>
+                    <option value="Kepulauan Sangkarrang" @if($data->sip->klh2->kecamatan == 'Kepulauan Sangkarrang') selected @endif>Kepulauan Sangkarrang</option>
+                    <option value="Makassar" @if($data->sip->klh2->kecamatan == 'Makassar') selected @endif>Makassar</option>
+                    <option value="Mamajang" @if($data->sip->klh2->kecamatan == 'Mamajang') selected @endif>Mamajang</option>
+                    <option value="Manggala" @if($data->sip->klh2->kecamatan == 'Manggala') selected @endif>Manggala</option>
+                    <option value="Mariso" @if($data->sip->klh2->kecamatan == 'Mariso') selected @endif>Mariso</option>
+                    <option value="Panakkukang" @if($data->sip->klh2->kecamatan == 'Panakkukang') selected @endif>Panakkukang</option>
+                    <option value="Rappocini" @if($data->sip->klh2->kecamatan == 'Rappocini') selected @endif>Rappocini</option>
+                    <option value="Tallo" @if($data->sip->klh2->kecamatan == 'Tallo') selected @endif>Tallo</option>
+                    <option value="Tamalanrea" @if($data->sip->klh2->kecamatan == 'Tamalanrea') selected @endif>Tamalanrea</option>
+                    <option value="Tamalate" @if($data->sip->klh2->kecamatan == 'Tamalate') selected @endif>Tamalate</option>
+                    <option value="Ujung Pandang" @if($data->sip->klh2->kecamatan == 'Ujung Pandang') selected @endif>Ujung Pandang</option>
+                    <option value="Ujung Tanah" @if($data->sip->klh2->kecamatan == 'Ujung Tanah') selected @endif>Ujung Tanah</option>
+                    <option value="Wajo" @if($data->sip->klh2->kecamatan == 'Wajo') selected @endif>Wajo</option>
+                  </select>
+                  <select class="form-control" name="revisi" id="kelurahan2">
+                    <option></option>
+                  </select>
+                  <input type="hidden" name="key" value="kelurahan2" required>
+                  <button type="submit" class="btn btn-outline-secondary">Update
+                  </button>
+                </div>
+              </form>
+            </td>
+            @else
+            <td></td>
+            <td></td>
+            @endif
+          </tr>
+          @endif
+
+          <!-- Jadwal Praktek 2 -->
+          @if($data->sip->subizin_id == '7')
             <tr>
               <td>{{$no = $no+1}}</td>
-              <td>Pas Foto</td>
-              <td><a href="{{ asset('storage/'.$data->sip->foto) }}" target="_blank">Lihat Berkas</a></td>
+              <td>Jadwal Praktek 2</td>
+              <td>{{ $data->sip->hari_buka2 }} s/d {{ $data->sip->hari_tutup2 }}, {{$data->sip->jam_buka2}} - {{$data->sip->jam_tutup2}}</td>
               <td>
-               @if($data->sip->reason && $data->sip->reason->foto =='1') {!! $terima !!}
-               @elseif($data->sip->reason && $data->sip->reason->foto == '') {!! $belumperiksa !!}
-               @elseif($data->sip->reason && $data->sip->reason->foto != '1') {!! $tolak !!}
-               @else {!! $belumperiksa !!} @endif
-             </td>
-             @if($data->sip->reason && $data->sip->reason->foto != '1')
-             <td> {{$data->sip->reason->foto}} </td>
-             <td>
-              <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-                <div class="input-group">
-                  <input type="file" class="form-control" name="foto" accept="image/jpeg,image/jpg,image/png" required>
-                  <input type="hidden" class="form-control" name="key" value="foto">
-                  <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Update
-                  </button>
-                </div>
-              </form>
-            </td>
-            @else
-            <td></td>
-            <td></td>
-            @endif
-          </tr>
-          <tr>
-            <td>{{$no = $no+1}}</td>
-            <td>File STR</td>
-            <td><a href="{{ asset('storage/'.$data->sip->str) }}" target="_blank">Lihat Berkas</a></td>
-            <td>
-              @if($data->sip->reason && $data->sip->reason->str =='1') {!! $terima !!}
-              @elseif($data->sip->reason && $data->sip->reason->str == '') {!! $belumperiksa !!}
-              @elseif($data->sip->reason && $data->sip->reason->str != '1') {!! $tolak !!}
-              @else {!! $belumperiksa !!} @endif
-            </td>
-            @if($data->sip->reason && $data->sip->reason->str != '1')
-            <td> {{$data->sip->reason->str}} </td>
-            <td>
-              <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-                <div class="input-group">
-                  <input type="file" class="form-control" name="str" accept="application/pdf" required>
-                  <input type="hidden" class="form-control" name="key" value="str">
-                  <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Update
-                  </button>
-                </div>
-              </form>
-            </td>
-            @else
-            <td></td>
-            <td></td>
-            @endif
-          </tr>
-          <tr>
-            <td>{{$no = $no+1}}</td>
-            <td>Rekomendasi Organisasi Profesi</td>
-            <td><a href="{{ asset('storage/'.$data->sip->rekomendasi_org) }}" target="_blank">Lihat Berkas</a></td>
-            <td>
-              @if($data->sip->reason && $data->sip->reason->rekomendasi_org =='1') {!! $terima !!}
-              @elseif($data->sip->reason && $data->sip->reason->rekomendasi_org == '') {!! $belumperiksa !!}
-              @elseif($data->sip->reason && $data->sip->reason->rekomendasi_org != '1') {!! $tolak !!}
-              @else {!! $belumperiksa !!} @endif
-            </td>
-            @if($data->sip->reason && $data->sip->reason->rekomendasi_org != '1')
-            <td> {{$data->sip->reason->rekomendasi_org}} </td>
-            <td>
-              <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-                <div class="input-group">
-                  <input type="file" class="form-control" name="rekomendasi_org" accept="application/pdf" required>
-                  <input type="hidden" class="form-control" name="key" value="rekomendasi_org">
-                  <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Update
-                  </button>
-                </div>
-              </form>
-            </td>
-            @else
-            <td></td>
-            <td></td>
-            @endif
-          </tr>
-          <tr>
-            <td>{{$no = $no+1}}</td>
-            <td>Surat Keterangan Pelayanan Kesehatan</td>
-            <td><a href="{{ asset('storage/'.$data->sip->surat_keterangan) }}" target="_blank">Lihat Berkas</a></td>
-            <td>
-              @if($data->sip->reason && $data->sip->reason->surat_keterangan =='1') {!! $terima !!}
-              @elseif($data->sip->reason && $data->sip->reason->surat_keterangan == '') {!! $belumperiksa !!}
-              @elseif($data->sip->reason && $data->sip->reason->surat_keterangan != '1') {!! $tolak !!}
-              @else {!! $belumperiksa !!} @endif
-            </td>
-            @if($data->sip->reason && $data->sip->reason->surat_keterangan != '1')
-            <td> {{$data->sip->reason->surat_keterangan}} </td>
-            <td>
-              <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-                <div class="input-group">
-                  <input type="file" class="form-control" name="surat_keterangan" accept="application/pdf" required>
-                  <input type="hidden" class="form-control" name="key" value="surat_keterangan">
-                  <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Update
-                  </button>
-                </div>
-              </form>
-            </td>
-            @else
-            <td></td>
-            <td></td>
-            @endif
-          </tr>
+                @if($data->sip->reason && $data->sip->reason->jadwal2 =='1') {!! $terima !!}
+                @elseif($data->sip->reason && $data->sip->reason->jadwal2 == '') {!! $belumperiksa !!}
+                @elseif($data->sip->reason && $data->sip->reason->jadwal2 != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              @if($data->sip->reason && $data->sip->reason->jadwal2 != '1')
+              <td> {{$data->sip->reason->jadwal2}} </td>
+              <td>
 
-          <!-- OPSIONAL -->
-          @if($data->sip->surat_persetujuan)
+                <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}">
+                 <input type="hidden" name="key" value="jadwal2">
+                 <div class="row">
+                  @csrf
+                  @method('PUT')
+                  <div class="col-lg-6 form-floating">
+                    @php $hari_buka2 = null; @endphp
+                    @if($data->sip->hari_buka2)
+                    @php $hari_buka2 = $data->sip->hari_buka2; @endphp
+                    @endif
+                    <label for="floatingInputInvalid">Hari Buka</label>
+                    <select class="form-control" name="hari_buka2" required="" id="hari_buka2">
+                      <option value="">Pilih hari</option>
+                      <option value="Senin" @if($hari_buka2 == 'Senin') selected @endif>Senin</option>
+                      <option value="Selasa" @if($hari_buka2 == 'Selasa') selected @endif>Selasa</option>
+                      <option value="Rabu" @if($hari_buka2 == 'Rabu') selected @endif>Rabu</option>
+                      <option value="Kamis" @if($hari_buka2 == 'Kamis') selected @endif>Kamis</option>
+                      <option value="Jumat" @if($hari_buka2 == 'Jumat') selected @endif>Jumat</option>
+                      <option value="Sabtu" @if($hari_buka2 == 'Sabtu') selected @endif>Sabtu</option>
+                      <option value="Minggu" @if($hari_buka2 == 'Minggu') selected @endif>Minggu</option>
+                    </select>
+                  </div>
+                  <div class="col-lg-6 form-floating">
+                    @php $hari_tutup2 = null; @endphp
+                    @if($data->sip->hari_tutup2)
+                    @php $hari_tutup2 = $data->sip->hari_tutup2; @endphp
+                    @endif
+                    <label for="floatingInputInvalid">Hari Tutup</label>
+                    <select class="form-control" name="hari_tutup2" required="" id="hari_tutup2">
+                      <option value="">Pilih hari</option>
+                      <option value="Senin" @if($hari_tutup2 == 'Senin') selected @endif>Senin</option>
+                      <option value="Selasa" @if($hari_tutup2 == 'Selasa') selected @endif>Selasa</option>
+                      <option value="Rabu" @if($hari_tutup2 == 'Rabu') selected @endif>Rabu</option>
+                      <option value="Kamis" @if($hari_tutup2 == 'Kamis') selected @endif>Kamis</option>
+                      <option value="Jumat" @if($hari_tutup2 == 'Jumat') selected @endif>Jumat</option>
+                      <option value="Sabtu" @if($hari_tutup2 == 'Sabtu') selected @endif>Sabtu</option>
+                      <option value="Minggu" @if($hari_tutup2 == 'Minggu') selected @endif>Minggu</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6 form-floating">
+                    @php $jam_buka2 = null; $menitbuka2 = null; @endphp
+                    @if($data->sip->jam_buka2)
+                    @php 
+                    $jam_buka2 = strtok($data->sip->jam_buka2, ':');  
+                    $menitbuka2 = substr($data->sip->jam_buka2, strpos($data->sip->jam_buka2, ":") + 1);
+                    @endphp
+                    @endif
+                    <label for="floatingInputInvalid">Jam Buka</label>
+                    <div class="input-group mb-3">
+                      <select class="form-control" name="jam_buka2">
+                        @php $i = 0; @endphp
+                        @for($i; $i < 24; $i++)
+                        <option value="{{$i}}" @if($jam_buka2 == $i) selected @endif>{{$i}}</option>
+                        @endfor
+                      </select>
+                      <select class="form-control" name="menitbuka2">
+                        <option value="00" @if($menitbuka2 == '00') selected @endif>00</option>
+                        <option value="15" @if($menitbuka2 == '15') selected @endif>15</option>
+                        <option value="30" @if($menitbuka2 == '30') selected @endif>30</option>
+                        <option value="45" @if($menitbuka2 == '45') selected @endif>45</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 form-floating">
+                    @php $jam_tutup2 = null; $menittutup2 = null; @endphp
+                    @if($data->sip->jam_tutup2)
+                    @php 
+                    $jam_tutup2 = strtok($data->sip->jam_tutup2, ':');  
+                    $menittutup2 = substr($data->sip->jam_tutup2, strpos($data->sip->jam_tutup2, ":") + 1);
+                    @endphp
+                    @endif
+                    <label for="floatingInputInvalid">Jam Tutup</label>
+                    <div class="input-group mb-3">
+                      <select class="form-control" name="jam_tutup2">
+                        @php $i = 0; @endphp
+                        @for($i; $i < 24; $i++)
+                        <option value="{{$i}}" @if($jam_tutup1 == $i) selected @endif>{{$i}}</option>
+                        @endfor
+                      </select>
+                      <select class="form-control" name="menittutup2">
+                        <option value="00" @if($menittutup2 == '00') selected @endif>00</option>
+                        <option value="15" @if($menittutup2 == '15') selected @endif>15</option>
+                        <option value="30" @if($menittutup2 == '30') selected @endif>30</option>
+                        <option value="45" @if($menittutup2 == '45') selected @endif>45</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row align-items-center">
+                  <div class="col-12 kt-align-right">
+                    <button type="submit" class="btn btn-outline-secondary">
+                       Update
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </td>
+            @else
+            <td></td>
+            <td></td>
+            @endif
+          </tr>
+          @else
+          @endif
+          <!-- End praktek 2 -->
+          <!-- END OF PRAKTEK 2, JALAN 2, KELURAHAN & KECAMATAN 2-->
+
+
+          <!-- PRAKTEK 3, JALAN 3, KELURAHAN & KECAMATAN 3 -->
+          @if($data->sip->nama_praktek3 && $data->sip->jalan3 && $data->sip->kelurahan3)
           <tr>
             <td>{{$no = $no+1}}</td>
-            <td>Surat Persetujuan Pimpinan Instansi</td>
-            <td><a href="{{ asset('storage/'.$data->sip->surat_persetujuan) }}" target="_blank">Lihat Berkas</a></td>
+            <td>Nama Praktek 3</td>
+            <td>{{ $data->sip->nama_praktek3 }}</td>
             <td>
-              @if($data->sip->reason && $data->sip->reason->surat_persetujuan =='1') {!! $terima !!}
-              @elseif($data->sip->reason && $data->sip->reason->surat_persetujuan == '') {!! $belumperiksa !!}
-              @elseif($data->sip->reason && $data->sip->reason->surat_persetujuan != '1') {!! $tolak !!}
+              @if($data->sip->reason && $data->sip->reason->nama_praktek3 =='1') {!! $terima !!}
+              @elseif($data->sip->reason && $data->sip->reason->nama_praktek3 == '') {!! $belumperiksa !!}
+              @elseif($data->sip->reason && $data->sip->reason->nama_praktek3 != '1') {!! $tolak !!}
               @else {!! $belumperiksa !!} @endif
             </td>
-            @if($data->sip->reason && $data->sip->reason->surat_persetujuan != '1')
-            <td> {{$data->sip->reason->surat_persetujuan}} </td>
+            @if($data->sip->reason && $data->sip->reason->nama_praktek3 != '1')
+            <td> {{$data->sip->reason->nama_praktek3}} </td>
             <td>
-              <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
+              <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}">
                 <div class="input-group">
-                  <input type="file" class="form-control" name="surat_persetujuan" accept="application/pdf" required>
-                  <input type="hidden" class="form-control" name="key" value="surat_persetujuan">
-                  <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Update
+                  @csrf
+                  @method('PUT')
+                  <input type="text" class="form-control" name="revisi" required>
+                  <input type="hidden" class="form-control" name="key" value="nama_praktek3">
+                  <button type="submit" class="btn btn-outline-secondary">Update
+                  </button>
+                </div>
+              </form>
+            </td>
+            @else
+            <td></td>
+            <td></td>
+            @endif
+          </tr>
+          <tr>
+            <td>{{$no = $no+1}}</td>
+            <td>Jalan 3</td>
+            <td>{{ $data->sip->jalan3 }}</td>
+            <td>
+              @if($data->sip->reason && $data->sip->reason->jalan3 =='1') {!! $terima !!}
+              @elseif($data->sip->reason && $data->sip->reason->jalan3 == '') {!! $belumperiksa !!}
+              @elseif($data->sip->reason && $data->sip->reason->jalan3 != '1') {!! $tolak !!}
+              @else {!! $belumperiksa !!} @endif
+            </td>
+            @if($data->sip->reason && $data->sip->reason->jalan3 != '1')
+            <td> {{$data->sip->reason->jalan3}} </td>
+            <td>
+              <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}">
+                <div class="input-group">
+                  @csrf
+                  @method('PUT')
+                  <input type="text" class="form-control" name="revisi" required>
+                  <input type="hidden" class="form-control" name="key" value="jalan3">
+                  <button type="submit" class="btn btn-outline-secondary">Update
+                  </button>
+                </div>
+              </form>
+            </td>
+            @else
+            <td></td>
+            <td></td>
+            @endif
+          </tr>
+          <tr>
+            <td>{{$no = $no+1}}</td>
+            <td>Kecamatan & Kelurahan Praktek 3</td>
+            <td>Kec. {{ $data->sip->klh3->kecamatan }}, Kel. {{ $data->sip->klh3->kelurahan }} </td>
+            <td>
+              @if($data->sip->reason && $data->sip->reason->kelurahan3 =='1') {!! $terima !!}
+              @elseif($data->sip->reason && $data->sip->reason->kelurahan3 == '') {!! $belumperiksa !!}
+              @elseif($data->sip->reason && $data->sip->reason->kelurahan3 != '1') {!! $tolak !!}
+              @else {!! $belumperiksa !!} @endif
+            </td>
+            @if($data->sip->reason && $data->sip->reason->kelurahan3 != '1')
+            <td> {{$data->sip->reason->jalan3}} </td>
+            <td>
+              <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}">
+                <div class="input-group">                  
+                  @csrf
+                  @method('PUT')
+                  <!-- PILIH KACAMATAN -->
+                  <select class="form-control" name="kecamatan3" id="kecamatan3" onchange="show_kelurahan3(this.value)" required>
+                    <option value="Biringkanaya" @if($data->sip->klh3->kecamatan == 'Biringkanaya') selected @endif>Biringkanaya</option>
+                    <option value="Bontoala" @if($data->sip->klh3->kecamatan == 'Bontoala') selected @endif>Bontoala</option>
+                    <option value="Kepulauan Sangkarrang" @if($data->sip->klh3->kecamatan == 'Kepulauan Sangkarrang') selected @endif>Kepulauan Sangkarrang</option>
+                    <option value="Makassar" @if($data->sip->klh3->kecamatan == 'Makassar') selected @endif>Makassar</option>
+                    <option value="Mamajang" @if($data->sip->klh3->kecamatan == 'Mamajang') selected @endif>Mamajang</option>
+                    <option value="Manggala" @if($data->sip->klh3->kecamatan == 'Manggala') selected @endif>Manggala</option>
+                    <option value="Mariso" @if($data->sip->klh3->kecamatan == 'Mariso') selected @endif>Mariso</option>
+                    <option value="Panakkukang" @if($data->sip->klh3->kecamatan == 'Panakkukang') selected @endif>Panakkukang</option>
+                    <option value="Rappocini" @if($data->sip->klh3->kecamatan == 'Rappocini') selected @endif>Rappocini</option>
+                    <option value="Tallo" @if($data->sip->klh3->kecamatan == 'Tallo') selected @endif>Tallo</option>
+                    <option value="Tamalanrea" @if($data->sip->klh3->kecamatan == 'Tamalanrea') selected @endif>Tamalanrea</option>
+                    <option value="Tamalate" @if($data->sip->klh3->kecamatan == 'Tamalate') selected @endif>Tamalate</option>
+                    <option value="Ujung Pandang" @if($data->sip->klh3->kecamatan == 'Ujung Pandang') selected @endif>Ujung Pandang</option>
+                    <option value="Ujung Tanah" @if($data->sip->klh3->kecamatan == 'Ujung Tanah') selected @endif>Ujung Tanah</option>
+                    <option value="Wajo" @if($data->sip->klh3->kecamatan == 'Wajo') selected @endif>Wajo</option>
+                  </select>
+                  <select class="form-control" name="revisi" id="kelurahan3">
+                    <option></option>
+                  </select>
+                  <input type="hidden" name="key" value="kelurahan3" required>
+                  <button type="submit" class="btn btn-outline-secondary">Update
                   </button>
                 </div>
               </form>
@@ -828,26 +893,151 @@
           </tr>
           @endif
 
-          @if($data->sip->berkas_pendukung)
+           <!-- Jadwal Praktek 3 -->
+          @if($data->sip->subizin_id == '7')
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Jadwal Praktek 3</td>
+              <td>{{ $data->sip->hari_buka3 }} s/d {{ $data->sip->hari_tutup3 }}, {{$data->sip->jam_buka3}} - {{$data->sip->jam_tutup3}}</td>
+              <td>
+                @if($data->sip->reason && $data->sip->reason->jadwal3 =='1') {!! $terima !!}
+                @elseif($data->sip->reason && $data->sip->reason->jadwal3 == '') {!! $belumperiksa !!}
+                @elseif($data->sip->reason && $data->sip->reason->jadwal3 != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              @if($data->sip->reason && $data->sip->reason->jadwal3 != '1')
+              <td> {{$data->sip->reason->jadwal3}} </td>
+              <td>
+
+                <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}">
+                 <input type="hidden" name="key" value="jadwal3">
+                 <div class="row">
+                  @csrf
+                  @method('PUT')
+                  <div class="col-lg-6 form-floating">
+                    @php $hari_buka3 = null; @endphp
+                    @if($data->sip->hari_buka3)
+                    @php $hari_buka3 = $data->sip->hari_buka3; @endphp
+                    @endif
+                    <label for="floatingInputInvalid">Hari Buka</label>
+                    <select class="form-control" name="hari_buka3" required="" id="hari_buka3">
+                      <option value="">Pilih hari</option>
+                      <option value="Senin" @if($hari_buka3 == 'Senin') selected @endif>Senin</option>
+                      <option value="Selasa" @if($hari_buka3 == 'Selasa') selected @endif>Selasa</option>
+                      <option value="Rabu" @if($hari_buka3 == 'Rabu') selected @endif>Rabu</option>
+                      <option value="Kamis" @if($hari_buka3 == 'Kamis') selected @endif>Kamis</option>
+                      <option value="Jumat" @if($hari_buka3 == 'Jumat') selected @endif>Jumat</option>
+                      <option value="Sabtu" @if($hari_buka3 == 'Sabtu') selected @endif>Sabtu</option>
+                      <option value="Minggu" @if($hari_buka3 == 'Minggu') selected @endif>Minggu</option>
+                    </select>
+                  </div>
+                  <div class="col-lg-6 form-floating">
+                    @php $hari_tutup3 = null; @endphp
+                    @if($data->sip->hari_tutup3)
+                    @php $hari_tutup3 = $data->sip->hari_tutup3; @endphp
+                    @endif
+                    <label for="floatingInputInvalid">Hari Tutup</label>
+                    <select class="form-control" name="hari_tutup3" required="" id="hari_tutup3">
+                      <option value="">Pilih hari</option>
+                      <option value="Senin" @if($hari_tutup3 == 'Senin') selected @endif>Senin</option>
+                      <option value="Selasa" @if($hari_tutup3 == 'Selasa') selected @endif>Selasa</option>
+                      <option value="Rabu" @if($hari_tutup3 == 'Rabu') selected @endif>Rabu</option>
+                      <option value="Kamis" @if($hari_tutup3 == 'Kamis') selected @endif>Kamis</option>
+                      <option value="Jumat" @if($hari_tutup3 == 'Jumat') selected @endif>Jumat</option>
+                      <option value="Sabtu" @if($hari_tutup3 == 'Sabtu') selected @endif>Sabtu</option>
+                      <option value="Minggu" @if($hari_tutup3 == 'Minggu') selected @endif>Minggu</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6 form-floating">
+                    @php $jam_buka3 = null; $menitbuka3 = null; @endphp
+                    @if($data->sip->jam_buka3)
+                    @php 
+                    $jam_buka3 = strtok($data->sip->jam_buka3, ':');  
+                    $menitbuka3 = substr($data->sip->jam_buka3, strpos($data->sip->jam_buka3, ":") + 1);
+                    @endphp
+                    @endif
+                    <label for="floatingInputInvalid">Jam Buka</label>
+                    <div class="input-group mb-3">
+                      <select class="form-control" name="jam_buka3">
+                        @php $i = 0; @endphp
+                        @for($i; $i < 24; $i++)
+                        <option value="{{$i}}" @if($jam_buka3 == $i) selected @endif>{{$i}}</option>
+                        @endfor
+                      </select>
+                      <select class="form-control" name="menitbuka3">
+                        <option value="00" @if($menitbuka3 == '00') selected @endif>00</option>
+                        <option value="15" @if($menitbuka3 == '15') selected @endif>15</option>
+                        <option value="30" @if($menitbuka3 == '30') selected @endif>30</option>
+                        <option value="45" @if($menitbuka3 == '45') selected @endif>45</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 form-floating">
+                    @php $jam_tutup3 = null; $menittutup3 = null; @endphp
+                    @if($data->sip->jam_tutup3)
+                    @php 
+                    $jam_tutup3 = strtok($data->sip->jam_tutup3, ':');  
+                    $menittutup3 = substr($data->sip->jam_tutup3, strpos($data->sip->jam_tutup3, ":") + 1);
+                    @endphp
+                    @endif
+                    <label for="floatingInputInvalid">Jam Tutup</label>
+                    <div class="input-group mb-3">
+                      <select class="form-control" name="jam_tutup3">
+                        @php $i = 0; @endphp
+                        @for($i; $i < 24; $i++)
+                        <option value="{{$i}}" @if($jam_tutup3 == $i) selected @endif>{{$i}}</option>
+                        @endfor
+                      </select>
+                      <select class="form-control" name="menittutup3">
+                        <option value="00" @if($menittutup3 == '00') selected @endif>00</option>
+                        <option value="15" @if($menittutup3 == '15') selected @endif>15</option>
+                        <option value="30" @if($menittutup3 == '30') selected @endif>30</option>
+                        <option value="45" @if($menittutup3 == '45') selected @endif>45</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row align-items-center">
+                  <div class="col-12 kt-align-right">
+                    <button type="submit" class="btn btn-outline-secondary">
+                       Update
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </td>
+            @else
+            <td></td>
+            <td></td>
+            @endif
+          </tr>
+          @else
+          @endif
+          <!-- end jadwal praktek 3 -->
+          <!-- END OF PRAKTEK 3, JALAN 3, KELURAHAN & KECAMATAN 3-->
+
+
           <tr>
             <td>{{$no = $no+1}}</td>
-            <td>Berkas Pendukung</td>
-            <td><a href="{{ asset('storage/'.$data->sip->berkas_pendukung) }}" target="_blank">Lihat Berkas</a></td>
+            <td>Foto KTP</td>
+            <td><a href="{{ asset('storage/'.$data->sip->ktp) }}" target="_blank">Lihat Berkas</a></td>
             <td>
-              @if($data->sip->reason && $data->sip->reason->berkas_pendukung =='1') {!! $terima !!}
-              @elseif($data->sip->reason && $data->sip->reason->berkas_pendukung == '') {!! $belumperiksa !!}
-              @elseif($data->sip->reason && $data->sip->reason->berkas_pendukung != '1') {!! $tolak !!}
+              @if($data->sip->reason && $data->sip->reason->ktp =='1') {!! $terima !!}
+              @elseif($data->sip->reason && $data->sip->reason->ktp == '') {!! $belumperiksa !!}
+              @elseif($data->sip->reason && $data->sip->reason->ktp != '1') {!! $tolak !!}
               @else {!! $belumperiksa !!} @endif
             </td>
-            @if($data->sip->reason && $data->sip->reason->berkas_pendukung != '1')
-            <td> {{$data->sip->reason->berkas_pendukung}} </td>
+            @if($data->sip->reason && $data->sip->reason->ktp != '1')
+            <td> {{$data->sip->reason->ktp}} </td>
             <td>
               <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="input-group">
-                  <input type="file" class="form-control" name="berkas_pendukung" accept="application/pdf" required>
-                  <input type="hidden" class="form-control" name="key" value="berkas_pendukung">
+                  <input type="file" class="form-control" name="ktp" accept="image/jpeg,image/jpg,image/png" required>
+                  <input type="hidden" class="form-control" name="key" value="ktp">
                   <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Update
                   </button>
                 </div>
@@ -858,11 +1048,191 @@
             <td></td>
             @endif
           </tr>
+          <tr>
+            <td>{{$no = $no+1}}</td>
+            <td>Pas Foto</td>
+            <td><a href="{{ asset('storage/'.$data->sip->foto) }}" target="_blank">Lihat Berkas</a></td>
+            <td>
+             @if($data->sip->reason && $data->sip->reason->foto =='1') {!! $terima !!}
+             @elseif($data->sip->reason && $data->sip->reason->foto == '') {!! $belumperiksa !!}
+             @elseif($data->sip->reason && $data->sip->reason->foto != '1') {!! $tolak !!}
+             @else {!! $belumperiksa !!} @endif
+           </td>
+           @if($data->sip->reason && $data->sip->reason->foto != '1')
+           <td> {{$data->sip->reason->foto}} </td>
+           <td>
+            <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}" enctype="multipart/form-data">
+              @csrf
+              @method('PUT')
+              <div class="input-group">
+                <input type="file" class="form-control" name="foto" accept="image/jpeg,image/jpg,image/png" required>
+                <input type="hidden" class="form-control" name="key" value="foto">
+                <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Update
+                </button>
+              </div>
+            </form>
+          </td>
+          @else
+          <td></td>
+          <td></td>
           @endif
-        </tbody>
-      </table>
-    </div>
+        </tr>
+        <tr>
+          <td>{{$no = $no+1}}</td>
+          <td>File STR</td>
+          <td><a href="{{ asset('storage/'.$data->sip->str) }}" target="_blank">Lihat Berkas</a></td>
+          <td>
+            @if($data->sip->reason && $data->sip->reason->str =='1') {!! $terima !!}
+            @elseif($data->sip->reason && $data->sip->reason->str == '') {!! $belumperiksa !!}
+            @elseif($data->sip->reason && $data->sip->reason->str != '1') {!! $tolak !!}
+            @else {!! $belumperiksa !!} @endif
+          </td>
+          @if($data->sip->reason && $data->sip->reason->str != '1')
+          <td> {{$data->sip->reason->str}} </td>
+          <td>
+            <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}" enctype="multipart/form-data">
+              @csrf
+              @method('PUT')
+              <div class="input-group">
+                <input type="file" class="form-control" name="str" accept="application/pdf" required>
+                <input type="hidden" class="form-control" name="key" value="str">
+                <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Update
+                </button>
+              </div>
+            </form>
+          </td>
+          @else
+          <td></td>
+          <td></td>
+          @endif
+        </tr>
+        <tr>
+          <td>{{$no = $no+1}}</td>
+          <td>Rekomendasi Organisasi Profesi</td>
+          <td><a href="{{ asset('storage/'.$data->sip->rekomendasi_org) }}" target="_blank">Lihat Berkas</a></td>
+          <td>
+            @if($data->sip->reason && $data->sip->reason->rekomendasi_org =='1') {!! $terima !!}
+            @elseif($data->sip->reason && $data->sip->reason->rekomendasi_org == '') {!! $belumperiksa !!}
+            @elseif($data->sip->reason && $data->sip->reason->rekomendasi_org != '1') {!! $tolak !!}
+            @else {!! $belumperiksa !!} @endif
+          </td>
+          @if($data->sip->reason && $data->sip->reason->rekomendasi_org != '1')
+          <td> {{$data->sip->reason->rekomendasi_org}} </td>
+          <td>
+            <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}" enctype="multipart/form-data">
+              @csrf
+              @method('PUT')
+              <div class="input-group">
+                <input type="file" class="form-control" name="rekomendasi_org" accept="application/pdf" required>
+                <input type="hidden" class="form-control" name="key" value="rekomendasi_org">
+                <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Update
+                </button>
+              </div>
+            </form>
+          </td>
+          @else
+          <td></td>
+          <td></td>
+          @endif
+        </tr>
+        <tr>
+          <td>{{$no = $no+1}}</td>
+          <td>Surat Keterangan Pelayanan Kesehatan</td>
+          <td><a href="{{ asset('storage/'.$data->sip->surat_keterangan) }}" target="_blank">Lihat Berkas</a></td>
+          <td>
+            @if($data->sip->reason && $data->sip->reason->surat_keterangan =='1') {!! $terima !!}
+            @elseif($data->sip->reason && $data->sip->reason->surat_keterangan == '') {!! $belumperiksa !!}
+            @elseif($data->sip->reason && $data->sip->reason->surat_keterangan != '1') {!! $tolak !!}
+            @else {!! $belumperiksa !!} @endif
+          </td>
+          @if($data->sip->reason && $data->sip->reason->surat_keterangan != '1')
+          <td> {{$data->sip->reason->surat_keterangan}} </td>
+          <td>
+            <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}" enctype="multipart/form-data">
+              @csrf
+              @method('PUT')
+              <div class="input-group">
+                <input type="file" class="form-control" name="surat_keterangan" accept="application/pdf" required>
+                <input type="hidden" class="form-control" name="key" value="surat_keterangan">
+                <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Update
+                </button>
+              </div>
+            </form>
+          </td>
+          @else
+          <td></td>
+          <td></td>
+          @endif
+        </tr>
+
+        <!-- OPSIONAL -->
+        @if($data->sip->surat_persetujuan)
+        <tr>
+          <td>{{$no = $no+1}}</td>
+          <td>Surat Persetujuan Pimpinan Instansi</td>
+          <td><a href="{{ asset('storage/'.$data->sip->surat_persetujuan) }}" target="_blank">Lihat Berkas</a></td>
+          <td>
+            @if($data->sip->reason && $data->sip->reason->surat_persetujuan =='1') {!! $terima !!}
+            @elseif($data->sip->reason && $data->sip->reason->surat_persetujuan == '') {!! $belumperiksa !!}
+            @elseif($data->sip->reason && $data->sip->reason->surat_persetujuan != '1') {!! $tolak !!}
+            @else {!! $belumperiksa !!} @endif
+          </td>
+          @if($data->sip->reason && $data->sip->reason->surat_persetujuan != '1')
+          <td> {{$data->sip->reason->surat_persetujuan}} </td>
+          <td>
+            <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}" enctype="multipart/form-data">
+              @csrf
+              @method('PUT')
+              <div class="input-group">
+                <input type="file" class="form-control" name="surat_persetujuan" accept="application/pdf" required>
+                <input type="hidden" class="form-control" name="key" value="surat_persetujuan">
+                <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Update
+                </button>
+              </div>
+            </form>
+          </td>
+          @else
+          <td></td>
+          <td></td>
+          @endif
+        </tr>
+        @endif
+
+        @if($data->sip->berkas_pendukung)
+        <tr>
+          <td>{{$no = $no+1}}</td>
+          <td>Berkas Pendukung</td>
+          <td><a href="{{ asset('storage/'.$data->sip->berkas_pendukung) }}" target="_blank">Lihat Berkas</a></td>
+          <td>
+            @if($data->sip->reason && $data->sip->reason->berkas_pendukung =='1') {!! $terima !!}
+            @elseif($data->sip->reason && $data->sip->reason->berkas_pendukung == '') {!! $belumperiksa !!}
+            @elseif($data->sip->reason && $data->sip->reason->berkas_pendukung != '1') {!! $tolak !!}
+            @else {!! $belumperiksa !!} @endif
+          </td>
+          @if($data->sip->reason && $data->sip->reason->berkas_pendukung != '1')
+          <td> {{$data->sip->reason->berkas_pendukung}} </td>
+          <td>
+            <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}" enctype="multipart/form-data">
+              @csrf
+              @method('PUT')
+              <div class="input-group">
+                <input type="file" class="form-control" name="berkas_pendukung" accept="application/pdf" required>
+                <input type="hidden" class="form-control" name="key" value="berkas_pendukung">
+                <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Update
+                </button>
+              </div>
+            </form>
+          </td>
+          @else
+          <td></td>
+          <td></td>
+          @endif
+        </tr>
+        @endif
+      </tbody>
+    </table>
   </div>
+</div>
 </div>
 @endsection
 
@@ -1072,4 +1442,5 @@ function gagal(key, pesan) {
   show_kelurahan3(kec3);
 </script>
 @endif
+
 @endsection

@@ -13,7 +13,12 @@
       $('#loader').attr("style", "");
     },
     success:function(data){
-      berhasil(data.status, data.pesan);
+      if(data.status == 'success') {
+        berhasil(data.status, data.pesan);
+        $('a[href="#kt_tab_pane_2"]').click();
+      } else {
+        berhasil(data.status, data.pesan);
+      } 
     },
     complete:function(data) {
       $('#loader').attr("style", "display:none");
@@ -29,7 +34,7 @@
   }); 
 });
 
-$('#tab2').submit(function(e){
+ $('#tab2').submit(function(e){
   e.preventDefault();
   var request = new FormData(this);
   var endpoint= route2;
@@ -44,7 +49,12 @@ $('#tab2').submit(function(e){
       $('#loader').attr("style", "");
     },
     success:function(data){
-      berhasil(data.status, data.pesan);
+      if(data.status == 'success') {
+        berhasil(data.status, data.pesan);
+        $('a[href="#kt_tab_pane_3"]').click();
+      } else {
+        berhasil(data.status, data.pesan);
+      } 
     },
     complete:function(data) {
       $('#loader').attr("style", "display:none");
@@ -60,10 +70,11 @@ $('#tab2').submit(function(e){
   }); 
 });
 
-$('#tab3').submit(function(e) {
+// TAB 3
+$('#praktik1').submit(function(e) {
   e.preventDefault();
   var request = new FormData(this);
-  var endpoint= route3;
+  var endpoint= praktik1;
   $.ajax({
     url: endpoint,
     method: "POST",
@@ -75,7 +86,11 @@ $('#tab3').submit(function(e) {
       $('#loader').attr("style", "");
     },
     success:function(data){
-      berhasil(data.status, data.pesan);
+      if(data.status == 'success') {
+        berhasil(data.status, data.pesan);
+      } else {
+        berhasil(data.status, data.pesan);
+      } 
     },
     complete:function(data) {
       $('#loader').attr("style", "display:none");
@@ -90,6 +105,114 @@ $('#tab3').submit(function(e) {
     } 
   }); 
 });
+
+$('#praktik2').submit(function(e) {
+  e.preventDefault();
+  var request = new FormData(this);
+  var endpoint= praktik2;
+  $.ajax({
+    url: endpoint,
+    method: "POST",
+    data: request,
+    contentType: false,
+    cache: false,
+    processData: false,
+    beforeSend: function(){
+      $('#loader').attr("style", "");
+    },
+    success:function(data){
+      if(data.status == 'success') {
+        berhasil(data.status, data.pesan);
+      } else {
+        berhasil(data.status, data.pesan);
+      } 
+    },
+    complete:function(data) {
+      $('#loader').attr("style", "display:none");
+    },
+    error: function(xhr, status, error){
+      var error = xhr.responseJSON; 
+      if ($.isEmptyObject(error) == false) {
+        $.each(error.errors, function(key, value) {
+          gagal(key, value);
+        });
+      }
+    } 
+  }); 
+});
+
+$('#praktik3').submit(function(e) {
+  e.preventDefault();
+  var request = new FormData(this);
+  var endpoint= praktik3;
+  $.ajax({
+    url: endpoint,
+    method: "POST",
+    data: request,
+    contentType: false,
+    cache: false,
+    processData: false,
+    beforeSend: function(){
+      $('#loader').attr("style", "");
+    },
+    success:function(data){
+      if(data.status == 'success') {
+        berhasil(data.status, data.pesan);
+      } else {
+        berhasil(data.status, data.pesan);
+      } 
+    },
+    complete:function(data) {
+      $('#loader').attr("style", "display:none");
+    },
+    error: function(xhr, status, error){
+      var error = xhr.responseJSON; 
+      if ($.isEmptyObject(error) == false) {
+        $.each(error.errors, function(key, value) {
+          gagal(key, value);
+        });
+      }
+    } 
+  }); 
+});
+
+ $('#tab3').submit(function(e) {
+  e.preventDefault();
+  var request = new FormData(this);
+  var endpoint= route3;
+  $.ajax({
+    url: endpoint,
+    method: "POST",
+    data: request,
+    contentType: false,
+    cache: false,
+    processData: false,
+    beforeSend: function(){
+      $('#loader').attr("style", "");
+    },
+    success:function(data){
+      if(data.status == 'success') {
+        berhasil(data.status, data.pesan);
+        $('a[href="#kt_tab_pane_4"]').click();
+      } else {
+        berhasil(data.status, data.pesan);
+      } 
+    },
+    complete:function(data) {
+      $('#loader').attr("style", "display:none");
+    },
+    error: function(xhr, status, error){
+      var error = xhr.responseJSON; 
+      if ($.isEmptyObject(error) == false) {
+        $.each(error.errors, function(key, value) {
+          gagal(key, value);
+        });
+      }
+    } 
+  }); 
+});
+
+// END TAB 3
 
 // TAB 4
 
@@ -433,7 +556,7 @@ $('#tab5').submit(function(e) {
 });
  // END TAB 5 
 
-function cekTanggalMulai() {
+ function cekTanggalMulai() {
   var start = document.getElementById("date_start").value;
   var end = document.getElementById("date_end").value;
   if(end != '') {
@@ -538,3 +661,40 @@ $(document).ready(function () {
             })
           }
   //end menampilkan kelurahan3 setelah memilih kecamatan3
+
+              // menampilkan kelurahan3 setelah memilih kecamatan3
+              function jenis(jen) {
+                if(jen == '7') {
+                  $('#jadwal1').attr("style", "");
+                  $('#hari_buka1').attr("required", "true");
+                  $('#hari_tutup1').attr("required", "true");
+
+                  $('#jadwal2').attr("style", "");
+                  $('#hari_buka2').attr("required", "true");
+                  $('#hari_tutup2').attr("required", "true");
+
+                  $('#jadwal3').attr("style", "");
+                  $('#hari_buka3').attr("required", "true");
+                  $('#hari_tutup3').attr("required", "true");
+                } else {
+                  $('#jadwal1').attr("style", "display:none");
+                  $('#hari_buka1').removeAttr('required');
+                  $('#hari_tutup1').removeAttr('required');
+
+                  $('#jadwal2').attr("style", "display:none");
+                  $('#hari_buka2').removeAttr('required');
+                  $('#hari_tutup2').removeAttr('required');
+
+                  $('#jadwal3').attr("style", "display:none");
+                  $('#hari_buka3').removeAttr('required');
+                  $('#hari_tutup3').removeAttr('required');
+                }              
+              }
+  //end menampilkan kelurahan3 setelah memilih kecamatan3
+
+function to_tab_5() {
+  $('a[href="#kt_tab_pane_5"]').click();
+}
+function to_tab_4() {
+  $('a[href="#kt_tab_pane_4"]').click();
+}

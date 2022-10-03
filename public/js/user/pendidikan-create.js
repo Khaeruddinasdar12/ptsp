@@ -17,20 +17,25 @@ $('#tab1').submit(function(e){
       $('#loader').attr("style", "");
     },
     success:function(data){
+     if(data.status == 'success') {
       berhasil(data.status, data.pesan);
-    },
-    complete:function(data) {
-      $('#loader').attr("style", "display:none");
-    },
-    error: function(xhr, status, error){
-      var error = xhr.responseJSON; 
-      if ($.isEmptyObject(error) == false) {
-        $.each(error.errors, function(key, value) {
-          gagal(key, value);
-        });
-      }
+      $('a[href="#kt_tab_pane_2"]').click();
+    } else {
+      berhasil(data.status, data.pesan);
     } 
-  }); 
+  },
+  complete:function(data) {
+    $('#loader').attr("style", "display:none");
+  },
+  error: function(xhr, status, error){
+    var error = xhr.responseJSON; 
+    if ($.isEmptyObject(error) == false) {
+      $.each(error.errors, function(key, value) {
+        gagal(key, value);
+      });
+    }
+  } 
+}); 
 });
 
 $('#tab2').submit(function(e){
@@ -49,7 +54,12 @@ $('#tab2').submit(function(e){
       $('#loader').attr("style", "");
     },
     success:function(data){
-      berhasil(data.status, data.pesan);
+      if(data.status == 'success') {
+        berhasil(data.status, data.pesan);
+        $('a[href="#kt_tab_pane_3"]').click();
+      } else {
+        berhasil(data.status, data.pesan);
+      } 
     },
     complete:function(data) {
       $('#loader').attr("style", "display:none");
@@ -80,7 +90,12 @@ $('#tab3').submit(function(e) {
       $('#loader').attr("style", "");
     },
     success:function(data){
-      berhasil(data.status, data.pesan);
+      if(data.status == 'success') {
+        berhasil(data.status, data.pesan);
+        $('a[href="#kt_tab_pane_4"]').click();
+      } else {
+        berhasil(data.status, data.pesan);
+      } 
     },
     complete:function(data) {
       $('#loader').attr("style", "display:none");
@@ -602,6 +617,7 @@ $('#ktp').submit(function(e) {
       'dataType': 'json',
       success: function(data) {
         if(data[0].kategori != null) {
+          $('#tersembunyi').empty();
           $('#kategori').empty();
           $('#layout-kategori').attr("style", "");
           jQuery.each(data, function(i, val) {
@@ -615,7 +631,8 @@ $('#ktp').submit(function(e) {
         }else{
           $('#layout-kategori').attr("style", "display: none");
           $('#kategori').empty();
-          $('#kategori').append('<input type="hidden" value="'+data[0].id+'" name="jenis_izin"');
+          $('#hide').empty();
+          $('#hide').append('<div><input type="hidden" value="'+data[0].id+'" name="jenis_izin"</div>');
         }
       },
       error: function(xhr, status, error) {

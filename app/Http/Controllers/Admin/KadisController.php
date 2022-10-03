@@ -72,7 +72,9 @@ class KadisController extends Controller
 			if($data->jenis_izin == 'sip') {
 				$jenis_izin = 'Surat Izin Praktik (SIP)';
 				$kode = $data->sip->subizin->kode;
-				$no_surat = '503/xxx/SIP.'.$kode.'/DPM-PTSP/'.$bulan.'/'.$tahun;
+				$urut = $data->sip->latest()->first();
+				
+				$no_surat = '503/'.$urut->id.'/SIP.'.$kode.'/DPM-PTSP/'.$bulan.'/'.$tahun;
 				$dasar_hukum = $data->sip->subizin->dasar_hukum;
 
 				$kelurahan2 = ''; $kecamatan2 = ''; $kelurahan3 = ''; $kecamatan3 = '';
@@ -102,14 +104,20 @@ class KadisController extends Controller
 					'kelurahan1' => $data->sip->klh1->kelurahan,
 					'kecamatan1' => $data->sip->klh1->kecamatan,
 					'jalan1' => $data->sip->jalan1,
+					'jadwal1' => $data->sip->hari_buka1.' s/d '. $data->sip->hari_tutup1 .' ,'. $data->sip->jam_buka1 .' - '. $data->sip->jam_tutup1.' WITA',
+
 					'praktek2' => $data->sip->nama_praktek2,
 					'kelurahan2' => $kelurahan2,
 					'kecamatan2' => $kecamatan2,
 					'jalan2' => $data->sip->jalan2,
+					'jadwal2' => $data->sip->hari_buka2.' s/d '. $data->sip->hari_tutup2 .' ,'. $data->sip->jam_buka2 .' - '. $data->sip->jam_tutup2.' WITA',
+
 					'praktek3' => $data->sip->nama_praktek3,
 					'kelurahan3' => $kelurahan3,
 					'kecamatan3' => $kecamatan3,
 					'jalan3' => $data->sip->jalan3,
+					'jadwal3' => $data->sip->hari_buka3.' s/d '. $data->sip->hari_tutup3 .' ,'. $data->sip->jam_buka3 .' - '. $data->sip->jam_tutup3.' WITA',
+
 					'no_str' => $data->sip->no_str,
 					'no_rekomendasi' => $data->sip->no_rekomendasi,
 					'penetapan' => $time,
@@ -119,7 +127,8 @@ class KadisController extends Controller
 			} elseif($data->jenis_izin == 'sik') {
 				$jenis_izin = 'Surat Izin Kerja (SIK)';
 				$kode = $data->sik->subizin->kode;
-				$no_surat = '503/xxx/SIK.'.$kode.'/DPM-PTSP/'.$bulan.'/'.$tahun;
+				$urut = $data->sik->latest()->first();
+				$no_surat = '503/'.$urut->id.'/SIK.'.$kode.'/DPM-PTSP/'.$bulan.'/'.$tahun;
 				$dasar_hukum = $data->sik->subizin->dasar_hukum;
 
 				$data_view = [
@@ -154,7 +163,8 @@ class KadisController extends Controller
 				$pdf = PDF::loadView('sip-sik-pdf', $data_view);
 			} elseif($data->jenis_izin == 'pendidikan') {
 				$jenis_izin = $data->pendidikan->subizin->nama;
-				$no_surat = '503/xxx/LKP/DPM-PTSP/'.$bulan.'/'.$tahun;
+				$urut = $data->pendidikan->latest()->first();
+				$no_surat = '503/'.$urut->id.'/LKP/DPM-PTSP/'.$bulan.'/'.$tahun;
 
 				$data_view = [
 					'barcode' => $data->no_tiket.'.png',
@@ -174,7 +184,8 @@ class KadisController extends Controller
 				];
 				$pdf = PDF::loadView('pendidikan-pdf', $data_view);
 			} elseif($data->jenis_izin == 'krk') {
-				$no_surat = '650/xxx/DPMPTSP/'.$bulan.'/'.$tahun;
+				$urut = $data->krk->latest()->first();
+				$no_surat = '650/'.$urut->id.'/DPMPTSP/'.$bulan.'/'.$tahun;
 
 				$data_view = [
 					'barcode' => $data->no_tiket.'.png',

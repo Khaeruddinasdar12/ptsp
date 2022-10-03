@@ -44,11 +44,12 @@
           <li><a class="nav-link scrollto {{ (request()->is('/') ? 'active' : '') }}" href="{{route('index')}}">Beranda</a></li>
           <li><a class="nav-link scrollto {{ (request()->is('tentang') ? 'active' : '') }}" href="{{route('tentang')}}">Tentang</a></li>
           <li><a class="nav-link scrollto {{ (request()->is('visi-misi') ? 'active' : '') }}" href="{{route('visi')}}">Visi Misi</a></li>
-          <li><a class="nav-link scrollto {{ (request()->is('struktur-organisasi') ? 'active' : '') }}" href="{{route('struktur')}}">Struktur Organisasi</a></li>
+          <!-- <li><a class="nav-link scrollto {{ (request()->is('struktur-organisasi') ? 'active' : '') }}" href="{{route('struktur')}}">Struktur Organisasi</a></li> -->
+          <li><a class="nav-link scrollto {{ (request()->is('lacak-perizinan') ? 'active' : '') }}" href="{{route('lacak')}}">Lacak Perizinan</a></li>
           <li><a class="nav-link scrollto {{ (request()->is('layanan') ? 'active' : '') }}" href="{{route('layanan')}}">Layanan</a></li>
           @guest
           <li><a class="nav-link scrollto" href="{{ route('login') }}">Masuk</a></li>
-          <li><a class="getstarted scrollto" href="#about">Daftar</a></li>
+          <li><a class="getstarted scrollto" href="{{ route('register') }}">Daftar</a></li>
           
           @else
           <li class="dropdown"><a href="#"><span>{{ Auth::user()->name }}</span> <i class="bi bi-chevron-down"></i></a>

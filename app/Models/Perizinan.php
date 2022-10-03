@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Perizinan extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'no_tiket', 'jenis_izin', 'status', 'bidang_by', 'teknis_by', 'kadis_by', 'ket', 'sertifikat', 'no_surat', 'verif_by', 'created_at', 'updated_at'];
+    protected $fillable = ['user_id', 'no_tiket', 'jenis_izin', 'status', 'bidang_by', 'teknis_by', 'kadis_by', 'ket', 'sertifikat', 'no_surat', 'verif_by', 'updatedbidang_at', 'updatedteknis_at', 'created_at', 'updated_at'];
     
     public function getCreatedAtAttribute()
     {

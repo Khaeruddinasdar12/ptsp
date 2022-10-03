@@ -21,7 +21,7 @@ class LoginController extends Controller
   
         $validator = $this->validate($request, [
             'email' => 'required',
-            'password' => 'required|digits:8',
+            'password' => 'required|min:8',
         ]);
   
         $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'nik';
@@ -29,7 +29,11 @@ class LoginController extends Controller
         {
             return redirect()->route('home');
         }else{
-            return redirect()->route('login')->withErrors($validator);
+            return redirect()->back()
+            ->withInput()
+            ->withErrors([
+                'email' => 'Data tidak ditemukan!'
+            ]);
         }
           
     }

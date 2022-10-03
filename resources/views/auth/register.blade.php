@@ -1,77 +1,92 @@
-@extends('layouts.app')
+@extends('admin.login_layout')
+
+@section('title', 'Register')
+
+@section('vendor-css')
+<link href="{{ asset('css/pages/login/login-3.css') }}" rel="stylesheet" type="text/css" />
+@endsection
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+<!-- begin::Body -->
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
+<body
+class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--transparent kt-aside--enabled kt-aside--fixed kt-aside--minimize kt-page--loading">
 
-                        <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+<!-- begin:: Page -->
+<div class="kt-grid kt-grid--ver kt-grid--root kt-page">
+    <div class="kt-grid kt-grid--hor kt-grid--root  kt-login kt-login--v3 kt-login--signin" id="kt_login">
+        <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor"
+        style="background-image: url({{ asset('media/bg/bg-3.jpg') }});">
+        <div class="kt-grid__item kt-grid__item--fluid kt-login__wrapper">
+            <div class="kt-login__container">
+                <div class="kt-login__logo">
+                    <img src="{{ asset('img/logo-makassar.png') }}" width="15%"> 
                 </div>
+                <div class="kt-login__signin">
+                    <div class="kt-login__head">
+                        <h5 class="kt-login__title">Registrasi Perizinan Non OSS PTSP Makassar {{ date('Y') }}</h5>
+                    </div>
+                    <form class="kt-form" method="POST" action="{{ route('register') }}">
+                        @csrf
+                        <div class="input-group">
+                            <input class="form-control @error('name') is-invalid @enderror" type="text" 
+                            placeholder="Nama" name="name" value="{{ old('name') }}" required>
+                            @error('name')
+                            <div id="name-error" class="error invalid-feedback">
+                            {{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="input-group">
+                            <input class="form-control @error('email') is-invalid @enderror" type="email" 
+                            placeholder="Email" name="email" value="{{ old('email') }}" required>
+                            @error('email')
+                            <div id="email-error" class="error invalid-feedback">
+                            {{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="input-group">
+                            <input class="form-control @error('nik') is-invalid @enderror" type="text" 
+                            placeholder="Nik" name="nik" value="{{ old('nik') }}" required>
+                            @error('nik')
+                            <div id="nik-error" class="error invalid-feedback">
+                            {{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="input-group">
+                            <input class="form-control @error('nohp') is-invalid @enderror" type="text" 
+                            placeholder="No Hp" name="nohp" value="{{ old('nohp') }}" required>
+                            @error('nohp')
+                            <div id="nohp-error" class="error invalid-feedback">
+                            {{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="input-group">
+                            <input class="form-control" type="password" placeholder="Password" name="password" required>
+                        </div>
+                        <div class="input-group">
+                            <input class="form-control" type="password" placeholder="Konfirmasi Password" name="password_confirmation" required>
+                        </div>
+                        <div class="kt-login__actions">
+                            <button type="submit"
+                            class="btn btn-brand btn-elevate kt-login__btn-primary">Daftar
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+</div>
+</div>
+<!-- end:: Page -->
+
+</body>
+@endsection
+
+@section('vendor-js')
+<script src="{{ asset('js/pages/custom/login/login-general.js') }}" type="text/javascript">
+</script>
+@endsection
+
+@section('js')
 @endsection

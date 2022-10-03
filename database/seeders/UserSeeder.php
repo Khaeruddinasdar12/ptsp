@@ -14,6 +14,7 @@ class UserSeeder extends Seeder
             'email' => 'khaeruddinasdar12@gmail.com',
             'password' => bcrypt(12345678),
             'nik' => '7308090408990001',
+            'nohp' => '082344949505',
         ]);
     }
 }

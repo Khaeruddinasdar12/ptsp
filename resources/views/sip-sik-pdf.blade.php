@@ -244,6 +244,13 @@
             <td style="width: 5%;">:</td>
             <td style="width: 65%;">{{$jalan1}}</td>
           </tr>
+          @if($jadwal1)
+          <tr>
+            <td style="width: 30%;">Jalan Praktek 1</td>
+            <td style="width: 5%;">:</td>
+            <td style="width: 65%;">{{$jadwal1}}</td>
+          </tr>
+          @endif
           <!-- Praktek 2 -->
           @if($praktek2 != '' && $kelurahan2 != '' && $kecamatan2 != '')
           <tr>
@@ -266,7 +273,14 @@
             <td style="width: 5%;">:</td>
             <td style="width: 65%;">{{$jalan2}}</td>
           </tr>
-          @endif()
+          @if($jadwal2)
+          <tr>
+            <td style="width: 30%;">Jalan Praktek 2</td>
+            <td style="width: 5%;">:</td>
+            <td style="width: 65%;">{{$jadwal2}}</td>
+          </tr>
+          @endif
+          @endif
           <!-- Praktek 3 -->
           @if($praktek3 != '' && $kelurahan3 != '' && $kecamatan3 != '')
           <tr>
@@ -289,6 +303,13 @@
             <td style="width: 5%;">:</td>
             <td style="width: 65%;">{{$jalan2}}</td>
           </tr>
+          @if($jadwal3)
+          <tr>
+            <td style="width: 30%;">Jalan Praktek 3</td>
+            <td style="width: 5%;">:</td>
+            <td style="width: 65%;">{{$jadwal3}}</td>
+          </tr>
+          @endif
           @endif
           <tr>
             <td style="width: 30%;">No. STR</td>

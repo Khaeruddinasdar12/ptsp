@@ -142,6 +142,13 @@
               <td>Kecamatan & Kelurahan Praktek 1</td>
               <td>Kec. {{ $data->sip->klh1->kelurahan }}, Kel. {{ $data->sip->klh1->kelurahan }} </td>
             </tr>
+            @if($data->sip->subizin_id == '7') 
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Jadwal Praktek 1</td>
+              <td>{{ $data->sip->hari_buka1 }} s/d {{ $data->sip->hari_tutup1 }}, {{$data->sip->jam_buka1}} - {{$data->sip->jam_tutup1}} WITA </td>
+            </tr>
+            @endif
 
             <!-- JALAN 2 -->
             @if($data->sip->jalan2 && $data->sip->nama_praktek2 && $data->sip->kelurahan2)
@@ -160,6 +167,13 @@
               <td>Kecamatan & Kelurahan Praktek 2</td>
               <td>Kec. {{ $data->sip->klh2->kelurahan }}, Kel. {{ $data->sip->klh2->kelurahan }} </td>
             </tr>
+            @if($data->sip->subizin_id == '7') 
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Jadwal Praktek 2</td>
+              <td>{{ $data->sip->hari_buka2 }} s/d {{ $data->sip->hari_tutup2 }}, {{$data->sip->jam_buka2}} - {{$data->sip->jam_tutup2}} WITA </td>
+            </tr>
+            @endif
             @endif
             <!-- END JALAN 2 -->
 
@@ -181,6 +195,13 @@
               <td>Kecamatan & Kelurahan Praktek 3</td>
               <td>Kec. {{ $data->sip->klh3->kelurahan }}, Kel. {{ $data->sip->klh3->kelurahan }} </td>
             </tr>
+            @if($data->sip->subizin_id == '7') 
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Jadwal Praktek 3</td>
+              <td>{{ $data->sip->hari_buka3 }} s/d {{ $data->sip->hari_tutup3 }}, {{$data->sip->jam_buka3}} - {{$data->sip->jam_tutup3}} WITA </td>
+            </tr>
+            @endif
             @endif
             <!-- END JALAN 3 -->
 

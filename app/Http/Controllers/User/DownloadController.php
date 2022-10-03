@@ -8,6 +8,11 @@ use Auth;
 use App\Models\Perizinan;
 class DownloadController extends Controller
 {
+	public function __construct()
+	{
+		$this->middleware('auth');
+	}
+	
     public function index()
 	{
 		$user_id = Auth::user()->id;

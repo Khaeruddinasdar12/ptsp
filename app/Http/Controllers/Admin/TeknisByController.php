@@ -257,7 +257,67 @@ class TeknisByController extends Controller
 				if ($data->pendidikan->berkas_pendukung && $dt->berkas_pendukung == '') {
 					return $err;
 				}
-			} 
+			} elseif($data->jenis_izin == 'sip') {
+				
+				if(!$data->sip->reason) {
+					return $err;
+				}
+
+				$dt = Sipreason::where('sip_id', $data->sip->id)->first();
+				if($dt->nama == '' || $dt->tempat_lahir == '' || $dt->tanggal_lahir == '' || $dt->no_str == '' || $dt->awal_str == '' || $dt->akhir_str == '' || $dt->alamat == '' || $dt->nama_praktek1 == '' || $dt->jalan1 == '' || $dt->kelurahan1 == '' || $dt->ktp == '' || $dt->foto == '' || $dt->str == '' || $dt->rekomendasi_org == '' || $dt->surat_keterangan == '') {
+					
+					return $err;
+				}
+				if($data->sip->subizin_id == '7' && $data->sip->nama_praktek1 && $dt->jadwal1 == '') {
+					return $err;
+				}
+
+				if ($data->sip->nama_praktek2 && $dt->nama_praktek2 == '') {
+					return $err;
+				}
+				if ($data->sip->jalan2 && $dt->jalan2 == '') {
+					return $err;
+				}
+				if ($data->sip->kelurahan2 && $dt->kelurahan2 == '') {
+					return $err;
+				}
+				if($data->sip->subizin_id == '7' && $data->sip->nama_praktek2 && $dt->jadwal2 == '') {
+					return $err;
+				}
+
+				if ($data->sip->nama_praktek3 && $dt->nama_praktek3 == '') {
+					return $err;
+				}
+				if ($data->sip->jalan3 && $dt->jalan3 == '') {
+					return $err;
+				}
+				if ($data->sip->kelurahan3 && $dt->kelurahan3 == '') {
+					return $err;
+				}
+				if($data->sip->subizin_id == '7' && $data->sip->nama_praktek3 && $dt->jadwal3 == '') {
+					return $err;
+				}
+
+				if ($data->sip->surat_persetujuan && $dt->surat_persetujuan == '') {
+					return $err;
+				}
+				if ($data->sip->berkas_pendukung && $dt->berkas_pendukung == '') {
+					return $err;
+				}
+			} elseif($data->jenis_izin == 'krk') {
+				
+				if(!$data->krk->reason) {
+					return $err;
+				}
+
+				$dt = Krkreason::where('krk_id', $data->krk->id)->first();
+				if($dt->nama == '' || $dt->nik == '' ||  $dt->alamat == '' || $dt->luas == '' || $dt->nama_surat == '' || $dt->nomor_surat == '' || $dt->penggunaan == '' || $dt->jenis == '' || $dt->jml_lantai == '' || $dt->jml_bangunan == '' || $dt->kelurahan == '' || $dt->jalan == '' || $dt->ktp == '' || $dt->pbb == '' || $dt->surat_tanah == '' || $dt->peta == '' || $dt->gambar == '') {
+					return $err;
+				}
+				if ($data->krk->berkas_pendukung && $dt->berkas_pendukung == '') {
+					return $err;
+				}
+			}
 
 			$data->verif_by = Auth::guard('admin')->user()->id;
 			$data->status = '2'; //tolak
@@ -351,6 +411,10 @@ class TeknisByController extends Controller
 					
 					return $err;
 				}
+				if($data->sip->subizin_id == '7' && $data->sip->nama_praktek1 && $dt->jadwal1 == '') {
+					return $err;
+				}
+
 				if ($data->sip->nama_praktek2 && $dt->nama_praktek2 != '1') {
 					return $err;
 				}
@@ -360,6 +424,10 @@ class TeknisByController extends Controller
 				if ($data->sip->kelurahan2 && $dt->kelurahan2 != '1') {
 					return $err;
 				}
+				if($data->sip->subizin_id == '7' && $data->sip->nama_praktek2 && $dt->jadwal2 == '') {
+					return $err;
+				}
+
 				if ($data->sip->nama_praktek3 && $dt->nama_praktek3 != '1') {
 					return $err;
 				}
@@ -369,6 +437,10 @@ class TeknisByController extends Controller
 				if ($data->sip->kelurahan3 && $dt->kelurahan3 != '1') {
 					return $err;
 				}
+				if($data->sip->subizin_id == '7' && $data->sip->nama_praktek3 && $dt->jadwal3 == '') {
+					return $err;
+				}
+
 				if ($data->sip->surat_persetujuan && $dt->surat_persetujuan != '1') {
 					return $err;
 				}
@@ -461,6 +533,7 @@ class TeknisByController extends Controller
 			$data->verif_by = Auth::guard('admin')->user()->id;
 			$data->teknis_by = Auth::guard('admin')->user()->id;
 			$data->status = '0';
+			$data->updatedteknis_at = Carbon::now();
 			$data->updated_at = Carbon::now();
 			$data->save();
 

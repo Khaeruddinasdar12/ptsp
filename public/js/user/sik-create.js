@@ -16,7 +16,12 @@ $('#tab1').submit(function(e){
       $('#loader').attr("style", "");
     },
     success:function(data){
-      berhasil(data.status, data.pesan);
+      if(data.status == 'success') {
+        berhasil(data.status, data.pesan);
+        $('a[href="#kt_tab_pane_2"]').click();
+      } else {
+        berhasil(data.status, data.pesan);
+      } 
     },
     complete:function(data) {
       $('#loader').attr("style", "display:none");
@@ -47,7 +52,12 @@ $('#tab2').submit(function(e){
       $('#loader').attr("style", "");
     },
     success:function(data){
-      berhasil(data.status, data.pesan);
+      if(data.status == 'success') {
+        berhasil(data.status, data.pesan);
+        $('a[href="#kt_tab_pane_3"]').click();
+      } else {
+        berhasil(data.status, data.pesan);
+      } 
     },
     complete:function(data) {
       $('#loader').attr("style", "display:none");
@@ -78,7 +88,12 @@ $('#tab3').submit(function(e) {
       $('#loader').attr("style", "");
     },
     success:function(data){
-      berhasil(data.status, data.pesan);
+      if(data.status == 'success') {
+        berhasil(data.status, data.pesan);
+        $('a[href="#kt_tab_pane_4"]').click();
+      } else {
+        berhasil(data.status, data.pesan);
+      } 
     },
     complete:function(data) {
       $('#loader').attr("style", "display:none");
@@ -474,3 +489,8 @@ $('#tab5').submit(function(e) {
   });
 });
  // END TAB 5 
+
+
+ function to_tab_5() {
+  $('a[href="#kt_tab_pane_5"]').click();
+}

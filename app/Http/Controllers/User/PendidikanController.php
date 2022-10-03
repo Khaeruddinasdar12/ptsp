@@ -314,6 +314,7 @@ class PendidikanController extends Controller
 				return redirect()->back()->with('not_found', $e->getMessage());
 			}
 		}
+		
 		public function create()
 		{
 			$auth = Auth::user()->id;
@@ -432,8 +433,6 @@ class PendidikanController extends Controller
 		}
 
 		try {
-
-
 			$no_tiket = strtoupper(substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 6));
 			$izin = Perizinan::create(array(
 				'user_id' => $auth,

@@ -196,21 +196,21 @@
                       <label class="col-lg-3 col-form-label">Kecamatan:*</label>
                       <div class="col-lg-9">
                         <select class="form-control" name="kecamatan" id="kecamatan" onchange="show_kelurahan(this.value)" required>
-                          <option value="Biringkanaya" @if($old && $old->sik->klh->kecamatan == 'Biringkanaya') selected @endif>Biringkanaya</option>
-                          <option value="Bontoala" @if($old && $old->sik->klh->kecamatan == 'Bontoala') selected @endif>Bontoala</option>
-                          <option value="Kepulauan Sangkarrang" @if($old && $old->sik->klh->kecamatan == 'Kepulauan Sangkarrang') selected @endif>Kepulauan Sangkarrang</option>
-                          <option value="Makassar" @if($old && $old->sik->klh->kecamatan == 'Makassar') selected @endif>Makassar</option>
-                          <option value="Mamajang" @if($old && $old->sik->klh->kecamatan == 'Mamajang') selected @endif>Mamajang</option>
-                          <option value="Manggala" @if($old && $old->sik->klh->kecamatan == 'Manggala') selected @endif>Manggala</option>
-                          <option value="Mariso" @if($old && $old->sik->klh->kecamatan == 'Mariso') selected @endif>Mariso</option>
-                          <option value="Panakkukang" @if($old && $old->sik->klh->kecamatan == 'Panakkukang') selected @endif>Panakkukang</option>
-                          <option value="Rappocini" @if($old && $old->sik->klh->kecamatan == 'Rappocini') selected @endif>Rappocini</option>
-                          <option value="Tallo" @if($old && $old->sik->klh->kecamatan == 'Tallo') selected @endif>Tallo</option>
-                          <option value="Tamalanrea" @if($old && $old->sik->klh->kecamatan == 'Tamalanrea') selected @endif>Tamalanrea</option>
-                          <option value="Tamalate" @if($old && $old->sik->klh->kecamatan == 'Tamalate') selected @endif>Tamalate</option>
-                          <option value="Ujung Pandang" @if($old && $old->sik->klh->kecamatan == 'Ujung Pandang') selected @endif>Ujung Pandang</option>
-                          <option value="Ujung Tanah" @if($old && $old->sik->klh->kecamatan == 'Ujung Tanah') selected @endif>Ujung Tanah</option>
-                          <option value="Wajo" @if($old && $old->sik->klh->kecamatan == 'Wajo') selected @endif>Wajo</option>
+                          <option value="Biringkanaya" @if($old && $old->sik && $old->sik->klh && $old->sik->klh->kecamatan == 'Biringkanaya') selected @endif>Biringkanaya</option>
+                          <option value="Bontoala" @if($old && $old->sik && $old->sik->klh && $old->sik->klh->kecamatan == 'Bontoala') selected @endif>Bontoala</option>
+                          <option value="Kepulauan Sangkarrang" @if($old && $old->sik && $old->sik->klh && $old->sik->klh->kecamatan == 'Kepulauan Sangkarrang') selected @endif>Kepulauan Sangkarrang</option>
+                          <option value="Makassar" @if($old && $old->sik && $old->sik->klh && $old->sik->klh->kecamatan == 'Makassar') selected @endif>Makassar</option>
+                          <option value="Mamajang" @if($old && $old->sik && $old->sik->klh && $old->sik->klh->kecamatan == 'Mamajang') selected @endif>Mamajang</option>
+                          <option value="Manggala" @if($old && $old->sik && $old->sik->klh && $old->sik->klh->kecamatan == 'Manggala') selected @endif>Manggala</option>
+                          <option value="Mariso" @if($old && $old->sik && $old->sik->klh && $old->sik->klh->kecamatan == 'Mariso') selected @endif>Mariso</option>
+                          <option value="Panakkukang" @if($old && $old->sik && $old->sik->klh && $old->sik->klh->kecamatan == 'Panakkukang') selected @endif>Panakkukang</option>
+                          <option value="Rappocini" @if($old && $old->sik && $old->sik->klh && $old->sik->klh->kecamatan == 'Rappocini') selected @endif>Rappocini</option>
+                          <option value="Tallo" @if($old && $old->sik && $old->sik->klh && $old->sik->klh->kecamatan == 'Tallo') selected @endif>Tallo</option>
+                          <option value="Tamalanrea" @if($old && $old->sik && $old->sik->klh && $old->sik->klh->kecamatan == 'Tamalanrea') selected @endif>Tamalanrea</option>
+                          <option value="Tamalate" @if($old && $old->sik && $old->sik->klh && $old->sik->klh->kecamatan == 'Tamalate') selected @endif>Tamalate</option>
+                          <option value="Ujung Pandang" @if($old && $old->sik && $old->sik->klh && $old->sik->klh->kecamatan == 'Ujung Pandang') selected @endif>Ujung Pandang</option>
+                          <option value="Ujung Tanah" @if($old && $old->sik && $old->sik->klh && $old->sik->klh->kecamatan == 'Ujung Tanah') selected @endif>Ujung Tanah</option>
+                          <option value="Wajo" @if($old && $old->sik && $old->sik->klh && $old->sik->klh->kecamatan == 'Wajo') selected @endif>Wajo</option>
                         </select>
                       </div>
                     </div>

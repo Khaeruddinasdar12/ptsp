@@ -428,11 +428,11 @@ function reason(key, head) {
               cache: false,
               processData: false,
               beforeSend: function(){
+                $('#modal-reason').modal("hide");
                 $('#loader').attr("style", "");
               },
               success:function(data){
                 $('#post-reason')[0].reset();
-                $('#modal-reason').modal("hide");
                 if(data.status == 'success') {
                   ceklisSuccess(data.status, data.pesan)
                 } else {

@@ -21,6 +21,9 @@ class CreatePerizinansTable extends Migration
             $table->string('sertifikat')->nullable();
             $table->string('no_surat')->unique()->nullable();
             $table->bigInteger('verif_by')->nullable();
+
+            $table->datetime('updatedbidang_at')->nullable();
+            $table->datetime('updatedteknis_at')->nullable();
             $table->timestamps();
         });
     }

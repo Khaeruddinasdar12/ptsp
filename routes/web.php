@@ -21,6 +21,7 @@ Route::get('qrcode', function () {
 Route::get('/', 'GuestController@index')->name('index');
 Route::get('/tentang', 'GuestController@tentang')->name('tentang');
 Route::get('/visi-misi', 'GuestController@visi')->name('visi');
+Route::get('/lacak-perizinan', 'GuestController@lacak')->name('lacak');
 Route::get('/struktur-organisasi', 'GuestController@struktur')->name('struktur');
 Route::get('/layanan', 'GuestController@layanan')->name('layanan');
 Route::get('pdf', 'GuestController@pdf');
@@ -43,6 +44,11 @@ Route::namespace('User')->group(function(){
 	Route::post('perizinan/izin-praktik/tab1', 'SipController@tab1')->name('sip.tab1');
 	Route::post('perizinan/izin-praktik/tab2', 'SipController@tab2')->name('sip.tab2');
 	Route::post('perizinan/izin-praktik/tab3', 'SipController@tab3')->name('sip.tab3');
+
+	Route::post('perizinan/izin-praktik/praktik1', 'SipController@praktik1')->name('sip.praktik1');
+	Route::post('perizinan/izin-praktik/praktik2', 'SipController@praktik2')->name('sip.praktik2');
+	Route::post('perizinan/izin-praktik/praktik3', 'SipController@praktik3')->name('sip.praktik3');
+	
 	Route::post('perizinan/izin-praktik/tab4', 'SipController@tab4')->name('sip.tab4');
 	Route::post('perizinan/izin-praktik/tab5', 'SipController@tab5')->name('sip.tab5');
 
