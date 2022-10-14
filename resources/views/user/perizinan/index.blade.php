@@ -88,6 +88,8 @@
                     @endif
                   @elseif($datas->status == '2')
                   <span class="badge rounded-pill bg-danger text-white"><i class="fa flaticon-circle"></i> Ditolak</span>
+                  @elseif($datas->status == '1')
+                  <span class="badge rounded-pill bg-success text-white"><i class="fa flaticon-circle"></i> Terbit, Silakan ke halaman Download</span>
                   @endif
                   
                 </td>

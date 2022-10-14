@@ -35,10 +35,10 @@
             </svg> </div>
             <div class="kt-iconbox__desc">
               <h3 class="kt-iconbox__title">
-                <a class="kt-link" href="#">Semua Perizinan</a>
+                <a class="kt-link" href="#">Telah Terbit</a>
               </h3>
               <div class="kt-iconbox__content">
-                87
+                {{$terbit}}
               </div>
             </div>
           </div>
@@ -62,7 +62,7 @@
                   <a class="kt-link" href="#">Perizinan Dalam Proses</a>
                 </h3>
                 <div class="kt-iconbox__content">
-                  87
+                  {{$proses}}
                 </div>
               </div>
             </div>
@@ -86,7 +86,7 @@
                     <a class="kt-link" href="#">Perizinan Ditolak</a>
                   </h3>
                   <div class="kt-iconbox__content">
-                    87
+                    {{$tolak}}
                   </div>
                 </div>
               </div>

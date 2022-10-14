@@ -23,7 +23,7 @@ class PerizinanController extends Controller
 	public function index()
 	{
 		$user_id = Auth::user()->id;
-		$data = Perizinan::where('status', '!=', '1')->where('user_id', $user_id)->paginate(10);
+		$data = Perizinan::where('status', '!=', '')->where('user_id', $user_id)->paginate(10);
 		return view('user.perizinan.index', ['data' => $data]);
 	}
 
