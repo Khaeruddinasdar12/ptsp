@@ -274,7 +274,7 @@ class KrkController extends Controller
                     $ktp = $request->file('ktp'); 
                     if ($ktp) {
                         $validasi = $this->validate($request, [
-                            'ktp' => 'image|mimes:jpeg,png,jpg|max:1024',
+                            'ktp' => 'mimes:jpeg,png,jpg|max:1024',
                         ],$message,$attribute);
                         $krk = Krk::where('perizinan_id', $i->id)->first();
                         if ($krk->ktp && file_exists(storage_path('app/public/' . $krk->ktp))) {
@@ -299,7 +299,7 @@ class KrkController extends Controller
                     $pbb = $request->file('pbb'); 
                     if ($pbb) {
                         $validasi = $this->validate($request, [
-                            'pbb' => 'image|mimes:jpeg,png,jpg|max:1024',
+                            'pbb' => 'mimes:jpeg,png,jpg|max:1024',
                         ],$message,$attribute);
                         $krk = Krk::where('perizinan_id', $i->id)->first();
                         if ($krk->pbb && file_exists(storage_path('app/public/' . $krk->pbb))) {
@@ -324,7 +324,7 @@ class KrkController extends Controller
                     $surat_tanah = $request->file('surat_tanah'); 
                     if ($surat_tanah) {
                         $validasi = $this->validate($request, [
-                            'surat_tanah' => 'image|mimes:jpeg,png,jpg|max:1024',
+                            'surat_tanah' => 'mimes:jpeg,png,jpg|max:1024',
                         ],$message,$attribute);
                         $krk = Krk::where('perizinan_id', $i->id)->first();
                         if ($krk->surat_tanah && file_exists(storage_path('app/public/' . $krk->surat_tanah))) {
@@ -349,7 +349,7 @@ class KrkController extends Controller
                     $peta = $request->file('peta'); 
                     if ($peta) {
                         $validasi = $this->validate($request, [
-                            'peta' => 'image|mimes:jpeg,png,jpg|max:1024',
+                            'peta' => 'mimes:jpeg,png,jpg|max:1024',
                         ],$message,$attribute);
                         $krk = Krk::where('perizinan_id', $i->id)->first();
                         if ($krk->peta && file_exists(storage_path('app/public/' . $krk->peta))) {
@@ -374,7 +374,7 @@ class KrkController extends Controller
                     $gambar = $request->file('gambar'); 
                     if ($gambar) {
                         $validasi = $this->validate($request, [
-                            'gambar' => 'image|mimes:jpeg,png,jpg|max:1024',
+                            'gambar' => 'mimes:jpeg,png,jpg|max:1024',
                         ],$message,$attribute);
                         $krk = Krk::where('perizinan_id', $i->id)->first();
                         if ($krk->gambar && file_exists(storage_path('app/public/' . $krk->gambar))) {

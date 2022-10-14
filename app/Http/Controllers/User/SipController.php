@@ -503,7 +503,7 @@ class SipController extends Controller
 					$ktp = $request->file('ktp'); 
 					if ($ktp) {
 						$validasi = $this->validate($request, [
-							'ktp' => 'image|mimes:jpeg,png,jpg|max:1024',
+							'ktp' => 'mimes:jpeg,png,jpg|max:1024',
 						],$message,$attribute);
 						$sip = Sip::where('perizinan_id', $i->id)->first();
 						if ($sip->ktp && file_exists(storage_path('app/public/' . $sip->ktp))) {
@@ -528,7 +528,7 @@ class SipController extends Controller
 					$foto = $request->file('foto'); 
 					if ($foto) {
 						$validasi = $this->validate($request, [
-							'foto' => 'image|mimes:jpeg,png,jpg|max:1024',
+							'foto' => 'mimes:jpeg,png,jpg|max:1024',
 						],$message,$attribute);
 						$sip = Sip::where('perizinan_id', $i->id)->first();
 						if ($sip->foto && file_exists(storage_path('app/public/' . $sip->foto))) {

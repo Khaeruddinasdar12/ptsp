@@ -282,7 +282,7 @@ class SikController extends Controller
 					$ktp = $request->file('ktp'); 
 					if ($ktp) {
 						$validasi = $this->validate($request, [
-							'ktp' => 'image|mimes:jpeg,png,jpg|max:1024',
+							'ktp' => 'mimes:jpeg,png,jpg|max:1024',
 						],$message,$attribute);
 						$sik = Sik::where('perizinan_id', $i->id)->first();
 						if ($sik->ktp && file_exists(storage_path('app/public/' . $sik->ktp))) {
@@ -307,7 +307,7 @@ class SikController extends Controller
 					$foto = $request->file('foto'); 
 					if ($foto) {
 						$validasi = $this->validate($request, [
-							'foto' => 'image|mimes:jpeg,png,jpg|max:1024',
+							'foto' => 'mimes:jpeg,png,jpg|max:1024',
 						],$message,$attribute);
 						$sik = Sik::where('perizinan_id', $i->id)->first();
 						if ($sik->foto && file_exists(storage_path('app/public/' . $sik->foto))) {
@@ -332,7 +332,7 @@ class SikController extends Controller
 					$ijazah = $request->file('ijazah'); 
 					if ($ijazah) {
 						$validasi = $this->validate($request, [
-							'ijazah' => 'image|mimes:jpeg,png,jpg|max:1024',
+							'ijazah' => 'mimes:jpeg,png,jpg|max:1024',
 						],$message,$attribute);
 						$sik = Sik::where('perizinan_id', $i->id)->first();
 						if ($sik->ijazah && file_exists(storage_path('app/public/' . $sik->ijazah))) {

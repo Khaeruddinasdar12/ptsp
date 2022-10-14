@@ -104,7 +104,7 @@ class PendidikanController extends Controller
 				$ktp = $request->file('ktp'); 
 				if ($ktp) {
 					$validasi = $this->validate($request, [
-						'ktp' => 'image|mimes:jpeg,png,jpg|max:1024',
+						'ktp' => 'mimes:jpeg,png,jpg|max:1024',
 					],$message,$attribute);
 					$pdd = Pendidikan::where('perizinan_id', $id)->first();
 					if ($pdd->ktp && file_exists(storage_path('app/public/' . $pdd->ktp))) {
@@ -123,7 +123,7 @@ class PendidikanController extends Controller
 					$foto = $request->file('pas_foto'); 
 					if ($foto) {
 						$validasi = $this->validate($request, [
-							'pas_foto' => 'image|mimes:jpeg,png,jpg|max:1024',
+							'pas_foto' => 'mimes:jpeg,png,jpg|max:1024',
 						],$message,$attribute);
 						$pdd = Pendidikan::where('perizinan_id', $id)->first();
 						if ($pdd->pas_foto && file_exists(storage_path('app/public/' . $pdd->pas_foto))) {
