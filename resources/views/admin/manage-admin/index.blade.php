@@ -3,7 +3,6 @@
 @section('title', 'Manage Admin')
 
 @section('page_style')
-<link href="{{ asset('plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css">
 @endsection
 
 @section('subheader')
@@ -155,86 +154,7 @@
 @endsection
 
 @section('page_script')
-<script src="{{ asset('plugins/custom/datatables/datatables.bundle.js') }}"></script>
 <script>
-  $(document).ready(function () {
-    fill_datatable();
-
-    function fill_datatable(filter_tahap = '') {
-      var dataTable2 = $('#tabel_guru').DataTable({
-        processing: true,
-        serverSide: true,
-        dom: 'Bfrtip',
-        buttons: [
-        {extend: 'pageLength'},
-        {extend: 'excel', exportOptions: { columns: [ 0, 1, 2, 3, 4 ] } },
-        ],
-        ajax: {
-          "url"  : '{{--route("pegawai.tabelguru")--}}',
-                    // "data" : {filter_tahap:filter_tahap}
-                  },
-                  columns: [
-                  {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                  {data: 'name', name: 'name'},
-                  {data: 'nik', name: 'nik'},
-                  {data: 'email', name: 'email'},
-                  {data: 'nohp', name: 'nohp'},
-                  {data: 'action', name: 'action'},
-                  ],
-                  columnDefs: [
-                  {
-                    className: 'text-center',
-                    targets: [0,5],
-                  },
-                  ],
-                // pagingType: "full_numbers"
-              });
-    }
-
-  });
-
-    function change() { // mengubah status kepegawaian
-      $(document).on('click', '#pegawai', function(){
-        Swal.fire({
-          title: 'Nonaktifkan Guru ?',
-          text: "Anda akan menonaktifkan guru ini dan tidak menjadi pegawai lagi!",
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Ya, Lanjutkan!',
-          timer: 6500
-        }).then((result) => {
-          if (result.value) {
-            var me = $(this),
-            url = me.attr('href'),
-            token = $('meta[name="csrf-token"]').attr('content');
-            $.ajax({
-              url: url,
-              method: "POST",
-              data : {
-                '_method' : 'PUT',
-                '_token'  : token
-              },
-              success:function(data){
-                if(data.status == 'success') {
-                  $('#tabel_guru').DataTable().ajax.reload();
-                  berhasil(data.status, data.pesan)
-                } 
-              },
-              error: function(xhr, status, error){
-                var error = xhr.responseJSON; 
-                if ($.isEmptyObject(error) == false) {
-                  $.each(error.errors, function(key, value) {
-                    gagal(key, value);
-                  });
-                }
-              } 
-            });
-          }
-        });
-      });
-    }
 
     function berhasil(status, pesan) {
       Swal.fire({

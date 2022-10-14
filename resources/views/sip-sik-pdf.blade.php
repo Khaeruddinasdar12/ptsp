@@ -324,7 +324,7 @@
           <tr>
             <td style="width: 30%;">No. Rekomendasi OP</td>
             <td style="width: 5%;">:</td>
-            <td style="width: 65%;"></td>
+            <td style="width: 65%;">{{$rekomendasi_op}}</td>
           </tr>
           <tr>
             <td style="width: 30%;">No. Rekomendasi Dinkes</td>
@@ -336,6 +336,13 @@
             <td style="width: 5%;">:</td>
             <td style="width: 65%;">{{$subizin}}</td>
           </tr>
+          @if($kategori)
+          <tr class="merah">
+            <td style="width: 30%;">Spesialis</td>
+            <td style="width: 5%;">:</td>
+            <td style="width: 65%;">{{$kategori}}</td>
+          </tr>
+          @endif
         </table>
 
         <br>

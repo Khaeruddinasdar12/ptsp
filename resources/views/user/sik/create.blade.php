@@ -141,6 +141,12 @@
                       </div>
                     </div>
                     <div class="form-group row">
+                      <label class="col-lg-3 col-form-label">No. Rekomondasi OP:*</label>
+                      <div class="col-lg-9">
+                        <input type="text" class="form-control" name="rekomendasi_op" value="@if($old){{$old->sik->rekomendasi_op}}@endif" required>
+                      </div>
+                    </div>
+                    <div class="form-group row">
                       <label class="col-lg-3 col-form-label">No. STR:*</label>
                       <div class="col-lg-9">
                         <input type="text" class="form-control" name="no_str" value="@if($old){{$old->sik->no_str}}@endif" required>
@@ -169,18 +175,7 @@
                 </div>
               </div>
               <!-- END TAB 2 -->
-              <script type="text/javascript">
-                kel_id = null;
-              </script>
-              @if($old && $old->sik && $old->sik->klh)
-              <script type="text/javascript">
-                kel_id = '{!! $old->sik->klh->id !!}';
-              </script>
-              @php $kec = $old->sik->klh->kecamatan; @endphp
-              @else
-              @php $kec=null; @endphp
-              @endif
-
+              
               <!-- TAB 3 -->
               <div class="tab-pane fade" id="kt_tab_pane_3" role="tabpanel" aria-labelledby="kt_tab_pane_3_3">
                 <div class="container">
@@ -249,7 +244,8 @@
                       <form action="{{route('sik.tab4')}}" method="POST" id="ktp">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="ktp" accept="image/jpeg,image/jpg,image/png" required>
+                          <input type="file" name="ktp" id="file-ktp" style="display:none;" accept="image/jpeg,image/jpg,image/png">
+                          <label for="file-ktp" class="form-control" id="label-ktp">@if($old && $old->sik->ktp)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="ktp" >
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
@@ -269,7 +265,8 @@
                       <form action="{{route('sik.tab4')}}" method="POST" id="foto">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="foto" accept="image/jpeg,image/jpg,image/png" required>
+                          <input type="file" name="foto" id="file-foto" style="display:none;" accept="image/jpeg,image/jpg,image/png">
+                          <label for="file-foto" class="form-control" id="label-foto">@if($old && $old->sik->foto)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="foto" >
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
@@ -289,7 +286,8 @@
                       <form action="{{route('sik.tab4')}}" method="POST" id="ijazah">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="ijazah" accept="image/jpeg,image/jpg,image/png" required>
+                          <input type="file" name="ijazah" id="file-ijazah" style="display:none;" accept="image/jpeg,image/jpg,image/png">
+                          <label for="file-ijazah" class="form-control" id="label-ijazah">@if($old && $old->sik->ijazah)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="ijazah" >
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
@@ -309,7 +307,8 @@
                       <form action="{{route('sik.tab4')}}" method="POST" id="str">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="str" accept="application/pdf" required>
+                          <input type="file" name="str" id="file-str" style="display:none;" accept="application/pdf">
+                          <label for="file-str" class="form-control" id="label-str">@if($old && $old->sik->str)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="str" >
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
@@ -329,7 +328,8 @@
                       <form action="{{route('sik.tab4')}}" method="POST" id="rekomendasi_org">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="rekomendasi_org" accept="application/pdf" required>
+                          <input type="file" name="rekomendasi_org" id="file-rekomendasi_org" style="display:none;" accept="application/pdf">
+                          <label for="file-rekomendasi_org" class="form-control" id="label-rekomendasi_org">@if($old && $old->sik->rekomendasi_org)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="rekomendasi_org" >
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
@@ -349,7 +349,8 @@
                       <form action="{{route('sik.tab4')}}" method="POST" id="surat_keterangan">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="surat_keterangan" accept="application/pdf" required>
+                          <input type="file" name="surat_keterangan" id="file-surat_keterangan" style="display:none;" accept="application/pdf">
+                          <label for="file-surat_keterangan" class="form-control" id="label-surat_keterangan">@if($old && $old->sik->surat_keterangan)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="surat_keterangan" >
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
@@ -372,7 +373,8 @@
                       <form action="{{route('sik.tab4')}}" method="POST" id="surat_keluasan">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="surat_keluasan" accept="application/pdf" required>
+                          <input type="file" name="surat_keluasan" id="file-surat_keluasan" style="display:none;" accept="application/pdf">
+                          <label for="file-surat_keluasan" class="form-control" id="label-surat_keluasan">@if($old && $old->sik->surat_keluasan)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="surat_keluasan" >
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
@@ -392,7 +394,8 @@
                       <form action="{{route('sik.tab4')}}" method="POST" id="berkas_pendukung">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="berkas_pendukung" accept="application/pdf" required>
+                          <input type="file" name="berkas_pendukung" id="file-berkas_pendukung" style="display:none;" accept="application/pdf">
+                          <label for="file-berkas_pendukung" class="form-control" id="label-berkas_pendukung">@if($old && $old->sik->berkas_pendukung)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="berkas_pendukung" >
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
@@ -454,6 +457,18 @@
 @endsection
 
 <script type="text/javascript">
+  kel_id = null;
+</script>
+@if($old && $old->sik && $old->sik->klh)
+<script type="text/javascript">
+  kel_id = '{!! $old->sik->klh->id !!}';
+</script>
+@php $kec = $old->sik->klh->kecamatan; @endphp
+@else
+@php $kec=null; @endphp
+@endif
+
+<script type="text/javascript">
   jenis_izin_old = null;
   id_jenis_izin_old = null;
 </script>
@@ -462,6 +477,10 @@
   jenis_izin_old = '{!! $old->sik->subizin->nama !!}';
   id_jenis_izin_old = '{!! $old->sik->subizin->id !!}';
   sik_id = '{!! $old->sik->id !!}';
+</script>
+@else
+<script type="text/javascript">
+  sik_id = null;
 </script>
 @endif
 
@@ -497,8 +516,12 @@
           // },
           success: function(data) {
             jQuery.each(data, function(i, val) {
-
-              $('#kelurahan').append('<option value="' + val.id + '">' + val.kecamatan +' - '+ val.kelurahan + '</option>');
+              if(val.id == kel_id) {
+                check = 'selected';
+              } else {
+                check = '';
+              }
+              $('#kelurahan').append('<option value="' + val.id + '" '+check+'>' + val.kecamatan +' - '+ val.kelurahan + '</option>');
             });
             // $(".loader").css("display","none");
           },

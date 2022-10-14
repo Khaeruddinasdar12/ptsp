@@ -13,6 +13,7 @@ use Auth;
 use Carbon\Carbon;
 use QueryException;
 use Exception;
+
 class SipController extends Controller
 {
 	public function __construct()
@@ -38,10 +39,15 @@ class SipController extends Controller
 		if(!$old) {
 			$old = null;
 		}
-		$data = Subizin::where('jenis', 'sip')->get();
+		$data = Subizin::where('jenis', 'sip')->where('nama', '!=', 'Dokter Spesialis')->get();
 		// $kel = 
 		// return $data;
 		return view('user.sip.create', ['data' => $data, 'old' => $old]);
+	}
+
+	public function spesialis()
+	{
+		return $data = Subizin::where('jenis', 'sip')->where('nama', 'Dokter Spesialis')->get();
 	}
 
 	public function tab1(Request $request)
@@ -77,7 +83,8 @@ class SipController extends Controller
 					));
 					return $arrayName = array(
 						'status' => 'success',
-						'pesan' => 'Berhasil Menyimpan!'
+						'pesan' => 'Berhasil Menyimpan!',
+						'sip_id' => $i->id
 					);
 
 				} elseif($i->status == '0' || $i->status == '2') {
@@ -96,7 +103,7 @@ class SipController extends Controller
 				'no_tiket' => 'SIP-'.$no_tiket
 			));
 
-			Sip::create(array(
+			$set = Sip::create(array(
 				'perizinan_id' => $izin->id,
 				'nama' => $request->nama,
 				'nohp' => $request->nohp,
@@ -107,7 +114,8 @@ class SipController extends Controller
 
 			return $arrayName = array(
 				'status' => 'success',
-				'pesan' => 'Data disimpan!'
+				'pesan' => 'Data disimpan!',
+				'sip_id' => $set->id
 			);
 		} catch(Exception $e) {
 			return $arrayName = array(
@@ -127,6 +135,7 @@ class SipController extends Controller
 	{
 		$rules = [
 			'jenis_izin' => 'required|string',
+			'rekomendasi_op' => 'required|string',
 			'no_str' => 'required|string',
 			'awal_str' => 'required|string',
 			'akhir_str' => 'required|date',
@@ -139,6 +148,11 @@ class SipController extends Controller
 			'akhir_str' => 'Tanggal Berakhir STR',
 		];
 		$validasi = $this->validate($request,$rules,$message,$attribute);
+		if($request->jenis_izin == 'Dokter Spesialis') {
+			$jenis_izin = $request->spesialis;
+		} else {
+			$jenis_izin = $request->jenis_izin;
+		}
 		try {
 			$auth = Auth::user()->id;
 			$perizinan = Perizinan::where('user_id', $auth)->where('jenis_izin', 'sip')->get();
@@ -146,14 +160,16 @@ class SipController extends Controller
 
 				if($i->status == null) {
 					Sip::where('perizinan_id', $i->id)->update(array(
-						'subizin_id' => $request->jenis_izin,
+						'subizin_id' => $jenis_izin,
+						'rekomendasi_op' => $request->rekomendasi_op,
 						'no_str' => $request->no_str,
 						'awal_str' => $request->awal_str,
 						'akhir_str' => $request->akhir_str,
 					));
 					return $arrayName = array(
 						'status' => 'success',
-						'pesan' => 'Berhasil Menyimpan!'
+						'pesan' => 'Berhasil Menyimpan!',
+						'sip_id' => $i->id
 					);
 
 				} elseif($i->status == '0' || $i->status == '2') {
@@ -172,9 +188,10 @@ class SipController extends Controller
 				'no_tiket' => 'SIP-'.$no_tiket
 			));
 
-			Sip::create(array(
+			$set = Sip::create(array(
 				'perizinan_id' => $izin->id,
-				'subizin_id' => $request->jenis_izin,
+				'subizin_id' => $jenis_izin,
+				'rekomendasi_op' => $request->rekomendasi_op,
 				'no_str' => $request->no_str,
 				'awal_str' => $request->awal_str,
 				'akhir_str' => $request->akhir_str,
@@ -182,7 +199,8 @@ class SipController extends Controller
 
 			return $arrayName = array(
 				'status' => 'success',
-				'pesan' => 'Data disimpan!'
+				'pesan' => 'Data disimpan!',
+				'sip_id' => $set->id
 			);
 		} catch(Exception $e) {
 			return $arrayName = array(
@@ -247,7 +265,8 @@ class SipController extends Controller
 					));
 					return $arrayName = array(
 						'status' => 'success',
-						'pesan' => 'Data Disimpan!'
+						'pesan' => 'Data Disimpan!',
+						'sip_id' => $i->id
 					);
 
 				} elseif($i->status == '0' || $i->status == '2') {
@@ -266,7 +285,7 @@ class SipController extends Controller
 				'no_tiket' => 'SIP-'.$no_tiket
 			));
 
-			Sip::create(array(
+			$set = Sip::create(array(
 				'perizinan_id' => $izin->id,
 
 				'nama_praktek1' => $request->nama_praktek1,
@@ -280,7 +299,8 @@ class SipController extends Controller
 
 			return $arrayName = array(
 				'status' => 'success',
-				'pesan' => 'Data disimpan!'
+				'pesan' => 'Data disimpan!',
+				'sip_id' => $set->id
 			);
 		} catch(Exception $e) {
 			return $arrayName = array(
@@ -352,7 +372,7 @@ class SipController extends Controller
 					));
 					return $arrayName = array(
 						'status' => 'success',
-						'pesan' => 'Data Disimpan!'
+						'pesan' => 'Data Disimpan!',
 					);
 
 				} elseif($i->status == '0' || $i->status == '2') {
@@ -466,204 +486,6 @@ class SipController extends Controller
 
 	}
 
-
-	public function tab3(Request $request)
-	{
-		$rules = [
-			'nama_praktek1' => 'required|string',
-			'jalan1' => 'required|string',
-			'kelurahan1' => 'required|string',			
-		];
-		$message = [];
-		$attribute = [
-			'nama_praktek1' => 'Nama Praktek 1',
-			'jalan1' => 'Jalan 1',
-			'kelurahan1' => 'Kelurahan 1',
-			'kecamatan1' => 'Kecamatan 1',
-			'nama_praktek2' => 'Nama Praktek 2',
-			'jalan2' => 'Jalan 2',
-			'kelurahan2' => 'Kelurahan 2',
-			'nama_praktek3' => 'Nama Praktek 3',
-			'jalan3' => 'Jalan 3',
-			'kelurahan3' => 'Kelurahan 3',
-		];
-		$validasi = $this->validate($request,$rules,$message,$attribute);
-
-		$jam_buka2 = null;
-		$jam_tutup2 = null;
-		if($request->nama_praktek2 || $request->jalan2 || $request->hari_buka2 || $request->hari_tutup2) {
-			$validasi = $this->validate($request, [
-				'nama_praktek2' => 'required|string',
-				'jalan2' => 'required|string',
-				'kelurahan2' => 'required|string',
-			],$message,$attribute);
-			
-			if($request->hari_buka2 || $request->hari_tutup2) {
-				$validasi = $this->validate($request, [
-					'hari_buka2'  => 'required|string',
-					'hari_tutup2'  => 'required|string',
-					'jam_buka2'  => 'required|string',
-					'menitbuka2' => 'required|string',
-					'jam_tutup2'  => 'required|string',
-					'menittutup2' => 'required|string',
-				],$message,$attribute);
-				$jam_buka2 = $request->jam_buka2 .':'. $request->menitbuka2;
-				$jam_tutup2 = $request->jam_tutup2 .':'. $request->menittutup2;
-			} else {
-				$request->hari_buka2 = null;
-				$request->hari_tutup2 = null;	
-			}
-		} else {
-			$request->kelurahan2 = null;
-		}
-
-		$jam_buka3 = null;
-		$jam_tutup3 = null;
-		if($request->nama_praktek3 || $request->jalan3 || $request->hari_buka3 || $request->hari_tutup3) {
-			$validasi = $this->validate($request, [
-				'nama_praktek3'  => 'required|string',
-				'jalan3'  => 'required|string',
-				'kelurahan3'  => 'required|string',
-			],$message,$attribute);
-			
-			if($request->hari_buka3 || $request->hari_tutup3) {
-				$validasi = $this->validate($request, [
-					'hari_buka3'  => 'required|string',
-					'hari_tutup3'  => 'required|string',
-					'jam_buka3'  => 'required|string',
-					'menitbuka3' => 'required|string',
-					'jam_tutup3'  => 'required|string',
-					'menittutup3' => 'required|string',
-				],$message,$attribute);
-				$jam_buka3 = $request->jam_buka3 .':'. $request->menitbuka3;
-				$jam_tutup3 = $request->jam_tutup3 .':'. $request->menittutup3;
-			} else {
-				$request->hari_buka3 = null;
-				$request->hari_tutup3 = null;	
-			}
-		} else {
-			$request->kelurahan3 = null;
-		}
-
-		// Jadwal Validate
-		$jam_buka1 = null;
-		$jam_tutup1 = null;
-		if($request->hari_buka1 || $request->hari_tutup1) {
-			$validasi = $this->validate($request, [
-				'hari_buka1'  => 'required|string',
-				'hari_tutup1'  => 'required|string',
-				'jam_buka1'  => 'required|string',
-				'menitbuka1' => 'required|string',
-				'jam_tutup1'  => 'required|string',
-				'menittutup1' => 'required|string',
-			],$message,$attribute);
-			$jam_buka1 = $request->jam_buka1 .':'. $request->menitbuka1;
-			$jam_tutup1 = $request->jam_tutup1 .':'. $request->menittutup1;
-		} else {
-			$request->hari_buka1 = null;
-			$request->hari_tutup1 = null;	
-		}		
-		// End Jadwal validate
-
-
-		try {
-			$auth = Auth::user()->id;
-			$perizinan = Perizinan::where('user_id', $auth)->where('jenis_izin', 'sip')->get();
-			foreach($perizinan as $i) {
-
-				if($i->status == null) {
-					Sip::where('perizinan_id', $i->id)->update(array(
-						'nama_praktek1' => $request->nama_praktek1,
-						'jalan1' => $request->jalan1,
-						'kelurahan1' => $request->kelurahan1,
-						'hari_buka1' => $request->hari_buka1,
-						'hari_tutup1' => $request->hari_tutup1,
-						'jam_buka1' => $jam_buka1,
-						'jam_tutup1' => $jam_tutup1,
-
-						'nama_praktek2' => $request->nama_praktek2,
-						'jalan2' => $request->jalan2,
-						'kelurahan2' => $request->kelurahan2,
-						'hari_buka2' => $request->hari_buka2,
-						'hari_tutup2' => $request->hari_tutup2,
-						'jam_buka2' => $jam_buka2,
-						'jam_tutup2' => $jam_tutup2,
-
-						'nama_praktek3' => $request->nama_praktek3,
-						'jalan3' => $request->jalan3,
-						'kelurahan3' => $request->kelurahan3,
-						'hari_buka3' => $request->hari_buka3,
-						'hari_tutup3' => $request->hari_tutup3,
-						'jam_buka3' => $jam_buka3,
-						'jam_tutup3' => $jam_tutup3,
-
-					));
-					return $arrayName = array(
-						'status' => 'success',
-						'pesan' => 'Data Disimpan!'
-					);
-
-				} elseif($i->status == '0' || $i->status == '2') {
-					return $arrayName = array(
-						'status' => 'error',
-						'pesan' => 'Saat ini Anda memiliki pengajuan perizinan Surat Izin Praktik (SIP)! Silakan Cek di tab Surat Perizinan Anda!'
-					);
-				}
-			}
-
-			$no_tiket = strtoupper(substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 6));
-			$izin = Perizinan::create(array(
-				'user_id' => $auth,
-				'jenis_izin' => 'sip',
-				'status' => null,
-				'no_tiket' => 'SIP-'.$no_tiket
-			));
-
-			Sip::create(array(
-				'perizinan_id' => $izin->id,
-
-				'nama_praktek1' => $request->nama_praktek1,
-				'jalan1' => $request->jalan1,
-				'kelurahan1' => $request->kelurahan1,
-				'hari_buka1' => $request->hari_buka1,
-				'hari_tutup1' => $request->hari_tutup1,
-				'jam_buka1' => $jam_buka1,
-				'jam_tutup1' => $jam_tutup1,
-
-				'nama_praktek2' => $request->nama_praktek2,
-				'jalan2' => $request->jalan2,
-				'kelurahan2' => $request->kelurahan2,
-				'hari_buka2' => $request->hari_buka2,
-				'hari_tutup2' => $request->hari_tutup2,
-				'jam_buka2' => $jam_buka2,
-				'jam_tutup2' => $jam_tutup2,
-
-				'nama_praktek3' => $request->nama_praktek3,
-				'jalan3' => $request->jalan3,
-				'kelurahan3' => $request->kelurahan3,
-				'hari_buka3' => $request->hari_buka3,
-				'hari_tutup3' => $request->hari_tutup3,
-				'jam_buka3' => $jam_buka3,
-				'jam_tutup3' => $jam_tutup3,
-			));
-
-			return $arrayName = array(
-				'status' => 'success',
-				'pesan' => 'Data disimpan!'
-			);
-		} catch(Exception $e) {
-			return $arrayName = array(
-				'status' => 'error',
-				'pesan' => $e->getMessage()
-			);
-		} catch(QueryException $e) {
-			return $arrayName = array(
-				'status' => 'error',
-				'pesan' => $e->getMessage()
-			);
-		}
-	} // END TAB 3
-
 	// TAB 4
 	public function tab4(Request $request)
 	{
@@ -671,7 +493,7 @@ class SipController extends Controller
 		$attribute = [];
 		$auth = Auth::user()->id;
 		$perizinan = Perizinan::where('user_id', $auth)->where('jenis_izin', 'sip')->get();
-
+		
 		foreach($perizinan as $i) {
 
 			if($i->status == null) {
@@ -697,7 +519,7 @@ class SipController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'KTP tidak diproses!',
+						'pesan' => 'KTP wajib diisi!',
 					);	
 				} // end upload ktp
 
@@ -722,7 +544,7 @@ class SipController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'Pas Foto tidak diproses!',
+						'pesan' => 'Pas Foto wajib diisi!',
 					);	
 				} // end upload pas foto
 
@@ -747,7 +569,7 @@ class SipController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'STR tidak diproses!',
+						'pesan' => 'STR wajib diisi!',
 					);	
 				} // end upload STR
 
@@ -772,7 +594,7 @@ class SipController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'Rekomendasi organisasi tidak diproses!',
+						'pesan' => 'Rekomendasi organisasi wajib diisi!',
 					);	
 				} // end upload Rekomendasi Organisasi
 
@@ -797,7 +619,7 @@ class SipController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'Surat keterangan pelayanan kesehatan tidak diproses!',
+						'pesan' => 'Surat keterangan pelayanan kesehatan wajib diisi!',
 					);	
 				} // end upload Surat Keterangan
 
@@ -823,7 +645,7 @@ class SipController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'Surat persetujuan pimpinan instansi tidak diproses!',
+						'pesan' => 'Surat persetujuan pimpinan instansi wajib diisi!',
 					);	
 				} // end upload Surat Persetujuan
 
@@ -848,7 +670,7 @@ class SipController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'Berkas pendukung tidak diproses!',
+						'pesan' => 'Berkas pendukung wajib diisi!',
 					);	
 				} // end upload Surat Persetujuan
 
@@ -858,8 +680,9 @@ class SipController extends Controller
 					'status' => 'error',
 					'pesan' => 'Saat ini Anda memiliki pengajuan perizinan Pendidikan! Silakan Cek di tab Surat Perizinan Anda!'
 				);
-			}
+			} 
 		}
+		return $this->err('Tab Sebelumnya');
 	} //END TAB 4
 
 	public function tab5(Request $request)
@@ -890,6 +713,7 @@ class SipController extends Controller
 					if($cek->tempat_lahir == '') { return $this->err('Tempat Lahir'); }
 					if($cek->tanggal_lahir == '') { return $this->err('Tanggal Lahir'); }
 					if($cek->alamat == '') { return $this->err('Alamat'); }
+					if($cek->rekomendasi_op == '') { return $this->err('No. Rekomendasi OP'); }
 					if($cek->no_str == '') { return $this->err('No STR'); }
 					if($cek->awal_str == '') { return $this->err('Tanggal Mulai Berlaku STR'); }
 					if($cek->akhir_str == '') { return $this->err('Tanggal Berakhir STR'); }

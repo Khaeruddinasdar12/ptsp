@@ -96,6 +96,7 @@ class KadisController extends Controller
 					'dasar_hukum' => $dasar_hukum,
 					'jenis_izin' => $jenis_izin,
 					'subizin' => $data->sip->subizin->nama,
+					'kategori' => $data->sip->subizin->kategori,
 					'tempat_lahir' => $data->sip->tempat_lahir,
 					'tanggal_lahir' => $data->sip->tanggal_lahir,
 					'alamat' => $data->sip->alamat,
@@ -119,6 +120,7 @@ class KadisController extends Controller
 					'jadwal3' => $data->sip->hari_buka3.' s/d '. $data->sip->hari_tutup3 .' ,'. $data->sip->jam_buka3 .' - '. $data->sip->jam_tutup3.' WITA',
 
 					'no_str' => $data->sip->no_str,
+					'rekomendasi_op' => $data->sip->rekomendasi_op,
 					'no_rekomendasi' => $data->sip->no_rekomendasi,
 					'penetapan' => $time,
 				];
@@ -139,6 +141,7 @@ class KadisController extends Controller
 					'dasar_hukum' => $dasar_hukum,
 					'jenis_izin' => $jenis_izin,
 					'subizin' => $data->sik->subizin->nama,
+					'kategori' => '',
 					'tempat_lahir' => $data->sik->tempat_lahir,
 					'tanggal_lahir' => $data->sik->tanggal_lahir,
 					'alamat' => $data->sik->alamat,
@@ -147,15 +150,19 @@ class KadisController extends Controller
 					'kelurahan1' => $data->sik->klh->kelurahan,
 					'kecamatan1' => $data->sik->klh->kecamatan,
 					'jalan1' => $data->sik->jalan,
+					'jadwal1' => '',
 					'praktek2' => '',
 					'kelurahan2' => '',
 					'kecamatan2' => '',
 					'jalan2' => '',
+					'jadwal2' => '',
 					'praktek3' => '',
 					'kelurahan3' => '',
 					'kecamatan3' => '',
 					'jalan3' => '',
+					'jadwal3' => '',
 					'no_str' => $data->sik->no_str,
+					'rekomendasi_op' => $data->sik->rekomendasi_op,
 					'no_rekomendasi' => $data->sik->no_rekomendasi,
 					'penetapan' => $time,
 				];
@@ -220,7 +227,27 @@ class KadisController extends Controller
 			$data->ket = null;
 			$data->kadis_by = Auth::guard('admin')->user()->id;
 			$data->updated_at = $time;
-			$data->save();			
+
+			$email = $data->user->email;
+			$judul= "Notifikasi Penerbitan Sertifikat ". config('app.name');
+			$data_send = array(
+				'no_tiket' => $no_tiket,
+				'name' => $data->user->name,
+				'status' => 'TELAH DITERBITKAN',
+				'pesan' => 'Silakan Melakukan Pengecekan Pada Aplikasi Untuk Mengunduh Sertifikat!',
+				'keterangan' => $request->ket,
+				'class' => 'success',
+			);
+			Mail::send('email', $data_send, function($mail) use($email, $judul) {
+				$mail->to($email, 'no-reply')
+				->subject($judul);
+				$mail->from('ptsp@gmail.com', config('app.name'));        
+			});
+			if (Mail::failures()) {
+				return $arrayName = array('status' => 'error' , 'pesan' => 'Gagal mengirim email' );
+			}
+
+			// $data->save();			
 
 			$content = $pdf->stream()->getOriginalContent();
 			$nama_sertifikat = $data->no_tiket.'.pdf';

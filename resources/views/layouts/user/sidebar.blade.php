@@ -59,7 +59,7 @@
               <li class="kt-menu__item kt-menu__item--submenu {{ (request()->is('perizinan/surat-izin-kerja/create') ? 'kt-menu__item--active' : '') }}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                 <a href="{{route('sik.create')}}" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">Surat Izin Kerja (SIK)</span></a>
               </li>
-              <li class="kt-menu__item kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+              <li class="kt-menu__item kt-menu__item--submenu {{ (request()->is('perizinan/izin-krk/create') ? 'kt-menu__item--active' : '') }}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                 <a href="{{route('krk.create')}}" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">KRK</span></a>
               </li>
               <li class="kt-menu__item kt-menu__item--submenu {{ (request()->is('perizinan/izin-pendidikan/create') ? 'kt-menu__item--active' : '') }}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">

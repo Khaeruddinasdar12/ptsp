@@ -9,7 +9,7 @@ class Sip extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['perizinan_id', 'nama', 'nohp', 'tempat_lahir', 'tanggal_lahir', 'no_str', 'awal_str', 'akhir_str', 'no_rekomendasi', 'alamat', 'subizin_id', 'nama_praktek1', 'jalan1', 'kelurahan1', 'hari_buka1', 'hari_tutup1', 'jam_buka1', 'jam_tutup1', 'nama_praktek2', 'jalan2', 'kelurahan2', 'hari_buka2', 'hari_tutup2', 'jam_buka2', 'jam_tutup2', 'nama_praktek3', 'jalan3', 'kelurahan3', 'hari_buka3', 'hari_tutup3', 'jam_buka3', 'jam_tutup3', 'ktp', 'foto', 'str', 'rekomendasi_org', 'surat_keterangan', 'surat_persetujuan', 'berkas_pendukung', 'created_at', 'updated_at'];
+    protected $fillable = ['perizinan_id', 'nama', 'nohp', 'tempat_lahir', 'tanggal_lahir', 'no_str', 'awal_str', 'akhir_str', 'no_rekomendasi', 'rekomendasi_op', 'alamat', 'subizin_id', 'nama_praktek1', 'jalan1', 'kelurahan1', 'hari_buka1', 'hari_tutup1', 'jam_buka1', 'jam_tutup1', 'nama_praktek2', 'jalan2', 'kelurahan2', 'hari_buka2', 'hari_tutup2', 'jam_buka2', 'jam_tutup2', 'nama_praktek3', 'jalan3', 'kelurahan3', 'hari_buka3', 'hari_tutup3', 'jam_buka3', 'jam_tutup3', 'ktp', 'foto', 'str', 'rekomendasi_org', 'surat_keterangan', 'surat_persetujuan', 'berkas_pendukung', 'created_at', 'updated_at'];
 
     public function perizinan()
     {

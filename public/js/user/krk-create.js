@@ -18,6 +18,7 @@ $('#tab1').submit(function(e){
     success:function(data){
       if(data.status == 'success') {
         berhasil(data.status, data.pesan);
+        krk_id = data.krk_id;
         $('a[href="#kt_tab_pane_2"]').click();
       } else {
         berhasil(data.status, data.pesan);
@@ -55,6 +56,7 @@ $('#tab2').submit(function(e){
     success:function(data){
       if(data.status == 'success') {
         berhasil(data.status, data.pesan);
+        krk_id = data.krk_id;
         $('a[href="#kt_tab_pane_3"]').click();
       } else {
         berhasil(data.status, data.pesan);
@@ -91,6 +93,7 @@ $('#tab3').submit(function(e) {
     success:function(data){
       if(data.status == 'success') {
         berhasil(data.status, data.pesan);
+        krk_id = data.krk_id;
         $('a[href="#kt_tab_pane_4"]').click();
       } else {
         berhasil(data.status, data.pesan);
@@ -128,7 +131,7 @@ $('#ktp').submit(function(e) {
       $('#loader').attr("style", "");
     },
     success:function(data) {
-      document.getElementById('ktp').reset();
+      // document.getElementById('ktp').reset();
       if(data.status == 'success') {
         reload(krk_id, 'reload-ktp', 'ktp');
       }
@@ -166,7 +169,7 @@ $('#ktp').submit(function(e) {
         $('#loader').attr("style", "");
       },
       success:function(data) {
-        document.getElementById('foto').reset();
+        // document.getElementById('foto').reset();
         if(data.status == 'success') {
           reload(krk_id, 'reload-foto', 'pas_foto');
         }
@@ -204,7 +207,7 @@ $('#ktp').submit(function(e) {
         $('#loader').attr("style", "");
       },
       success:function(data) {
-        document.getElementById('pbb').reset();
+        // document.getElementById('pbb').reset();
         if(data.status == 'success') {
           reload(krk_id, 'reload-pbb', 'pbb');
         }
@@ -242,7 +245,7 @@ $('#ktp').submit(function(e) {
         $('#loader').attr("style", "");
       },
       success:function(data) {
-        document.getElementById('surat_tanah').reset();
+        // document.getElementById('surat_tanah').reset();
         if(data.status == 'success') {
           reload(krk_id, 'reload-surat_tanah', 'surat_tanah');
         }
@@ -280,7 +283,7 @@ $('#ktp').submit(function(e) {
         $('#loader').attr("style", "");
       },
       success:function(data) {
-        document.getElementById('peta').reset();
+        // document.getElementById('peta').reset();
         if(data.status == 'success') {
           reload(krk_id, 'reload-peta', 'peta');
         }
@@ -318,7 +321,7 @@ $('#ktp').submit(function(e) {
         $('#loader').attr("style", "");
       },
       success:function(data) {
-        document.getElementById('gambar').reset();
+        // document.getElementById('gambar').reset();
         if(data.status == 'success') {
           reload(krk_id, 'reload-gambar', 'gambar');
         }
@@ -356,7 +359,7 @@ $('#ktp').submit(function(e) {
         $('#loader').attr("style", "");
       },
       success:function(data) {
-        document.getElementById('berkas_pendukung').reset();
+        // document.getElementById('berkas_pendukung').reset();
         if(data.status == 'success') {
           reload(krk_id, 'reload-berkas_pendukung', 'berkas_pendukung');
         }
@@ -536,3 +539,27 @@ $('#ktp').submit(function(e) {
       }
   //end menampilkan kelurahan1 setelah memilih kecamatan1
 
+// Handle File
+$("#file-ktp").change(function(){
+  $("#label-ktp").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-pbb").change(function(){
+  $("#label-pbb").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-surat_tanah").change(function(){
+  $("#label-surat_tanah").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-peta").change(function(){
+  $("#label-peta").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-gambar").change(function(){
+  $("#label-gambar").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-berkas_pendukung").change(function(){
+  $("#label-berkas_pendukung").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});

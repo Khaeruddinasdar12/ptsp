@@ -65,7 +65,8 @@ class SikController extends Controller
 				));
 				return $arrayName = array(
 					'status' => 'success',
-					'pesan' => 'Berhasil Menyimpan!'
+					'pesan' => 'Berhasil Menyimpan!',
+					'sik_id' => $i->id
 				);
 
 			} elseif($i->status == '0' || $i->status == '2') {
@@ -84,7 +85,7 @@ class SikController extends Controller
 				'no_tiket' => 'SIK-'.$no_tiket
 			));
 
-			Sik::create(array(
+			$sik = Sik::create(array(
 				'perizinan_id' => $izin->id,
 				'nama' => $request->nama,
 				'nohp' => $request->nohp,
@@ -95,7 +96,8 @@ class SikController extends Controller
 
 			return $arrayName = array(
 				'status' => 'success',
-				'pesan' => 'Data disimpan!'
+				'pesan' => 'Data disimpan!',
+				'sik_id' => $sik->id
 			);
 		} catch(Exception $e) {
 			return $arrayName = array(
@@ -122,6 +124,7 @@ class SikController extends Controller
 		$message = [];
 		$attribute = [
 			'jenis_izin' => 'Jenis izin',
+			'rekomendasi_op' => 'No. Rekomendasi OP',
 			'no_str' => 'No. STR',
 			'awal_str' => 'Tanggal Mulai Berlaku STR',
 			'akhir_str' => 'Tanggal Berakhir STR',
@@ -134,13 +137,15 @@ class SikController extends Controller
 			if($i->status == null) {
 				Sik::where('perizinan_id', $i->id)->update(array(
 					'subizin_id' => $request->jenis_izin,
+					'rekomendasi_op' => $request->rekomendasi_op,
 					'no_str' => $request->no_str,
 					'awal_str' => $request->awal_str,
 					'akhir_str' => $request->akhir_str,
 				));
 				return $arrayName = array(
 					'status' => 'success',
-					'pesan' => 'Berhasil Menyimpan!'
+					'pesan' => 'Berhasil Menyimpan!',
+					'sik_id' => $i->id
 				);
 
 			} elseif($i->status == '0' || $i->status == '2') {
@@ -159,9 +164,10 @@ class SikController extends Controller
 				'no_tiket' => 'SIK-'.$no_tiket
 			));
 
-			Sik::create(array(
+			$sik = Sik::create(array(
 				'perizinan_id' => $izin->id,
 				'subizin_id' => $request->jenis_izin,
+				'rekomendasi_op' => $request->rekomendasi_op,
 				'no_str' => $request->no_str,
 				'awal_str' => $request->awal_str,
 				'akhir_str' => $request->akhir_str,
@@ -169,7 +175,8 @@ class SikController extends Controller
 
 			return $arrayName = array(
 				'status' => 'success',
-				'pesan' => 'Data disimpan!'
+				'pesan' => 'Data disimpan!',
+				'sik_id' => $sik->id
 			);
 		} catch(Exception $e) {
 			return $arrayName = array(
@@ -213,7 +220,8 @@ class SikController extends Controller
 				));
 				return $arrayName = array(
 					'status' => 'success',
-					'pesan' => 'Berhasil Menyimpan!'
+					'pesan' => 'Berhasil Menyimpan!',
+					'sik_id' => $i->id
 				);
 
 			} elseif($i->status == '0' || $i->status == '2') {
@@ -232,7 +240,7 @@ class SikController extends Controller
 				'no_tiket' => 'SIK-'.$no_tiket
 			));
 
-			Sik::create(array(
+			$sik = Sik::create(array(
 				'perizinan_id' => $izin->id,
 				'nama_praktek' => $request->nama_praktek,
 				'kelurahan' => $request->kelurahan,
@@ -241,7 +249,8 @@ class SikController extends Controller
 
 			return $arrayName = array(
 				'status' => 'success',
-				'pesan' => 'Data disimpan!'
+				'pesan' => 'Data disimpan!',
+				'sik_id' => $sik->id
 			);
 		} catch(Exception $e) {
 			return $arrayName = array(
@@ -289,7 +298,7 @@ class SikController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'KTP tidak diproses!',
+						'pesan' => 'KTP wajib diisi!',
 					);	
 				} // end upload ktp
 
@@ -314,7 +323,7 @@ class SikController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'Foto tidak diproses!',
+						'pesan' => 'Foto wajib diisi!',
 					);	
 				} // end upload Foto
 
@@ -339,7 +348,7 @@ class SikController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'Ijazah tidak diproses!',
+						'pesan' => 'Ijazah wajib diisi!',
 					);	
 				} // end upload Ijazah
 
@@ -364,7 +373,7 @@ class SikController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'STR tidak diproses!',
+						'pesan' => 'STR wajib diisi!',
 					);	
 				} // end upload STR
 
@@ -389,7 +398,7 @@ class SikController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'Rekomendasi organisasi tidak diproses!',
+						'pesan' => 'Rekomendasi organisasi wajib diisi!',
 					);	
 				} // end upload Rekomendasi Organisasi
 
@@ -414,7 +423,7 @@ class SikController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'Surat keterangan dari pimpinan fasilitas pelayanan kesehatan tidak diproses!',
+						'pesan' => 'Surat keterangan dari pimpinan fasilitas pelayanan kesehatan wajib diisi!',
 					);	
 				} // end upload Surat Keterangan Dari Pimpinan
 
@@ -441,7 +450,7 @@ class SikController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'Surat keterangan keluasan tidak diproses!',
+						'pesan' => 'Surat keterangan keluasan wajib diisi!',
 					);	
 				} // end upload Surat Keterangan Dari Pimpinan
 
@@ -466,7 +475,7 @@ class SikController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'Berkas pendukung tidak diproses!',
+						'pesan' => 'Berkas pendukung wajib diisi!',
 					);	
 				} // end upload Berkas Pendukung
 
@@ -477,6 +486,7 @@ class SikController extends Controller
 				);
 			}
 		}
+		return $this->err('Tab Sebelumnya');
 	} //END TAB 4
 
 	public function tab5(Request $request)
@@ -493,6 +503,7 @@ class SikController extends Controller
 					if($cek->tempat_lahir == '') { return $this->err('Tempat Lahir'); }
 					if($cek->tanggal_lahir == '') { return $this->err('Tanggal Lahir'); }
 					if($cek->nohp == '') { return $this->err('No HP'); }
+					if($cek->rekomendasi_op == '') { return $this->err('No. Rekomendasi OP'); }
 					if($cek->no_str == '') { return $this->err('No STR'); }
 					if($cek->awal_str == '') { return $this->err('Tanggal Mulai Berlaku STR'); }
 					if($cek->akhir_str == '') { return $this->err('Tanggal Berakhir'); }
@@ -555,6 +566,254 @@ class SikController extends Controller
 			'status' => 'error',
 			'pesan' => 'Mohon mengisi '.$pesan
 		);
+	}
+
+	public function update(Request $request, $id)
+	{
+		$message = [];
+		$attribute = [
+			'nama' => 'Nama',
+			'alamat' => 'Alamat',
+			'tempat_lahir' => 'Tempat Lahir',
+			'tanggal_lahir' => 'Tanggal Lahir',
+			'jenis_izin' => 'Jenis izin',
+			'rekomendasi_op' => 'Rekomendasi OP',
+			'no_str' => 'No. STR',
+			'awal_str' => 'Tanggal Mulai Berlaku STR',
+			'akhir_str' => 'Tanggal Berakhir STR',
+			'nama_praktek' => 'Nama Praktek ',
+			'jalan' => 'Jalan ',
+			'kelurahan' => 'Kelurahan ',
+			'kecamatan' => 'Kecamatan ',
+
+			'surat_keterangan' => 'Surat Keterangan Pelayanan Kesehatan',
+			'surat_keluasan' => 'Surat Keterangan Keluasan',
+			'ktp' => 'KTP',
+			'foto' => 'Foto',
+			'str' => 'STR',
+			'ijazah' => 'Ijazah',
+			'rekomendasi_org' => 'Rekomendasi Organisasi Profesi',
+			'berkas_pendukung' => 'Berkas Pendukung',
+
+		];
+
+		try {
+			// BERKAS - FILE
+
+				// upload KTP
+			if($request->key == 'ktp') {
+				$ktp = $request->file('ktp'); 
+				if ($ktp) {
+					$validasi = $this->validate($request, [
+						'ktp' => 'image|mimes:jpeg,png,jpg|max:1024',
+					],$message,$attribute);
+					$sik = Sik::where('perizinan_id', $id)->first();
+					if ($sik->ktp && file_exists(storage_path('app/public/' . $sik->ktp))) {
+						\Storage::delete('public/' . $sik->ktp);
+					}
+					$path = $ktp->store('sik', 'public');
+					$sik->ktp = $path;
+					$sik->save();
+					return $arrayName = array(
+						'status' => 'success',
+						'pesan' => 'KTP disimpan!'
+					);
+				}
+				return $arrayName = array(
+					'status' => 'error',
+					'pesan' => 'KTP tidak diproses!',
+				);	
+			} // end upload ktp
+
+			// upload Foto
+			if($request->key == 'foto') {
+				$foto = $request->file('foto'); 
+				if ($foto) {
+					$validasi = $this->validate($request, [
+						'foto' => 'image|mimes:jpeg,png,jpg|max:1024',
+					],$message,$attribute);
+					$sik = Sik::where('perizinan_id', $id)->first();
+					if ($sik->foto && file_exists(storage_path('app/public/' . $sik->foto))) {
+						\Storage::delete('public/' . $sik->foto);
+					}
+					$path = $foto->store('sik', 'public');
+					$sik->foto = $path;
+					$sik->save();
+					return $arrayName = array(
+						'status' => 'success',
+						'pesan' => 'Foto disimpan!'
+					);
+				}
+				return $arrayName = array(
+					'status' => 'error',
+					'pesan' => 'Foto tidak diproses!',
+				);	
+			} // end upload Foto
+
+			// upload Ijazah
+			if($request->key == 'ijazah') {
+				$ijazah = $request->file('ijazah'); 
+				if ($ijazah) {
+					$validasi = $this->validate($request, [
+						'ijazah' => 'image|mimes:jpeg,png,jpg|max:1024',
+					],$message,$attribute);
+					$sik = Sik::where('perizinan_id', $id)->first();
+					if ($sik->ijazah && file_exists(storage_path('app/public/' . $sik->ijazah))) {
+						\Storage::delete('public/' . $sik->ijazah);
+					}
+					$path = $ijazah->store('sik', 'public');
+					$sik->ijazah = $path;
+					$sik->save();
+					return $arrayName = array(
+						'status' => 'success',
+						'pesan' => 'Ijazah disimpan!'
+					);
+				}
+				return $arrayName = array(
+					'status' => 'error',
+					'pesan' => 'Ijazah tidak diproses!',
+				);	
+			} // end upload Ijazah
+
+			// upload STR
+			if($request->key == 'str') {
+				$str = $request->file('str'); 
+				if ($str) {
+					$validasi = $this->validate($request, [
+						'str' => 'mimes:pdf|max:1024',
+					],$message,$attribute);
+					$sik = Sik::where('perizinan_id', $id)->first();
+					if ($sik->str && file_exists(storage_path('app/public/' . $sik->str))) {
+						\Storage::delete('public/' . $sik->str);
+					}
+					$path = $str->store('sik', 'public');
+					$sik->str = $path;
+					$sik->save();
+					return $arrayName = array(
+						'status' => 'success',
+						'pesan' => 'STR disimpan!'
+					);
+				}
+				return $arrayName = array(
+					'status' => 'error',
+					'pesan' => 'STR tidak diproses!',
+				);	
+			} // end upload STR
+
+			// upload Rekomendasi Organisasi
+			if($request->key == 'rekomendasi_org') {
+				$rekomendasi_org = $request->file('rekomendasi_org'); 
+				if ($rekomendasi_org) {
+					$validasi = $this->validate($request, [
+						'rekomendasi_org' => 'mimes:pdf|max:1024',
+					],$message,$attribute);
+					$sik = Sik::where('perizinan_id', $id)->first();
+					if ($sik->rekomendasi_org && file_exists(storage_path('app/public/' . $sik->rekomendasi_org))) {
+						\Storage::delete('public/' . $sik->rekomendasi_org);
+					}
+					$path = $rekomendasi_org->store('sik', 'public');
+					$sik->rekomendasi_org = $path;
+					$sik->save();
+					return $arrayName = array(
+						'status' => 'success',
+						'pesan' => 'Rekomendasi organisasi disimpan!'
+					);
+				}
+				return $arrayName = array(
+					'status' => 'error',
+					'pesan' => 'Rekomendasi organisasi tidak diproses!',
+				);	
+			} // end upload Rekomendasi Organisasi
+
+			// upload Surat Keterangan Dari Pimpinan
+			if($request->key == 'surat_keterangan') {
+				$surat_keterangan = $request->file('surat_keterangan'); 
+				if ($surat_keterangan) {
+					$validasi = $this->validate($request, [
+						'surat_keterangan' => 'mimes:pdf|max:1024',
+					],$message,$attribute);
+					$sik = Sik::where('perizinan_id', $id)->first();
+					if ($sik->surat_keterangan && file_exists(storage_path('app/public/' . $sik->surat_keterangan))) {
+						\Storage::delete('public/' . $sik->surat_keterangan);
+					}
+					$path = $surat_keterangan->store('sik', 'public');
+					$sik->surat_keterangan = $path;
+					$sik->save();
+					return $arrayName = array(
+						'status' => 'success',
+						'pesan' => 'Surat keterangan dari pimpinan fasilitas pelayanan kesehatan disimpan!'
+					);
+				}
+				return $arrayName = array(
+					'status' => 'error',
+					'pesan' => 'Surat keterangan dari pimpinan fasilitas pelayanan kesehatan tidak diproses!',
+				);	
+			} // end upload Surat Keterangan Dari Pimpinan
+
+
+			// OPSIONAL
+			// upload Surat Keluasan
+			if($request->key == 'surat_keluasan') {
+				$surat_keluasan = $request->file('surat_keluasan'); 
+				if ($surat_keluasan) {
+					$validasi = $this->validate($request, [
+						'surat_keluasan' => 'mimes:pdf|max:1024',
+					],$message,$attribute);
+					$sik = Sik::where('perizinan_id', $id)->first();
+					if ($sik->surat_keluasan && file_exists(storage_path('app/public/' . $sik->surat_keluasan))) {
+						\Storage::delete('public/' . $sik->surat_keluasan);
+					}
+					$path = $surat_keluasan->store('sik', 'public');
+					$sik->surat_keluasan = $path;
+					$sik->save();
+					return $arrayName = array(
+						'status' => 'success',
+						'pesan' => 'Surat keterangan keluasan disimpan!'
+					);
+				}
+				return $arrayName = array(
+					'status' => 'error',
+					'pesan' => 'Surat keterangan keluasan tidak diproses!',
+				);	
+			} // end upload Surat Keterangan Dari Pimpinan
+
+			// upload Berkas Pendukung
+			if($request->key == 'berkas_pendukung') {
+				$berkas_pendukung = $request->file('berkas_pendukung'); 
+				if ($berkas_pendukung) {
+					$validasi = $this->validate($request, [
+						'berkas_pendukung' => 'mimes:pdf|max:1024',
+					],$message,$attribute);
+					$sik = Sik::where('perizinan_id', $id)->first();
+					if ($sik->berkas_pendukung && file_exists(storage_path('app/public/' . $sik->berkas_pendukung))) {
+						\Storage::delete('public/' . $sik->berkas_pendukung);
+					}
+					$path = $berkas_pendukung->store('sik', 'public');
+					$sik->berkas_pendukung = $path;
+					$sik->save();
+					return $arrayName = array(
+						'status' => 'success',
+						'pesan' => 'Berkas pendukung keluasan disimpan!'
+					);
+				}
+				return $arrayName = array(
+					'status' => 'error',
+					'pesan' => 'Berkas pendukung tidak diproses!',
+				);	
+			} // end upload Berkas Pendukung
+
+			// TEXT
+			$validasi = $this->validate($request, [
+				'revisi' => 'required|string',
+			],$message,$attribute);
+			$data = Sik::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
+			return redirect()->back()->with('success',$attribute[$request->key].' diperbarui');
+
+		} catch(Exception $e) {
+			return redirect()->back()->with('not_found', $e->getMessage());
+		} catch(QueryException $e) {
+			return redirect()->back()->with('not_found', $e->getMessage());
+		}
 	}
 
 }

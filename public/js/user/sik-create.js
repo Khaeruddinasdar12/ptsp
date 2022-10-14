@@ -18,6 +18,7 @@ $('#tab1').submit(function(e){
     success:function(data){
       if(data.status == 'success') {
         berhasil(data.status, data.pesan);
+        sik_id = data.sik_id;
         $('a[href="#kt_tab_pane_2"]').click();
       } else {
         berhasil(data.status, data.pesan);
@@ -54,6 +55,7 @@ $('#tab2').submit(function(e){
     success:function(data){
       if(data.status == 'success') {
         berhasil(data.status, data.pesan);
+        sik_id = data.sik_id;
         $('a[href="#kt_tab_pane_3"]').click();
       } else {
         berhasil(data.status, data.pesan);
@@ -90,6 +92,7 @@ $('#tab3').submit(function(e) {
     success:function(data){
       if(data.status == 'success') {
         berhasil(data.status, data.pesan);
+        sik_id = data.sik_id;
         $('a[href="#kt_tab_pane_4"]').click();
       } else {
         berhasil(data.status, data.pesan);
@@ -127,7 +130,7 @@ $('#ktp').submit(function(e) {
       $('#loader').attr("style", "");
     },
     success:function(data) {
-      document.getElementById('ktp').reset();
+      // document.getElementById('ktp').reset();
       if(data.status == 'success') {
         reload(sik_id, 'reload-ktp', 'ktp');
       }
@@ -165,7 +168,7 @@ $('#foto').submit(function(e) {
       $('#loader').attr("style", "");
     },
     success:function(data) {
-      document.getElementById('foto').reset();
+      // document.getElementById('foto').reset();
       if(data.status == 'success') {
         reload(sik_id, 'reload-foto', 'foto');
       }
@@ -203,7 +206,7 @@ $('#ijazah').submit(function(e) {
       $('#loader').attr("style", "");
     },
     success:function(data) {
-      document.getElementById('ijazah').reset();
+      // document.getElementById('ijazah').reset();
       if(data.status == 'success') {
         reload(sik_id, 'reload-ijazah', 'ijazah');
       }
@@ -241,7 +244,7 @@ $('#str').submit(function(e) {
       $('#loader').attr("style", "");
     },
     success:function(data) {
-      document.getElementById('str').reset();
+      // document.getElementById('str').reset();
       if(data.status == 'success') {
         reload(sik_id, 'reload-str', 'str');
       }
@@ -279,7 +282,7 @@ $('#rekomendasi_org').submit(function(e) {
       $('#loader').attr("style", "");
     },
     success:function(data) {
-      document.getElementById('rekomendasi_org').reset();
+      // document.getElementById('rekomendasi_org').reset();
       if(data.status == 'success') {
         reload(sik_id, 'reload-rekomendasi_org', 'rekomendasi_org');
       }
@@ -318,7 +321,7 @@ $('#surat_keterangan').submit(function(e) {
       $('#loader').attr("style", "");
     },
     success:function(data) {
-      document.getElementById('surat_keterangan').reset();
+      // document.getElementById('surat_keterangan').reset();
       if(data.status == 'success') {
         reload(sik_id, 'reload-surat_keterangan', 'surat_keterangan');
       }
@@ -357,7 +360,7 @@ $('#surat_keluasan').submit(function(e) {
       $('#loader').attr("style", "");
     },
     success:function(data) {
-      document.getElementById('surat_keluasan').reset();
+      // document.getElementById('surat_keluasan').reset();
       if(data.status == 'success') {
         reload(sik_id, 'reload-surat_keluasan', 'surat_keluasan');
       }
@@ -395,7 +398,7 @@ $('#berkas_pendukung').submit(function(e) {
       $('#loader').attr("style", "");
     },
     success:function(data) {
-      document.getElementById('berkas_pendukung').reset();
+      // document.getElementById('berkas_pendukung').reset();
       if(data.status == 'success') {
         reload(sik_id, 'reload-berkas_pendukung', 'berkas_pendukung');
       }
@@ -494,3 +497,36 @@ $('#tab5').submit(function(e) {
  function to_tab_5() {
   $('a[href="#kt_tab_pane_5"]').click();
 }
+
+// Handle File
+$("#file-ktp").change(function(){
+  $("#label-ktp").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-foto").change(function(){
+  $("#label-foto").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-ijazah").change(function(){
+  $("#label-ijazah").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-str").change(function(){
+  $("#label-str").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-rekomendasi_org").change(function(){
+  $("#label-rekomendasi_org").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-surat_keterangan").change(function(){
+  $("#label-surat_keterangan").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-surat_keluasan").change(function(){
+  $("#label-surat_keluasan").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-berkas_pendukung").change(function(){
+  $("#label-berkas_pendukung").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});

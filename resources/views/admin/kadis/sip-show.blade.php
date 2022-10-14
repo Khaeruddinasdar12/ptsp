@@ -71,7 +71,7 @@
         </div>
 
         <div class="col-md-12">
-          <p>Jenis Perizinan : <b>{{ $data->sip->subizin->nama }}</b></p>
+          <p>Jenis Perizinan : <b>{{ $data->sip->subizin->nama }} - {{ $data->sip->subizin->kategori }}</b></p>
         </div>
       </div>
 
@@ -111,6 +111,11 @@
               <td>{{$no = $no+1}}</td>
               <td>Alamat Rumah</td>
               <td>{{ $data->sip->alamat }}</td>
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>No. Rekomendasi OP</td>
+              <td>{{ $data->sip->no_str }}</td>
             </tr>
             <tr>
               <td>{{$no = $no+1}}</td>

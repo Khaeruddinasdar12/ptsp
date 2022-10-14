@@ -228,6 +228,35 @@
             </tr>
             <tr>
               <td>{{$no = $no+1}}</td>
+              <td>No. Rekomendasi OP</td>
+              <td>{{ $data->sik->no_str }}</td>
+              <td>
+                @if($data->sik->reason && $data->sik->reason->rekomendasi_op =='1') {!! $terima !!}
+                @elseif($data->sik->reason && $data->sik->reason->rekomendasi_op == '') {!! $belumperiksa !!}
+                @elseif($data->sik->reason && $data->sik->reason->rekomendasi_op != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              @if($data->sik->reason && $data->sik->reason->rekomendasi_op != '1')
+              <td> {{$data->sik->reason->rekomendasi_op}} </td>
+              <td>
+                <form method="POST" action="{{route('sik.update', ['id' => $data->sik->perizinan_id])}}">
+                  <div class="input-group">
+                    @csrf
+                    @method('PUT')
+                    <input type="text" class="form-control" name="revisi" required>
+                    <input type="hidden" class="form-control" name="key" value="rekomendasi_op">
+                    <button type="submit" class="btn btn-outline-secondary">Update
+                    </button>
+                  </div>
+                </form>
+              </td>
+              @else
+              <td></td>
+              <td></td>
+              @endif
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
               <td>Nomor STR</td>
               <td>{{ $data->sik->no_str }}</td>
               <td>

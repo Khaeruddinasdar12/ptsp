@@ -55,7 +55,8 @@ class KrkController extends Controller
                 ));
                 return $arrayName = array(
                     'status' => 'success',
-                    'pesan' => 'Berhasil Mengupdate!'
+                    'pesan' => 'Berhasil Disimpan!',
+                    'krk_id' => $i->id
                 );
 
             } elseif($i->status == '0' || $i->status == '2') {
@@ -74,7 +75,7 @@ class KrkController extends Controller
                 'no_tiket' => 'KRK-'.$no_tiket
             ));
 
-            Krk::create(array(
+            $krk = Krk::create(array(
                 'perizinan_id' => $izin->id,
                 'nama' => $request->nama,
                 'nohp' => $request->nohp,
@@ -84,7 +85,8 @@ class KrkController extends Controller
 
             return $arrayName = array(
                 'status' => 'success',
-                'pesan' => 'Data disimpan!'
+                'pesan' => 'Data disimpan!',
+                'krk_id' => $krk->id
             );
         } catch(Exception $e) {
             return $arrayName = array(
@@ -137,7 +139,8 @@ class KrkController extends Controller
                 ));
                 return $arrayName = array(
                     'status' => 'success',
-                    'pesan' => 'Berhasil Mengupdate!'
+                    'pesan' => 'Berhasil Disimpan!',
+                    'krk_id' => $i->id
                 );
 
             } elseif($i->status == '0' || $i->status == '2') {
@@ -157,7 +160,7 @@ class KrkController extends Controller
                 'no_tiket' => 'KRK-'.$no_tiket
             ));
 
-            Krk::create(array(
+            $krk = Krk::create(array(
                 'perizinan_id' => $izin->id,
                 'luas' => $request->luas,
                 'nama_surat' => $request->nama_surat,
@@ -170,7 +173,8 @@ class KrkController extends Controller
 
             return $arrayName = array(
                 'status' => 'success',
-                'pesan' => 'Data disimpan!'
+                'pesan' => 'Data disimpan!',
+                'krk_id' => $krk->id
             );
         } catch(Exception $e) {
             return $arrayName = array(
@@ -209,7 +213,8 @@ class KrkController extends Controller
                 ));
                 return $arrayName = array(
                     'status' => 'success',
-                    'pesan' => 'Berhasil Mengupdate!'
+                    'pesan' => 'Berhasil Disimpan!',
+                    'krk_id' => $i->id
                 );
 
             } elseif($i->status == '0' || $i->status == '2') {
@@ -229,7 +234,7 @@ class KrkController extends Controller
                 'no_tiket' => 'KRK-'.$no_tiket
             ));
 
-            Krk::create(array(
+            $krk = Krk::create(array(
                 'perizinan_id' => $izin->id,
                 'kelurahan' => $request->kelurahan,
                 'jalan' => $request->jalan,
@@ -237,7 +242,8 @@ class KrkController extends Controller
 
             return $arrayName = array(
                 'status' => 'success',
-                'pesan' => 'Data disimpan!'
+                'pesan' => 'Data disimpan!',
+                'krk_id' => $krk->id
             );
         } catch(Exception $e) {
             return $arrayName = array(
@@ -284,7 +290,7 @@ class KrkController extends Controller
                     }
                     return $arrayName = array(
                         'status' => 'error',
-                        'pesan' => 'KTP tidak diproses!',
+                        'pesan' => 'KTP wajib diisi!',
                     );  
                 } // end upload ktp
 
@@ -309,7 +315,7 @@ class KrkController extends Controller
                     }
                     return $arrayName = array(
                         'status' => 'error',
-                        'pesan' => 'PBB tidak diproses!',
+                        'pesan' => 'PBB wajib diisi!',
                     );  
                 } // end upload PBB
 
@@ -334,7 +340,7 @@ class KrkController extends Controller
                     }
                     return $arrayName = array(
                         'status' => 'error',
-                        'pesan' => 'Surat tanah tidak diproses!',
+                        'pesan' => 'Surat tanah wajib diisi!',
                     );  
                 } // end upload Surat Tanah
 
@@ -359,7 +365,7 @@ class KrkController extends Controller
                     }
                     return $arrayName = array(
                         'status' => 'error',
-                        'pesan' => 'peta tidak diproses!',
+                        'pesan' => 'Peta wajib diisi!',
                     );  
                 } // end upload Peta
 
@@ -384,7 +390,7 @@ class KrkController extends Controller
                     }
                     return $arrayName = array(
                         'status' => 'error',
-                        'pesan' => 'Gambar bangunan rencana tidak diproses!',
+                        'pesan' => 'Gambar bangunan rencana wajib diisi!',
                     );  
                 } // end upload Gambar
 
@@ -409,7 +415,7 @@ class KrkController extends Controller
                     }
                     return $arrayName = array(
                         'status' => 'error',
-                        'pesan' => 'Berkas pendukung tidak diproses!'
+                        'pesan' => 'Berkas pendukung wajib diisi!'
                     );  
                 } // end upload berkas pendukung
 
@@ -420,6 +426,7 @@ class KrkController extends Controller
                 );
             }
         }
+        return $this->err('Tab Sebelumnya');
     } //END TAB 4
 
 
@@ -500,4 +507,190 @@ class KrkController extends Controller
             'pesan' => 'Mohon mengisi '.$pesan
         );
     }
-}
+
+    public function update(Request $request, $id)
+    {
+        $message = [];
+        $attribute = [
+            'nama' => 'Nama',
+            'nik' => 'Nomor KTP',
+            'alamat' => 'Alamat',
+            'luas' => 'Luas', 
+            'nama_surat' => 'Nama Pada Surat Tanah',
+            'nomor_surat' => 'Nomor/Tanggal Pada Surat Tanah',
+            'penggunaan' => 'Penggunaan/Fungsi Bangunan',
+            'jenis' => 'Jenis Bangunan',
+            'jml_lantai' => 'Jumlah Lantai',
+            'jml_bangunan' => 'Jumlah Bangunan',
+            'kelurahan' => 'Kelurahan', 
+            'jalan' => 'Jalan',
+
+
+        ];
+
+        try {
+            // BERKAS - FILE
+
+            // upload KTP
+            if($request->key == 'ktp') {
+                $ktp = $request->file('ktp'); 
+                if ($ktp) {
+                    $validasi = $this->validate($request, [
+                        'ktp' => 'image|mimes:jpeg,png,jpg|max:1024',
+                    ],$message,$attribute);
+                    $krk = Krk::where('perizinan_id', $id)->first();
+                    if ($krk->ktp && file_exists(storage_path('app/public/' . $krk->ktp))) {
+                        \Storage::delete('public/' . $krk->ktp);
+                    }
+                    $path = $ktp->store('krk', 'public');
+                    $krk->ktp = $path;
+                    $krk->save();
+                    return $arrayName = array(
+                        'status' => 'success',
+                        'pesan' => 'KTP disimpan!'
+                    );
+                }
+                return $arrayName = array(
+                    'status' => 'error',
+                    'pesan' => 'KTP tidak diproses!',
+                );  
+                } // end upload ktp
+
+                // upload PBB
+                if($request->key == 'pbb') {
+                    $pbb = $request->file('pbb'); 
+                    if ($pbb) {
+                        $validasi = $this->validate($request, [
+                            'pbb' => 'image|mimes:jpeg,png,jpg|max:1024',
+                        ],$message,$attribute);
+                        $krk = Krk::where('perizinan_id', $id)->first();
+                        if ($krk->pbb && file_exists(storage_path('app/public/' . $krk->pbb))) {
+                            \Storage::delete('public/' . $krk->pbb);
+                        }
+                        $path = $pbb->store('krk', 'public');
+                        $krk->pbb = $path;
+                        $krk->save();
+                        return $arrayName = array(
+                            'status' => 'success',
+                            'pesan' => 'PBB disimpan!'
+                        );
+                    }
+                    return $arrayName = array(
+                        'status' => 'error',
+                        'pesan' => 'PBB tidak diproses!',
+                    );  
+                } // end upload PBB
+
+                // upload Surat Tanah
+                if($request->key == 'surat_tanah') {
+                    $surat_tanah = $request->file('surat_tanah'); 
+                    if ($surat_tanah) {
+                        $validasi = $this->validate($request, [
+                            'surat_tanah' => 'image|mimes:jpeg,png,jpg|max:1024',
+                        ],$message,$attribute);
+                        $krk = Krk::where('perizinan_id', $id)->first();
+                        if ($krk->surat_tanah && file_exists(storage_path('app/public/' . $krk->surat_tanah))) {
+                            \Storage::delete('public/' . $krk->surat_tanah);
+                        }
+                        $path = $surat_tanah->store('krk', 'public');
+                        $krk->surat_tanah = $path;
+                        $krk->save();
+                        return $arrayName = array(
+                            'status' => 'success',
+                            'pesan' => 'Surat tanah disimpan!'
+                        );
+                    }
+                    return $arrayName = array(
+                        'status' => 'error',
+                        'pesan' => 'Surat tanah tidak diproses!',
+                    );  
+                } // end upload Surat Tanah
+
+                // upload Peta
+                if($request->key == 'peta') {
+                    $peta = $request->file('peta'); 
+                    if ($peta) {
+                        $validasi = $this->validate($request, [
+                            'peta' => 'image|mimes:jpeg,png,jpg|max:1024',
+                        ],$message,$attribute);
+                        $krk = Krk::where('perizinan_id', $id)->first();
+                        if ($krk->peta && file_exists(storage_path('app/public/' . $krk->peta))) {
+                            \Storage::delete('public/' . $krk->peta);
+                        }
+                        $path = $peta->store('krk', 'public');
+                        $krk->peta = $path;
+                        $krk->save();
+                        return $arrayName = array(
+                            'status' => 'success',
+                            'pesan' => 'Peta lokasi disimpan!'
+                        );
+                    }
+                    return $arrayName = array(
+                        'status' => 'error',
+                        'pesan' => 'peta tidak diproses!',
+                    );  
+                } // end upload Peta
+
+                // upload Gambar
+                if($request->key == 'gambar') {
+                    $gambar = $request->file('gambar'); 
+                    if ($gambar) {
+                        $validasi = $this->validate($request, [
+                            'gambar' => 'image|mimes:jpeg,png,jpg|max:1024',
+                        ],$message,$attribute);
+                        $krk = Krk::where('perizinan_id', $id)->first();
+                        if ($krk->gambar && file_exists(storage_path('app/public/' . $krk->gambar))) {
+                            \Storage::delete('public/' . $krk->gambar);
+                        }
+                        $path = $gambar->store('krk', 'public');
+                        $krk->gambar = $path;
+                        $krk->save();
+                        return $arrayName = array(
+                            'status' => 'success',
+                            'pesan' => 'Gambar bangunan rencana disimpan!'
+                        );
+                    }
+                    return $arrayName = array(
+                        'status' => 'error',
+                        'pesan' => 'Gambar bangunan rencana tidak diproses!',
+                    );  
+                } // end upload Gambar
+
+                // upload berkas pendukung
+                if($request->key == 'berkas_pendukung') {
+                    $berkas_pendukung = $request->file('berkas_pendukung'); 
+                    if ($berkas_pendukung) {
+                        $validasi = $this->validate($request, [
+                            'berkas_pendukung' => 'mimes:pdf|max:1024',
+                        ],$message,$attribute);
+                        $krk = Krk::where('perizinan_id', $id)->first();
+                        if ($krk->berkas_pendukung && file_exists(storage_path('app/public/' . $krk->berkas_pendukung))) {
+                            \Storage::delete('public/' . $krk->berkas_pendukung);
+                        }
+                        $path = $berkas_pendukung->store('pendidikan', 'public');
+                        $krk->berkas_pendukung = $path;
+                        $krk->save();
+                        return $arrayName = array(
+                            'status' => 'success',
+                            'pesan' => 'Berkas pendukung disimpan!',
+                        );
+                    }
+                    return $arrayName = array(
+                        'status' => 'error',
+                        'pesan' => 'Berkas pendukung tidak diproses!'
+                    );  
+                } // end upload berkas pendukung
+            // TEXT
+                $validasi = $this->validate($request, [
+                    'revisi' => 'required|string',
+                ],$message,$attribute);
+                $data = Krk::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
+                return redirect()->back()->with('success',$attribute[$request->key].' diperbarui');
+
+            } catch(Exception $e) {
+                return redirect()->back()->with('not_found', $e->getMessage());
+            } catch(QueryException $e) {
+                return redirect()->back()->with('not_found', $e->getMessage());
+            }
+        }
+    }

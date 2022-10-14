@@ -124,7 +124,7 @@
                         <select class="form-control" id="jenis_izin" onchange="jenis(this.value)">
                           <option value="">pilih jenis perizinan</option>
                           @foreach($data as $datas)
-                          <option value="{{$datas->nama}}" @if($old && $old->pendidikan && $old->pendidikan->subizin->nama == $datas->nama)selected @endif>{{$datas->nama}}</option>
+                          <option value="{{$datas->nama}}" @if($old && $old->pendidikan && $old->pendidikan->subizin &&  $old->pendidikan->subizin->nama == $datas->nama)selected @endif>{{$datas->nama}}</option>
                           @endforeach
                         </select>
                       </div>
@@ -232,7 +232,8 @@
                       <form action="{{route('pendidikan.tab4')}}" method="POST" id="ktp">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="ktp" required accept="image/jpeg,image/jpg,image/png">
+                          <input type="file" name="ktp" id="file-ktp" style="display:none;" accept="image/jpeg,image/jpg,image/png">
+                          <label for="file-ktp" class="form-control" id="label-ktp">@if($old && $old->pendidikan->ktp)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="ktp" >
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
@@ -254,7 +255,8 @@
                       <form action="" method="POST" id="foto">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="foto" required accept="image/png, image/gif, image/jpeg">
+                          <input type="file" name="foto" id="file-foto" style="display:none;" accept="image/jpeg,image/jpg,image/png">
+                          <label for="file-foto" class="form-control" id="label-foto">@if($old && $old->pendidikan->pas_foto)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="foto">
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
@@ -274,7 +276,8 @@
                       <form action="" method="POST" id="akta">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="akta" required accept="application/pdf">
+                          <input type="file" name="akta" id="file-akta" style="display:none;" accept="application/pdf">
+                          <label for="file-akta" class="form-control" id="label-akta">@if($old && $old->pendidikan->akta)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="akta">
                           <button type="submit" class="btn btn-outline-secondary">Simpan 
                           </button>
@@ -294,7 +297,8 @@
                       <form id="kurikulum">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="kurikulum" accept="application/pdf" required>
+                          <input type="file" name="kurikulum" id="file-kurikulum" style="display:none;" accept="application/pdf">
+                          <label for="file-kurikulum" class="form-control" id="label-kurikulum">@if($old && $old->pendidikan->kurikulum)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="kurikulum" >
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
@@ -314,7 +318,8 @@
                       <form id="struktur-organisasi">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="struktur_organisasi" accept="application/pdf" required>
+                          <input type="file" name="struktur_organisasi" id="file-struktur_organisasi" style="display:none;" accept="application/pdf">
+                          <label for="file-struktur_organisasi" class="form-control" id="label-struktur_organisasi">@if($old && $old->pendidikan->struktur_organisasi)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="struktur_organisasi" >
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
@@ -333,7 +338,8 @@
                       <form id="sk">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="sk" accept="application/pdf" required>
+                          <input type="file" name="sk" id="file-sk" style="display:none;" accept="application/pdf">
+                          <label for="file-sk" class="form-control" id="label-sk">@if($old && $old->pendidikan->sk)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="sk">
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
@@ -352,7 +358,8 @@
                       <form id="sertifikat-tanah">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="sertifikat_tanah" accept="application/pdf" required>
+                          <input type="file" name="sertifikat_tanah" id="file-sertifikat_tanah" style="display:none;" accept="application/pdf">
+                          <label for="file-sertifikat_tanah" class="form-control" id="label-sertifikat_tanah">@if($old && $old->pendidikan->sertifikat_tanah)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="sertifikat_tanah">
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
@@ -371,7 +378,8 @@
                       <form id="nib">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="nib" accept="application/pdf" required>
+                          <input type="file" name="nib" id="file-nib" style="display:none;" accept="application/pdf">
+                          <label for="file-nib" class="form-control" id="label-nib">@if($old && $old->pendidikan->nib)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="nib">
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
@@ -393,7 +401,8 @@
                       <form id="npsn">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="npsn" accept="application/pdf" required>
+                          <input type="file" name="npsn" id="file-npsn" style="display:none;" accept="application/pdf">
+                          <label for="file-npsn" class="form-control" id="label-npsn">@if($old && $old->pendidikan->npsn)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="npsn">
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
@@ -412,7 +421,8 @@
                       <form id="izin_lama">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="izin_lama" accept="application/pdf" required>
+                          <input type="file" name="izin_lama" id="file-izin_lama" style="display:none;" accept="application/pdf">
+                          <label for="file-izin_lama" class="form-control" id="label-izin_lama">@if($old && $old->pendidikan->izin_lama)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="izin_lama">
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
@@ -431,7 +441,8 @@
                       <form id="berkas_pendukung">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="berkas_pendukung" accept="application/pdf" required>
+                          <input type="file" name="berkas_pendukung" id="file-berkas_pendukung" style="display:none;" accept="application/pdf">
+                          <label for="file-berkas_pendukung" class="form-control" id="label-berkas_pendukung">@if($old && $old->pendidikan->berkas_pendukung)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="berkas_pendukung">
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
@@ -500,6 +511,10 @@
   jenis_izin_old = '{!! $old->pendidikan->subizin->nama !!}';
   id_jenis_izin_old = '{!! $old->pendidikan->subizin->id !!}';
   pendidikan_id = '{!! $old->pendidikan->id !!}';
+</script>
+@else
+<script type="text/javascript">
+  pendidikan_id = null;
 </script>
 @endif
 

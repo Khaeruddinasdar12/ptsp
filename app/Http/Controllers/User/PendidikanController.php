@@ -319,7 +319,7 @@ class PendidikanController extends Controller
 		{
 			$auth = Auth::user()->id;
 			$data = Subizin::where('jenis', 'pendidikan')->distinct()->get('nama');
-// 		return $data;
+		// return $data;
 			$old = Perizinan::where('user_id', $auth)->where('jenis_izin', 'pendidikan')->where('status', null)->first();
 			if(!$old) {
 				$old = null;
@@ -354,7 +354,8 @@ class PendidikanController extends Controller
 					));
 					return $arrayName = array(
 						'status' => 'success',
-						'pesan' => 'Berhasil Mengupdate!'
+						'pesan' => 'Berhasil Disimpan!',
+						'pendidikan_id' => $i->id
 					);
 
 				} elseif($i->status == '0' || $i->status == '2') {
@@ -373,7 +374,7 @@ class PendidikanController extends Controller
 					'no_tiket' => 'PDD-'.$no_tiket
 				));
 
-				Pendidikan::create(array(
+				$pdd = Pendidikan::create(array(
 					'perizinan_id' => $izin->id,
 					'nama' => $request->nama,
 					'nohp' => $request->nohp,
@@ -382,7 +383,8 @@ class PendidikanController extends Controller
 
 				return $arrayName = array(
 					'status' => 'success',
-					'pesan' => 'Data disimpan!'
+					'pesan' => 'Data disimpan!',
+					'pendidikan_id' => $pdd->id
 				);
 			} catch(Exception $e) {
 				return $arrayName = array(
@@ -421,7 +423,8 @@ class PendidikanController extends Controller
 				));
 				return $arrayName = array(
 					'status' => 'success',
-					'pesan' => 'Berhasil Mengupdate!'
+					'pesan' => 'Berhasil Disimpan!',
+					'pendidikan_id' => $i->id
 				);
 
 			} elseif($i->status == '0' || $i->status == '2') {
@@ -441,7 +444,7 @@ class PendidikanController extends Controller
 				'no_tiket' => 'PDD-'.$no_tiket
 			));
 
-			Pendidikan::create(array(
+			$pdd = Pendidikan::create(array(
 				'perizinan_id' => $izin->id,
 				'subizin_id' => $request->jenis_izin,
 				'nama_pendidikan' => $request->nama_pendidikan,
@@ -449,7 +452,8 @@ class PendidikanController extends Controller
 
 			return $arrayName = array(
 				'status' => 'success',
-				'pesan' => 'Data disimpan!'
+				'pesan' => 'Data disimpan!',
+				'pendidikan_id' => $pdd->id
 			);
 		} catch(Exception $e) {
 			return $arrayName = array(
@@ -488,7 +492,8 @@ class PendidikanController extends Controller
 				));
 				return $arrayName = array(
 					'status' => 'success',
-					'pesan' => 'Berhasil Mengupdate!'
+					'pesan' => 'Berhasil Disimpan!',
+					'pendidikan_id' => $i->id
 				);
 
 			} elseif($i->status == '0' || $i->status == '2') {
@@ -510,7 +515,7 @@ class PendidikanController extends Controller
 				'no_tiket' => 'PDD-'.$no_tiket
 			));
 
-			Pendidikan::create(array(
+			$pdd = Pendidikan::create(array(
 				'perizinan_id' => $izin->id,
 				'kelurahan' => $request->kelurahan,
 				'jalan' => $request->jalan,
@@ -518,7 +523,8 @@ class PendidikanController extends Controller
 
 			return $arrayName = array(
 				'status' => 'success',
-				'pesan' => 'Data disimpan!'
+				'pesan' => 'Data disimpan!',
+				'pendidikan_id' => $pdd->id
 			);
 		} catch(Exception $e) {
 			return $arrayName = array(
@@ -564,7 +570,7 @@ class PendidikanController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'KTP tidak diproses!',
+						'pesan' => 'KTP wajib diisi!',
 					);	
 				} // end upload ktp
 
@@ -589,7 +595,7 @@ class PendidikanController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'Foto tidak diproses!'
+						'pesan' => 'Foto wajib diisi!'
 					);	
 				} // end upload foto
 
@@ -614,7 +620,7 @@ class PendidikanController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'Foto tidak diproses!'
+						'pesan' => 'Foto wajib diisi!'
 					);	
 				} // end upload akta
 
@@ -639,7 +645,7 @@ class PendidikanController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'Kurikulum tidak diproses!'
+						'pesan' => 'Kurikulum wajib diisi!'
 					);	
 				} // end upload kurikulum
 
@@ -664,7 +670,7 @@ class PendidikanController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'Struktur organisasi tidak diproses!'
+						'pesan' => 'Struktur organisasi wajib diisi!'
 					);	
 				} // end upload struktur organisasi
 
@@ -689,7 +695,7 @@ class PendidikanController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'SK tidak diproses!'
+						'pesan' => 'SK wajib diisi!'
 					);	
 				} // end upload sk
 
@@ -714,7 +720,7 @@ class PendidikanController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'Sertifikat tanah tidak diproses!'
+						'pesan' => 'Sertifikat tanah wajib diisi!'
 					);	
 				} // end upload sertifikat tanah
 
@@ -739,7 +745,7 @@ class PendidikanController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'NIB tidak diproses!'
+						'pesan' => 'NIB wajib diisi!'
 					);	
 				} // end upload nib
 
@@ -764,7 +770,7 @@ class PendidikanController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'NPSN tidak diproses!'
+						'pesan' => 'NPSN wajib diisi!'
 					);	
 				} // end upload npsn
 
@@ -789,7 +795,7 @@ class PendidikanController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'Izin lama tidak diproses!'
+						'pesan' => 'Izin lama wajib diisi!'
 					);	
 				} // end upload izin lama
 
@@ -814,7 +820,7 @@ class PendidikanController extends Controller
 					}
 					return $arrayName = array(
 						'status' => 'error',
-						'pesan' => 'Berkas pendukung tidak diproses!'
+						'pesan' => 'Berkas pendukung wajib diisi!'
 					);	
 				} // end upload berkas pendukung
 
@@ -825,6 +831,7 @@ class PendidikanController extends Controller
 				);
 			}
 		}
+		return $this->err('Tab Sebelumnya');
 	} //END TAB 4
 
 	public function tab5(Request $request)

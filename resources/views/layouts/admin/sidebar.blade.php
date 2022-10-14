@@ -77,10 +77,9 @@
             </svg>
           </span><span class="kt-menu__link-text">Keluhan Dan Saran </span></a>
         </li>
-        @if($role == 'superadmin')
 
-        <li class="kt-menu__item kt-menu__item--submenu {{ (request()->is('admin/manage-admin') || request()->is('admin/manage-admin/*') ? 'kt-menu__item--active kt-menu__item--open' : '') }}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-          <a href="{{route('manage.admin.index')}}" class="kt-menu__link kt-menu__toggle {{ ( request()->is('/admin/manage-admin*') ? 'kt-menu__item--active' : '') }}">
+        <li class="kt-menu__item kt-menu__item--submenu {{ (request()->is('admin/laporan') || request()->is('admin/laporan/*') ? 'kt-menu__item--active kt-menu__item--open' : '') }}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+          <a href="{{route('laporan.index')}}" class="kt-menu__link kt-menu__toggle {{ ( request()->is('/admin/laporan/*') ? 'kt-menu__item--active' : '') }}">
             <span class="kt-menu__link-icon">
               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
               width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
@@ -93,6 +92,8 @@
             </svg>
           </span><span class="kt-menu__link-text">Laporan </span></a>
         </li>
+
+        @if($role == 'superadmin')        
 
         <li class="kt-menu__item kt-menu__item--submenu {{ (request()->is('admin/manage-user') || request()->is('admin/manage-user/*') ? 'kt-menu__item--active kt-menu__item--open' : '') }}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
           <a href="{{route('manage.user.index')}}" class="kt-menu__link kt-menu__toggle {{ ( request()->is('/admin/manage-user*') ? 'kt-menu__item--active' : '') }}">

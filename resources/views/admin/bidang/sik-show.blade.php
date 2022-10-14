@@ -156,6 +156,21 @@
             </tr>
             <tr>
               <td>{{$no = $no+1}}</td>
+              <td>No. Rekomendasi OP</td>
+              <td>{{ $data->sik->rekomendasi_op }}</td>
+              <td>
+                @if($data->sik->reason && $data->sik->reason->rekomendasi_op =='1') {!! $terima !!}
+                @elseif($data->sik->reason && $data->sik->reason->rekomendasi_op == '') {!! $belumperiksa !!}
+                @elseif($data->sik->reason && $data->sik->reason->rekomendasi_op != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              <td>@if($data->sik->reason && $data->sik->reason->rekomendasi_op != '1') {{$data->sik->reason->rekomendasi_op}} @endif</td>
+              <td><button class="btn btn-outline-danger btn-sm" onclick="reason('rekomendasi_op', 'No. Rekomendasi OP')"><i class="fa fa-times"></i></button>&nbsp;
+                <button class="btn btn-outline-success btn-sm" onclick="ceklis('rekomendasi_op', 'No Rekomendasi OP')" id="ceklis"><i class="fa fa-check"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
               <td>Nomor STR</td>
               <td>{{ $data->sik->no_str }}</td>
               <td>

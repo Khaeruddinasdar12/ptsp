@@ -65,7 +65,7 @@
         </div>
 
         <div class="col-md-12">
-          <p>Jenis Perizinan : <b>{{ $data->sip->subizin->nama }}</b></p>
+          <p>Jenis Perizinan : <b>{{ $data->sip->subizin->nama }} - {{ $data->sip->subizin->kategori }}</b></p>
         </div>
       </div>
 
@@ -148,6 +148,21 @@
               <td>@if($data->sip->reason && $data->sip->reason->alamat != '1') {{$data->sip->reason->alamat}} @endif</td>
               <td><button class="btn btn-outline-danger btn-sm" onclick="reason('alamat', 'Alamat')"><i class="fa fa-times"></i></button>&nbsp;
                 <button class="btn btn-outline-success btn-sm" onclick="ceklis('alamat', 'Alamat')" id="ceklis"><i class="fa fa-check"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>No. Rekomendasi OP</td>
+              <td>{{ $data->sip->rekomendasi_op }}</td>
+              <td>
+                @if($data->sip->reason && $data->sip->reason->rekomendasi_op =='1') {!! $terima !!}
+                @elseif($data->sip->reason && $data->sip->reason->rekomendasi_op == '') {!! $belumperiksa !!}
+                @elseif($data->sip->reason && $data->sip->reason->rekomendasi_op != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              <td>@if($data->sip->reason && $data->sip->reason->rekomendasi_op != '1') {{$data->sip->reason->rekomendasi_op}} @endif</td>
+              <td><button class="btn btn-outline-danger btn-sm" onclick="reason('rekomendasi_op', 'No. Rekomendasi OP')"><i class="fa fa-times"></i></button>&nbsp;
+                <button class="btn btn-outline-success btn-sm" onclick="ceklis('rekomendasi_op', 'No. Rekomendasi OP')" id="ceklis"><i class="fa fa-check"></i></button>
               </td>
             </tr>
             <tr>

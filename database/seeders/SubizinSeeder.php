@@ -10,15 +10,16 @@ class SubizinSeeder extends Seeder
     {
 
         DB::table('subizins')->insert([
-            'nama' => 'Dokter Umum / Spesialis',
+            'nama' => 'Dokter Umum',
             'jenis' => 'sip',
             'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
             'kode' => 'DU',
         ]);
 
-        DB::table('subizins')->insert([
+        DB::table('subizins')->insert([ //1
             'nama' => 'Dokter Spesialis',
             'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Bedah Plastik',
             'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
             'kode' => 'DS',
         ]);
@@ -119,6 +120,233 @@ class SubizinSeeder extends Seeder
             'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia  Nomor 61 Tahun 2013 tentang Izin Pelayanan Kesehatan Tradisonal Empiris',
             'kode' => 'KT',
         ]);
+        
+        DB::table('subizins')->insert([ //2
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Kedokteran Fisik dan Rehabibilitasi',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //3
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis PPDS Sub Spesialis Kardiolagi Intervensi',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //4
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Kedokteran Jiwa',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //5
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Bedah Onkologi',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //6
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Radiologi Subspesial Radiologi Muskuloskeletal',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //7
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Penyakit Jantung dan Pembuluh Darah',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //8
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Patologi Anatomi',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //9
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Bedah',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //10
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Urologi',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //11
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Bedah/ PPDS Sub Spesialis Bedah Onkologi',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //12
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Obstetri dan Ginekologi',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //13
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Paru',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //14
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Penyakit Jantung dan Pembuluh Darah',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //15
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Penyakit Dalam Konsultan Reumatologi',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //16
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Dermatologi dan Venereologi',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //17
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Bedah Saraf',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //18
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Bedah Saraf Subspesialis Bedah Saraf Onkologi',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //19
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Mata',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //20
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Neurologi',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //21
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Anak',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //22
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Orthopaedi dan Traumatologi',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //23
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Anestesiologi',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //24
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Patologi Klinik Subspesialis Hepatogastroenterologi',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //25
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Ortodonsia',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //26
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Gizi Klinik',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //27
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Jantung Dan Pembuluh Darah',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //28
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Radiologi',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //29
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Periodonsia',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //30
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Telinga Hidung Tenggorok - Bedah Kepala dan Leher',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //31
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Bedah - Bedah Vaskuler dan Endovaskular',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //32
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Paru Konsultan Infeksi Paru',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([ //33
+            'nama' => 'Dokter Spesialis',
+            'jenis' => 'sip',
+            'kategori' => 'Dokter Spesialis Bedah Digesif',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+
+
 
 
 

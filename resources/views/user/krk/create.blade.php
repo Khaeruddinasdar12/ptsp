@@ -287,7 +287,8 @@
                       <form action="{{route('krk.tab4')}}" method="POST" id="ktp">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="ktp" required accept="image/jpeg,image/jpg,image/png">
+                          <input type="file" name="ktp" id="file-ktp" style="display:none;" accept="image/jpeg,image/jpg,image/png">
+                          <label for="file-ktp" class="form-control" id="label-ktp">@if($old && $old->krk->ktp)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="ktp" >
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
@@ -307,7 +308,8 @@
                       <form action="" method="POST" id="pbb">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="pbb" required accept="image/png, image/gif, image/jpeg">
+                          <input type="file" name="pbb" id="file-pbb" style="display:none;" accept="image/jpeg,image/jpg,image/png">
+                          <label for="file-pbb" class="form-control" id="label-pbb">@if($old && $old->krk->pbb)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="pbb">
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
@@ -326,7 +328,8 @@
                       <form action="" method="POST" id="surat_tanah">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="surat_tanah" required accept="image/png, image/gif, image/jpeg">
+                          <input type="file" name="surat_tanah" id="file-surat_tanah" style="display:none;" accept="image/jpeg,image/jpg,image/png">
+                          <label for="file-surat_tanah" class="form-control" id="label-surat_tanah">@if($old && $old->krk->surat_tanah)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="surat_tanah">
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
@@ -345,7 +348,8 @@
                       <form action="" method="POST" id="peta">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="peta" required accept="image/png, image/gif, image/jpeg">
+                          <input type="file" name="peta" id="file-peta" style="display:none;" accept="image/jpeg,image/jpg,image/png">
+                          <label for="file-peta" class="form-control" id="label-peta">@if($old && $old->krk->peta)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="peta">
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
@@ -364,7 +368,8 @@
                       <form action="" method="POST" id="gambar">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="gambar" required accept="image/png, image/gif, image/jpeg">
+                          <input type="file" name="gambar" id="file-gambar" style="display:none;" accept="image/jpeg,image/jpg,image/png">
+                          <label for="file-gambar" class="form-control" id="label-gambar">@if($old && $old->krk->gambar)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="gambar">
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
@@ -383,7 +388,9 @@
                       <form id="berkas_pendukung">
                         <div class="input-group">
                           @csrf
-                          <input type="file" class="form-control" name="berkas_pendukung" accept="application/pdf" required>
+                          <!-- <input type="file" class="form-control" name="berkas_pendukung" accept="application/pdf" required> -->
+                          <input type="file" name="berkas_pendukung" id="file-berkas_pendukung" style="display:none;" accept="application/pdf">
+                          <label for="file-berkas_pendukung" class="form-control" id="label-berkas_pendukung">@if($old && $old->krk->berkas_pendukung)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
                           <input type="hidden" class="form-control" name="key" value="berkas_pendukung">
                           <button type="submit" class="btn btn-outline-secondary">Simpan
                           </button>
@@ -450,6 +457,10 @@
 @if($old && $old->krk)
 <script type="text/javascript">
   krk_id = '{!! $old->krk->id !!}';
+</script>
+@else
+<script type="text/javascript">
+  krk_id = null;
 </script>
 @endif
 

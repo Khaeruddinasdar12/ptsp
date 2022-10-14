@@ -3,7 +3,6 @@
 @section('title', 'Download')
 
 @section('page_style')
-<link href="{{ asset('plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css">
 @endsection
 
 @section('subheader')
@@ -80,7 +79,7 @@
                 <td>{{ $datas->jenis_izin}} </td>
                 <td></td>
                 <td>
-                  <span class="badge rounded-pill bg-success">Telah Terbit</span>
+                  <span class="badge rounded-pill bg-success text-white">Telah Terbit</span>
                 </td>
                 <td>{{ $datas->updated_at }}</td>
                 <td><a href="{{asset('storage/sertifikat/'.$datas->no_tiket.$ext) }}" target="_blank" class="btn btn-outline-danger btn-sm" title="sertifikat">
@@ -99,160 +98,4 @@
   </div>
 </div>
 </div>
-
-
-<!-- Modal Tambah Admin -->
-<div class="modal fade bd-example-modal" id="modal-tambah-admin" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content ">
-      <div class="modal-header">
-        <h5 class="modal-title"> Tambah Admin</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form method="post" action="{{ route('manage.admin.store') }}">
-        @csrf
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">Nama:</label>
-            <input type="text" class="form-control" name="name" value="{{old('name')}}">
-          </div>
-          <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">NIK:</label>
-            <input type="text" class="form-control" name="nik" value="{{old('nik')}}">
-          </div>
-          <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">Email:</label>
-            <input type="text" class="form-control" name="email" value="{{old('email')}}">
-          </div>
-          <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">Password:</label>
-            <input type="text" class="form-control" name="password">
-          </div>
-          <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">Konfirmasi Password:</label>
-            <input type="text" class="form-control" name="password_confirmation">
-          </div>
-          <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">Pilih Role Akses:</label>
-            <select class="form-control" name="role">
-              <option value="bidang" @if(old('role') == 'bidang') selected @endif>Bidang</option>
-              <option value="teknis" @if(old('role') == 'teknis') selected @endif>Teknis</option>
-              <option value="kadis" @if(old('role') == 'kadis') selected @endif>Kadis</option>
-            </select>
-          </div>
-
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Tambah</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-<!-- End Modal -->
 @endsection
-
-@section('page_script')
-<script src="{{ asset('plugins/custom/datatables/datatables.bundle.js') }}"></script>
-<script>
-  $(document).ready(function () {
-    fill_datatable();
-
-    function fill_datatable(filter_tahap = '') {
-      var dataTable2 = $('#tabel_guru').DataTable({
-        processing: true,
-        serverSide: true,
-        dom: 'Bfrtip',
-        buttons: [
-        {extend: 'pageLength'},
-        {extend: 'excel', exportOptions: { columns: [ 0, 1, 2, 3, 4 ] } },
-        ],
-        ajax: {
-          "url"  : '{{--route("pegawai.tabelguru")--}}',
-                    // "data" : {filter_tahap:filter_tahap}
-                  },
-                  columns: [
-                  {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                  {data: 'name', name: 'name'},
-                  {data: 'nik', name: 'nik'},
-                  {data: 'email', name: 'email'},
-                  {data: 'nohp', name: 'nohp'},
-                  {data: 'action', name: 'action'},
-                  ],
-                  columnDefs: [
-                  {
-                    className: 'text-center',
-                    targets: [0,5],
-                  },
-                  ],
-                // pagingType: "full_numbers"
-              });
-    }
-
-  });
-
-    function change() { // mengubah status kepegawaian
-      $(document).on('click', '#pegawai', function(){
-        Swal.fire({
-          title: 'Nonaktifkan Guru ?',
-          text: "Anda akan menonaktifkan guru ini dan tidak menjadi pegawai lagi!",
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Ya, Lanjutkan!',
-          timer: 6500
-        }).then((result) => {
-          if (result.value) {
-            var me = $(this),
-            url = me.attr('href'),
-            token = $('meta[name="csrf-token"]').attr('content');
-            $.ajax({
-              url: url,
-              method: "POST",
-              data : {
-                '_method' : 'PUT',
-                '_token'  : token
-              },
-              success:function(data){
-                if(data.status == 'success') {
-                  $('#tabel_guru').DataTable().ajax.reload();
-                  berhasil(data.status, data.pesan)
-                } 
-              },
-              error: function(xhr, status, error){
-                var error = xhr.responseJSON; 
-                if ($.isEmptyObject(error) == false) {
-                  $.each(error.errors, function(key, value) {
-                    gagal(key, value);
-                  });
-                }
-              } 
-            });
-          }
-        });
-      });
-    }
-
-    function berhasil(status, pesan) {
-      Swal.fire({
-        type: status,
-        title: pesan,
-        showConfirmButton: true,
-        button: "Ok"
-      })
-    }
-
-    function gagal(key, pesan) {
-      Swal.fire({
-        type: 'error',
-        title:  key + ' : ' + pesan,
-        showConfirmButton: true,
-        timer: 25500,
-        button: "Ok"
-      })
-    }
-  </script>
-  @endsection

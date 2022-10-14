@@ -15,6 +15,7 @@ class CreateSikreasonTable extends Migration
             $table->string('tempat_lahir')->nullable();
             $table->string('tanggal_lahir')->nullable();
             $table->string('no_str')->nullable();
+            $table->string('rekomendasi_op')->nullable();
             $table->string('awal_str')->nullable();
             $table->string('akhir_str')->nullable();
             $table->string('alamat')->nullable();

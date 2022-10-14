@@ -26,6 +26,7 @@ Route::get('/struktur-organisasi', 'GuestController@struktur')->name('struktur')
 Route::get('/layanan', 'GuestController@layanan')->name('layanan');
 Route::get('pdf', 'GuestController@pdf');
 Route::get('cek-email', 'GuestController@email')->name('email');
+Route::get('cek-sertifikat/{no_tiket}', 'GuestController@ceksertifikat')->name('cek.sertifikat');
 Route::get('qr', 'GuestController@qr');
 
 Route::namespace('User')->group(function(){
@@ -56,6 +57,8 @@ Route::namespace('User')->group(function(){
 	Route::post('sip-store', 'SipController@store')->name('sip.store');
 
 	Route::get('perizinan/sip-reload/{id}', 'SipController@reload')->name('sip.reload'); //reload file create
+
+	Route::get('perizinan/list-spesialis', 'SipController@spesialis')->name('list.spesialis'); //list dokter spesialis 
 
 	// =====SIK=====
 	Route::get('perizinan/surat-izin-kerja/create', 'SikController@create')->name('sik.create');
@@ -120,7 +123,8 @@ Route::middleware('auth:admin')->prefix('admin')->namespace('Admin')->group(func
 	Route::post('manage-admin', 'ManageAdminController@store')->name('manage.admin.store');
 
 	Route::get('manage-keluhan', 'ManageKeluhanController@index')->name('manage.keluhan.index');
-
+	Route::get('laporan', 'LaporanController@index')->name('laporan.index');
+	Route::get('download', 'LaporanController@pdf')->name('laporan.pdf');
 	// BIDANG
 	Route::get('perizinan-bidang', 'BidangByController@index')->name('perizinan.bidang.index');
 	Route::get('perizinan-bidang/{no_tiket}', 'BidangByController@show')->name('perizinan.bidang.show');

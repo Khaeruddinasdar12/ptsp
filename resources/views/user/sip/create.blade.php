@@ -137,7 +137,23 @@
                           @foreach($data as $datas)
                           <option value="{{$datas->id}}" @if($old && $old->sip->subizin_id == $datas->id) selected @endif>{{$datas->nama}}</option>
                           @endforeach
+
+                          <option value="Dokter Spesialis" @if($old && $old->sip->subizin && $old->sip->subizin->nama == 'Dokter Spesialis') selected @endif>Dokter Spesialis</option>
                         </select>
+                      </div>
+                    </div>
+                    <div class="form-group row" id="list-spesialis">
+                      <label class="col-lg-3 col-form-label">Sepsialis:*</label>
+                      <div class="col-lg-9">
+                        <select class="form-control" name="spesialis" id="spesialis">
+                          <option></option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-lg-3 col-form-label">No. Rekomendasi OP*</label>
+                      <div class="col-lg-9">
+                        <input type="text" class="form-control" name="rekomendasi_op" value="@if($old){{$old->sip->rekomendasi_op}}@endif">
                       </div>
                     </div>
                     <div class="form-group row">
@@ -169,17 +185,6 @@
                 </div>
               </div>
               <!-- END TAB 2 -->
-              <script type="text/javascript">
-                kel_id = null;
-              </script>
-              @if($old && $old->sip && $old->sip->klh)
-              <script type="text/javascript">
-                kel_id = '{!! $old->sip->klh->id !!}';
-              </script>
-              @php $kec = $old->sip->klh->kecamatan; @endphp
-              @else
-              @php $kec=null; @endphp
-              @endif
 
               <!-- TAB 3 -->
               <div class="tab-pane fade" id="kt_tab_pane_3" role="tabpanel" aria-labelledby="kt_tab_pane_3_3">
@@ -198,21 +203,21 @@
                           <label class="col-lg-3 col-form-label">Kecamatan:*</label>
                           <div class="col-lg-9">
                             <select class="form-control" name="kecamatan1" id="kecamatan1" onchange="show_kelurahan1(this.value)">
-                              <option value="Biringkanaya" selected="">Biringkanaya</option>
-                              <option value="Bontoala">Bontoala</option>
-                              <option value="Kepulauan Sangkarrang">Kepulauan Sangkarrang</option>
-                              <option value="Makassar">Makassar</option>
-                              <option value="Mamajang">Mamajang</option>
-                              <option value="Manggala">Manggala</option>
-                              <option value="Mariso">Mariso</option>
-                              <option value="Panakkukang">Panakkukang</option>
-                              <option value="Rappocini">Rappocini</option>
-                              <option value="Tallo">Tallo</option>
-                              <option value="Tamalanrea">Tamalanrea</option>
-                              <option value="Tamalate">Tamalate</option>
-                              <option value="Ujung Pandang">Ujung Pandang</option>
-                              <option value="Ujung Tanah">Ujung Tanah</option>
-                              <option value="Wajo">Wajo</option>
+                              <option value="Biringkanaya" @if($old && $old->sip && $old->sip->klh1 && $old->sip->klh1->kecamatan == 'Biringkanaya') selected @endif>Biringkanaya</option>
+                              <option value="Bontoala" @if($old && $old->sip && $old->sip->klh1 && $old->sip->klh1->kecamatan == 'Bontoala') selected @endif>Bontoala</option>
+                              <option value="Kepulauan Sangkarrang" @if($old && $old->sip && $old->sip->klh1 && $old->sip->klh1->kecamatan == 'Kepulauan Sangkarrang') selected @endif>Kepulauan Sangkarrang</option>
+                              <option value="Makassar" @if($old && $old->sip && $old->sip->klh1 && $old->sip->klh1->kecamatan == 'Makassar') selected @endif>Makassar</option>
+                              <option value="Mamajang" @if($old && $old->sip && $old->sip->klh1 && $old->sip->klh1->kecamatan == 'Mamajang') selected @endif>Mamajang</option>
+                              <option value="Manggala" @if($old && $old->sip && $old->sip->klh1 && $old->sip->klh1->kecamatan == 'Manggala') selected @endif>Manggala</option>
+                              <option value="Mariso" @if($old && $old->sip && $old->sip->klh1 && $old->sip->klh1->kecamatan == 'Mariso') selected @endif>Mariso</option>
+                              <option value="Panakkukang" @if($old && $old->sip && $old->sip->klh1 && $old->sip->klh1->kecamatan == 'Panakkukang') selected @endif>Panakkukang</option>
+                              <option value="Rappocini" @if($old && $old->sip && $old->sip->klh1 && $old->sip->klh1->kecamatan == 'Rappocini') selected @endif>Rappocini</option>
+                              <option value="Tallo" @if($old && $old->sip && $old->sip->klh1 && $old->sip->klh1->kecamatan == 'Tallo') selected @endif>Tallo</option>
+                              <option value="Tamalanrea" @if($old && $old->sip && $old->sip->klh1 && $old->sip->klh1->kecamatan == 'Tamalanrea') selected @endif>Tamalanrea</option>
+                              <option value="Tamalate" @if($old && $old->sip && $old->sip->klh1 && $old->sip->klh1->kecamatan == 'Tamalate') selected @endif>Tamalate</option>
+                              <option value="Ujung Pandang" @if($old && $old->sip && $old->sip->klh1 && $old->sip->klh1->kecamatan == 'Ujung Pandang') selected @endif>Ujung Pandang</option>
+                              <option value="Ujung Tanah" @if($old && $old->sip && $old->sip->klh1 && $old->sip->klh1->kecamatan == 'Ujung Tanah') selected @endif>Ujung Tanah</option>
+                              <option value="Wajo" @if($old && $old->sip && $old->sip->klh1 && $old->sip->klh1->kecamatan == 'Wajo') selected @endif>Wajo</option>
                             </select>
                           </div>
                         </div>
@@ -350,21 +355,21 @@
                           <label class="col-lg-3 col-form-label">Kecamatan:*</label>
                           <div class="col-lg-9">
                             <select class="form-control" name="kecamatan2" id="kecamatan2" onchange="show_kelurahan2(this.value)">
-                              <option value="Biringkanaya" selected="">Biringkanaya</option>
-                              <option value="Bontoala">Bontoala</option>
-                              <option value="Kepulauan Sangkarrang">Kepulauan Sangkarrang</option>
-                              <option value="Makassar">Makassar</option>
-                              <option value="Mamajang">Mamajang</option>
-                              <option value="Manggala">Manggala</option>
-                              <option value="Mariso">Mariso</option>
-                              <option value="Panakkukang">Panakkukang</option>
-                              <option value="Rappocini">Rappocini</option>
-                              <option value="Tallo">Tallo</option>
-                              <option value="Tamalanrea">Tamalanrea</option>
-                              <option value="Tamalate">Tamalate</option>
-                              <option value="Ujung Pandang">Ujung Pandang</option>
-                              <option value="Ujung Tanah">Ujung Tanah</option>
-                              <option value="Wajo">Wajo</option>
+                              <option value="Biringkanaya" @if($old && $old->sip && $old->sip->klh2 && $old->sip->klh2->kecamatan == 'Biringkanaya') selected @endif>Biringkanaya</option>
+                              <option value="Bontoala" @if($old && $old->sip && $old->sip->klh2 && $old->sip->klh2->kecamatan == 'Bontoala') selected @endif>Bontoala</option>
+                              <option value="Kepulauan Sangkarrang" @if($old && $old->sip && $old->sip->klh2 && $old->sip->klh2->kecamatan == 'Kepulauan Sangkarrang') selected @endif>Kepulauan Sangkarrang</option>
+                              <option value="Makassar" @if($old && $old->sip && $old->sip->klh2 && $old->sip->klh2->kecamatan == 'Makassar') selected @endif>Makassar</option>
+                              <option value="Mamajang" @if($old && $old->sip && $old->sip->klh2 && $old->sip->klh2->kecamatan == 'Mamajang') selected @endif>Mamajang</option>
+                              <option value="Manggala" @if($old && $old->sip && $old->sip->klh2 && $old->sip->klh2->kecamatan == 'Manggala') selected @endif>Manggala</option>
+                              <option value="Mariso" @if($old && $old->sip && $old->sip->klh2 && $old->sip->klh2->kecamatan == 'Mariso') selected @endif>Mariso</option>
+                              <option value="Panakkukang" @if($old && $old->sip && $old->sip->klh2 && $old->sip->klh2->kecamatan == 'Panakkukang') selected @endif>Panakkukang</option>
+                              <option value="Rappocini" @if($old && $old->sip && $old->sip->klh2 && $old->sip->klh2->kecamatan == 'Rappocini') selected @endif>Rappocini</option>
+                              <option value="Tallo" @if($old && $old->sip && $old->sip->klh2 && $old->sip->klh2->kecamatan == 'Tallo') selected @endif>Tallo</option>
+                              <option value="Tamalanrea" @if($old && $old->sip && $old->sip->klh2 && $old->sip->klh2->kecamatan == 'Tamalanrea') selected @endif>Tamalanrea</option>
+                              <option value="Tamalate" @if($old && $old->sip && $old->sip->klh2 && $old->sip->klh2->kecamatan == 'Tamalate') selected @endif>Tamalate</option>
+                              <option value="Ujung Pandang" @if($old && $old->sip && $old->sip->klh2 && $old->sip->klh2->kecamatan == 'Ujung Pandang') selected @endif>Ujung Pandang</option>
+                              <option value="Ujung Tanah" @if($old && $old->sip && $old->sip->klh2 && $old->sip->klh2->kecamatan == 'Ujung Tanah') selected @endif>Ujung Tanah</option>
+                              <option value="Wajo" @if($old && $old->sip && $old->sip->klh2 && $old->sip->klh2->kecamatan == 'Wajo') selected @endif>Wajo</option>
                             </select>
                           </div>
                         </div>
@@ -497,21 +502,21 @@
                           <label class="col-lg-3 col-form-label">Kecamatan:*</label>
                           <div class="col-lg-9">
                             <select class="form-control" name="kecamatan3" id="kecamatan3" onchange="show_kelurahan3(this.value)">
-                              <option value="Biringkanaya" selected="">Biringkanaya</option>
-                              <option value="Bontoala">Bontoala</option>
-                              <option value="Kepulauan Sangkarrang">Kepulauan Sangkarrang</option>
-                              <option value="Makassar">Makassar</option>
-                              <option value="Mamajang">Mamajang</option>
-                              <option value="Manggala">Manggala</option>
-                              <option value="Mariso">Mariso</option>
-                              <option value="Panakkukang">Panakkukang</option>
-                              <option value="Rappocini">Rappocini</option>
-                              <option value="Tallo">Tallo</option>
-                              <option value="Tamalanrea">Tamalanrea</option>
-                              <option value="Tamalate">Tamalate</option>
-                              <option value="Ujung Pandang">Ujung Pandang</option>
-                              <option value="Ujung Tanah">Ujung Tanah</option>
-                              <option value="Wajo">Wajo</option>
+                              <option value="Biringkanaya" @if($old && $old->sip && $old->sip->klh3 && $old->sip->klh3->kecamatan == 'Biringkanaya') selected @endif>Biringkanaya</option>
+                              <option value="Bontoala" @if($old && $old->sip && $old->sip->klh3 && $old->sip->klh1->kecamatan == 'Bontoala') selected @endif>Bontoala</option>
+                              <option value="Kepulauan Sangkarrang" @if($old && $old->sip && $old->sip->klh3 && $old->sip->klh3->kecamatan == 'Kepulauan Sangkarrang') selected @endif>Kepulauan Sangkarrang</option>
+                              <option value="Makassar" @if($old && $old->sip && $old->sip->klh3 && $old->sip->klh3->kecamatan == 'Makassar') selected @endif>Makassar</option>
+                              <option value="Mamajang" @if($old && $old->sip && $old->sip->klh3 && $old->sip->klh3->kecamatan == 'Mamajang') selected @endif>Mamajang</option>
+                              <option value="Manggala" @if($old && $old->sip && $old->sip->klh3 && $old->sip->klh3->kecamatan == 'Manggala') selected @endif>Manggala</option>
+                              <option value="Mariso" @if($old && $old->sip && $old->sip->klh3 && $old->sip->klh3->kecamatan == 'Mariso') selected @endif>Mariso</option>
+                              <option value="Panakkukang" @if($old && $old->sip && $old->sip->klh3 && $old->sip->klh3->kecamatan == 'Panakkukang') selected @endif>Panakkukang</option>
+                              <option value="Rappocini" @if($old && $old->sip && $old->sip->klh3 && $old->sip->klh3->kecamatan == 'Rappocini') selected @endif>Rappocini</option>
+                              <option value="Tallo" @if($old && $old->sip && $old->sip->klh3 && $old->sip->klh3->kecamatan == 'Tallo') selected @endif>Tallo</option>
+                              <option value="Tamalanrea" @if($old && $old->sip && $old->sip->klh3 && $old->sip->klh3->kecamatan == 'Tamalanrea') selected @endif>Tamalanrea</option>
+                              <option value="Tamalate" @if($old && $old->sip && $old->sip->klh3 && $old->sip->klh3->kecamatan == 'Tamalate') selected @endif>Tamalate</option>
+                              <option value="Ujung Pandang" @if($old && $old->sip && $old->sip->klh3 && $old->sip->klh3->kecamatan == 'Ujung Pandang') selected @endif>Ujung Pandang</option>
+                              <option value="Ujung Tanah" @if($old && $old->sip && $old->sip->klh3 && $old->sip->klh3->kecamatan == 'Ujung Tanah') selected @endif>Ujung Tanah</option>
+                              <option value="Wajo" @if($old && $old->sip && $old->sip->klh3 && $old->sip->klh3->kecamatan == 'Wajo') selected @endif>Wajo</option>
                             </select>
                           </div>
                         </div>
@@ -635,193 +640,200 @@
                       </button>
                     </div>
                   </div>
-              </div>
-            </div>
-            <!-- END TAB 3 -->
-
-            <!-- TAB 4 -->
-            <div class="tab-pane fade" id="kt_tab_pane_4" role="tabpanel" aria-labelledby="kt_tab_pane_4">
-              <div class="container">
-
-                <div class="form-group row">
-                  <label class="col-lg-3 col-form-label">Foto KTP: (jpeg, jpg, png) max 1MB*</label>
-                  <div class="col-lg-9">
-                    <form action="{{route('sip.tab4')}}" method="POST" id="ktp">
-                      <div class="input-group">
-                        @csrf
-                        <input type="file" class="form-control" name="ktp" accept="image/jpeg,image/jpg,image/png" required>
-                        <input type="hidden" class="form-control" name="key" value="ktp" >
-                        <button type="submit" class="btn btn-outline-secondary">Simpan
-                        </button>
-                      </div>
-                    </form>
-                    <div id="reload-ktp">
-                      @if($old && $old->sip->ktp)
-                      <a href="{{asset('storage/'.$old->sip->ktp)}}" target="_blank">Lihat berkas</a>
-                      @endif
-                    </div>
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                  <label class="col-lg-3 col-form-label">Pas Foto: (jpeg, jpg, png) max 1MB*</label>
-                  <div class="col-lg-9">
-                    <form action="{{route('sip.tab4')}}" method="POST" id="foto">
-                      <div class="input-group">
-                        @csrf
-                        <input type="file" class="form-control" name="foto" accept="image/jpeg,image/jpg,image/png" required>
-                        <input type="hidden" class="form-control" name="key" value="foto" >
-                        <button type="submit" class="btn btn-outline-secondary">Simpan
-                        </button>
-                      </div>
-                    </form>
-                    <div id="reload-foto">
-                      @if($old && $old->sip->foto)
-                      <a href="{{asset('storage/'.$old->sip->foto)}}" target="_blank">Lihat berkas</a>
-                      @endif
-                    </div>
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                  <label class="col-lg-3 col-form-label">STR: (pdf) max 1MB*</label>
-                  <div class="col-lg-9">
-                    <form action="{{route('sip.tab4')}}" method="POST" id="str">
-                      <div class="input-group">
-                        @csrf
-                        <input type="file" class="form-control" name="str" accept="application/pdf" required>
-                        <input type="hidden" class="form-control" name="key" value="str" >
-                        <button type="submit" class="btn btn-outline-secondary">Simpan
-                        </button>
-                      </div>
-                    </form>
-                    <div id="reload-str">
-                      @if($old && $old->sip->str)
-                      <a href="{{asset('storage/'.$old->sip->str)}}" target="_blank">Lihat berkas</a>
-                      @endif
-                    </div>
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                  <label class="col-lg-3 col-form-label">Rekomendasi Organisasi Profesi: (pdf) max 1MB*</label>
-                  <div class="col-lg-9">
-                    <form action="{{route('sip.tab4')}}" method="POST" id="rekomendasi_org">
-                      <div class="input-group">
-                        @csrf
-                        <input type="file" class="form-control" name="rekomendasi_org" accept="application/pdf" required>
-                        <input type="hidden" class="form-control" name="key" value="rekomendasi_org" >
-                        <button type="submit" class="btn btn-outline-secondary">Simpan
-                        </button>
-                      </div>
-                    </form>
-                    <div id="reload-rekomendasi_org">
-                      @if($old && $old->sip->rekomendasi_org)
-                      <a href="{{asset('storage/'.$old->sip->rekomendasi_org)}}" target="_blank">Lihat berkas</a>
-                      @endif
-                    </div>
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                  <label class="col-lg-3 col-form-label">Surat Keterangan Pelayanan Kesehatan: (pdf) max 1MB*</label>
-                  <div class="col-lg-9">
-                    <form action="{{route('sip.tab4')}}" method="POST" id="surat_keterangan">
-                      <div class="input-group">
-                        @csrf
-                        <input type="file" class="form-control" name="surat_keterangan" accept="application/pdf" required>
-                        <input type="hidden" class="form-control" name="key" value="surat_keterangan" >
-                        <button type="submit" class="btn btn-outline-secondary">Simpan
-                        </button>
-                      </div>
-                    </form>
-                    <div id="reload-surat_keterangan">
-                      @if($old && $old->sip->surat_keterangan)
-                      <a href="{{asset('storage/'.$old->sip->surat_keterangan)}}" target="_blank">Lihat berkas</a>
-                      @endif
-                    </div>
-                  </div>
-                </div>
-
-                <hr>
-                <h6>Opsional</h6>
-                <hr>
-
-                <div class="form-group row">
-                  <label class="col-lg-3 col-form-label">Surat Persetujuan Pimpinan Instansi: (pdf) max 1MB</label>
-                  <div class="col-lg-9">
-                    <form action="{{route('sip.tab4')}}" method="POST" id="surat_persetujuan">
-                      <div class="input-group">
-                        @csrf
-                        <input type="file" class="form-control" name="surat_persetujuan" accept="application/pdf" required>
-                        <input type="hidden" class="form-control" name="key" value="surat_persetujuan" >
-                        <button type="submit" class="btn btn-outline-secondary">Simpan
-                        </button>
-                      </div>
-                    </form>
-                    <div id="reload-surat_persetujuan">
-                      @if($old && $old->sip->surat_persetujuan)
-                      <a href="{{asset('storage/'.$old->sip->surat_persetujuan)}}" target="_blank">Lihat berkas</a>
-                      @endif
-                    </div>
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                  <label class="col-lg-3 col-form-label">Berkas Pendukung Lainnya: (pdf) max 1MB</label>
-                  <div class="col-lg-9">
-                    <form action="{{route('sip.tab4')}}" method="POST" id="berkas_pendukung">
-                      <div class="input-group">
-                        @csrf
-                        <input type="file" class="form-control" name="berkas_pendukung" accept="application/pdf" required>
-                        <input type="hidden" class="form-control" name="key" value="berkas_pendukung" >
-                        <button type="submit" class="btn btn-outline-secondary">Simpan
-                        </button>
-                      </div>
-                    </form>
-                    <div id="reload-berkas_pendukung">
-                      @if($old && $old->sip->berkas_pendukung)
-                      <a href="{{asset('storage/'.$old->sip->berkas_pendukung)}}" target="_blank">Lihat berkas</a>
-                      @endif
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row align-items-center">
-                  <div class="col-12 kt-align-right">
-                    <button type="button" class="btn btn-outline-info btn-sm" onclick="to_tab_5()" title="Terima Berkas">
-                      <i class="fa fa-check"></i> Simpan & Selanjutnya
-                    </button>
-                  </div>
                 </div>
               </div>
-            </div>
-            <!-- END TAB 4 -->
+              <!-- END TAB 3 -->
 
-            <!-- TAB 5 -->
-            <div class="tab-pane fade" id="kt_tab_pane_5" role="tabpanel" aria-labelledby="kt_tab_pane_4">
-              <div class="container">
-                <form id=tab5>
-                  @csrf
+              <!-- TAB 4 -->
+              <div class="tab-pane fade" id="kt_tab_pane_4" role="tabpanel" aria-labelledby="kt_tab_pane_4">
+                <div class="container">
+
                   <div class="form-group row">
-                    <label class="col-lg-3 col-form-label">Pernyataan: </label>
+                    <label class="col-lg-3 col-form-label">Foto KTP: (jpeg, jpg, png) max 1MB*</label>
                     <div class="col-lg-9">
-                      <input type="checkbox" class="" name="ceklis" required="">  Dengan ini menyatakan bahwa data yang dikirim merupakan data yang sebenarnya dan apabila dikemudian hari terdapat ketidaksesuain maka saya siap untuk menerima konsekuensi.
+                      <form action="{{route('sip.tab4')}}" method="POST" id="ktp">
+                        <div class="input-group">
+                          @csrf
+                          <input type="file" name="ktp" id="file-ktp" style="display:none;" accept="image/jpeg,image/jpg,image/png">
+                          <label for="file-ktp" class="form-control" id="label-ktp">@if($old && $old->sip->ktp)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
+                          <input type="hidden" class="form-control" name="key" value="ktp" >
+                          <button type="submit" class="btn btn-outline-secondary">Simpan
+                          </button>
+                        </div>
+                      </form>
+                      <div id="reload-ktp">
+                        @if($old && $old->sip->ktp)
+                        <a href="{{asset('storage/'.$old->sip->ktp)}}" target="_blank">Lihat berkas</a>
+                        @endif
+                      </div>
                     </div>
                   </div>
+
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label">Pas Foto: (jpeg, jpg, png) max 1MB*</label>
+                    <div class="col-lg-9">
+                      <form action="{{route('sip.tab4')}}" method="POST" id="foto">
+                        <div class="input-group">
+                          @csrf
+                          <input type="file" name="foto" id="file-foto" style="display:none;" accept="image/jpeg,image/jpg,image/png">
+                          <label for="file-foto" class="form-control" id="label-foto">@if($old && $old->sip->foto)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
+                          <input type="hidden" class="form-control" name="key" value="foto" >
+                          <button type="submit" class="btn btn-outline-secondary">Simpan
+                          </button>
+                        </div>
+                      </form>
+                      <div id="reload-foto">
+                        @if($old && $old->sip->foto)
+                        <a href="{{asset('storage/'.$old->sip->foto)}}" target="_blank">Lihat berkas</a>
+                        @endif
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label">STR: (pdf) max 1MB*</label>
+                    <div class="col-lg-9">
+                      <form action="{{route('sip.tab4')}}" method="POST" id="str">
+                        <div class="input-group">
+                          @csrf
+                          <input type="file" name="str" id="file-str" style="display:none;" accept="application/pdf">
+                          <label for="file-str" class="form-control" id="label-str">@if($old && $old->sip->str)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
+                          <input type="hidden" class="form-control" name="key" value="str" >
+                          <button type="submit" class="btn btn-outline-secondary">Simpan
+                          </button>
+                        </div>
+                      </form>
+                      <div id="reload-str">
+                        @if($old && $old->sip->str)
+                        <a href="{{asset('storage/'.$old->sip->str)}}" target="_blank">Lihat berkas</a>
+                        @endif
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label">Rekomendasi Organisasi Profesi: (pdf) max 1MB*</label>
+                    <div class="col-lg-9">
+                      <form action="{{route('sip.tab4')}}" method="POST" id="rekomendasi_org">
+                        <div class="input-group">
+                          @csrf
+                          <input type="file" name="rekomendasi_org" id="file-rekomendasi_org" style="display:none;" accept="application/pdf">
+                          <label for="file-rekomendasi_org" class="form-control" id="label-rekomendasi_org">@if($old && $old->sip->rekomendasi_org)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
+                          <input type="hidden" class="form-control" name="key" value="rekomendasi_org" >
+                          <button type="submit" class="btn btn-outline-secondary">Simpan
+                          </button>
+                        </div>
+                      </form>
+                      <div id="reload-rekomendasi_org">
+                        @if($old && $old->sip->rekomendasi_org)
+                        <a href="{{asset('storage/'.$old->sip->rekomendasi_org)}}" target="_blank">Lihat berkas</a>
+                        @endif
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label">Surat Keterangan Pelayanan Kesehatan - Tempat Kerja: (pdf) max 1MB*</label>
+                    <div class="col-lg-9">
+                      <form action="{{route('sip.tab4')}}" method="POST" id="surat_keterangan">
+                        <div class="input-group">
+                          @csrf
+                          <input type="file" name="surat_keterangan" id="file-surat_keterangan" style="display:none;" accept="application/pdf">
+                          <label for="file-surat_keterangan" class="form-control" id="label-surat_keterangan">@if($old && $old->sip->surat_keterangan)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
+                          <input type="hidden" class="form-control" name="key" value="surat_keterangan" >
+                          <button type="submit" class="btn btn-outline-secondary">Simpan
+                          </button>
+                        </div>
+                      </form>
+                      <div id="reload-surat_keterangan">
+                        @if($old && $old->sip->surat_keterangan)
+                        <a href="{{asset('storage/'.$old->sip->surat_keterangan)}}" target="_blank">Lihat berkas</a>
+                        @endif
+                      </div>
+                    </div>
+                  </div>
+
+                  <hr>
+                  <h6>Opsional</h6>
+                  <hr>
+
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label">Surat Persetujuan Pimpinan Instansi: (pdf) max 1MB</label>
+                    <div class="col-lg-9">
+                      <form action="{{route('sip.tab4')}}" method="POST" id="surat_persetujuan">
+                        <div class="input-group">
+                          @csrf
+                          <input type="file" name="surat_persetujuan" id="file-surat_persetujuan" style="display:none;" accept="application/pdf">
+                          <label for="file-surat_persetujuan" class="form-control" id="label-surat_persetujuan">@if($old && $old->sip->surat_persetujuan)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
+                          <input type="hidden" class="form-control" name="key" value="surat_persetujuan" >
+                          <button type="submit" class="btn btn-outline-secondary">Simpan
+                          </button>
+                        </div>
+                      </form>
+                      <div id="reload-surat_persetujuan">
+                        @if($old && $old->sip->surat_persetujuan)
+                        <a href="{{asset('storage/'.$old->sip->surat_persetujuan)}}" target="_blank">Lihat berkas</a>
+                        @endif
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label">Berkas Pendukung Lainnya: (pdf) max 1MB</label>
+                    <div class="col-lg-9">
+                      <form action="{{route('sip.tab4')}}" method="POST" id="berkas_pendukung">
+                        <div class="input-group">
+                          @csrf
+                          <input type="file" name="berkas_pendukung" id="file-berkas_pendukung" style="display:none;" accept="application/pdf">
+                          <label for="file-berkas_pendukung" class="form-control" id="label-berkas_pendukung">@if($old && $old->sip->berkas_pendukung)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
+                          <input type="hidden" class="form-control" name="key" value="berkas_pendukung" >
+                          <button type="submit" class="btn btn-outline-secondary">Simpan
+                          </button>
+                        </div>
+                      </form>
+                      <div id="reload-berkas_pendukung">
+                        @if($old && $old->sip->berkas_pendukung)
+                        <a href="{{asset('storage/'.$old->sip->berkas_pendukung)}}" target="_blank">Lihat berkas</a>
+                        @endif
+                      </div>
+                    </div>
+                  </div>
+
                   <div class="row align-items-center">
                     <div class="col-12 kt-align-right">
-                      <button type="submit" class="btn btn-outline-info btn-sm" title="Kirim Berkas">
-                        <i class="fa fa-check"></i> Kirim Berkas
+                      <button type="button" class="btn btn-outline-info btn-sm" onclick="to_tab_5()" title="Terima Berkas">
+                        <i class="fa fa-check"></i> Simpan & Selanjutnya
                       </button>
                     </div>
                   </div>
-                </form>
+                </div>
               </div>
+              <!-- END TAB 4 -->
+
+              <!-- TAB 5 -->
+              <div class="tab-pane fade" id="kt_tab_pane_5" role="tabpanel" aria-labelledby="kt_tab_pane_4">
+                <div class="container">
+                  <form id=tab5>
+                    @csrf
+                    <div class="form-group row">
+                      <label class="col-lg-3 col-form-label">Pernyataan: </label>
+                      <div class="col-lg-9">
+                        <input type="checkbox" class="" name="ceklis" required="">  Dengan ini menyatakan bahwa data yang dikirim merupakan data yang sebenarnya dan apabila dikemudian hari terdapat ketidaksesuain maka saya siap untuk menerima konsekuensi.
+                      </div>
+                    </div>
+                    <div class="row align-items-center">
+                      <div class="col-12 kt-align-right">
+                        <button type="submit" class="btn btn-outline-info btn-sm" title="Kirim Berkas">
+                          <i class="fa fa-check"></i> Kirim Berkas
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <!-- END TAB 5 -->
             </div>
-            <!-- END TAB 5 -->
           </div>
-        </div>
        <!--    <div class="card-footer">
             halsjfohasjf
           </div> -->
@@ -833,6 +845,33 @@
 </div>
 
 @endsection
+<script type="text/javascript">
+  kel_id1 = null;
+</script>
+@if($old && $old->sip && $old->sip->klh1)
+<script type="text/javascript">
+  kel_id1 = '{!! $old->sip->klh1->id !!}';
+</script>
+@endif
+
+<script type="text/javascript">
+  kel_id2 = null;
+</script>
+@if($old && $old->sip && $old->sip->klh2)
+<script type="text/javascript">
+  kel_id2 = '{!! $old->sip->klh2->id !!}';
+</script>
+@endif
+
+<script type="text/javascript">
+  kel_id3 = null;
+</script>
+@if($old && $old->sip && $old->sip->klh3)
+<script type="text/javascript">
+  kel_id3 = '{!! $old->sip->klh3->id !!}';
+</script>
+@endif
+
 
 <script type="text/javascript">
   jenis_izin_old = null;
@@ -841,6 +880,10 @@
 @if($old && $old->sip)
 <script type="text/javascript">
   sip_id = '{!! $old->sip->id !!}';
+</script>
+@else
+<script type="text/javascript">
+  sip_id = null;
 </script>
 @endif
 
@@ -865,6 +908,17 @@
 @else
 <script type="text/javascript">
   jenis(0);
+</script>
+@endif
+
+
+<script type="text/javascript">
+  subizin_id = null;
+</script>
+@if($old && $old->sip->subizin && $old->sip->subizin->nama == 'Dokter Spesialis') 
+<script type="text/javascript">
+  subizin_id = '{!! $old->sip->subizin->id !!}';
+  jenis('Dokter Spesialis');
 </script>
 @endif
 

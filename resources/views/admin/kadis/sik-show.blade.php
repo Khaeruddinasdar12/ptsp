@@ -123,6 +123,11 @@
             </tr>
             <tr>
               <td>{{$no = $no+1}}</td>
+              <td>No. Rekomendasi OP</td>
+              <td>{{ $data->sik->no_str }}</td>
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
               <td>Nomor STR</td>
               <td>{{ $data->sik->no_str }}</td>
             </tr>

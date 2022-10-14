@@ -19,6 +19,7 @@ class CreateSiksTable extends Migration
             $table->date('awal_str')->nullable();
             $table->date('akhir_str')->nullable();
             $table->string('no_rekomendasi')->nullable();
+            $table->string('rekomendasi_op')->nullable();
             $table->string('alamat')->nullable();
             $table->bigInteger('subizin_id')->nullable();
             $table->string('nama_praktek')->nullable();

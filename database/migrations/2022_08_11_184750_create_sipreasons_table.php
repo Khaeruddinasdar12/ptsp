@@ -18,6 +18,7 @@ class CreateSipreasonsTable extends Migration
             $table->string('awal_str')->nullable();
             $table->string('akhir_str')->nullable();
             $table->string('alamat')->nullable();
+            $table->string('rekomendasi_op')->nullable();
 
             $table->string('nama_praktek1')->nullable();
             $table->string('jalan1')->nullable();

@@ -226,6 +226,35 @@
             </tr>
             <tr>
               <td>{{$no = $no+1}}</td>
+              <td>No. Rekomendasi OP</td>
+              <td>{{ $data->sip->no_str }}</td>
+              <td>
+                @if($data->sip->reason && $data->sip->reason->rekomendasi_op =='1') {!! $terima !!}
+                @elseif($data->sip->reason && $data->sip->reason->rekomendasi_op == '') {!! $belumperiksa !!}
+                @elseif($data->sip->reason && $data->sip->reason->rekomendasi_op != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              @if($data->sip->reason && $data->sip->reason->rekomendasi_op != '1')
+              <td> {{$data->sip->reason->rekomendasi_op}} </td>
+              <td>
+                <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}">
+                  <div class="input-group">
+                    @csrf
+                    @method('PUT')
+                    <input type="text" class="form-control" name="revisi" required>
+                    <input type="hidden" class="form-control" name="key" value="rekomendasi_op">
+                    <button type="submit" class="btn btn-outline-secondary">Update
+                    </button>
+                  </div>
+                </form>
+              </td>
+              @else
+              <td></td>
+              <td></td>
+              @endif
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
               <td>Nomor STR</td>
               <td>{{ $data->sip->no_str }}</td>
               <td>
@@ -1137,7 +1166,7 @@
         </tr>
         <tr>
           <td>{{$no = $no+1}}</td>
-          <td>Surat Keterangan Pelayanan Kesehatan</td>
+          <td>Surat Keterangan Pelayanan Kesehatan - Tempat Kerja</td>
           <td><a href="{{ asset('storage/'.$data->sip->surat_keterangan) }}" target="_blank">Lihat Berkas</a></td>
           <td>
             @if($data->sip->reason && $data->sip->reason->surat_keterangan =='1') {!! $terima !!}

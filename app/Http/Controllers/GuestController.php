@@ -44,6 +44,12 @@ class GuestController extends Controller
         return view('guest.layanan');
     }
 
+    public function ceksertifikat($no_tiket)
+    {
+        $data = Perizinan::where('no_tiket', $no_tiket)->first();
+        return view('guest.cek-sertifikat', ['data' => $data]);
+    }
+
 	public function pdf()
 	{
         $data = [

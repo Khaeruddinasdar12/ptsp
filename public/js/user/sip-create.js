@@ -2,6 +2,7 @@
   e.preventDefault();
   var request = new FormData(this);
   var endpoint= route1;
+  // if()
   $.ajax({
     url: endpoint,
     method: "POST",
@@ -15,6 +16,7 @@
     success:function(data){
       if(data.status == 'success') {
         berhasil(data.status, data.pesan);
+        sip_id = data.sip_id;
         $('a[href="#kt_tab_pane_2"]').click();
       } else {
         berhasil(data.status, data.pesan);
@@ -51,6 +53,7 @@
     success:function(data){
       if(data.status == 'success') {
         berhasil(data.status, data.pesan);
+        sip_id = data.sip_id;
         $('a[href="#kt_tab_pane_3"]').click();
       } else {
         berhasil(data.status, data.pesan);
@@ -88,6 +91,7 @@ $('#praktik1').submit(function(e) {
     success:function(data){
       if(data.status == 'success') {
         berhasil(data.status, data.pesan);
+        sip_id = data.sip_id;
       } else {
         berhasil(data.status, data.pesan);
       } 
@@ -174,43 +178,7 @@ $('#praktik3').submit(function(e) {
       }
     } 
   }); 
-});
-
- $('#tab3').submit(function(e) {
-  e.preventDefault();
-  var request = new FormData(this);
-  var endpoint= route3;
-  $.ajax({
-    url: endpoint,
-    method: "POST",
-    data: request,
-    contentType: false,
-    cache: false,
-    processData: false,
-    beforeSend: function(){
-      $('#loader').attr("style", "");
-    },
-    success:function(data){
-      if(data.status == 'success') {
-        berhasil(data.status, data.pesan);
-        $('a[href="#kt_tab_pane_4"]').click();
-      } else {
-        berhasil(data.status, data.pesan);
-      } 
-    },
-    complete:function(data) {
-      $('#loader').attr("style", "display:none");
-    },
-    error: function(xhr, status, error){
-      var error = xhr.responseJSON; 
-      if ($.isEmptyObject(error) == false) {
-        $.each(error.errors, function(key, value) {
-          gagal(key, value);
-        });
-      }
-    } 
-  }); 
-});
+}); 
 
 // END TAB 3
 
@@ -232,7 +200,7 @@ $('#ktp').submit(function(e) {
       $('#loader').attr("style", "");
     },
     success:function(data) {
-      document.getElementById('ktp').reset();
+      // document.getElementById('ktp').reset();
       if(data.status == 'success') {
         reload(sip_id, 'reload-ktp', 'ktp');
       }
@@ -270,7 +238,7 @@ $('#foto').submit(function(e) {
       $('#loader').attr("style", "");
     },
     success:function(data) {
-      document.getElementById('foto').reset();
+      // document.getElementById('foto').reset();
       if(data.status == 'success') {
         reload(sip_id, 'reload-foto', 'foto');
       }
@@ -308,7 +276,7 @@ $('#str').submit(function(e) {
       $('#loader').attr("style", "");
     },
     success:function(data) {
-      document.getElementById('str').reset();
+      // document.getElementById('str').reset();
       if(data.status == 'success') {
         reload(sip_id, 'reload-str', 'str');
       }
@@ -346,7 +314,7 @@ $('#rekomendasi_org').submit(function(e) {
       $('#loader').attr("style", "");
     },
     success:function(data) {
-      document.getElementById('rekomendasi_org').reset();
+      // document.getElementById('rekomendasi_org').reset();
       if(data.status == 'success') {
         reload(sip_id, 'reload-rekomendasi_org', 'rekomendasi_org');
       }
@@ -384,7 +352,7 @@ $('#surat_keterangan').submit(function(e) {
       $('#loader').attr("style", "");
     },
     success:function(data) {
-      document.getElementById('surat_keterangan').reset();
+      // document.getElementById('surat_keterangan').reset();
       if(data.status == 'success') {
         reload(sip_id, 'reload-surat_keterangan', 'surat_keterangan');
       }
@@ -422,7 +390,7 @@ $('#surat_persetujuan').submit(function(e) {
       $('#loader').attr("style", "");
     },
     success:function(data) {
-      document.getElementById('surat_persetujuan').reset();
+      // document.getElementById('surat_persetujuan').reset();
       if(data.status == 'success') {
         reload(sip_id, 'reload-surat_persetujuan', 'surat_persetujuan');
       }
@@ -460,7 +428,7 @@ $('#berkas_pendukung').submit(function(e) {
       $('#loader').attr("style", "");
     },
     success:function(data) {
-      document.getElementById('berkas_pendukung').reset();
+      // document.getElementById('berkas_pendukung').reset();
       if(data.status == 'success') {
         reload(sip_id, 'reload-berkas_pendukung', 'berkas_pendukung');
       }
@@ -599,7 +567,12 @@ $(document).ready(function () {
           'dataType': 'json',
           success: function(data) {
             jQuery.each(data, function(i, val) {
-              $('#kelurahan1').append('<option value="' + val.id + '">' + val.kecamatan +' - '+ val.kelurahan + '</option>');
+              if(val.id == kel_id1) {
+                check = 'selected';
+              } else {
+                check = '';
+              }
+              $('#kelurahan1').append('<option value="' + val.id + '" '+check+'>' + val.kecamatan +' - '+ val.kelurahan + '</option>');
             });
           },
           error: function(xhr, status, error) {
@@ -622,8 +595,12 @@ $(document).ready(function () {
             'dataType': 'json',
             success: function(data) {
               jQuery.each(data, function(i, val) {
-
-                $('#kelurahan2').append('<option value="' + val.id + '">' + val.kecamatan +' - '+ val.kelurahan + '</option>');
+                if(val.id == kel_id2) {
+                  check = 'selected';
+                } else {
+                  check = '';
+                }
+                $('#kelurahan2').append('<option value="' + val.id + '" '+check+'>' + val.kecamatan +' - '+ val.kelurahan + '</option>');
               });
             },
             error: function(xhr, status, error) {
@@ -646,8 +623,13 @@ $(document).ready(function () {
               'dataType': 'json',
               success: function(data) {
                 jQuery.each(data, function(i, val) {
+                  if(val.id == kel_id3) {
+                    check = 'selected';
+                  } else {
+                    check = '';
+                  }
 
-                  $('#kelurahan3').append('<option value="' + val.id + '">' + val.kecamatan +' - '+ val.kelurahan + '</option>');
+                  $('#kelurahan3').append('<option value="' + val.id + '" '+check+'>' + val.kecamatan +' - '+ val.kelurahan + '</option>');
                 });
               },
               error: function(xhr, status, error) {
@@ -661,6 +643,36 @@ $(document).ready(function () {
             })
           }
   //end menampilkan kelurahan3 setelah memilih kecamatan3
+
+
+  // menampilkan list dokter spesialis
+  function show_listspesialis() {
+    $("#spesialis").empty();
+    $.ajax({
+      'url': "../../perizinan/list-spesialis/",
+      'dataType': 'json',
+      success: function(data) {
+        jQuery.each(data, function(i, val) {
+          if(val.id == subizin_id) {
+            check = 'selected';
+          } else {
+            check = '';
+          }
+          $('#spesialis').append('<option value="' + val.id + '" '+check+'>' + val.kategori + '</option>');
+        });
+      },
+      error: function(xhr, status, error) {
+        var error = xhr.responseJSON;
+        if ($.isEmptyObject(error) == false) {
+          $.each(error.errors, function(key, value) {
+            alert(key + value);
+          });
+        }
+      }
+    })
+  }
+  //end menampilkan list dokter spesialis
+
 
               // menampilkan kelurahan3 setelah memilih kecamatan3
               function jenis(jen) {
@@ -676,6 +688,11 @@ $(document).ready(function () {
                   $('#jadwal3').attr("style", "");
                   $('#hari_buka3').attr("required", "true");
                   $('#hari_tutup3').attr("required", "true");
+                  $("#spesialis").empty();
+                  $('#list-spesialis').attr("style", "display:none");
+                } else if (jen == 'Dokter Spesialis') {
+                  $('#list-spesialis').attr("style", "");
+                  show_listspesialis();
                 } else {
                   $('#jadwal1').attr("style", "display:none");
                   $('#hari_buka1').removeAttr('required');
@@ -688,13 +705,44 @@ $(document).ready(function () {
                   $('#jadwal3').attr("style", "display:none");
                   $('#hari_buka3').removeAttr('required');
                   $('#hari_tutup3').removeAttr('required');
+                  $("#spesialis").empty();
+                  $('#list-spesialis').attr("style", "display:none");
                 }              
               }
   //end menampilkan kelurahan3 setelah memilih kecamatan3
 
-function to_tab_5() {
-  $('a[href="#kt_tab_pane_5"]').click();
-}
-function to_tab_4() {
-  $('a[href="#kt_tab_pane_4"]').click();
-}
+  function to_tab_5() {
+    $('a[href="#kt_tab_pane_5"]').click();
+  }
+  function to_tab_4() {
+    $('a[href="#kt_tab_pane_4"]').click();
+  }
+
+// HANDLE INPUT FILE
+$("#file-ktp").change(function(){
+  $("#label-ktp").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-foto").change(function(){
+  $("#label-foto").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-str").change(function(){
+  $("#label-str").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-rekomendasi_org").change(function(){
+  $("#label-rekomendasi_org").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-surat_keterangan").change(function(){
+  $("#label-surat_keterangan").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-surat_persetujuan").change(function(){
+  $("#label-surat_persetujuan").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-berkas_pendukung").change(function(){
+  $("#label-berkas_pendukung").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});

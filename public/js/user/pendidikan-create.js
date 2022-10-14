@@ -19,6 +19,7 @@ $('#tab1').submit(function(e){
     success:function(data){
      if(data.status == 'success') {
       berhasil(data.status, data.pesan);
+      pendidikan_id = data.pendidikan_id;
       $('a[href="#kt_tab_pane_2"]').click();
     } else {
       berhasil(data.status, data.pesan);
@@ -56,6 +57,7 @@ $('#tab2').submit(function(e){
     success:function(data){
       if(data.status == 'success') {
         berhasil(data.status, data.pesan);
+        pendidikan_id = data.pendidikan_id;
         $('a[href="#kt_tab_pane_3"]').click();
       } else {
         berhasil(data.status, data.pesan);
@@ -92,6 +94,7 @@ $('#tab3').submit(function(e) {
     success:function(data){
       if(data.status == 'success') {
         berhasil(data.status, data.pesan);
+        pendidikan_id = data.pendidikan_id;
         $('a[href="#kt_tab_pane_4"]').click();
       } else {
         berhasil(data.status, data.pesan);
@@ -129,7 +132,7 @@ $('#ktp').submit(function(e) {
       $('#loader').attr("style", "");
     },
     success:function(data) {
-      document.getElementById('ktp').reset();
+      // document.getElementById('ktp').reset();
       if(data.status == 'success') {
         reload(pendidikan_id, 'reload-ktp', 'ktp');
       }
@@ -167,7 +170,7 @@ $('#ktp').submit(function(e) {
         $('#loader').attr("style", "");
       },
       success:function(data) {
-        document.getElementById('foto').reset();
+        // document.getElementById('foto').reset();
         if(data.status == 'success') {
           reload(pendidikan_id, 'reload-foto', 'pas_foto');
         }
@@ -205,7 +208,7 @@ $('#ktp').submit(function(e) {
         $('#loader').attr("style", "");
       },
       success:function(data) {
-        document.getElementById('akta').reset();
+        // document.getElementById('akta').reset();
         if(data.status == 'success') {
           reload(pendidikan_id, 'reload-akta', 'akta');
         }
@@ -243,7 +246,7 @@ $('#ktp').submit(function(e) {
         $('#loader').attr("style", "");
       },
       success:function(data) {
-        document.getElementById('kurikulum').reset();
+        // document.getElementById('kurikulum').reset();
         if(data.status == 'success') {
           reload(pendidikan_id, 'reload-kurikulum', 'kurikulum');
         }
@@ -281,7 +284,7 @@ $('#ktp').submit(function(e) {
         $('#loader').attr("style", "");
       },
       success:function(data) {
-        document.getElementById('struktur-organisasi').reset();
+        // document.getElementById('struktur-organisasi').reset();
         if(data.status == 'success') {
           reload(pendidikan_id, 'reload-struktur-organisasi', 'struktur_organisasi');
         }
@@ -319,7 +322,7 @@ $('#ktp').submit(function(e) {
         $('#loader').attr("style", "");
       },
       success:function(data) {
-        document.getElementById('sk').reset();
+        // document.getElementById('sk').reset();
         if(data.status == 'success') {
           reload(pendidikan_id, 'reload-sk', 'sk');
         }
@@ -357,7 +360,7 @@ $('#ktp').submit(function(e) {
         $('#loader').attr("style", "");
       },
       success:function(data) {
-        document.getElementById('sertifikat-tanah').reset();
+        // document.getElementById('sertifikat-tanah').reset();
         if(data.status == 'success') {
           reload(pendidikan_id, 'reload-sertifikat-tanah', 'sertifikat_tanah');
         }
@@ -395,7 +398,7 @@ $('#ktp').submit(function(e) {
         $('#loader').attr("style", "");
       },
       success:function(data) {
-        document.getElementById('nib').reset();
+        // document.getElementById('nib').reset();
         if(data.status == 'success') {
           reload(pendidikan_id, 'reload-nib', 'nib');
         }
@@ -433,7 +436,7 @@ $('#ktp').submit(function(e) {
         $('#loader').attr("style", "");
       },
       success:function(data) {
-        document.getElementById('npsn').reset();
+        // document.getElementById('npsn').reset();
         if(data.status == 'success') {
           reload(pendidikan_id, 'reload-npsn', 'npsn');
         }
@@ -471,7 +474,7 @@ $('#ktp').submit(function(e) {
         $('#loader').attr("style", "");
       },
       success:function(data) {
-        document.getElementById('izin_lama').reset();
+        // document.getElementById('izin_lama').reset();
         if(data.status == 'success') {
           reload(pendidikan_id, 'reload-izin_lama', 'izin_lama');
         }
@@ -509,7 +512,7 @@ $('#ktp').submit(function(e) {
         $('#loader').attr("style", "");
       },
       success:function(data) {
-        document.getElementById('berkas_pendukung').reset();
+        // document.getElementById('berkas_pendukung').reset();
         if(data.status == 'success') {
           reload(pendidikan_id, 'reload-berkas_pendukung', 'berkas_pendukung');
         }
@@ -689,3 +692,47 @@ $('#ktp').submit(function(e) {
       }
   //end menampilkan kelurahan1 setelah memilih kecamatan1
 
+// Handle File
+$("#file-ktp").change(function(){
+  $("#label-ktp").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-foto").change(function(){
+  $("#label-foto").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-akta").change(function(){
+  $("#label-akta").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-kurikulum").change(function(){
+  $("#label-kurikulum").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-struktur_organisasi").change(function(){
+  $("#label-struktur_organisasi").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-sk").change(function(){
+  $("#label-sk").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-sertifikat_tanah").change(function(){
+  $("#label-sertifikat_tanah").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-nib").change(function(){
+  $("#label-nib").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-npsn").change(function(){
+  $("#label-npsn").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-izin_lama").change(function(){
+  $("#label-izin_lama").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-berkas_pendukung").change(function(){
+  $("#label-berkas_pendukung").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
