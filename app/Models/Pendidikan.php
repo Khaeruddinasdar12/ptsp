@@ -9,7 +9,7 @@ class Pendidikan extends Model
 {
     use HasFactory;
 
-    protected $fillable =['perizinan_id', 'subizin_id', 'no_rekomendasi', 'nama', 'nohp', 'alamat', 'nama_pendidikan', 'kelurahan', 'jalan', 'ktp', 'pas_foto', 'akta', 'kurikulum', 'struktur_organisasi', 'sk', 'sertifikat_tanah', 'nib', 'npsn', 'izin_lama', 'berkas_pendukung'];
+    protected $fillable =['perizinan_id', 'subizin_id', 'no_rekomendasi', 'gelar_awal', 'nama', 'gelar_akhir', 'nohp', 'alamat', 'nama_yayasan', 'nama_pendidikan', 'no_npsn', 'kelurahan', 'jalan', 'kode_pos', 'jenis_program', 'surat_permohonan', 'ktp', 'pas_foto', 'imb', 'akta', 'kurikulum', 'struktur_organisasi', 'sk', 'sertifikat_tanah', 'nib', 'npsn', 'izin_lama', 'berkas_pendukung'];
 
     public function perizinan()
     {

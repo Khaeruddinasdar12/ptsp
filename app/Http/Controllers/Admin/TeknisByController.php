@@ -23,13 +23,19 @@ use QrCode;
 use Storage;
 class TeknisByController extends Controller
 {
-	public function index()
+	public function index(Request $request)
 	{
 		if (Auth::guard('admin')->user()->role != 'teknis') {
 			return redirect()->route('error')->with('not_found','Kamu Tidak Memiliki Akses Teknis');
 		}
 		
-		$data = Perizinan::where('status', '0')->whereNotNull('bidang_by')->whereNull('teknis_by')->paginate(10);
+		// $data = Perizinan::where('status', '0')->whereNotNull('bidang_by')->whereNull('teknis_by')->paginate(10);
+
+		$data = Perizinan::where('status', '0')
+			->whereNotNull('bidang_by')
+			->whereNull('teknis_by')
+            ->where('no_tiket','LIKE','%'.$request->cari.'%')
+            ->paginate(10);
 		// return $data;
 		return view('admin.teknis.index', ['data' => $data]);
 	}

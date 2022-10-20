@@ -4,13 +4,18 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSikreasonTable extends Migration
+class CreateSikreasonsTable extends Migration
 {
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         Schema::create('sikreasons', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('sik_id');
+            $table->bigInteger('sik_id')->unsigned();
             $table->string('nama')->nullable();
             $table->string('tempat_lahir')->nullable();
             $table->string('tanggal_lahir')->nullable();
@@ -31,8 +36,16 @@ class CreateSikreasonTable extends Migration
             $table->string('surat_keluasan')->nullable();
             $table->string('berkas_pendukung')->nullable();
             $table->timestamps();
+
+            $table->foreign('sik_id')->references('id')->on('siks');
         });
     }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
         Schema::dropIfExists('sikreasons');

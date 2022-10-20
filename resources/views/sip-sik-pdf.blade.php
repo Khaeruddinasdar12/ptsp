@@ -40,6 +40,12 @@
     text-transform: uppercase;
   }
 
+  #judul2 {
+    text-align: center;
+    text-transform: uppercase;
+    font-size:.7rem;
+  }
+
   .merah {
     color: red;
   }
@@ -149,6 +155,7 @@
 
   .data_nama {
     text-align: center;
+    font-size: 18px;
   }
 
   .penetapan {
@@ -183,7 +190,7 @@
               <th><img src="{{ public_path('cert/logo.jpg') }}" alt="" srcset="" class="logo"></th>
               <th><div class="text">
                 <h3 id=judul>PEMERINTAH KOTA MAKASSAR</h3>
-                <h3 id=judul>DINAS PENANAMAN MODAL DAN PELAYANAN TERPADU SATU PINTU</h3>
+                <h3 id=judul2>DINAS PENANAMAN MODAL DAN PELAYANAN TERPADU SATU PINTU</h3>
                 <p>Jl. Jendral Ahmad Yani No. 2 Makasssar 90171 <br>
                 Website: dpmptsp.makassarkota.go.id</p>
               </div></th>
@@ -244,9 +251,9 @@
             <td style="width: 5%;">:</td>
             <td style="width: 65%;">{{$jalan1}}</td>
           </tr>
-          @if($jadwal1)
+          @if($subizin == 'Apoteker')
           <tr>
-            <td style="width: 30%;">Jalan Praktek 1</td>
+            <td style="width: 30%;">Jadwal Praktek 1</td>
             <td style="width: 5%;">:</td>
             <td style="width: 65%;">{{$jadwal1}}</td>
           </tr>
@@ -273,9 +280,9 @@
             <td style="width: 5%;">:</td>
             <td style="width: 65%;">{{$jalan2}}</td>
           </tr>
-          @if($jadwal2)
+          @if($subizin == 'Apoteker')
           <tr>
-            <td style="width: 30%;">Jalan Praktek 2</td>
+            <td style="width: 30%;">Jadwal Praktek 2</td>
             <td style="width: 5%;">:</td>
             <td style="width: 65%;">{{$jadwal2}}</td>
           </tr>
@@ -303,9 +310,9 @@
             <td style="width: 5%;">:</td>
             <td style="width: 65%;">{{$jalan2}}</td>
           </tr>
-          @if($jadwal3)
+          @if($subizin == 'Apoteker')
           <tr>
-            <td style="width: 30%;">Jalan Praktek 3</td>
+            <td style="width: 30%;">Jadwal Praktek 3</td>
             <td style="width: 5%;">:</td>
             <td style="width: 65%;">{{$jadwal3}}</td>
           </tr>

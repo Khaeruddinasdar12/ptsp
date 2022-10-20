@@ -6,11 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateSipreasonsTable extends Migration
 {
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         Schema::create('sipreasons', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('sip_id');
+            $table->bigInteger('sip_id')->unsigned();
             $table->string('nama')->nullable();
             $table->string('tempat_lahir')->nullable();
             $table->string('tanggal_lahir')->nullable();
@@ -43,8 +48,16 @@ class CreateSipreasonsTable extends Migration
             $table->string('surat_persetujuan')->nullable();
             $table->string('berkas_pendukung')->nullable();
             $table->timestamps();
+
+            $table->foreign('sip_id')->references('id')->on('sips');
         });
     }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
         Schema::dropIfExists('sipreasons');

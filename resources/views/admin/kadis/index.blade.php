@@ -53,6 +53,16 @@
           Tabel Data Perizinan
         </h3>
       </div>
+      <div class="row align-items-center">
+        <div class="col-12 kt-align-right">
+          <form method="get" action="{{route('perizinan.kadis.index')}}">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Masukkan No. Tiket" name="cari" @if(Request::get('cari') != '') value="{{Request::get('cari')}}" @endif>
+              <button class="btn btn-outline-secondary" type="submit">Cari</button>
+            </div>
+          </form>
+        </div> 
+      </div>
     </div>
     <div class="kt-portlet__body">
 

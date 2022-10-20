@@ -65,9 +65,9 @@
       </div>
       <div class="row align-items-center">
         <div class="col-12 kt-align-right">
-          <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modal-verifikasi">
+          <!-- <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modal-verifikasi">
             <i class="fa fa-eye"></i> Preview Sertifikat
-          </button>
+          </button> -->
           <button type="button" class="btn btn-success btn-sm" id="verif" onclick="verifikasi()" title="Terima Berkas">
             <i class="fa fa-check"></i> Terbitkan Sertifikat
           </button>
@@ -111,12 +111,17 @@
             <tr>
               <td>{{$no}}</td>
               <td valign="center">Nama Penanggung Jawab</td>
-              <td>{{ $data->pendidikan->nama }}</td>
+              <td>{{ $data->pendidikan->gelar_awal }} {{ $data->pendidikan->nama }} {{ $data->pendidikan->gelar_akhir }}</td>
             </tr>
             <tr>
               <td>{{$no = $no+1}}</td>
               <td>Alamat</td>
               <td>{{ $data->pendidikan->alamat }}</td>
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Nama Yayasan </td>
+              <td>{{ $data->pendidikan->nama_yayasan }}</td>
             </tr>
             <tr>
               <td>{{$no = $no+1}}</td>
@@ -127,6 +132,11 @@
               <td>{{$no = $no+1}}</td>
               <td>Jalan</td>
               <td>{{ $data->pendidikan->jalan }}</td>
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Kode Pos</td>
+              <td>{{ $data->pendidikan->kode_pos }}</td>
             </tr>
             <tr>
               <td>{{$no = $no+1}}</td>
@@ -143,6 +153,11 @@
               <td>{{$no = $no+1}}</td>
               <td>Pas Foto</td>
               <td><a href="{{ asset('storage/'.$data->pendidikan->pas_foto) }}" target="_blank">Lihat Berkas</a></td>
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>IMB</td>
+              <td><a href="{{ asset('storage/'.$data->pendidikan->imb) }}" target="_blank">Lihat Berkas</a></td>
             </tr>
             <tr>
               <td>{{$no = $no+1}}</td>

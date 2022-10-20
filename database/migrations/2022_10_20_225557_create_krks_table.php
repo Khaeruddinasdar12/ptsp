@@ -15,9 +15,11 @@ class CreateKrksTable extends Migration
     {
         Schema::create('krks', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('perizinan_id');
+            $table->bigInteger('perizinan_id')->unsigned();
             $table->string('no_rekomendasi')->nullable();
+            $table->string('gelar_awal')->nullable();
             $table->string('nama')->nullable();
+            $table->string('gelar_akhir')->nullable();
             $table->string('nik')->nullable();
             $table->string('nohp')->nullable();
             $table->string('alamat')->nullable();
@@ -46,6 +48,8 @@ class CreateKrksTable extends Migration
             $table->string('gsb')->nullable();
             $table->string('klasifikasi')->nullable();
             $table->timestamps();
+            
+            $table->foreign('perizinan_id')->references('id')->on('perizinans');
         });
     }
 

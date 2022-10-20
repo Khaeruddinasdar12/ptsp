@@ -83,9 +83,21 @@
                       <form action="{{route('sik.tab1')}}" method="POST" id="tab1">
                         @csrf
                         <div class="form-group row">
+                          <label class="col-lg-3 col-form-label">Gelar Awal:</label>
+                          <div class="col-lg-9">
+                            <input type="text" class="form-control" name="gelar_awal" value="@if($old){{$old->sik->gelar_awal}}@endif">
+                          </div>
+                        </div>
+                        <div class="form-group row">
                           <label class="col-lg-3 col-form-label">Nama Lengkap Sesuai STR:*</label>
                           <div class="col-lg-9">
                             <input type="text" class="form-control" name="nama" value="@if($old){{$old->sik->nama}}@endif" required>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-lg-3 col-form-label">Gelar Akhir:</label>
+                          <div class="col-lg-9">
+                            <input type="text" class="form-control" name="gelar_akhir" value="@if($old){{$old->sik->gelar_akhir}}@endif">
                           </div>
                         </div>
                         <div class="form-group row">

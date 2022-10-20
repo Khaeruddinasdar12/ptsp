@@ -104,7 +104,7 @@
             <tr>
               <td>{{$no}}</td>
               <td valign="center">Nama Sesuai STR</td>
-              <td>{{ $data->sik->nama }}</td>
+              <td>{{ $data->sik->gelar_awal }} {{ $data->sik->nama }} {{ $data->sik->gelar_akhir }}</td>
             </tr>
             <tr>
               <td>{{$no = $no+1}}</td>

@@ -96,7 +96,7 @@
             <tr>
               <td>{{$no}}</td>
               <td valign="center">Nama Sesuai STR</td>
-              <td>{{ $data->sik->nama }}</td>
+              <td>{{ $data->sik->gelar_awal }} {{ $data->sik->nama }} {{ $data->sik->gelar_akhir }}</td>
               <td>
                 @if($data->sik->reason && $data->sik->reason->nama =='1') {!! $terima !!}
                 @elseif($data->sik->reason && $data->sik->reason->nama == '') {!! $belumperiksa !!}
@@ -396,11 +396,11 @@
     <br>
     <div class="row align-items-center">
       <div class="col-12 kt-align-right">
-        <button type="button" class="btn btn-danger btn-sm" onclick="tolak()" id="tolak">
+        <!-- <button type="button" class="btn btn-danger btn-sm" onclick="tolak()" id="tolak">
           <i class="fa fa-times"></i> Tolak Berkas
-        </button>
+        </button> -->
         <button type="button" class="btn btn-success btn-sm" id="verif" onclick="verifikasi()" title="Terima Berkas">
-          <i class="fa fa-check"></i> Verifikasi Berkas
+          <i class="fa fa-check"></i> Kirim Ke Teknis
         </button>
       </div>
     </div>

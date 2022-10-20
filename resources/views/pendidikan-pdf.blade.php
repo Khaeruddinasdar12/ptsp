@@ -230,12 +230,17 @@
         <tr>
           <td style="width: 30%;">Nama Lembaga </td>
           <td style="width: 5%;">:</td>
+          <td style="width: 65%;">{{$nama_yayasan}}</td>
+        </tr>
+        <tr>
+          <td style="width: 30%;"> </td>
+          <td style="width: 5%;"></td>
           <td style="width: 65%;">{{$nama_pendidikan}}</td>
         </tr>
         <tr>
           <td style="width: 30%;">Alamat</td>
           <td style="width: 5%;">:</td>
-          <td style="width: 65%;">{{$alamat}} </td>
+          <td style="width: 65%;">{{$jalan}}, kel. {{$kelurahan}}, kec. {{$kecamatan}}</td>
         </tr>
         <tr>
           <td style="width: 30%; vertical-align: top;">No Telp</td>

@@ -22,14 +22,17 @@ use QueryException;
 use Exception;
 class BidangByController extends Controller
 {
-	public function index()
+	public function index(Request $request)
 	{
 		if (Auth::guard('admin')->user()->role != 'bidang') {
 			return redirect()->route('error')->with('not_found','Kamu Tidak Memiliki Akses Bidang');
 		}
 		
-		$data = Perizinan::where('status', '0')->whereNull('bidang_by')->paginate(10);
-
+		// $data = Perizinan::where('status', '0')->whereNull('bidang_by')->paginate(10);
+		$data = Perizinan::where('status', '0')
+            ->whereNull('bidang_by')
+            ->where('no_tiket','LIKE','%'.$request->cari.'%')
+            ->paginate(10);
 		// return $data;
 		return view('admin.bidang.index', ['data' => $data]);
 	}
@@ -228,7 +231,7 @@ class BidangByController extends Controller
 
 			$err =array(
 				'status' => 'warning',
-				'pesan' => 'Mohon centang setiap baris!'
+				'pesan' => 'Mohon periksa setiap baris!'
 			);
 
 			if($data->jenis_izin == 'sik') {
@@ -238,16 +241,16 @@ class BidangByController extends Controller
 				}
 
 				$dt = Sikreason::where('sik_id', $data->sik->id)->first();
-				if($dt->nama != '1' || $dt->tempat_lahir != '1' || $dt->tanggal_lahir != '1' || $dt->rekomendasi_op == '1' || $dt->no_str != '1' || $dt->awal_str != '1' || $dt->akhir_str != '1' || $dt->alamat != '1' || $dt->nama_praktek != '1' || $dt->jalan != '1' || $dt->kelurahan != '1' || $dt->ktp != '1' || $dt->foto != '1' || $dt->str != '1' || $dt->ijazah != '1' || $dt->rekomendasi_org != '1' || $dt->surat_keterangan != '1') {
+				if($dt->nama == '' || $dt->tempat_lahir == '' || $dt->tanggal_lahir == '' || $dt->rekomendasi_op == '' || $dt->no_str == '' || $dt->awal_str == '' || $dt->akhir_str == '' || $dt->alamat == '' || $dt->nama_praktek == '' || $dt->jalan == '' || $dt->kelurahan == '' || $dt->ktp == '' || $dt->foto == '' || $dt->str == '1' || $dt->ijazah == '' || $dt->rekomendasi_org == '' || $dt->surat_keterangan == '') {
 					return $err;
 				}
-				if($data->sik->surat_keluasan && $dt->surat_keluasan != '1') {
+				if($data->sik->surat_keluasan && $dt->surat_keluasan == '') {
 					return $err;
 				}
-				if ($data->sik->berkas_pendukung && $dt->berkas_pendukung != '1') {
+				if ($data->sik->berkas_pendukung && $dt->berkas_pendukung == '') {
 					return $err;
 				}
-				$dt->delete();
+				// $dt->delete();
 			} elseif($data->jenis_izin == 'sip') {
 				
 				if(!$data->sip->reason) {
@@ -255,7 +258,7 @@ class BidangByController extends Controller
 				}
 
 				$dt = Sipreason::where('sip_id', $data->sip->id)->first();
-				if($dt->nama != '1' || $dt->tempat_lahir != '1' || $dt->tanggal_lahir != '1' || $dt->rekomendasi_op == '1' || $dt->no_str != '1' || $dt->awal_str != '1' || $dt->akhir_str != '1' || $dt->alamat != '1' || $dt->nama_praktek1 != '1' || $dt->jalan1 != '1' || $dt->kelurahan1 != '1' || $dt->ktp != '1' || $dt->foto != '1' || $dt->str != '1' || $dt->rekomendasi_org != '1' || $dt->surat_keterangan != '1') {
+				if($dt->nama == '' || $dt->tempat_lahir == '' || $dt->tanggal_lahir == '' || $dt->rekomendasi_op == '' || $dt->no_str == '' || $dt->awal_str == '' || $dt->akhir_str == '' || $dt->alamat == '' || $dt->nama_praktek1 == '' || $dt->jalan1 == '' || $dt->kelurahan1 == '' || $dt->ktp == '' || $dt->foto == '' || $dt->str == '' || $dt->rekomendasi_org == '' || $dt->surat_keterangan == '') {
 					
 					return $err;
 				}
@@ -263,71 +266,71 @@ class BidangByController extends Controller
 					return $err;
 				}
 
-				if ($data->sip->nama_praktek2 && $dt->nama_praktek2 != '1') {
+				if ($data->sip->nama_praktek2 && $dt->nama_praktek2 == '') {
 					return $err;
 				}
-				if ($data->sip->jalan2 && $dt->jalan2 != '1') {
+				if ($data->sip->jalan2 && $dt->jalan2 == '') {
 					return $err;
 				}
-				if ($data->sip->kelurahan2 && $dt->kelurahan2 != '1') {
+				if ($data->sip->kelurahan2 && $dt->kelurahan2 == '') {
 					return $err;
 				}
 				if($data->sip->subizin_id == '7' && $data->sip->nama_praktek2 && $dt->jadwal2 == '') {
 					return $err;
 				}
 
-				if ($data->sip->nama_praktek3 && $dt->nama_praktek3 != '1') {
+				if ($data->sip->nama_praktek3 && $dt->nama_praktek3 == '') {
 					return $err;
 				}
-				if ($data->sip->jalan3 && $dt->jalan3 != '1') {
+				if ($data->sip->jalan3 && $dt->jalan3 == '') {
 					return $err;
 				}
-				if ($data->sip->kelurahan3 && $dt->kelurahan3 != '1') {
+				if ($data->sip->kelurahan3 && $dt->kelurahan3 == '') {
 					return $err;
 				}
 				if($data->sip->subizin_id == '7' && $data->sip->nama_praktek3 && $dt->jadwal3 == '') {
 					return $err;
 				}
 
-				if ($data->sip->surat_persetujuan && $dt->surat_persetujuan != '1') {
+				if ($data->sip->surat_persetujuan && $dt->surat_persetujuan == '') {
 					return $err;
 				}
-				if ($data->sip->berkas_pendukung && $dt->berkas_pendukung != '1') {
+				if ($data->sip->berkas_pendukung && $dt->berkas_pendukung == '') {
 					return $err;
 				}
-				$dt->delete();
+				// $dt->delete();
 			} if($data->jenis_izin == 'pendidikan') {
 
 				if(!$data->pendidikan->reason) {
 					return $err;
 				}
 				$dt = Pddreason::where('pendidikan_id', $data->pendidikan->id)->first();
-				if($dt->nama != '1' || $dt->alamat != '1' || $dt->nama_pendidikan != '1' || $dt->kelurahan != '1' || $dt->jalan != '1' || $dt->ktp != '1' || $dt->pas_foto != '1' || $dt->akta != '1' || $dt->kurikulum != '1' || $dt->struktur_organisasi != '1' || $dt->sk != '1' || $dt->nib != '1') {
+				if($dt->nama == '' || $dt->alamat == '' || $dt->nama_pendidikan == '' || $dt->kelurahan == '' || $dt->jalan == '' || $dt->ktp == '' || $dt->pas_foto == '' || $dt->akta == '' || $dt->kurikulum == '' || $dt->struktur_organisasi == '' || $dt->sk == '' || $dt->nib == '') {
 					return $err;
 				}
-				if ($data->pendidikan->npsn && $dt->npsn != '1') {
+				if ($data->pendidikan->npsn && $dt->npsn == '') {
 					return $err;
 				}
-				if ($data->pendidikan->izin_lama && $dt->izin_lama != '1') {
+				if ($data->pendidikan->izin_lama && $dt->izin_lama == '') {
 					return $err;
 				}
-				if ($data->pendidikan->berkas_pendukung && $dt->berkas_pendukung != '1') {
+				if ($data->pendidikan->berkas_pendukung && $dt->berkas_pendukung == '') {
 					return $err;
 				}
-				$dt->delete();
+				// $dt->delete();
 			} if($data->jenis_izin == 'krk') {
 
 				if(!$data->krk->reason) {
 					return $err;
 				}
 				$dt = Krkreason::where('krk_id', $data->krk->id)->first();
-				if($dt->nama != '1' || $dt->nik != '1' || $dt->alamat != '1' || $dt->luas != '1' || $dt->nama_surat != '1' || $dt->nomor_surat != '1' || $dt->penggunaan != '1' || $dt->jenis != '1' || $dt->jml_lantai != '1' || $dt->jml_bangunan != '1' || $dt->kelurahan != '1' || $dt->jalan != '1' || $dt->ktp != '1' || $dt->pbb != '1' || $dt->surat_tanah != '1' || $dt->peta != '1' || $dt->gambar != '1') {
+				if($dt->nama == '' || $dt->nik == '' || $dt->alamat == '' || $dt->luas == '' || $dt->nama_surat == '' || $dt->nomor_surat == '' || $dt->penggunaan == '' || $dt->jenis == '' || $dt->jml_lantai == '' || $dt->jml_bangunan == '' || $dt->kelurahan == '' || $dt->jalan == '' || $dt->ktp == '' || $dt->pbb == '' || $dt->surat_tanah == '' || $dt->peta == '' || $dt->gambar == '') {
 					return $err;
 				}
-				if ($data->krk->berkas_pendukung && $dt->berkas_pendukung != '1') {
+				if ($data->krk->berkas_pendukung && $dt->berkas_pendukung == '') {
 					return $err;
 				}
-				$dt->delete();
+				// $dt->delete();
 			}
 
 			$data->verif_by = Auth::guard('admin')->user()->id;

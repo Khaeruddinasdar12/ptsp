@@ -83,9 +83,21 @@
                       <form action="{{route('pendidikan.tab1')}}" method="POST" id="tab1">
                         @csrf
                         <div class="form-group row">
+                          <label class="col-lg-3 col-form-label">Gelar Awal:</label>
+                          <div class="col-lg-9">
+                            <input type="text" class="form-control" name="gelar_awal" value="@if($old){{$old->pendidikan->gelar_awal}}@endif">
+                          </div>
+                        </div>
+                        <div class="form-group row">
                           <label class="col-lg-3 col-form-label">Nama Penanggung Jawab:*</label>
                           <div class="col-lg-9">
                             <input type="text" class="form-control" name="nama" value="@if($old){{$old->pendidikan->nama}}@endif" >
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-lg-3 col-form-label">Gelar Akhir:</label>
+                          <div class="col-lg-9">
+                            <input type="text" class="form-control" name="gelar_akhir" value="@if($old){{$old->pendidikan->gelar_akhir}}@endif">
                           </div>
                         </div>
                         <div class="form-group row">
@@ -121,7 +133,7 @@
                     <div class="form-group row">
                       <label class="col-lg-3 col-form-label">Jenis Perizinan:*</label>
                       <div class="col-lg-9">
-                        <select class="form-control" id="jenis_izin" onchange="jenis(this.value)">
+                        <select class="form-control" id="jenis_izin" onchange="jenis(this.value)" name="jenis_perizinan">
                           <option value="">pilih jenis perizinan</option>
                           @foreach($data as $datas)
                           <option value="{{$datas->nama}}" @if($old && $old->pendidikan && $old->pendidikan->subizin &&  $old->pendidikan->subizin->nama == $datas->nama)selected @endif>{{$datas->nama}}</option>
@@ -131,15 +143,30 @@
                     </div>
 
                     <div class="form-group row" style="display: none;" id="layout-kategori">
-                      <label class="col-lg-3 col-form-label">Kategori:*</label>
+                      <label class="col-lg-3 col-form-label" id="label-kategori"></label>
                       <div class="col-lg-9" id="kategori">
                       </div>
                     </div>
 
                     <div class="form-group row">
+                      <label class="col-lg-3 col-form-label">Nama Yayasan:*</label>
+                      <div class="col-lg-9">
+                        <input type="text" class="form-control" name="nama_yayasan" value="@if($old){{$old->pendidikan->nama_yayasan}}@endif">
+                      </div>
+                    </div>
+                    <div class="form-group row">
                       <label class="col-lg-3 col-form-label">Nama Pendidikan:*</label>
                       <div class="col-lg-9">
                         <input type="text" class="form-control" name="nama_pendidikan" value="@if($old){{$old->pendidikan->nama_pendidikan}}@endif">
+                      </div>
+                    </div>
+                    <hr>
+                    <h6>Opsional</h6>
+                    <hr>
+                    <div class="form-group row">
+                      <label class="col-lg-3 col-form-label">No NPSN:*</label>
+                      <div class="col-lg-9">
+                        <input type="text" class="form-control" name="no_npsn" value="@if($old){{$old->pendidikan->no_npsn}}@endif">
                       </div>
                     </div>
 
@@ -211,6 +238,12 @@
                         <input type="text" class="form-control" name="jalan" value="@if($old){{$old->pendidikan->jalan}}@endif" required>
                       </div>
                     </div>
+                    <div class="form-group row">
+                      <label class="col-lg-3 col-form-label">Kode Pos:*</label>
+                      <div class="col-lg-9">
+                        <input type="text" class="form-control" name="kode_pos" value="@if($old){{$old->pendidikan->kode_pos}}@endif" required>
+                      </div>
+                    </div>
                     <div class="row align-items-center">
                       <div class="col-12 kt-align-right">
                         <button type="submit" class="btn btn-outline-info btn-sm">
@@ -266,6 +299,27 @@
                       <div id="reload-foto">
                         @if($old && $old->pendidikan->pas_foto)
                         <a href="{{asset('storage/'.$old->pendidikan->pas_foto)}}" target="_blank">Lihat berkas</a>
+                        @endif
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label">IMB: (jpeg, jpg, png) max 1MB*</label>
+                    <div class="col-lg-9">
+                      <form action="" method="POST" id="imb">
+                        <div class="input-group">
+                          @csrf
+                          <input type="file" name="imb" id="file-imb" style="display:none;" accept="image/jpeg,image/jpg,image/png">
+                          <label for="file-imb" class="form-control" id="label-imb">@if($old && $old->pendidikan->imb)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
+                          <input type="hidden" class="form-control" name="key" value="imb">
+                          <button type="submit" class="btn btn-outline-secondary">Simpan 
+                          </button>
+                        </div>
+                      </form>
+
+                      <div id="reload-imb">
+                        @if($old && $old->pendidikan->imb)
+                        <a href="{{asset('storage/'.$old->pendidikan->imb)}}" target="_blank">Lihat berkas</a>
                         @endif
                       </div>
                     </div>
@@ -394,6 +448,8 @@
                   </div>
 
                   <!-- OPSIONAL -->
+                  <hr>
+                  <h6>Opsional</h6>
                   <hr>
                   <div class="form-group row">
                     <label class="col-lg-3 col-form-label">NPSN (Perpanjangan): (pdf) max 1MB</label>

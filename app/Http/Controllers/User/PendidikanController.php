@@ -348,7 +348,9 @@ class PendidikanController extends Controller
 
 				if($i->status == null) {
 					Pendidikan::where('perizinan_id', $i->id)->update(array(
+						'gelar_awal' => $request->gelar_awal,
 						'nama' => $request->nama,
+						'gelar_akhir' => $request->gelar_akhir,						
 						'nohp' => $request->nohp,
 						'alamat' => $request->alamat
 					));
@@ -376,7 +378,9 @@ class PendidikanController extends Controller
 
 				$pdd = Pendidikan::create(array(
 					'perizinan_id' => $izin->id,
+					'gelar_awal' => $request->gelar_awal,
 					'nama' => $request->nama,
+					'gelar_akhir' => $request->gelar_akhir,
 					'nohp' => $request->nohp,
 					'alamat' => $request->alamat
 				));
@@ -401,16 +405,28 @@ class PendidikanController extends Controller
 
 	public function tab2(Request $request)
 	{
-		$rules = [
-			'nama_pendidikan' => 'required|string',
-			'jenis_izin' => 'required|string',
-		];
 		$message = [];
 		$attribute = [
+			'nama_yayasan' => 'Nama Yayasan',	
 			'nama_pendidikan' => 'Nama Pendidikan',	
 			'jenis_izin' => 'Jenis Izin',
-
+			'jenis_program' => 'Jenis Program',
 		];
+		if($request->jenis_perizinan == 'Program Pendidikan Kursus Dan Pelatihan') {
+			$rules = [
+				'nama_pendidikan' => 'required|string',
+				'nama_yayasan' => 'required|string',
+				'jenis_program' => 'required|string',
+			];
+			$jenis_izin = 66;
+		} else {
+			$rules = [
+				'nama_pendidikan' => 'required|string',
+				'nama_yayasan' => 'required|string',
+				'jenis_izin' => 'required|string',
+			];
+			$jenis_izin = $request->jenis_izin;
+		}
 		$validasi = $this->validate($request,$rules,$message,$attribute);
 		$auth = Auth::user()->id;
 		$perizinan = Perizinan::where('user_id', $auth)->where('jenis_izin', 'pendidikan')->get();
@@ -418,8 +434,11 @@ class PendidikanController extends Controller
 
 			if($i->status == null) {
 				Pendidikan::where('perizinan_id', $i->id)->update(array(
-					'subizin_id' => $request->jenis_izin,
+					'subizin_id' => $jenis_izin,
+					'nama_yayasan' => $request->nama_yayasan,
 					'nama_pendidikan' => $request->nama_pendidikan,
+					'no_npsn' => $request->no_npsn,
+					'jenis_program' => $request->jenis_program,
 				));
 				return $arrayName = array(
 					'status' => 'success',
@@ -446,8 +465,11 @@ class PendidikanController extends Controller
 
 			$pdd = Pendidikan::create(array(
 				'perizinan_id' => $izin->id,
-				'subizin_id' => $request->jenis_izin,
+				'subizin_id' => $jenis_izin,
+				'nama_yayasan' => $request->nama_yayasan,
 				'nama_pendidikan' => $request->nama_pendidikan,
+				'no_npsn' => $request->no_npsn,
+				'jenis_program' => $request->jenis_program,
 			));
 
 			return $arrayName = array(
@@ -489,6 +511,7 @@ class PendidikanController extends Controller
 				Pendidikan::where('perizinan_id', $i->id)->update(array(
 					'kelurahan' => $request->kelurahan,
 					'jalan' => $request->jalan,
+					'kode_pos' => $request->kode_pos,
 				));
 				return $arrayName = array(
 					'status' => 'success',
@@ -519,6 +542,7 @@ class PendidikanController extends Controller
 				'perizinan_id' => $izin->id,
 				'kelurahan' => $request->kelurahan,
 				'jalan' => $request->jalan,
+				'kode_pos' => $request->kode_pos,
 			));
 
 			return $arrayName = array(
@@ -598,6 +622,31 @@ class PendidikanController extends Controller
 						'pesan' => 'Foto wajib diisi!'
 					);	
 				} // end upload foto
+
+				// upload imb
+				if($request->key == 'imb') {
+					$imb = $request->file('imb'); 
+					if ($imb) {
+						$validasi = $this->validate($request, [
+							'imb' => 'image|mimes:jpeg,png,jpg|max:1024',
+						],$message,$attribute);
+						$pdd = Pendidikan::where('perizinan_id', $i->id)->first();
+						if ($pdd->imb && file_exists(storage_path('app/public/' . $pdd->imb))) {
+							\Storage::delete('public/' . $pdd->imb);
+						}
+						$path = $imb->store('pendidikan', 'public');
+						$pdd->imb = $path;
+						$pdd->save();
+						return $arrayName = array(
+							'status' => 'success',
+							'pesan' => 'IMB disimpan!',
+						);
+					}
+					return $arrayName = array(
+						'status' => 'error',
+						'pesan' => 'IMB wajib diisi!'
+					);	
+				} // end upload imb
 
 				// upload akta
 				if($request->key == 'akta') {
@@ -867,7 +916,7 @@ class PendidikanController extends Controller
 					));
 					return $arrayName = array(
 						'status' => 'success',
-						'pesan' => 'Berhasil Mengirim Berkas!'
+						'pesan' => 'Berhasil Mengirim Berkas! '
 					);
 
 				} elseif($i->status == '0' || $i->status == '2') {

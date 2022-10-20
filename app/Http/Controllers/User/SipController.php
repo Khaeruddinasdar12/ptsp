@@ -75,7 +75,9 @@ class SipController extends Controller
 
 				if($i->status == null) {
 					Sip::where('perizinan_id', $i->id)->update(array(
+						'gelar_awal' => $request->gelar_awal,
 						'nama' => $request->nama,
+						'gelar_akhir' => $request->gelar_akhir,
 						'nohp' => $request->nohp,
 						'alamat' => $request->alamat,
 						'tanggal_lahir' => $request->tanggal_lahir,
@@ -105,7 +107,9 @@ class SipController extends Controller
 
 			$set = Sip::create(array(
 				'perizinan_id' => $izin->id,
+				'gelar_awal' => $request->gelar_awal,
 				'nama' => $request->nama,
+				'gelar_akhir' => $request->gelar_akhir,
 				'nohp' => $request->nohp,
 				'alamat' => $request->alamat,
 				'tanggal_lahir' => $request->tanggal_lahir,
@@ -723,7 +727,7 @@ class SipController extends Controller
 					if($cek->ktp == '') { return $this->err('KTP'); }
 					if($cek->foto == '') { return $this->err('Foto'); }
 					if($cek->str == '') { return $this->err('STR'); }
-					if($cek->rekomendasi_org == '') { return $this->err('Rekomendasi Organisas'); }
+					if($cek->rekomendasi_org == '') { return $this->err('Rekomendasi Organisasi'); }
 					if($cek->surat_keterangan == '') { return $this->err('Surat Keterangan'); }
 
 					Perizinan::where('id', $i->id)->update(array(
@@ -732,7 +736,7 @@ class SipController extends Controller
 					));
 					return $arrayName = array(
 						'status' => 'success',
-						'pesan' => 'Berhasil Mengirim Berkas!'
+						'pesan' => 'Berhasil Mengirim Berkas! Mohon Mengirim Berkas Asli Ke Tim Teknis (kantor PTSP)'
 					);
 
 				} elseif($i->status == '0' || $i->status == '2') {

@@ -6,12 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateSipsTable extends Migration
 {
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         Schema::create('sips', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('perizinan_id');
+            $table->bigInteger('perizinan_id')->unsigned();
+            $table->string('gelar_awal')->nullable();
             $table->string('nama')->nullable();
+            $table->string('gelar_akhir')->nullable();
             $table->string('nohp')->nullable();
             $table->string('tempat_lahir')->nullable();
             $table->date('tanggal_lahir')->nullable();
@@ -21,7 +28,7 @@ class CreateSipsTable extends Migration
             $table->string('no_rekomendasi')->nullable();
             $table->string('rekomendasi_op')->nullable();
             $table->string('alamat')->nullable();
-            $table->bigInteger('subizin_id')->nullable();
+            $table->bigInteger('subizin_id')->unsigned()->nullable();
 
             $table->string('nama_praktek1')->nullable();
             $table->string('jalan1')->nullable();
@@ -58,9 +65,19 @@ class CreateSipsTable extends Migration
             $table->string('berkas_pendukung')->nullable();
 
             $table->timestamps();
+
+
+            $table->foreign('subizin_id')->references('id')->on('subizins');
+            // $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('perizinan_id')->references('id')->on('perizinans');
         });
     }
 
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
         Schema::dropIfExists('sips');

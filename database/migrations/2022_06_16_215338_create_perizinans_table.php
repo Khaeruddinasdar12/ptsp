@@ -25,6 +25,8 @@ class CreatePerizinansTable extends Migration
             $table->datetime('updatedbidang_at')->nullable();
             $table->datetime('updatedteknis_at')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
     public function down()

@@ -48,7 +48,9 @@ class KrkController extends Controller
 
             if($i->status == null) {
                 Krk::where('perizinan_id', $i->id)->update(array(
+                    'gelar_awal' => $request->gelar_awal,
                     'nama' => $request->nama,
+                    'gelar_akhir' => $request->gelar_akhir,
                     'nohp' => $request->nohp,
                     'nik' => $request->nik,
                     'alamat' => $request->alamat
@@ -77,7 +79,9 @@ class KrkController extends Controller
 
             $krk = Krk::create(array(
                 'perizinan_id' => $izin->id,
+                'gelar_awal' => $request->gelar_awal,
                 'nama' => $request->nama,
+                'gelar_akhir' => $request->gelar_akhir,
                 'nohp' => $request->nohp,
                 'nik' => $request->nik,
                 'alamat' => $request->alamat

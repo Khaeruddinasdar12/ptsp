@@ -17,14 +17,23 @@ class LaporanController extends Controller
     public function index(Request $request)
     {
         $data =null;
+        if($request->cari != '') {
+            $data = Perizinan::where('status', '2')
+            ->orWhere('status', '1')
+            ->where('no_tiket','LIKE','%'.$request->cari.'%')
+            ->paginate(20);
+            $jml = $data->count();
+            return view('admin.laporan', ['data' => $data, 'jml' => $jml]);
+        }
+
         if($request->status == 'gagal') {
             $data = Perizinan::where('status', '2')->paginate(20);
         } elseif ($request->status == 'terbit') {
             $start = $request->start;
             $end = $request->end;
             $data = Perizinan::where('status', '1')
-                ->whereBetween('updated_at', [$start, $end])
-                ->paginate(20);
+            ->whereBetween('updated_at', [$start, $end])
+            ->paginate(20);
         } else {
             $data = Perizinan::where('status', '1')->paginate(20);
             // return redirect()->back()->with('not_found','Kamu Tidak Memiliki Akses Teknis');
@@ -46,10 +55,10 @@ class LaporanController extends Controller
             $end = $request->end;
             $tanggal = $start . ' s/d ' . $end;
             $data = Perizinan::where('status', '1')
-                ->whereBetween('updated_at', [$start, $end])
-                ->get();
+            ->whereBetween('updated_at', [$start, $end])
+            ->get();
         } else {
-            return redirect()->back()->with('not_found','Masukkan detail data yang Anda inginkan!');
+            return redirect()->back()->with('not_found','Masukkan detail data yang Anda inginkan! (pilih status)');
         }
 
         $jml = $data->count();

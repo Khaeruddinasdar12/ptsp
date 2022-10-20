@@ -413,7 +413,7 @@ class SubizinSeeder extends Seeder
             'jenis' => 'pendidikan',
             'kategori' => 'SD',
             'dasar_hukum' => 'Peraturan Menteri Pendidikan dan Kebudayaan Nomor 36 Tahun 2014 tentang Pedoman Pendirian, Perubahan, dan Penutupan Satuan Pendidikan Dasar dan Menengah',
-            'kode' => 'PPD',
+            'kode' => 'SD',
         ]);
 
         DB::table('subizins')->insert([
@@ -421,7 +421,7 @@ class SubizinSeeder extends Seeder
             'jenis' => 'pendidikan',
             'kategori' => 'SMP',
             'dasar_hukum' => 'Peraturan Menteri Pendidikan dan Kebudayaan Nomor 36 Tahun 2014 tentang Pedoman Pendirian, Perubahan, dan Penutupan Satuan Pendidikan Dasar dan Menengah',
-            'kode' => 'PPD',
+            'kode' => 'SMP',
         ]);
 
         DB::table('subizins')->insert([
@@ -430,7 +430,7 @@ class SubizinSeeder extends Seeder
             'kategori' => 'Taman Kanak-Kanak (TK)',
             'dasar_hukum' => 'Peraturan Menteri Pendidikan dan Kebudayaan Nomor 84 Tahun 2014
             tentang Pendirian Satuan Pendidikan Anak Usia Dini',
-            'kode' => 'PPD',
+            'kode' => 'PAUD-TK',
         ]);
 
         DB::table('subizins')->insert([
@@ -438,7 +438,7 @@ class SubizinSeeder extends Seeder
             'jenis' => 'pendidikan',
             'kategori' => 'Kelompok Belajar (KB)',
             'dasar_hukum' => 'Peraturan Menteri Pendidikan dan Kebudayaan Nomor 36 Tahun 2014 tentang Pedoman Pendirian, Perubahan, dan Penutupan Satuan Pendidikan Dasar dan Menengah',
-            'kode' => 'PPD',
+            'kode' => 'PAUD-KB',
         ]);
 
         DB::table('subizins')->insert([
@@ -446,7 +446,7 @@ class SubizinSeeder extends Seeder
             'jenis' => 'pendidikan',
             'kategori' => 'Tempat Pendidikan Anak (TPA)',
             'dasar_hukum' => 'Peraturan Menteri Pendidikan dan Kebudayaan Nomor 36 Tahun 2014 tentang Pedoman Pendirian, Perubahan, dan Penutupan Satuan Pendidikan Dasar dan Menengah',
-            'kode' => 'PPD',
+            'kode' => 'PAUD-TPA',
         ]);
 
         DB::table('subizins')->insert([
@@ -454,7 +454,7 @@ class SubizinSeeder extends Seeder
             'jenis' => 'pendidikan',
             'dasar_hukum' => 'Peraturan Menteri Pendidikan dan Kebudayaan Nomor 81 Tahun 2013
             tentang Pendirian Satuan Pendidikan Nonforma',
-            'kode' => 'PPD',
+            'kode' => 'PKBM',
         ]);
 
         DB::table('subizins')->insert([
@@ -462,7 +462,7 @@ class SubizinSeeder extends Seeder
             'jenis' => 'pendidikan',
             'dasar_hukum' => 'Peraturan Menteri Pendidikan dan Kebudayaan Nomor 81 Tahun 2013
             tentang Pendirian Satuan Pendidikan Nonforma',
-            'kode' => 'PPD',
+            'kode' => 'LKP',
         ]);
 
 

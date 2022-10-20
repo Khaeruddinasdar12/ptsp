@@ -51,13 +51,18 @@
         <h3 class="kt-portlet__head-title">
           Laporan
         </h3>
-        
-
-
       </div>
 
-<div class="row align-items-center">
-      <div class="kt-align-right">
+      <div class="row align-items-center">
+        <div class="col-8 kt-align-right">
+          <form method="get" action="{{route('laporan.index')}}">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Masukkan No. Tiket" name="cari" @if(Request::get('cari') != '') value="{{Request::get('cari')}}" @endif>
+              <button class="btn btn-outline-secondary" type="submit">Cari</button>
+            </div>
+          </form>
+        </div> 
+        <div class="col-4">
           <form method="get" action="{{route('laporan.pdf')}}">
             <input type="hidden" name="status" @if(Request::get('status') != '') value="{{Request::get('status')}}" @endif>
             <input type="hidden" class="form-control" name="start" required="" @if(Request::get('start') != '') value="{{Request::get('start')}}" @endif>
@@ -67,114 +72,118 @@
             </button>
           </form>
         </div>
+
+
       </div>
 
     </div>
     <div class="kt-portlet__body">
 
-          <form action="{{route('laporan.index')}}" method="get">
-            <div class="row">
-              <div class="col-2">
-                <select class="form-control" name="status" onchange="change(this.value)" required="">
-                  <option value="" >Pilih Status</option>
-                  <option value="terbit" @if(Request::get('status') == 'terbit') selected="" @endif>Terbit</option>
-                  <option value="gagal" @if(Request::get('status') == 'gagal') selected="" @endif>Gagal</option>
-                </select>
+      <form action="{{route('laporan.index')}}" method="get">
+        <div class="row">
+          <div class="col-2">
+            <select class="form-control" name="status" onchange="change(this.value)" required="">
+              <option value="" >Pilih Status</option>
+              <option value="terbit" @if(Request::get('status') == 'terbit') selected="" @endif>Terbit</option>
+              <option value="gagal" @if(Request::get('status') == 'gagal') selected="" @endif>Gagal</option>
+            </select>
+          </div>
+          <div class="col-4" id="date">
+            <div class="input-group" >
+              <input type="date" class="form-control" name="start" required="" @if(Request::get('start') != '') value="{{Request::get('start')}}" @endif>
+              <div class="input-group-append">
+                <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
               </div>
-              <div class="col-4" id="date">
-                <div class="input-group" >
-                  <input type="date" class="form-control" name="start" required="" @if(Request::get('start') != '') value="{{Request::get('start')}}" @endif>
-                  <div class="input-group-append">
-                    <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
-                  </div>
-                  <input type="date" class="form-control" name="end" required="" @if(Request::get('end') != '') value="{{Request::get('end')}}" @endif>
-                </div>
-              </div>
-              <div class="col-6" id="col-hide">
-              </div>
-
-              <div class="col-2" id="btn-submit">
-                <button type="submit" class="btn btn-outline-secondary">Filter</button>
-              </div>
-
-            </div>
-          </form>
-
-          <br>
-          <div class="row">
-            <div class="col-12">
-              <h6>Jumlah : {{$jml}} Data</h6>
+              <input type="date" class="form-control" name="end" required="" @if(Request::get('end') != '') value="{{Request::get('end')}}" @endif>
             </div>
           </div>
-
-          <br>
-
-          <div class="tab-content">
-            <div class="table-responsive">
-              <!--begin: Datatable -->
-              <table class="table table-striped table-bordered table-hover belum no-footer dtr-inline" role="grid" aria-describedby="table" width="100%">
-                <thead>
-                  <tr>
-                    <th>No.</th>
-                    <th>No. Tiket</th>
-                    <th>Jenis Izin</th>
-                    <th>Nama</th>
-                    <th>NIK</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @php $no=1; @endphp
-                  @foreach($data as $datas)
-                  <tr>
-                    <td>{{ $no++; }}</td>
-                    <td>{{ $datas->no_tiket }}</td>
-                    <td>{{ $datas->jenis_izin }}</td>
-                    <td>{{ $datas->user->name}} </td>
-                    <td>{{ $datas->user->nik}}</td>
-                    <td><a href="" class="btn btn-outline-secondary btn-sm"><i class="fa fa-eye"></i></a></td>
-                  </tr>
-                  @endforeach
-                </tbody>
-
-              </table>
-              <!--end: Datatable -->
-            </div>
-            {{$data->links('vendor.pagination.bootstrap-4')}}
+          <div class="col-6" id="col-hide">
           </div>
+
+          <div class="col-2" id="btn-submit">
+            <button type="submit" class="btn btn-outline-secondary">Filter</button>
+          </div>
+
         </div>
+      </form>
+
+      <br>
+      <div class="row">
+        <div class="col-12">
+          <h6>Jumlah : {{$jml}} Data</h6>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="tab-content">
+        <div class="table-responsive">
+          <!--begin: Datatable -->
+          <table class="table table-striped table-bordered table-hover belum no-footer dtr-inline" role="grid" aria-describedby="table" width="100%">
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>No. Tiket</th>
+                <th>No. Rekomendasi</th>
+                <th>Jenis Izin</th>
+                <th>Nama</th>
+                <th>NIK</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              @php $no=1; @endphp
+              @foreach($data as $datas)
+              <tr>
+                <td>{{ $no++; }}</td>
+                <td>{{ $datas->no_tiket }}</td>
+                <td>{{ $datas->no_rekomendasi }}</td>
+                <td>{{ $datas->jenis_izin }}</td>
+                <td>{{ $datas->user->name}} </td>
+                <td>{{ $datas->user->nik}}</td>
+                <td><a href="" class="btn btn-outline-secondary btn-sm"><i class="fa fa-eye"></i></a></td>
+              </tr>
+              @endforeach
+            </tbody>
+
+          </table>
+          <!--end: Datatable -->
+        </div>
+        {{$data->links('vendor.pagination.bootstrap-4')}}
       </div>
     </div>
   </div>
+</div>
+</div>
 
 
-  @endsection
+@endsection
 
-  @section('page_script')
-  <!-- <script src="assets/js/demo1/" type="text/javascript"></script> -->
-  <script type="text/javascript" src="{{asset('js/pages/crud/forms/widgets/bootstrap-datepicker.js')}}"></script>
-  @if(Request::get('status') == 'gagal') 
-  <script>
-    status = "{{Request::get('status')}}";
-    $('#date').attr('style', 'display:none');
-    $('#btn-submit').attr('style', 'display:none');
-    $('#col-hide').attr('style', '');
-  </script>
-  @elseif(Request::get('status') == 'terbit') 
-  <script>
-    status = "{{Request::get('status')}}";
-    $('#date').attr('style', '');
-    $('#btn-submit').attr('style', '');
-    $('#col-hide').attr('style', 'display:none');
-  </script>
-  @else
-  <script>
-    $('#col-hide').attr('style', 'display:none');
-  </script>
-  @endif
+@section('page_script')
+<!-- <script src="assets/js/demo1/" type="text/javascript"></script> -->
+<script type="text/javascript" src="{{asset('js/pages/crud/forms/widgets/bootstrap-datepicker.js')}}"></script>
+@if(Request::get('status') == 'gagal') 
+<script>
+  status = "{{Request::get('status')}}";
+  $('#date').attr('style', 'display:none');
+  $('#btn-submit').attr('style', 'display:none');
+  $('#col-hide').attr('style', '');
+</script>
+@elseif(Request::get('status') == 'terbit') 
+<script>
+  status = "{{Request::get('status')}}";
+  $('#date').attr('style', '');
+  $('#btn-submit').attr('style', '');
+  $('#col-hide').attr('style', 'display:none');
+</script>
+@else
+<script>
+  $('#col-hide').attr('style', 'display:none');
+</script>
+@endif
 
-  <script>
-    console.log(status);
+<script>
+  console.log(status);
 
   // change(status);
   function change(val) {

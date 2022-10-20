@@ -98,7 +98,7 @@
             <tr>
               <td>{{$no}}</td>
               <td valign="center">Nama Pemohon</td>
-              <td>{{ $data->krk->nama }}</td>
+              <td>{{ $data->krk->gelar_awal }} {{ $data->krk->nama }} {{ $data->krk->gelar_akhir }}</td>
               <td>
                 @if($data->krk->reason && $data->krk->reason->nama =='1') {!! $terima !!}
                 @elseif($data->krk->reason && $data->krk->reason->nama == '') {!! $belumperiksa !!}

@@ -111,7 +111,7 @@
             <tr>
               <td>{{$no}}</td>
               <td valign="center">Nama Pemohon</td>
-              <td>{{ $data->krk->nama }}</td>
+              <td>{{ $data->krk->gelar_awal }} {{ $data->krk->nama }} {{ $data->krk->gelar_akhir }}</td>
             </tr>
             <tr>
               <td>{{$no = $no+1}}</td>

@@ -28,6 +28,17 @@
 <div class="row justify-content-center">
   <div class="col-12">
     @include('layouts.user.alert')
+    <div class="alert alert-secondary fade show" role="alert">
+      <div class="alert-icon"><i class="fa flaticon-warning"></i></div>
+      <div class="alert-text text-danger">
+        <strong>Mohon bawa berkas asli ke tim Teknis (Kantor PTSP) setelah mengirim berkas.</strong>
+      </div>
+      <div class="alert-close">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true"><i class="la la-close"></i></span>
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -83,9 +94,21 @@
                       <form action="{{route('sip.tab1')}}" method="POST" id="tab1">
                         @csrf
                         <div class="form-group row">
+                          <label class="col-lg-3 col-form-label">Gelar Awal:</label>
+                          <div class="col-lg-9">
+                            <input type="text" class="form-control" name="gelar_awal" value="@if($old){{$old->sip->gelar_awal}}@endif">
+                          </div>
+                        </div>
+                        <div class="form-group row">
                           <label class="col-lg-3 col-form-label">Nama Lengkap Sesuai STR:*</label>
                           <div class="col-lg-9">
                             <input type="text" class="form-control" name="nama" value="@if($old){{$old->sip->nama}}@endif">
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-lg-3 col-form-label">Gelar Akhir:</label>
+                          <div class="col-lg-9">
+                            <input type="text" class="form-control" name="gelar_akhir" value="@if($old){{$old->sip->gelar_akhir}}@endif">
                           </div>
                         </div>
                         <div class="form-group row">
@@ -190,7 +213,22 @@
               <div class="tab-pane fade" id="kt_tab_pane_3" role="tabpanel" aria-labelledby="kt_tab_pane_3_3">
                 <div class="container">
                   <div class="card-body">
+                    <div class="alert alert-secondary fade show" role="alert">
+                        <div class="alert-icon"><i class="fa flaticon-warning"></i></div>
+                        <div class="alert-text">
+                          <strong>Jika permohonan ini adalah tempat praktek ke-2 Anda, maka mohon isi bagian Praktek 1.</strong>
+                        </div>
+                        <div class="alert-close">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true"><i class="la la-close"></i></span>
+                          </button>
+                        </div>
+                      </div>
+                    <h5 class="font-size-lg text-dark font-weight-bold mb-6">Praktek 1</h5>
                     <div class="container">
+
+                      
+                      
                       <form method="POST" id="praktik1">                    
                         @csrf
                         <div class="form-group row">

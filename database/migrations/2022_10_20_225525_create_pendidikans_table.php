@@ -15,15 +15,24 @@ class CreatePendidikansTable extends Migration
     {
         Schema::create('pendidikans', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('perizinan_id');
-            $table->bigInteger('subizin_id')->nullable();
+            $table->bigInteger('perizinan_id')->unsigned();
+            $table->bigInteger('subizin_id')->unsigned()->nullable();
             $table->string('no_rekomendasi')->nullable();
+            $table->string('no_npsn')->nullable();
+            $table->string('gelar_awal')->nullable();
             $table->string('nama')->nullable();
+            $table->string('gelar_akhir')->nullable();
             $table->string('nohp')->nullable();
             $table->string('alamat')->nullable();
+            $table->string('nama_yayasan')->nullable();
             $table->string('nama_pendidikan')->nullable();
             $table->string('kelurahan')->nullable();
             $table->string('jalan')->nullable();
+            $table->string('kode_pos')->nullable();
+            $table->string('jenis_program')->nullable();
+            $table->string('surat_permohonan')->nullable();
+            // $table->string('rekomendasi_disdik')->nullable();
+            $table->string('imb')->nullable();
             $table->string('ktp')->nullable();
             $table->string('pas_foto')->nullable();
             $table->string('akta')->nullable(); // akta pendirian
@@ -36,6 +45,9 @@ class CreatePendidikansTable extends Migration
             $table->string('izin_lama')->nullable(); // opsional
             $table->string('berkas_pendukung')->nullable(); // opsional
             $table->timestamps();
+
+            $table->foreign('subizin_id')->references('id')->on('subizins');
+            $table->foreign('perizinan_id')->references('id')->on('perizinans');
         });
     }
 

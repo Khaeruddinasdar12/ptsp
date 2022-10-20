@@ -101,7 +101,7 @@
             <tr>
               <td>{{$no}}</td>
               <td valign="center">Nama Penanggung Jawab</td>
-              <td>{{ $data->pendidikan->nama }}</td>
+              <td>{{ $data->pendidikan->gelar_awal }} {{ $data->pendidikan->nama }} {{ $data->pendidikan->gelar_akhir }}</td>
               <td>
                 @if($data->pendidikan->reason && $data->pendidikan->reason->nama =='1') {!! $terima !!}
                 @elseif($data->pendidikan->reason && $data->pendidikan->reason->nama == '') {!! $belumperiksa !!}
@@ -131,6 +131,21 @@
             </tr>
             <tr>
               <td>{{$no = $no+1}}</td>
+              <td>Nama Yayasan</td>
+              <td>{{ $data->pendidikan->nama_yayasan }}</td>
+              <td>
+                @if($data->pendidikan->reason && $data->pendidikan->reason->nama_yayasan =='1') {!! $terima !!}
+                @elseif($data->pendidikan->reason && $data->pendidikan->reason->nama_yayasan == '') {!! $belumperiksa !!}
+                @elseif($data->pendidikan->reason && $data->pendidikan->reason->nama_yayasan != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              <td>@if($data->pendidikan->reason && $data->pendidikan->reason->nama_yayasan != '1') {{$data->pendidikan->reason->nama_yayasan}} @endif</td>
+              <td><button class="btn btn-outline-danger btn-sm" onclick="reason('nama_yayasan', 'Nama Yayasan')"><i class="fa fa-times"></i></button>&nbsp;
+                <button class="btn btn-outline-success btn-sm" onclick="ceklis('nama_yayasan', 'Nama Yayasan')" id="ceklis"><i class="fa fa-check"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
               <td>Nama Pendidikan</td>
               <td>{{ $data->pendidikan->nama_pendidikan }}</td>
               <td>
@@ -144,6 +159,23 @@
                 <button class="btn btn-outline-success btn-sm" onclick="ceklis('nama_pendidikan', 'Nama Pendidikan')" id="ceklis"><i class="fa fa-check"></i></button>
               </td>
             </tr>
+            @if($data->pendidikan->no_npsn)
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>No. NPSN</td>
+              <td>{{ $data->pendidikan->no_npsn }}</td>
+              <td>
+                @if($data->pendidikan->reason && $data->pendidikan->reason->no_npsn =='1') {!! $terima !!}
+                @elseif($data->pendidikan->reason && $data->pendidikan->reason->no_npsn == '') {!! $belumperiksa !!}
+                @elseif($data->pendidikan->reason && $data->pendidikan->reason->no_npsn != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              <td>@if($data->pendidikan->reason && $data->pendidikan->reason->no_npsn != '1') {{$data->pendidikan->reason->no_npsn}} @endif</td>
+              <td><button class="btn btn-outline-danger btn-sm" onclick="reason('no_npsn', 'No NPSN')"><i class="fa fa-times"></i></button>&nbsp;
+                <button class="btn btn-outline-success btn-sm" onclick="ceklis('no_npsn', 'No NPSN')" id="ceklis"><i class="fa fa-check"></i></button>
+              </td>
+            </tr>
+            @endif
             <tr>
               <td>{{$no = $no+1}}</td>
               <td>Kecamatan & Kelurahan Praktek</td>
@@ -172,6 +204,21 @@
               <td>@if($data->pendidikan->reason && $data->pendidikan->reason->jalan != '1') {{$data->pendidikan->reason->jalan}} @endif</td>
               <td><button class="btn btn-outline-danger btn-sm" onclick="reason('jalan', 'Jalan')"><i class="fa fa-times"></i></button>&nbsp;
                 <button class="btn btn-outline-success btn-sm" onclick="ceklis('jalan', 'Jalan')" id="ceklis"><i class="fa fa-check"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Kode Pos</td>
+              <td>{{ $data->pendidikan->kode_pos }}</td>
+              <td>
+                @if($data->pendidikan->reason && $data->pendidikan->reason->kode_pos =='1') {!! $terima !!}
+                @elseif($data->pendidikan->reason && $data->pendidikan->reason->kode_pos == '') {!! $belumperiksa !!}
+                @elseif($data->pendidikan->reason && $data->pendidikan->reason->kode_pos != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              <td>@if($data->pendidikan->reason && $data->pendidikan->reason->kode_pos != '1') {{$data->pendidikan->reason->kode_pos}} @endif</td>
+              <td><button class="btn btn-outline-danger btn-sm" onclick="reason('kode_pos', 'Kode Pos')"><i class="fa fa-times"></i></button>&nbsp;
+                <button class="btn btn-outline-success btn-sm" onclick="ceklis('kode_pos', 'Kode Pos')" id="ceklis"><i class="fa fa-check"></i></button>
               </td>
             </tr>
             <!-- BERKAS -->
@@ -203,6 +250,22 @@
              <td>@if($data->pendidikan->reason && $data->pendidikan->reason->pas_foto != '1') {{$data->pendidikan->reason->pas_foto}} @endif</td>
              <td><button class="btn btn-outline-danger btn-sm" onclick="reason('pas_foto', 'Pas Foto')"><i class="fa fa-times"></i></button>&nbsp;
               <button class="btn btn-outline-success btn-sm" onclick="ceklis('pas_foto', 'Pas Foto')" id="ceklis"><i class="fa fa-check"></i></button>
+            </td>
+          </tr>
+
+          <tr>
+            <td>{{$no = $no+1}}</td>
+            <td>IMB</td>
+            <td><a href="{{ asset('storage/'.$data->pendidikan->imb) }}" target="_blank">Lihat Berkas</a></td>
+            <td>
+              @if($data->pendidikan->reason && $data->pendidikan->reason->imb =='1') {!! $terima !!}
+              @elseif($data->pendidikan->reason && $data->pendidikan->reason->imb == '') {!! $belumperiksa !!}
+              @elseif($data->pendidikan->reason && $data->pendidikan->reason->imb != '1') {!! $tolak !!}
+              @else {!! $belumperiksa !!} @endif
+            </td>
+            <td>@if($data->pendidikan->reason && $data->pendidikan->reason->imb != '1') {{$data->pendidikan->reason->imb}} @endif</td>
+            <td><button class="btn btn-outline-danger btn-sm" onclick="reason('imb', 'IMB')"><i class="fa fa-times"></i></button>&nbsp;
+              <button class="btn btn-outline-success btn-sm" onclick="ceklis('imb', 'IMB')" id="ceklis"><i class="fa fa-check"></i></button>
             </td>
           </tr>
 

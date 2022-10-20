@@ -15,7 +15,7 @@ class CreateKrkreasonsTable extends Migration
     {
         Schema::create('krkreasons', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('krk_id');
+            $table->bigInteger('krk_id')->unsigned();
             $table->string('nama')->nullable();
             $table->string('nik')->nullable();
             $table->string('alamat')->nullable();
@@ -33,6 +33,8 @@ class CreateKrkreasonsTable extends Migration
             $table->string('gambar')->nullable();
             $table->string('berkas_pendukung')->nullable();
             $table->timestamps();
+
+            $table->foreign('krk_id')->references('id')->on('krks');
         });
     }
 

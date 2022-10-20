@@ -57,7 +57,9 @@ class SikController extends Controller
 
 			if($i->status == null) {
 				Sik::where('perizinan_id', $i->id)->update(array(
+					'gelar_awal' => $request->gelar_awal,
 					'nama' => $request->nama,
+					'gelar_akhir' => $request->gelar_akhir,
 					'nohp' => $request->nohp,
 					'alamat' => $request->alamat,
 					'tanggal_lahir' => $request->tanggal_lahir,
@@ -87,7 +89,9 @@ class SikController extends Controller
 
 			$sik = Sik::create(array(
 				'perizinan_id' => $izin->id,
+				'gelar_awal' => $request->gelar_awal,
 				'nama' => $request->nama,
+				'gelar_akhir' => $request->gelar_akhir,
 				'nohp' => $request->nohp,
 				'alamat' => $request->alamat,
 				'tanggal_lahir' => $request->tanggal_lahir,

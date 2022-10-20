@@ -15,14 +15,20 @@ use QueryException;
 use Exception;
 class KadisController extends Controller
 {
-	public function index()
+	public function index(Request $request)
 	{
 		if (Auth::guard('admin')->user()->role != 'kadis') {
 			return redirect()->route('error')->with('not_found','Kamu Tidak Memiliki Akses Teknis');
 		}
 		
-		$data = Perizinan::where('status', '0')->whereNotNull('bidang_by')->whereNotNull('teknis_by')->whereNull('kadis_by')->paginate(10);
+		// $data = Perizinan::where('status', '0')->whereNotNull('bidang_by')->whereNotNull('teknis_by')->whereNull('kadis_by')->paginate(10);
 		// return $data;
+		$data = Perizinan::where('status', '0')
+			->whereNotNull('bidang_by')
+			->whereNotNull('teknis_by')
+			->whereNull('kadis_by')
+            ->where('no_tiket','LIKE','%'.$request->cari.'%')
+            ->paginate(10);
 		return view('admin.kadis.index', ['data' => $data]);
 	}
 
@@ -88,11 +94,12 @@ class KadisController extends Controller
 					$kecamatan3 = $data->sip->klh3->kecamatan;
 				}
 
+				$nama = $data->sip->gelar_awal.' '.$data->sip->nama.' '.$data->sip->gelar_akhir;
 				$data_view = [
 					'pas_foto'=> $data->sip->foto,
 					'barcode' => $data->no_tiket.'.png',
 					'no_surat' => $no_surat,
-					'nama' => $data->sip->nama,
+					'nama' => $nama,
 					'dasar_hukum' => $dasar_hukum,
 					'jenis_izin' => $jenis_izin,
 					'subizin' => $data->sip->subizin->nama,
@@ -132,12 +139,12 @@ class KadisController extends Controller
 				$urut = $data->sik->latest()->first();
 				$no_surat = '503/'.$urut->id.'/SIK.'.$kode.'/DPM-PTSP/'.$bulan.'/'.$tahun;
 				$dasar_hukum = $data->sik->subizin->dasar_hukum;
-
+				$nama = $data->sik->gelar_awal.' '.$data->sik->nama.' '.$data->sik->gelar_akhir;
 				$data_view = [
 					'pas_foto'=> $data->sik->foto,
 					'barcode' => $data->no_tiket.'.png',
 					'no_surat' => $no_surat,
-					'nama' => $data->sik->nama,
+					'nama' => $nama,
 					'dasar_hukum' => $dasar_hukum,
 					'jenis_izin' => $jenis_izin,
 					'subizin' => $data->sik->subizin->nama,
@@ -169,19 +176,21 @@ class KadisController extends Controller
 				
 				$pdf = PDF::loadView('sip-sik-pdf', $data_view);
 			} elseif($data->jenis_izin == 'pendidikan') {
+				$kode = $data->pendidikan->subizin->kode;
 				$jenis_izin = $data->pendidikan->subizin->nama;
 				$urut = $data->pendidikan->latest()->first();
-				$no_surat = '503/'.$urut->id.'/LKP/DPM-PTSP/'.$bulan.'/'.$tahun;
-
+				$no_surat = '503/'.$urut->id.'/'.$kode.'/DPM-PTSP/'.$bulan.'/'.$tahun;
+				$nama = $data->pendidikan->gelar_awal.' '.$data->pendidikan->nama.' '.$data->pendidikan->gelar_akhir;
 				$data_view = [
 					'barcode' => $data->no_tiket.'.png',
 					'no_surat' => $no_surat,
 					'no_rekomendasi' => $data->pendidikan->no_rekomendasi,
-					'nama' => $data->pendidikan->nama,
+					'nama' => $nama,
 					'nohp' => $data->pendidikan->nohp,
 					'jenis_izin' => $jenis_izin,
 					'subizin' => $data->pendidikan->subizin->nama,
 					'alamat' => $data->pendidikan->alamat,
+					'nama_yayasan' => $data->pendidikan->nama_yayasan,
 					'nama_pendidikan' => $data->pendidikan->nama_pendidikan,
 					'kelurahan' => $data->pendidikan->klh->kelurahan,
 					'kecamatan' => $data->pendidikan->klh->kecamatan,
@@ -193,14 +202,14 @@ class KadisController extends Controller
 			} elseif($data->jenis_izin == 'krk') {
 				$urut = $data->krk->latest()->first();
 				$no_surat = '650/'.$urut->id.'/DPMPTSP/'.$bulan.'/'.$tahun;
-
+				$nama = $data->krk->gelar_awal.' '.$data->krk->nama.' '.$data->krk->gelar_akhir;
 				$data_view = [
 					'barcode' => $data->no_tiket.'.png',
 					'no_surat' => $no_surat,
 					'no_rekomendasi' => $data->krk->no_rekomendasi,
 					'penggunaan' => $data->krk->penggunaan,
 					'jenis' => $data->krk->jenis,
-					'nama' => $data->krk->nama,
+					'nama' => $nama,
 					'alamat' => $data->krk->alamat,
 					'luas' => $data->krk->luas,
 					'jalan' => $data->krk->jalan,

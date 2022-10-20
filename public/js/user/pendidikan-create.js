@@ -192,6 +192,44 @@ $('#ktp').submit(function(e) {
   });
   // END UPLOAD FOTO
 
+    // UPLOAD IMB
+  $('#imb').submit(function(e) {
+    e.preventDefault();
+    var request = new FormData(this);
+    var endpoint= route4;
+    $.ajax({
+      url: endpoint,
+      method: "POST",
+      data: request,
+      contentType: false,
+      cache: false,
+      processData: false,
+      beforeSend: function(){
+        $('#loader').attr("style", "");
+      },
+      success:function(data) {
+        // document.getElementById('akta').reset();
+        if(data.status == 'success') {
+          reload(pendidikan_id, 'reload-imb', 'imb');
+        }
+        berhasil(data.status, data.pesan);
+      },
+      complete:function(data) {
+        $('#loader').attr("style", "display:none");
+      },
+      error: function(xhr, status, error){
+        var error = xhr.responseJSON; 
+        if ($.isEmptyObject(error) == false) {
+          $.each(error.errors, function(key, value) {
+            gagal(key, value);
+          });
+        }
+      } 
+    }); 
+    return false;
+  });
+  // END UPLOAD IMB
+
   // UPLOAD AKTA
   $('#akta').submit(function(e) {
     e.preventDefault();
@@ -615,38 +653,51 @@ $('#ktp').submit(function(e) {
       $('#kategori').empty();
       return null;
     }
-    $.ajax({
-      'url': "../../cek-kategori/" + jenis,
-      'dataType': 'json',
-      success: function(data) {
-        if(data[0].kategori != null) {
-          $('#tersembunyi').empty();
-          $('#kategori').empty();
-          $('#layout-kategori').attr("style", "");
-          jQuery.each(data, function(i, val) {
-            if(val.id == id_jenis_izin_old) {
-              check = 'checked';
-            } else {
-              check = '';
-            }
-            $('#kategori').append('<div class="form-check"><input class="form-check-input" type="radio" name="jenis_izin" value="'+val.id+'" '+check+'><label class="form-check-label"">'+val.kategori+'</label></div>');
-          });
-        }else{
-          $('#layout-kategori').attr("style", "display: none");
-          $('#kategori').empty();
-          $('#hide').empty();
-          $('#hide').append('<div><input type="hidden" value="'+data[0].id+'" name="jenis_izin"</div>');
+    if(jenis == 'Program Pendidikan Kursus Dan Pelatihan' || jenis == '66') {
+      $('#kategori').empty();
+      $('#layout-kategori').attr("style", "");
+      $('#label-kategori').empty();
+      $('#label-kategori').append('Jenis Program: max 8 program*');
+      $('#kategori').append('<input type="text" class="form-control" name="jenis_program"><div>jika lebih dari 1 pisahkan dengan koma (misal : Menjahit, Menyulam)</div>');
+    } else {
+      // start ajax
+      $.ajax({
+        'url': "../../cek-kategori/" + jenis,
+        'dataType': 'json',
+        success: function(data) {
+          if(data[0].kategori != null) {
+            $('#kategori').empty();
+            $('#layout-kategori').attr("style", "");
+            $('#label-kategori').empty();
+            $('#label-kategori').append('Kategori:*');
+            jQuery.each(data, function(i, val) {
+              if(val.id == id_jenis_izin_old) {
+                check = 'checked';
+              } else {
+                check = '';
+              }
+
+              $('#kategori').append('<div class="form-check"><input class="form-check-input" type="radio" name="jenis_izin" value="'+val.id+'" '+check+'><label class="form-check-label"">'+val.kategori+'</label></div>');
+            });
+          }else{
+            $('#layout-kategori').attr("style", "display: none");
+            $('#kategori').empty();
+            $('#hide').empty();
+            $('#hide').append('<div><input type="hidden" value="'+data[0].id+'" name="jenis_izin"</div>');
+          }
+        },
+        error: function(xhr, status, error) {
+          var error = xhr.responseJSON;
+          if ($.isEmptyObject(error) == false) {
+            $.each(error.errors, function(key, value) {
+              alert(key + value);
+            });
+          }
         }
-      },
-      error: function(xhr, status, error) {
-        var error = xhr.responseJSON;
-        if ($.isEmptyObject(error) == false) {
-          $.each(error.errors, function(key, value) {
-            alert(key + value);
-          });
-        }
-      }
-    })
+      })
+      // End ajax
+    }
+    
   }
 
   function verifikasi() {   
@@ -699,6 +750,10 @@ $("#file-ktp").change(function(){
 
 $("#file-foto").change(function(){
   $("#label-foto").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-imb").change(function(){
+  $("#label-imb").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
 });
 
 $("#file-akta").change(function(){
