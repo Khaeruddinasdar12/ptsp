@@ -112,7 +112,7 @@
             <tr>
               <td>{{$no}}</td>
               <td valign="center">Nama Sesuai STR</td>
-              <td>{{ $data->sik->nama }}</td>
+              <td>{{ $data->sik->gelar_awal }} {{ $data->sik->nama }} {{ $data->sik->gelar_akhir }}</td>
               <td>
                 @if($data->sik->reason && $data->sik->reason->nama =='1') {!! $terima !!}
                 @elseif($data->sik->reason && $data->sik->reason->nama == '') {!! $belumperiksa !!}
@@ -126,7 +126,9 @@
                   <div class="input-group">
                     @csrf
                     @method('PUT')
-                    <input type="text" class="form-control" name="revisi" required>
+                    <input type="text" class="form-control col-3" name="gelar_awal" required placeholder="Gelar Depan">
+                    <input type="text" class="form-control col-6" name="nama" required placeholder="Nama Sesuai STR">
+                    <input type="text" class="form-control col-3" name="gelar_akhir" required placeholder="Gelar Belakang" >
                     <input type="hidden" class="form-control" name="key" value="nama">
                     <button type="submit" class="btn btn-outline-secondary">Update
                     </button>

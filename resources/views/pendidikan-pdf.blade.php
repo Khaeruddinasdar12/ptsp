@@ -39,6 +39,11 @@
     text-align: center;
     text-transform: uppercase;
   }
+  #judul2 {
+    text-align: center;
+    text-transform: uppercase;
+    font-size:.7rem;
+  }
 
   .merah {
     color: red;
@@ -183,7 +188,7 @@
               <th><img src="{{ public_path('cert/logo.jpg') }}" alt="" srcset="" class="logo"></th>
               <th><div class="text">
                 <h3 id=judul>PEMERINTAH KOTA MAKASSAR</h3>
-                <h3 id=judul>DINAS PENANAMAN MODAL DAN PELAYANAN TERPADU SATU PINTU</h3>
+                <h3 id=judul2>DINAS PENANAMAN MODAL DAN PELAYANAN TERPADU SATU PINTU</h3>
                 <p>Jl. Jendral Ahmad Yani No. 2 Makasssar 90171 <br>
                 Website: dpmptsp.makassarkota.go.id</p>
               </div></th>
@@ -192,11 +197,12 @@
           </table>
         </div>
         <hr class="hr">
-          <h3 id="judul">Izin Operasional</h3>
-          <h3 id="judul">{{$jenis_izin}}</h3>
-          <p align="center">Nomor: {{$no_surat}}</p>
+        <h3 id="judul">Izin Operasional</h3>
+        <h3 id="judul">{{$jenis_izin}}</h3>
+        <p align="center">Nomor: {{$no_surat}}</p>
 
 
+        @if($jenis_izin == 'Program Pendidikan Kursus Dan Pelatihan')
         <p class='descSurat'>Dasar:
           <ol type="a">
             <li>Undang-undang Nomor 20 Tahun 2003 tentang Sistem Pendidikan Nasional;</li>
@@ -223,19 +229,50 @@
           </li>
         </ol>
       </p>
-
       <h3 id="judul">Mengizinkan</h3>
+      @elseif($jenis->izin == 'Program Pendidikan Dasar')
+      <p class='descSurat'>Dasar:
+        <ol type="1">
+          <li>Undang-undang Nomor 20 Tahun 2003 tentang Sistem Pendidikan Nasional;</li>
+          <li>Peraturan Pemerintah Nomor 19 Tahun 2005 tentang Standar Nasional Pendidikan;;</li>
+          <li>Peraturan Pemerintah Rebuplik Indonesia Nomor 17 Tahun 2010 tentang Pengelolaan dan
+            Penyelenggaraan Pendidikan;
+          </li>
+          <li>Peraturan Walikota Makassar Nomor 27 Tahun 2017 Tentang Penyelenggaraan Perizinan
+            Terpadu Satu Pintu;
+          </li>
+          <li>Peraturan Walikota Makassar Nomor 59 Tahun 2021 Tentang Pendelegasian Kewenangan
+            Penyelenggaraan Pelayanan Perizinan Berusaha Kepada Kepala Dinas Penanaman Modal
+            Dan Pelayanan Terpadu Satu Pintu Kota Makassar; ;
+          </li>
+          <li>Surat Rekomendasi Dari Tim Teknis Dinas Pendidikan Kota Makassar Nomor
+            {{$no_rekomendasi}}
+          </li>
+        </ol>
+      </p>
+      <h3 id="judul">Izin Operasional</h3>
+      @elseif($jenis->izin == 'PAUD')
+      <p class="descSurat">Berdasarkan Peraturan Menteri Pendidikan Dan Kebudayaan Republik Indonesia Nomor 84 Tahun 2014 Tentang Pendirian Satuan Pendidikan Anak Usia Dini, dan Peraturan Walikota Makassar Nomor 59 Tahun 2021 Tentang Pendelegasian Kewenangan Penyelenggaraan Pelayanan Perizinan Berusaha Kepada Kepala Dinas Penanaman Modal Dan Pelayanan Terpadu Satu Pintu Kota Makassar, serta memperhatikan Surat Rekomendasi dari Tim Teknis Dinas Pendidikan Kota Makassar Nomor: {{$no_rekomendasi}}; maka dengan ini Kepala Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu Kota Makassar, memberikan Izin Operasional :
+      </p>
+      @else  
+      <p class="descSurat">Berdasarkan Permendikbud nomor 49 tahun 2007 tentang Standar pengelolaan Pendidikan oleh satuan pendidikan non formal, dan Peraturan Walikota Makassar Nomor 59 Tahun 2021 Tentang Pendelegasian Kewenangan Penyelenggaraan Pelayanan Perizinan Berusaha Kepada Kepala Dinas Penanaman Modal Dan Pelayanan Terpadu Satu Pintu Kota Makassar serta memperhatikan Surat Rekomendasi dari Tim Teknis Dinas Pendidikan Nomor: {{$no_rekomendasi}}; maka dengan ini Kepala Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu Kota Makassar, memberikan Izin Operasional :</p>
+      <h3 id="judul">Izin Penyelenggaraan</h3>
+      @endif      
 
+
+
+      KEPADA: 
+      @if($jenis_izin == 'Program Pendidikan Kursus Dan Pelatihan')
       <table>
         <tr>
           <td style="width: 30%;">Nama Lembaga </td>
           <td style="width: 5%;">:</td>
-          <td style="width: 65%;">{{$nama_yayasan}}</td>
+          <td style="width: 65%;">{{$nama_pendidikan}}</td>
         </tr>
         <tr>
           <td style="width: 30%;"> </td>
           <td style="width: 5%;"></td>
-          <td style="width: 65%;">{{$nama_pendidikan}}</td>
+          <td style="width: 65%;">{{$nama_yayasan}}</td>
         </tr>
         <tr>
           <td style="width: 30%;">Alamat</td>
@@ -253,11 +290,158 @@
           <td style="width: 65%;"><b>{{$nama}}</b></td>
         </tr>
         <tr>
+          <td style="width: 30%;">Jenis Program</td>
+          <td style="width: 5%;">:</td>
+          <td style="width: 65%;"><b>{{$jenis_program}}</b></td>
+        </tr>
+        <tr>
           <td style="width: 30%;">Berlaku Sampai</td>
           <td style="width: 5%;">:</td>
           <td style="width: 65%;">{{$berlaku_sampai->isoFormat('D MMMM Y')}}</td>
         </tr>
       </table>
+      <p class="descSurat">Izin ini mulai berlaku sejak tanggal dikeluarkan, dengan ketentuan pemegang izin harus mematuhi dan bertanggungjawab segala aturan dan ketentuan yang berlaku dan jika terdapat kekeliruan didalamnya akan dilakukan perbaikan sebagaimana mestinya.</p> 
+
+
+      @elseif($jenis->izin == 'Program Pendidikan Dasar')
+      <table>
+        <tr>
+          <td style="width: 30%;">Nama Sekolah </td>
+          <td style="width: 5%;">:</td>
+          <td style="width: 65%;">{{$nama_pendidikan}}</td>
+        </tr>
+        <tr>
+          <td style="width: 30%;">Nama Lembaga</td>
+          <td style="width: 5%;">:</td>
+          <td style="width: 65%;">{{$nama_yayasan}}</td>
+        </tr>
+        <tr>
+          <td style="width: 30%;">Alamat</td>
+          <td style="width: 5%;">:</td>
+          <td style="width: 65%;">{{$jalan}}, kel. {{$kelurahan}}, kec. {{$kecamatan}}</td>
+        </tr>
+        <tr>
+          <td style="width: 30%;">Nama Kepala Sekolah</td>
+          <td style="width: 5%;">:</td>
+          <td style="width: 65%;"><b>{{$nama}}</b></td>
+        </tr>
+        <tr>
+          <td style="width: 30%; vertical-align: top;">No Telp</td>
+          <td style="width: 5%; vertical-align: top;">:</td>
+          <td style="width: 65%;">{{$nohp}}</td>
+        </tr>
+        <tr>
+          <td style="width: 30%;">No NPSN</td>
+          <td style="width: 5%;">:</td>
+          <td style="width: 65%;"><b>{{$no_npsn}}</b></td>
+        </tr>
+        <tr>
+          <td style="width: 30%;">Berlaku Sampai</td>
+          <td style="width: 5%;">:</td>
+          <td style="width: 65%;">{{$berlaku_sampai->isoFormat('D MMMM Y')}}</td>
+        </tr>
+      </table>
+      <p>Untuk menyelenggarakan dengan ketentuan sebagai berikut :</p>
+      <ol type="1">
+        <li>Mentaati peraturan Undang-undang yang berlaku;</li>
+        <li>Mengajukan permohonan izin selambat-lambatnya <b>30 hari sebelum izin ini berakhir</b>;</li>
+        <li>Izin ini mulai berlaku sejak tanggal ditetapkan.</li>
+      </ol>
+      @elseif($jenis->izin == 'PAUD')
+      <table>
+        <tr>
+          <td style="width: 30%;">Nama PAUD </td>
+          <td style="width: 5%;">:</td>
+          <td style="width: 65%;">{{$nama_pendidikan}}</td>
+        </tr>
+        <tr>
+          <td style="width: 30%;">Jenis Program</td>
+          <td style="width: 5%;">:</td>
+          <td style="width: 65%;">{{$kategori}}</td>
+        </tr>
+        <tr>
+          <td style="width: 30%;">Alamat</td>
+          <td style="width: 5%;">:</td>
+          <td style="width: 65%;">{{$jalan}}, kel. {{$kelurahan}}, kec. {{$kecamatan}}</td>
+        </tr>
+        <tr>
+          <td style="width: 30%;">Nama Lembaga </td>
+          <td style="width: 5%;">:</td>
+          <td style="width: 65%;">{{$nama_yayasan}}</td>
+        </tr>
+        <tr>
+          <td style="width: 30%;">Nama Kepala Sekolah</td>
+          <td style="width: 5%;">:</td>
+          <td style="width: 65%;"><b>{{$nama}}</b></td>
+        </tr>
+        <tr>
+          <td style="width: 30%; vertical-align: top;">No Telp</td>
+          <td style="width: 5%; vertical-align: top;">:</td>
+          <td style="width: 65%;">{{$nohp}}</td>
+        </tr>
+        <tr>
+          <td style="width: 30%;">No NPSN</td>
+          <td style="width: 5%;">:</td>
+          <td style="width: 65%;"><b>{{$no_npsn}}</b></td>
+        </tr>
+        <tr>
+          <td style="width: 30%;">Berlaku Sampai</td>
+          <td style="width: 5%;">:</td>
+          <td style="width: 65%;">{{$berlaku_sampai->isoFormat('D MMMM Y')}}</td>
+        </tr>
+      </table>
+      <p>Untuk menyelenggarakan dengan ketentuan sebagai berikut :</p>
+      <ol type="1">
+        <li>Mentaati peraturan Undang-undang yang berlaku;</li>
+        <li>Mengajukan permohonan izin selambat-lambatnya <b>30 hari sebelum izin ini berakhir</b>;</li>
+        <li>Izin ini mulai berlaku sejak tanggal ditetapkan.</li>
+      </ol>
+      @else
+      <table>
+        <tr>
+          <td style="width: 30%;">Nama Lembaga </td>
+          <td style="width: 5%;">:</td>
+          <td style="width: 65%;">{{$nama_pendidikan}}</td>
+        </tr>
+        <tr>
+          <td style="width: 30%;"> </td>
+          <td style="width: 5%;"></td>
+          <td style="width: 65%;">{{$nama_yayasan}}</td>
+        </tr>
+        <tr>
+          <td style="width: 30%;">Alamat</td>
+          <td style="width: 5%;">:</td>
+          <td style="width: 65%;">{{$jalan}}, kel. {{$kelurahan}}, kec. {{$kecamatan}}</td>
+        </tr>
+        <tr>
+          <td style="width: 30%;">Nama Ketua / Penyelenggara</td>
+          <td style="width: 5%;">:</td>
+          <td style="width: 65%;"><b>{{$nama}}</b></td>
+        </tr>
+        <tr>
+          <td style="width: 30%; vertical-align: top;">No Telp</td>
+          <td style="width: 5%; vertical-align: top;">:</td>
+          <td style="width: 65%;">{{$nohp}}</td>
+        </tr>
+        <tr>
+          <td style="width: 30%;">No NPSN</td>
+          <td style="width: 5%;">:</td>
+          <td style="width: 65%;"><b>{{$no_npsn}}</b></td>
+        </tr>
+        <tr>
+          <td style="width: 30%;">Berlaku Sampai</td>
+          <td style="width: 5%;">:</td>
+          <td style="width: 65%;">{{$berlaku_sampai->isoFormat('D MMMM Y')}}</td>
+        </tr>
+      </table>
+      <p>Untuk menyelenggarakan dengan ketentuan sebagai berikut :</p>
+      <ol type="1">
+        <li>Mentaati peraturan Undang-undang yang berlaku;</li>
+        <li>Mengajukan permohonan izin selambat-lambatnya <b>30 hari sebelum izin ini berakhir</b>;</li>
+        <li>Izin ini mulai berlaku sejak tanggal ditetapkan.</li>
+      </ol>
+      @endif
+
 
       <br>
       <table class="penetapan clearfix">
@@ -272,7 +456,7 @@
       <!-- <br> -->
       <p><strong>Tembusan :</strong></p>
       <ol>
-        <li>Dinas Kesehatan Kota Makassar</li>
+        <li>Dinas Pendidikan Kota Makassar</li>
         <li>Pertinggal,-</li>
       </ol>
 

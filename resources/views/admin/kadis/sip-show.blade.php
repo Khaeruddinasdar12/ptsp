@@ -73,6 +73,9 @@
         <div class="col-md-12">
           <p>Jenis Perizinan : <b>{{ $data->sip->subizin->nama }} - {{ $data->sip->subizin->kategori }}</b></p>
         </div>
+        <div class="col-md-12">
+          <p>No. Rekomendasi : <b>{{ $data->sip->no_rekomendasi }}</b></p>
+        </div>
       </div>
 
       <div class="table-responsive">
@@ -96,6 +99,11 @@
               <td>{{$no}}</td>
               <td valign="center">Nama Sesuai STR</td>
               <td>{{ $data->sip->gelar_awal }} {{ $data->sip->nama }} {{ $data->sip->gelar_akhir }}</td>
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Konsultan</td>
+              <td>{{ $data->sip->konsultan }}</td>
             </tr>
             <tr>
               <td>{{$no = $no+1}}</td>
@@ -136,6 +144,11 @@
               <td>{{$no = $no+1}}</td>
               <td>Nama Praktek 1</td>
               <td>{{ $data->sip->nama_praktek1 }}</td>
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Jejaring</td>
+              <td>{{ $data->sip->jejaring1 }}</td>
             </tr>
             <tr>
               <td>{{$no = $no+1}}</td>
@@ -237,22 +250,25 @@
               <td><a href="{{ asset('storage/'.$data->sip->surat_keterangan) }}" target="_blank">Lihat Berkas</a></td>
             </tr>
 
-            <!-- OPSIONAL -->
-            @if($data->sip->surat_persetujuan)
+            <!-- OPSIONAL -->     
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>SK Jejaring</td>
+              <td><a href="{{ asset('storage/'.$data->sip->berkas_jejaring1) }}" target="_blank">Lihat Berkas</a></td>
+            </tr>
+
             <tr>
               <td>{{$no = $no+1}}</td>
               <td>Surat Persetujuan Pimpinan Instansi</td>
               <td><a href="{{ asset('storage/'.$data->sip->surat_persetujuan) }}" target="_blank">Lihat Berkas</a></td>
             </tr>
-            @endif
-
-            @if($data->sip->berkas_pendukung)
+        
             <tr>
               <td>{{$no = $no+1}}</td>
               <td>Berkas Pendukung</td>
               <td><a href="{{ asset('storage/'.$data->sip->berkas_pendukung) }}" target="_blank">Lihat Berkas</a></td>
             </tr>
-            @endif
+        
           </tbody>
         </table>
       </div>

@@ -413,7 +413,7 @@ class SubizinSeeder extends Seeder
             'jenis' => 'pendidikan',
             'kategori' => 'SD',
             'dasar_hukum' => 'Peraturan Menteri Pendidikan dan Kebudayaan Nomor 36 Tahun 2014 tentang Pedoman Pendirian, Perubahan, dan Penutupan Satuan Pendidikan Dasar dan Menengah',
-            'kode' => 'SD',
+            'kode' => 'DIKDAS',
         ]);
 
         DB::table('subizins')->insert([
@@ -421,7 +421,7 @@ class SubizinSeeder extends Seeder
             'jenis' => 'pendidikan',
             'kategori' => 'SMP',
             'dasar_hukum' => 'Peraturan Menteri Pendidikan dan Kebudayaan Nomor 36 Tahun 2014 tentang Pedoman Pendirian, Perubahan, dan Penutupan Satuan Pendidikan Dasar dan Menengah',
-            'kode' => 'SMP',
+            'kode' => 'DIKDAS',
         ]);
 
         DB::table('subizins')->insert([
@@ -465,6 +465,32 @@ class SubizinSeeder extends Seeder
             'kode' => 'LKP',
         ]);
 
+
+
+        DB::table('subizins')->insert([
+            'nama' => 'Dokter PPDS',
+            'jenis' => 'sip',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([
+            'nama' => 'Dokter PPDS Sub Spesialis',
+            'jenis' => 'sip',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DS',
+        ]);
+        DB::table('subizins')->insert([
+            'nama' => 'Dokter PPDGS',
+            'jenis' => 'sip',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DGS',
+        ]);
+        DB::table('subizins')->insert([
+            'nama' => 'Dokter PPDGS Sub Spesialis',
+            'jenis' => 'sip',
+            'dasar_hukum' => 'Peraturan Menteri Kesehatan Republik Indonesia Nomor 2052/MENKES/PER/X/2011 tentang Izin Pelaksanaan Praktik Kedokteran',
+            'kode' => 'DGS',
+        ]);
 
 
 

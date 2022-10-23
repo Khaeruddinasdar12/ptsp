@@ -110,7 +110,7 @@
             <tr>
               <td>{{$no}}</td>
               <td valign="center">Nama Sesuai STR</td>
-              <td>{{ $data->sip->nama }}</td>
+              <td>{{ $data->sip->gelar_awal }} {{ $data->sip->nama }} {{ $data->sip->gelar_akhir }}</td>
               <td>
                 @if($data->sip->reason && $data->sip->reason->nama =='1') {!! $terima !!}
                 @elseif($data->sip->reason && $data->sip->reason->nama == '') {!! $belumperiksa !!}
@@ -124,8 +124,40 @@
                   <div class="input-group">
                     @csrf
                     @method('PUT')
-                    <input type="text" class="form-control" name="revisi" required>
+                    <input type="text" class="form-control col-3" name="gelar_awal" required placeholder="Gelar Depan">
+                    <input type="text" class="form-control col-6" name="nama" required placeholder="Nama Sesuai STR">
+                    <input type="text" class="form-control col-3" name="gelar_akhir" required placeholder="Gelar Belakang" >
                     <input type="hidden" class="form-control" name="key" value="nama">
+                    <button type="submit" class="btn btn-outline-secondary">Update
+                    </button>
+                  </div>
+                </form>
+              </td>
+              @else
+              <td></td>
+              <td></td>
+              @endif
+            </tr>
+
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td valign="center">Konsultan</td>
+              <td>{{ $data->sip->konsultan }}</td>
+              <td>
+                @if($data->sip->reason && $data->sip->reason->konsultan =='1') {!! $terima !!}
+                @elseif($data->sip->reason && $data->sip->reason->konsultan == '') {!! $belumperiksa !!}
+                @elseif($data->sip->reason && $data->sip->reason->konsultan != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              @if($data->sip->reason && $data->sip->reason->konsultan != '1')
+              <td> {{$data->sip->reason->konsultan}} </td>
+              <td>
+                <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}">
+                  <div class="input-group">
+                    @csrf
+                    @method('PUT')
+                    <input type="text" class="form-control" name="revisi" required>
+                    <input type="hidden" class="form-control" name="key" value="konsultan">
                     <button type="submit" class="btn btn-outline-secondary">Update
                     </button>
                   </div>
@@ -361,6 +393,35 @@
                     @method('PUT')
                     <input type="text" class="form-control" name="revisi" required>
                     <input type="hidden" class="form-control" name="key" value="nama_praktek1">
+                    <button type="submit" class="btn btn-outline-secondary">Update
+                    </button>
+                  </div>
+                </form>
+              </td>
+              @else
+              <td></td>
+              <td></td>
+              @endif
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Jejaring</td>
+              <td>{{ $data->sip->jejaring1 }}</td>
+              <td>
+                @if($data->sip->reason && $data->sip->reason->jejaring1 =='1') {!! $terima !!}
+                @elseif($data->sip->reason && $data->sip->reason->jejaring1 == '') {!! $belumperiksa !!}
+                @elseif($data->sip->reason && $data->sip->reason->jejaring1 != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              @if($data->sip->reason && $data->sip->reason->jejaring1 != '1')
+              <td> {{$data->sip->reason->jejaring1}} </td>
+              <td>
+                <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}">
+                  <div class="input-group">
+                    @csrf
+                    @method('PUT')
+                    <input type="text" class="form-control" name="revisi" required>
+                    <input type="hidden" class="form-control" name="key" value="jejaring1">
                     <button type="submit" class="btn btn-outline-secondary">Update
                     </button>
                   </div>
@@ -1195,7 +1256,36 @@
         </tr>
 
         <!-- OPSIONAL -->
-        @if($data->sip->surat_persetujuan)
+        <tr>
+          <td>{{$no = $no+1}}</td>
+          <td>SK Jejaring</td>
+          <td><a href="{{ asset('storage/'.$data->sip->berkas_jejaring1) }}" target="_blank">Lihat Berkas</a></td>
+          <td>
+            @if($data->sip->reason && $data->sip->reason->berkas_jejaring1 =='1') {!! $terima !!}
+            @elseif($data->sip->reason && $data->sip->reason->berkas_jejaring1 == '') {!! $belumperiksa !!}
+            @elseif($data->sip->reason && $data->sip->reason->berkas_jejaring1 != '1') {!! $tolak !!}
+            @else {!! $belumperiksa !!} @endif
+          </td>
+          @if($data->sip->reason && $data->sip->reason->berkas_jejaring1 != '1')
+          <td> {{$data->sip->reason->berkas_jejaring1}} </td>
+          <td>
+            <form method="POST" action="{{route('sip.update', ['id' => $data->sip->perizinan_id])}}" enctype="multipart/form-data">
+              @csrf
+              @method('PUT')
+              <div class="input-group">
+                <input type="file" class="form-control" name="berkas_jejaring1" accept="application/pdf" required>
+                <input type="hidden" class="form-control" name="key" value="berkas_jejaring1">
+                <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Update
+                </button>
+              </div>
+            </form>
+          </td>
+          @else
+          <td></td>
+          <td></td>
+          @endif
+        </tr>
+
         <tr>
           <td>{{$no = $no+1}}</td>
           <td>Surat Persetujuan Pimpinan Instansi</td>
@@ -1225,9 +1315,7 @@
           <td></td>
           @endif
         </tr>
-        @endif
 
-        @if($data->sip->berkas_pendukung)
         <tr>
           <td>{{$no = $no+1}}</td>
           <td>Berkas Pendukung</td>
@@ -1257,7 +1345,6 @@
           <td></td>
           @endif
         </tr>
-        @endif
       </tbody>
     </table>
   </div>

@@ -40,7 +40,7 @@ class LaporanController extends Controller
         }
         
         $jml = $data->count();
-        // return $jml;
+        // return $data;
         return view('admin.laporan', ['data' => $data, 'jml' => $jml]);
     }
 

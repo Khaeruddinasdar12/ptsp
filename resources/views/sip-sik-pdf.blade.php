@@ -234,7 +234,7 @@
           <tr>
             <td style="width: 30%;">Tempat Praktik yang ke-1</td>
             <td style="width: 5%;">:</td>
-            <td style="width: 65%;">{{$praktek1}}</td>
+            <td style="width: 65%;">{{$praktek1}}; {{$jejaring1}}</td>
           </tr>
           <tr>
             <td style="width: 30%;">Kelurahan</td>

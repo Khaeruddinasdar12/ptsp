@@ -358,7 +358,7 @@
           </tr>
 
           <!-- OPSIONAL -->
-          @if($data->krk->berkas_pendukung)
+  
           <tr>
             <td>{{$no = $no+1}}</td>
             <td>Berkas Pendukung</td>
@@ -374,7 +374,7 @@
               <button class="btn btn-outline-success btn-sm" onclick="ceklis('berkas_pendukung', 'Berkas Pendukung')" id="ceklis"><i class="fa fa-check"></i></button>
             </td>
           </tr>
-          @endif
+    
         </tbody>
       </table>
     </div>

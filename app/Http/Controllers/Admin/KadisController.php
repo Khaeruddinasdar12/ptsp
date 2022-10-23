@@ -109,6 +109,7 @@ class KadisController extends Controller
 					'alamat' => $data->sip->alamat,
 					'akhir_str' => $data->sip->akhir_str,
 					'praktek1' => $data->sip->nama_praktek1,
+					'jejaring1' => $data->sip->jejaring1,
 					'kelurahan1' => $data->sip->klh1->kelurahan,
 					'kecamatan1' => $data->sip->klh1->kecamatan,
 					'jalan1' => $data->sip->jalan1,
@@ -154,6 +155,7 @@ class KadisController extends Controller
 					'alamat' => $data->sik->alamat,
 					'akhir_str' => $data->sik->akhir_str,
 					'praktek1' => $data->sik->nama_praktek,
+					'jejaring1' => '',
 					'kelurahan1' => $data->sik->klh->kelurahan,
 					'kecamatan1' => $data->sik->klh->kecamatan,
 					'jalan1' => $data->sik->jalan,
@@ -188,10 +190,13 @@ class KadisController extends Controller
 					'nama' => $nama,
 					'nohp' => $data->pendidikan->nohp,
 					'jenis_izin' => $jenis_izin,
+					'kategori' => $data->pendidikan->subizin->kategori,
 					'subizin' => $data->pendidikan->subizin->nama,
 					'alamat' => $data->pendidikan->alamat,
 					'nama_yayasan' => $data->pendidikan->nama_yayasan,
 					'nama_pendidikan' => $data->pendidikan->nama_pendidikan,
+					'no_npsn' => $data->pendidikan->no_npsn,
+					'jenis_program' => $data->pendidikan->jenis_program,
 					'kelurahan' => $data->pendidikan->klh->kelurahan,
 					'kecamatan' => $data->pendidikan->klh->kecamatan,
 					'jalan' => $data->pendidikan->jalan,
@@ -235,7 +240,7 @@ class KadisController extends Controller
 			$data->verif_by = Auth::guard('admin')->user()->id;
 			$data->ket = null;
 			$data->kadis_by = Auth::guard('admin')->user()->id;
-			$data->updated_at = $time;
+			$data->updated_at = Carbon::now();
 
 			$email = $data->user->email;
 			$judul= "Notifikasi Penerbitan Sertifikat ". config('app.name');

@@ -86,7 +86,7 @@ class SipController extends Controller
 					return $arrayName = array(
 						'status' => 'success',
 						'pesan' => 'Berhasil Menyimpan!',
-						'sip_id' => $i->id
+						'sip_id' => $i->sip->id
 					);
 
 				} elseif($i->status == '0' || $i->status == '2') {
@@ -150,13 +150,25 @@ class SipController extends Controller
 			'no_str' => 'Nomor STR',	
 			'awal_str' => 'Tanggal Mulai Berlaku STR',
 			'akhir_str' => 'Tanggal Berakhir STR',
+			'konsultan' => 'Konsultan',
 		];
-		$validasi = $this->validate($request,$rules,$message,$attribute);
+		
 		if($request->jenis_izin == 'Dokter Spesialis') {
+			$rules = [
+				'jenis_izin' => 'required|string',
+				'rekomendasi_op' => 'required|string',
+				'no_str' => 'required|string',
+				'awal_str' => 'required|string',
+				'akhir_str' => 'required|date',
+				'konsultan' => 'required|string',
+			];
+
 			$jenis_izin = $request->spesialis;
 		} else {
 			$jenis_izin = $request->jenis_izin;
 		}
+
+		$validasi = $this->validate($request,$rules,$message,$attribute);
 		try {
 			$auth = Auth::user()->id;
 			$perizinan = Perizinan::where('user_id', $auth)->where('jenis_izin', 'sip')->get();
@@ -166,6 +178,7 @@ class SipController extends Controller
 					Sip::where('perizinan_id', $i->id)->update(array(
 						'subizin_id' => $jenis_izin,
 						'rekomendasi_op' => $request->rekomendasi_op,
+						'konsultan' => $request->konsultan,
 						'no_str' => $request->no_str,
 						'awal_str' => $request->awal_str,
 						'akhir_str' => $request->akhir_str,
@@ -173,7 +186,7 @@ class SipController extends Controller
 					return $arrayName = array(
 						'status' => 'success',
 						'pesan' => 'Berhasil Menyimpan!',
-						'sip_id' => $i->id
+						'sip_id' => $i->sip->id
 					);
 
 				} elseif($i->status == '0' || $i->status == '2') {
@@ -196,6 +209,7 @@ class SipController extends Controller
 				'perizinan_id' => $izin->id,
 				'subizin_id' => $jenis_izin,
 				'rekomendasi_op' => $request->rekomendasi_op,
+				'konsultan' => $request->konsultan,
 				'no_str' => $request->no_str,
 				'awal_str' => $request->awal_str,
 				'akhir_str' => $request->akhir_str,
@@ -232,7 +246,7 @@ class SipController extends Controller
 			'nama_praktek1' => 'Nama Praktek 1',
 			'jalan1' => 'Jalan 1',
 			'kelurahan1' => 'Kelurahan 1',
-			'kecamatan1' => 'Kecamatan 1',
+			'jejaring1' => 'Jejaring 1',
 		];
 		$validasi = $this->validate($request,$rules,$message,$attribute);
 		$jam_buka1 = null;
@@ -260,6 +274,7 @@ class SipController extends Controller
 				if($i->status == null) {
 					Sip::where('perizinan_id', $i->id)->update(array(
 						'nama_praktek1' => $request->nama_praktek1,
+						'jejaring1' => $request->jejaring1,
 						'jalan1' => $request->jalan1,
 						'kelurahan1' => $request->kelurahan1,
 						'hari_buka1' => $request->hari_buka1,
@@ -270,7 +285,7 @@ class SipController extends Controller
 					return $arrayName = array(
 						'status' => 'success',
 						'pesan' => 'Data Disimpan!',
-						'sip_id' => $i->id
+						'sip_id' => $i->sip->id
 					);
 
 				} elseif($i->status == '0' || $i->status == '2') {
@@ -293,6 +308,7 @@ class SipController extends Controller
 				'perizinan_id' => $izin->id,
 
 				'nama_praktek1' => $request->nama_praktek1,
+				'jejaring1' => $request->jejaring1,
 				'jalan1' => $request->jalan1,
 				'kelurahan1' => $request->kelurahan1,
 				'hari_buka1' => $request->hari_buka1,
@@ -629,6 +645,31 @@ class SipController extends Controller
 
 				// OPSIONAL
 				// upload Surat Persetujuan
+				if($request->key == 'berkas_jejaring1') {
+					$berkas_jejaring1 = $request->file('berkas_jejaring1'); 
+					if ($berkas_jejaring1) {
+						$validasi = $this->validate($request, [
+							'berkas_jejaring1' => 'mimes:pdf|max:1024',
+						],$message,$attribute);
+						$sip = Sip::where('perizinan_id', $i->id)->first();
+						if ($sip->berkas_jejaring1 && file_exists(storage_path('app/public/' . $sip->berkas_jejaring1))) {
+							\Storage::delete('public/' . $sip->berkas_jejaring1);
+						}
+						$path = $berkas_jejaring1->store('sip', 'public');
+						$sip->berkas_jejaring1 = $path;
+						$sip->save();
+						return $arrayName = array(
+							'status' => 'success',
+							'pesan' => 'SK Jejaring 1 disimpan!'
+						);
+					}
+					return $arrayName = array(
+						'status' => 'error',
+						'pesan' => 'SK Jejaring 1 wajib diisi!',
+					);	
+				} // end upload Surat Persetujuan
+
+				// upload Surat Persetujuan
 				if($request->key == 'surat_persetujuan') {
 					$surat_persetujuan = $request->file('surat_persetujuan'); 
 					if ($surat_persetujuan) {
@@ -736,7 +777,7 @@ class SipController extends Controller
 					));
 					return $arrayName = array(
 						'status' => 'success',
-						'pesan' => 'Berhasil Mengirim Berkas! Mohon Mengirim Berkas Asli Ke Tim Teknis (kantor PTSP)'
+						'pesan' => 'Berhasil Mengirim Berkas! Mohon Membawa Berkas STR Asli Anda Ke Tim Teknis (kantor PTSP)'
 					);
 
 				} elseif($i->status == '0' || $i->status == '2') {
@@ -788,12 +829,14 @@ class SipController extends Controller
 		$message = [];
 		$attribute = [
 			'nama' => 'Nama',
+			'konsultan' => 'Konsultan',
 			'alamat' => 'Alamat',
 			'jenis_izin' => 'Jenis izin',
 			'no_str' => 'No. STR',
 			'awal_str' => 'Tanggal Mulai Berlaku STR',
 			'akhir_str' => 'Tanggal Berakhir STR',
 			'nama_praktek1' => 'Nama Praktek 1',
+			'jejaring1' => 'Jejaring',
 			'jalan1' => 'Jalan 1',
 			'kelurahan1' => 'Kelurahan 1',
 			'kecamatan1' => 'Kecamatan 1',
@@ -809,6 +852,7 @@ class SipController extends Controller
 			'kelurahan3' => 'Kelurahan 3',
 			'jadwal3' => 'Jalan Praktek 3',
 
+			'berkas_jejaring1' => 'SK Jejaring',
 			'surat_keterangan' => 'Surat Keterangan Pelayanan Kesehatan',
 			'surat_persetujuan' => 'Surat Persetujuan Pimpinan Instansi',
 			'ktp' => 'KTP',
@@ -918,6 +962,25 @@ class SipController extends Controller
 			} // end upload Surat Keterangan
 
 				// OPSIONAL
+			// upload Surat Persetujuan
+			if($request->key == 'berkas_jejaring1') {
+				$berkas_jejaring1 = $request->file('berkas_jejaring1'); 
+				if ($berkas_jejaring1) {
+					$validasi = $this->validate($request, [
+						'berkas_jejaring1' => 'mimes:pdf|max:1024',
+					],$message,$attribute);
+					$sip = Sip::where('perizinan_id', $id)->first();
+					if ($sip->berkas_jejaring1 && file_exists(storage_path('app/public/' . $sip->berkas_jejaring1))) {
+						\Storage::delete('public/' . $sip->berkas_jejaring1);
+					}
+					$path = $berkas_jejaring1->store('sip', 'public');
+					$sip->berkas_jejaring1 = $path;
+					$sip->save();
+					return redirect()->back()->with('success', 'SK Jejaring disimpan!');
+				}
+				return redirect()->back()->with('not_found', 'SK Jejaring tidak diproses!');
+			} // end upload Surat Persetujuan
+
 				// upload Surat Persetujuan
 			if($request->key == 'surat_persetujuan') {
 				$surat_persetujuan = $request->file('surat_persetujuan'); 
@@ -956,6 +1019,22 @@ class SipController extends Controller
 				return redirect()->back()->with('not_found', 'Berkas pendukung tidak diproses!');	
 			} // end upload Surat Persetujuan
 
+			if($request->key == 'nama') {
+				$validasi = $this->validate($request, [
+					'nama' => 'required|string',
+					'gelar_awal' => 'required|string',
+					'gelar_akhir' => 'required|string',
+
+				],$message,$attribute);
+				$data = Sip::where('perizinan_id', $id)->update(array(
+					'nama' => $request->nama,
+					'gelar_awal' => $request->gelar_awal,
+					'gelar_akhir' => $request->gelar_akhir,
+
+				));
+				return redirect()->back()->with('success',$attribute[$request->key].' diperbarui');
+			}
+			
 			if($request->key == 'jadwal1') {
 				$validasi = $this->validate($request, [
 					'hari_buka1' => 'required|string',
@@ -990,6 +1069,7 @@ class SipController extends Controller
 				));
 				return redirect()->back()->with('success',$attribute[$request->key].' diperbarui');
 			}
+			
 			if($request->key == 'jadwal2') {
 				$validasi = $this->validate($request, [
 					'hari_buka2' => 'required|string',

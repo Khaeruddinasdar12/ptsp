@@ -170,6 +170,35 @@
             </tr>
             <tr>
               <td>{{$no = $no+1}}</td>
+              <td>Nama Yayasan</td>
+              <td>{{ $data->pendidikan->nama_yayasan }}</td>
+              <td>
+                @if($data->pendidikan->reason && $data->pendidikan->reason->nama_yayasan =='1') {!! $terima !!}
+                @elseif($data->pendidikan->reason && $data->pendidikan->reason->nama_yayasan == '') {!! $belumperiksa !!}
+                @elseif($data->pendidikan->reason && $data->pendidikan->reason->nama_yayasan != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              @if($data->pendidikan->reason && $data->pendidikan->reason->nama_yayasan != '1')
+              <td> {{$data->pendidikan->reason->nama_yayasan}} </td>
+              <td>
+                <form method="POST" action="{{route('pendidikan.update', ['id' => $data->pendidikan->perizinan_id])}}">
+                  <div class="input-group">
+                    @csrf
+                    @method('PUT')
+                    <input type="text" class="form-control" name="revisi" required>
+                    <input type="hidden" class="form-control" name="key" value="nama_yayasan">
+                    <button type="submit" class="btn btn-outline-secondary">Update
+                    </button>
+                  </div>
+                </form>
+              </td>
+              @else
+              <td></td>
+              <td></td>
+              @endif
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
               <td>Nama Pendidikan</td>
               <td>{{ $data->pendidikan->nama_pendidikan }}</td>
               <td>
@@ -187,6 +216,68 @@
                     @method('PUT')
                     <input type="text" class="form-control" name="revisi" required>
                     <input type="hidden" class="form-control" name="key" value="nama_pendidikan">
+                    <button type="submit" class="btn btn-outline-secondary">Update
+                    </button>
+                  </div>
+                </form>
+              </td>
+              @else
+              <td></td>
+              <td></td>
+              @endif
+            </tr>
+
+            @if($data->pendidikan->subizin->nama == 'Program Pendidikan Kursus Dan Pelatihan')
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Jenis Proram</td>
+              <td>{{ $data->pendidikan->jenis_program }}</td>
+              <td>
+                @if($data->pendidikan->reason && $data->pendidikan->reason->jenis_program =='1') {!! $terima !!}
+                @elseif($data->pendidikan->reason && $data->pendidikan->reason->jenis_program == '') {!! $belumperiksa !!}
+                @elseif($data->pendidikan->reason && $data->pendidikan->reason->jenis_program != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              @if($data->pendidikan->reason && $data->pendidikan->reason->jenis_program != '1')
+              <td> {{$data->pendidikan->reason->jenis_program}} </td>
+              <td>
+                <form method="POST" action="{{route('pendidikan.update', ['id' => $data->pendidikan->perizinan_id])}}">
+                  <div class="input-group">
+                    @csrf
+                    @method('PUT')
+                    <input type="text" class="form-control" name="revisi" required>
+                    <input type="hidden" class="form-control" name="key" value="jenis_program">
+                    <button type="submit" class="btn btn-outline-secondary">Update
+                    </button>
+                  </div>
+                </form>
+              </td>
+              @else
+              <td></td>
+              <td></td>
+              @endif
+            </tr>
+            @endif
+
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>No NPSN</td>
+              <td>{{ $data->pendidikan->no_npsn }}</td>
+              <td>
+                @if($data->pendidikan->reason && $data->pendidikan->reason->no_npsn =='1') {!! $terima !!}
+                @elseif($data->pendidikan->reason && $data->pendidikan->reason->no_npsn == '') {!! $belumperiksa !!}
+                @elseif($data->pendidikan->reason && $data->pendidikan->reason->no_npsn != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              @if($data->pendidikan->reason && $data->pendidikan->reason->no_npsn != '1')
+              <td> {{$data->pendidikan->reason->no_npsn}} </td>
+              <td>
+                <form method="POST" action="{{route('pendidikan.update', ['id' => $data->pendidikan->perizinan_id])}}">
+                  <div class="input-group">
+                    @csrf
+                    @method('PUT')
+                    <input type="text" class="form-control" name="revisi" required>
+                    <input type="hidden" class="form-control" name="key" value="no_npsn">
                     <button type="submit" class="btn btn-outline-secondary">Update
                     </button>
                   </div>
@@ -277,6 +368,35 @@
               <td></td>
               @endif
             </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Kode Pos</td>
+              <td>{{ $data->pendidikan->kode_pos }}</td>
+              <td>
+                @if($data->pendidikan->reason && $data->pendidikan->reason->kode_pos =='1') {!! $terima !!}
+                @elseif($data->pendidikan->reason && $data->pendidikan->reason->kode_pos == '') {!! $belumperiksa !!}
+                @elseif($data->pendidikan->reason && $data->pendidikan->reason->kode_pos != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              @if($data->pendidikan->reason && $data->pendidikan->reason->kode_pos != '1')
+              <td> {{$data->pendidikan->reason->kode_pos}} </td>
+              <td>
+                <form method="POST" action="{{route('pendidikan.update', ['id' => $data->pendidikan->perizinan_id])}}">
+                  <div class="input-group">
+                    @csrf
+                    @method('PUT')
+                    <input type="text" class="form-control" name="revisi" required>
+                    <input type="hidden" class="form-control" name="key" value="kode_pos">
+                    <button type="submit" class="btn btn-outline-secondary">Update
+                    </button>
+                  </div>
+                </form>
+              </td>
+              @else
+              <td></td>
+              <td></td>
+              @endif
+            </tr>
             <!-- END OF PRAKTEK 1, JALAN 1, KELURAHAN & KECAMATAN 1 -->
 
             <tr>
@@ -327,6 +447,36 @@
                 <div class="input-group">
                   <input type="file" class="form-control" name="pas_foto" accept="image/jpeg,image/jpg,image/png" required>
                   <input type="hidden" class="form-control" name="key" value="pas_foto">
+                  <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Update
+                  </button>
+                </div>
+              </form>
+            </td>
+            @else
+            <td></td>
+            <td></td>
+            @endif
+          </tr>
+
+          <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>IMB</td>
+              <td><a href="{{ asset('storage/'.$data->pendidikan->imb) }}" target="_blank">Lihat Berkas</a></td>
+              <td>
+               @if($data->pendidikan->reason && $data->pendidikan->reason->imb =='1') {!! $terima !!}
+               @elseif($data->pendidikan->reason && $data->pendidikan->reason->imb == '') {!! $belumperiksa !!}
+               @elseif($data->pendidikan->reason && $data->pendidikan->reason->imb != '1') {!! $tolak !!}
+               @else {!! $belumperiksa !!} @endif
+             </td>
+             @if($data->pendidikan->reason && $data->pendidikan->reason->imb != '1')
+             <td> {{$data->pendidikan->reason->imb}} </td>
+             <td>
+              <form method="POST" action="{{route('pendidikan.update', ['id' => $data->pendidikan->perizinan_id])}}" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <div class="input-group">
+                  <input type="file" class="form-control" name="imb" accept="image/jpeg,image/jpg,image/png" required>
+                  <input type="hidden" class="form-control" name="key" value="imb">
                   <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Update
                   </button>
                 </div>
@@ -519,7 +669,7 @@
           </tr>
 
           <!-- OPSIONAL -->
-          @if($data->pendidikan->npsn)
+          
           <tr>
             <td>{{$no = $no+1}}</td>
             <td>NPNS (Perpanjangan)</td>
@@ -549,9 +699,8 @@
             <td></td>
             @endif
           </tr>
-          @endif
 
-          @if($data->pendidikan->izin_lama)
+         
           <tr>
             <td>{{$no = $no+1}}</td>
             <td>Izin Lama</td>
@@ -581,9 +730,8 @@
             <td></td>
             @endif
           </tr>
-          @endif
 
-          @if($data->pendidikan->berkas_pendukung)
+        
           <tr>
             <td>{{$no = $no+1}}</td>
             <td>Berkas Pendukung</td>
@@ -613,7 +761,7 @@
             <td></td>
             @endif
           </tr>
-          @endif
+       
         </tbody>
       </table>
     </div>

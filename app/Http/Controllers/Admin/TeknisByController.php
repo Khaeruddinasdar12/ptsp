@@ -29,13 +29,11 @@ class TeknisByController extends Controller
 			return redirect()->route('error')->with('not_found','Kamu Tidak Memiliki Akses Teknis');
 		}
 		
-		// $data = Perizinan::where('status', '0')->whereNotNull('bidang_by')->whereNull('teknis_by')->paginate(10);
-
 		$data = Perizinan::where('status', '0')
-			->whereNotNull('bidang_by')
-			->whereNull('teknis_by')
-            ->where('no_tiket','LIKE','%'.$request->cari.'%')
-            ->paginate(10);
+		->whereNotNull('bidang_by')
+		->whereNull('teknis_by')
+		->where('no_tiket','LIKE','%'.$request->cari.'%')
+		->paginate(10);
 		// return $data;
 		return view('admin.teknis.index', ['data' => $data]);
 	}
@@ -235,13 +233,7 @@ class TeknisByController extends Controller
 				}
 
 				$dt = Sikreason::where('sik_id', $data->sik->id)->first();
-				if($dt->nama == '' || $dt->tempat_lahir == '' || $dt->tanggal_lahir == '' || $dt->rekomendasi_op =='' || $dt->no_str == '' || $dt->awal_str == '' || $dt->akhir_str == '' || $dt->alamat == '' || $dt->nama_praktek == '' || $dt->jalan == '' || $dt->kelurahan == '' || $dt->ktp == '' || $dt->foto == '' || $dt->str == '' || $dt->ijazah == '' || $dt->rekomendasi_org == '' || $dt->surat_keterangan == '') {
-					return $err;
-				}
-				if ($data->sik->surat_keluasan && $dt->surat_keluasan == '') {
-					return $err;
-				}
-				if ($data->sik->berkas_pendukung && $dt->berkas_pendukung == '') {
+				if($dt->nama == '' || $dt->tempat_lahir == '' || $dt->tanggal_lahir == '' || $dt->rekomendasi_op =='' || $dt->no_str == '' || $dt->awal_str == '' || $dt->akhir_str == '' || $dt->alamat == '' || $dt->nama_praktek == '' || $dt->jalan == '' || $dt->kelurahan == '' || $dt->ktp == '' || $dt->foto == '' || $dt->str == '' || $dt->ijazah == '' || $dt->rekomendasi_org == '' || $dt->surat_keterangan == '' || $dt->surat_keluasan == '' || $dt->berkas_pendukung == '') {
 					return $err;
 				}
 			} elseif($data->jenis_izin == 'pendidikan') {
@@ -251,18 +243,14 @@ class TeknisByController extends Controller
 				}
 
 				$dt = Pddreason::where('pendidikan_id', $data->pendidikan->id)->first();
-				if($dt->nama == '' || $dt->alamat == '' || $dt->nama_pendidikan == '' || $dt->kelurahan == '' || $dt->jalan == '' || $dt->ktp == '' || $dt->pas_foto == '' || $dt->akta == '' || $dt->kurikulum == '' || $dt->struktur_organisasi == '' || $dt->sk == '' || $dt->nib == '') {
+				if($dt->nama == '' || $dt->alamat == '' || $dt->nama_yayasan == '' || $dt->nama_pendidikan == '' || $dt->no_npsn == '' || $dt->kelurahan == '' || $dt->jalan == '' || $dt->kode_pos == '' || $dt->ktp == '' || $dt->pas_foto == '' || $dt->imb == '' || $dt->akta == '' || $dt->kurikulum == '' || $dt->struktur_organisasi == '' || $dt->sk == '' || $dt->nib == '' || $dt->npsn == '' || $dt->izin_lama == '' || $dt->berkas_pendukung == '') {
 					return $err;
 				}
-				if ($data->pendidikan->npsn && $dt->npsn == '') {
+
+				if ($data->pendidikan->subizin->nama == 'Program Pendidikan Kursus Dan Pelatihan' && $dt->jenis_program == '') {
 					return $err;
 				}
-				if ($data->pendidikan->izin_lama && $dt->izin_lama == '') {
-					return $err;
-				}
-				if ($data->pendidikan->berkas_pendukung && $dt->berkas_pendukung == '') {
-					return $err;
-				}
+
 			} elseif($data->jenis_izin == 'sip') {
 				
 				if(!$data->sip->reason) {
@@ -270,7 +258,7 @@ class TeknisByController extends Controller
 				}
 
 				$dt = Sipreason::where('sip_id', $data->sip->id)->first();
-				if($dt->nama == '' || $dt->tempat_lahir == '' || $dt->tanggal_lahir == '' || $dt->rekomendasi_op =='' || $dt->no_str == '' || $dt->awal_str == '' || $dt->akhir_str == '' || $dt->alamat == '' || $dt->nama_praktek1 == '' || $dt->jalan1 == '' || $dt->kelurahan1 == '' || $dt->ktp == '' || $dt->foto == '' || $dt->str == '' || $dt->rekomendasi_org == '' || $dt->surat_keterangan == '') {
+				if($dt->nama == '' || $dt->tempat_lahir == '' || $dt->tanggal_lahir == '' || $dt->rekomendasi_op =='' || $dt->konsultan == '' || $dt->no_str == '' || $dt->awal_str == '' || $dt->akhir_str == '' || $dt->alamat == '' || $dt->nama_praktek1 == '' || $dt->jejaring1 == '' || $dt->jejaring1 == '' || $dt->jalan1 == '' || $dt->kelurahan1 == '' || $dt->ktp == '' || $dt->foto == '' || $dt->str == '' || $dt->rekomendasi_org == '' || $dt->surat_keterangan == '' || $dt->berkas_jejaring1 == '' || $dt->surat_persetujuan == '' || $dt->berkas_pendukung == '' || $dt->berkas_jejaring1 == '') {
 					
 					return $err;
 				}
@@ -304,12 +292,6 @@ class TeknisByController extends Controller
 					return $err;
 				}
 
-				if ($data->sip->surat_persetujuan && $dt->surat_persetujuan == '') {
-					return $err;
-				}
-				if ($data->sip->berkas_pendukung && $dt->berkas_pendukung == '') {
-					return $err;
-				}
 			} elseif($data->jenis_izin == 'krk') {
 				
 				if(!$data->krk->reason) {
@@ -395,16 +377,10 @@ class TeknisByController extends Controller
 					return $err;
 				}
 				$dt = Sikreason::where('sik_id', $data->sik->id)->first();
-				if($dt->nama != '1' || $dt->tempat_lahir != '1' || $dt->tanggal_lahir != '1' || $dt->rekomendasi_op !='1' || $dt->no_str != '1' || $dt->awal_str != '1' || $dt->akhir_str != '1' || $dt->alamat != '1' || $dt->nama_praktek != '1' || $dt->jalan != '1' || $dt->kelurahan != '1' || $dt->ktp != '1' || $dt->foto != '1' || $dt->str != '1' || $dt->ijazah != '1' || $dt->rekomendasi_org != '1' || $dt->surat_keterangan != '1') {
+				if($dt->nama != '1' || $dt->tempat_lahir != '1' || $dt->tanggal_lahir != '1' || $dt->rekomendasi_op !='1' || $dt->no_str != '1' || $dt->awal_str != '1' || $dt->akhir_str != '1' || $dt->alamat != '1' || $dt->nama_praktek != '1' || $dt->jalan != '1' || $dt->kelurahan != '1' || $dt->ktp != '1' || $dt->foto != '1' || $dt->str != '1' || $dt->ijazah != '1' || $dt->rekomendasi_org != '1' || $dt->surat_keterangan != '1' || $dt->surat_keluasan != '1' || $dt->berkas_pendukung != '1') {
 					return $err;
 				}
-				if ($data->sik->surat_keluasan && $dt->surat_keluasan != '1') {
-					return $err;
-				}
-				if ($data->sik->berkas_pendukung && $dt->berkas_pendukung != '1') {
-					return $err;
-				}
-				$dt->delete();	
+				// $dt->delete();	
 				$kode = $data->sik->subizin->kode; //kode SUBIZIN
 				$no_kode = $data->sik->latest()->first();//Nomor Kode Surat
 			} elseif($data->jenis_izin == 'sip') {
@@ -413,7 +389,7 @@ class TeknisByController extends Controller
 				}
 
 				$dt = Sipreason::where('sip_id', $data->sip->id)->first();
-				if($dt->nama != '1' || $dt->tempat_lahir != '1' || $dt->tanggal_lahir != '1' || $dt->rekomendasi_op != '1' || $dt->no_str != '1' || $dt->awal_str != '1' || $dt->akhir_str != '1' || $dt->alamat != '1' || $dt->nama_praktek1 != '1' || $dt->jalan1 != '1' || $dt->kelurahan1 != '1' || $dt->ktp != '1' || $dt->foto != '1' || $dt->str != '1' || $dt->rekomendasi_org != '1' || $dt->surat_keterangan != '1') {
+				if($dt->nama != '1' || $dt->konsultan != '1' || $dt->tempat_lahir != '1' || $dt->tanggal_lahir != '1' || $dt->rekomendasi_op != '1' || $dt->no_str != '1' || $dt->awal_str != '1' || $dt->akhir_str != '1' || $dt->alamat != '1' || $dt->nama_praktek1 != '1' || $dt->jejaring1 != '1' || $dt->jalan1 != '1' || $dt->kelurahan1 != '1' || $dt->ktp != '1' || $dt->foto != '1' || $dt->str != '1' || $dt->rekomendasi_org != '1' || $dt->surat_keterangan != '1' || $dt->berkas_jejaring1 != '1' || $dt->surat_persetujuan != '1' || $dt->berkas_pendukung != '1') {
 					
 					return $err;
 				}
@@ -446,14 +422,7 @@ class TeknisByController extends Controller
 				if($data->sip->subizin_id == '7' && $data->sip->nama_praktek3 && $dt->jadwal3 == '') {
 					return $err;
 				}
-
-				if ($data->sip->surat_persetujuan && $dt->surat_persetujuan != '1') {
-					return $err;
-				}
-				if ($data->sip->berkas_pendukung && $dt->berkas_pendukung != '1') {
-					return $err;
-				}
-				$dt->delete();
+				// $dt->delete();
 				$kode = $data->sip->subizin->kode; //kode SUBIZIN
 				$no_kode = $data->sip->latest()->first();//Nomor Kode Surat
 			} if($data->jenis_izin == 'pendidikan') {
@@ -462,20 +431,14 @@ class TeknisByController extends Controller
 					return $err;
 				}
 				$dt = Pddreason::where('pendidikan_id', $data->pendidikan->id)->first();
-				if($dt->nama != '1' || $dt->alamat != '1' || $dt->nama_pendidikan != '1' || $dt->kelurahan != '1' || $dt->jalan != '1' || $dt->ktp != '1' || $dt->pas_foto != '1' || $dt->akta != '1' || $dt->kurikulum != '1' || $dt->struktur_organisasi != '1' || $dt->sk != '1' || $dt->nib != '1') {
+				if($dt->nama != '1' || $dt->alamat != '1' || $dt->nama_yayasan != '1' || $dt->nama_pendidikan != '1' || $dt->no_npsn != '1' || $dt->kelurahan != '1' || $dt->jalan != '1' || $dt->ktp != '1' || $dt->pas_foto != '1' || $dt->imb != '1' || $dt->akta != '1' || $dt->kurikulum != '1' || $dt->struktur_organisasi != '1' || $dt->sk != '1' || $dt->nib != '1' || $dt->npsn != '1' || $dt->izin_lama != '1' || $dt->berkas_pendukung != '1') {
 					return $err;
 				}
-				if ($data->pendidikan->npsn && $dt->npsn != '1') {
+				if ($data->pendidikan->subizin->nama == 'Program Pendidikan Kursus Dan Pelatihan' && $dt->jenis_program != '1') {
 					return $err;
 				}
-				if ($data->pendidikan->izin_lama && $dt->izin_lama != '1') {
-					return $err;
-				}
-				if ($data->pendidikan->berkas_pendukung && $dt->berkas_pendukung != '1') {
-					return $err;
-				}
-				$dt->delete();
-				$kode = 'PDD'; //kode SUBIZIN
+				// $dt->delete();
+				$kode =  $data->pendidikan->subizin->kode; //kode SUBIZIN
 				$no_kode = $data->pendidikan->latest()->first();//Nomor Kode Surat
 			} if($data->jenis_izin == 'krk') {
 
@@ -530,7 +493,7 @@ class TeknisByController extends Controller
 				$no_rekomendasi = '440/'.$uniqkode.'/Rek.'.$kode.'/DKK/'.$bulan.'/'.$tahun;
 				$data->sik->update(array('no_rekomendasi' => $no_rekomendasi));
 			} elseif($data->jenis_izin == 'pendidikan') {
-				$no_rekomendasi = '650/'.$uniqkode.'.'.$kode.'/PDD/'.$bulan.'/'.$tahun;
+				$no_rekomendasi = '503/'.$uniqkode.'/'.$kode.'/DPM-PTSP/'.$bulan.'/'.$tahun;
 				$data->pendidikan->update(array('no_rekomendasi' => $no_rekomendasi));
 			}  elseif($data->jenis_izin == 'krk') {
 				$no_rekomendasi = $uniqkode.'/RekoTeknis/'.$bulan.'/'.$tahun;

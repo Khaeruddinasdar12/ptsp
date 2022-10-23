@@ -31,7 +31,7 @@
     <div class="alert alert-secondary fade show" role="alert">
       <div class="alert-icon"><i class="fa flaticon-warning"></i></div>
       <div class="alert-text text-danger">
-        <strong>Mohon bawa berkas asli ke tim Teknis (Kantor PTSP) setelah mengirim berkas.</strong>
+        <strong>Mohon bawa STR Asli ke tim Teknis (Kantor PTSP) setelah mengirim berkas.</strong>
       </div>
       <div class="alert-close">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -173,6 +173,9 @@
                         </select>
                       </div>
                     </div>
+                    
+                    <div id="konsultan"></div>
+
                     <div class="form-group row">
                       <label class="col-lg-3 col-form-label">No. Rekomendasi OP*</label>
                       <div class="col-lg-9">
@@ -214,16 +217,16 @@
                 <div class="container">
                   <div class="card-body">
                     <div class="alert alert-secondary fade show" role="alert">
-                        <div class="alert-icon"><i class="fa flaticon-warning"></i></div>
-                        <div class="alert-text">
-                          <strong>Jika permohonan ini adalah tempat praktek ke-2 Anda, maka mohon isi bagian Praktek 1.</strong>
-                        </div>
-                        <div class="alert-close">
-                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true"><i class="la la-close"></i></span>
-                          </button>
-                        </div>
+                      <div class="alert-icon"><i class="fa flaticon-warning"></i></div>
+                      <div class="alert-text">
+                        <strong>Jika permohonan ini adalah tempat praktek ke-2 Anda, maka mohon isi data Praktek 1 Anda.</strong>
                       </div>
+                      <div class="alert-close">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true"><i class="la la-close"></i></span>
+                        </button>
+                      </div>
+                    </div>
                     <h5 class="font-size-lg text-dark font-weight-bold mb-6">Praktek 1</h5>
                     <div class="container">
 
@@ -235,6 +238,12 @@
                           <label class="col-lg-3 col-form-label">Nama Praktek:*</label>
                           <div class="col-lg-9">
                             <input type="text" class="form-control" name="nama_praktek1" value="@if($old){{$old->sip->nama_praktek1}}@endif">
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-lg-3 col-form-label">Jejaring:</label>
+                          <div class="col-lg-9">
+                            <textarea class="form-control" name="jejaring1" placeholder="isi dengan format jejaring 1: nama_jejaring, alamat_jejaring; jejaring 2: nama_jejaring, alamat_jejaring; dst">@if($old){{$old->sip->jejaring1}}@endif</textarea>
                           </div>
                         </div>
                         <div class="form-group row">
@@ -796,6 +805,27 @@
                   <hr>
 
                   <div class="form-group row">
+                    <label class="col-lg-3 col-form-label">SK Jejaring: (pdf) max 1MB*</label>
+                    <div class="col-lg-9">
+                      <form action="{{route('sip.tab4')}}" method="POST" id="berkas_jejaring1">
+                        <div class="input-group">
+                          @csrf
+                          <input type="file" name="berkas_jejaring1" id="file-berkas_jejaring1" style="display:none;" accept="application/pdf">
+                          <label for="file-berkas_jejaring1" class="form-control" id="label-berkas_jejaring1">@if($old && $old->sip->str)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
+                          <input type="hidden" class="form-control" name="key" value="berkas_jejaring1" >
+                          <button type="submit" class="btn btn-outline-secondary">Simpan
+                          </button>
+                        </div>
+                      </form>
+                      <div id="reload-berkas_jejaring1">
+                        @if($old && $old->sip->berkas_jejaring1)
+                        <a href="{{asset('storage/'.$old->sip->berkas_jejaring1)}}" target="_blank">Lihat berkas</a>
+                        @endif
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
                     <label class="col-lg-3 col-form-label">Surat Persetujuan Pimpinan Instansi: (pdf) max 1MB</label>
                     <div class="col-lg-9">
                       <form action="{{route('sip.tab4')}}" method="POST" id="surat_persetujuan">
@@ -935,6 +965,10 @@
   const praktik3= "{{ route('sip.praktik3') }}";
   const route4= "{{ route('sip.tab4') }}";
   const route5= "{{ route('sip.tab5') }}"; 
+
+  function show_konsultan() {
+    $('#konsultan').append('<div class="form-group row"><label class="col-lg-3 col-form-label">Konsultan*</label><div class="col-lg-9"><input type="text" class="form-control" name="konsultan" value="@if($old){{$old->sip->rekomendasi_op}}@endif"></div></div>')
+  }
 </script>
 
 <script type="text/javascript" src="{{asset('js/user/sip-create.js')}}"></script>
@@ -961,6 +995,10 @@
 @endif
 
 <script type="text/javascript">
+  function show_konsultan() {
+    $('#konsultan').append('<div class="form-group row"><label class="col-lg-3 col-form-label">Konsultan*</label><div class="col-lg-9"><input type="text" class="form-control" name="konsultan" value="@if($old){{$old->sip->rekomendasi_op}}@endif"></div></div>')
+  }
+
   function successToRelaoad(status, pesan) {
     Swal.fire({
       type: status,

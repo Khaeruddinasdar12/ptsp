@@ -20,6 +20,7 @@ class CreatePddreasonsTable extends Migration
             $table->string('alamat')->nullable();
             $table->string('nama_yayasan')->nullable();
             $table->string('nama_pendidikan')->nullable();
+            $table->string('jenis_program')->nullable();
             $table->string('kelurahan')->nullable();
             $table->string('jalan')->nullable();
             $table->string('no_npsn')->nullable();

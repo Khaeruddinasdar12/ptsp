@@ -374,6 +374,44 @@ $('#surat_keterangan').submit(function(e) {
 });
 // END UPLOAD SURAT KETERANGAN
 
+// UPLOAD JEJARING
+$('#berkas_jejaring1').submit(function(e) {
+  e.preventDefault();
+  var request = new FormData(this);
+  var endpoint= route4;
+  $.ajax({
+    url: endpoint,
+    method: "POST",
+    data: request,
+    contentType: false,
+    cache: false,
+    processData: false,
+    beforeSend: function(){
+      $('#loader').attr("style", "");
+    },
+    success:function(data) {
+      // document.getElementById('surat_persetujuan').reset();
+      if(data.status == 'success') {
+        reload(sip_id, 'reload-berkas_jejaring1', 'berkas_jejaring1');
+      }
+      berhasil(data.status, data.pesan);
+    },
+    complete:function(data) {
+      $('#loader').attr("style", "display:none");
+    },
+    error: function(xhr, status, error){
+      var error = xhr.responseJSON; 
+      if ($.isEmptyObject(error) == false) {
+        $.each(error.errors, function(key, value) {
+          gagal(key, value);
+        });
+      }
+    } 
+  }); 
+  return false;
+});
+// END UPLOAD JEJARING
+
 // UPLOAD SURAT KETERANGAN
 $('#surat_persetujuan').submit(function(e) {
   e.preventDefault();
@@ -690,9 +728,12 @@ $(document).ready(function () {
                   $('#hari_tutup3').attr("required", "true");
                   $("#spesialis").empty();
                   $('#list-spesialis').attr("style", "display:none");
+
+                  $('#konsultan').html('');
                 } else if (jen == 'Dokter Spesialis') {
                   $('#list-spesialis').attr("style", "");
                   show_listspesialis();
+                  show_konsultan();
                 } else {
                   $('#jadwal1').attr("style", "display:none");
                   $('#hari_buka1').removeAttr('required');
@@ -707,6 +748,8 @@ $(document).ready(function () {
                   $('#hari_tutup3').removeAttr('required');
                   $("#spesialis").empty();
                   $('#list-spesialis').attr("style", "display:none");
+
+                  $('#konsultan').html('');
                 }              
               }
   //end menampilkan kelurahan3 setelah memilih kecamatan3
@@ -729,6 +772,10 @@ $("#file-foto").change(function(){
 
 $("#file-str").change(function(){
   $("#label-str").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
+});
+
+$("#file-berkas_jejaring1").change(function(){
+  $("#label-berkas_jejaring1").html($(this).val().split("\\").splice(-1,1)[0] || "Choose File");     
 });
 
 $("#file-rekomendasi_org").change(function(){

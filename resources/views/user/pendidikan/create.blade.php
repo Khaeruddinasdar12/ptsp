@@ -566,6 +566,12 @@
 <script type="text/javascript">
   jenis_izin_old = '{!! $old->pendidikan->subizin->nama !!}';
   id_jenis_izin_old = '{!! $old->pendidikan->subizin->id !!}';
+  
+</script>
+@endif
+
+@if($old && $old->pendidikan)
+<script type="text/javascript">
   pendidikan_id = '{!! $old->pendidikan->id !!}';
 </script>
 @else

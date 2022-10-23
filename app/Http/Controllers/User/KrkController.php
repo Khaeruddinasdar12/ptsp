@@ -58,7 +58,7 @@ class KrkController extends Controller
                 return $arrayName = array(
                     'status' => 'success',
                     'pesan' => 'Berhasil Disimpan!',
-                    'krk_id' => $i->id
+                    'krk_id' => $i->krk->id
                 );
 
             } elseif($i->status == '0' || $i->status == '2') {
@@ -144,7 +144,7 @@ class KrkController extends Controller
                 return $arrayName = array(
                     'status' => 'success',
                     'pesan' => 'Berhasil Disimpan!',
-                    'krk_id' => $i->id
+                    'krk_id' => $i->krk->id
                 );
 
             } elseif($i->status == '0' || $i->status == '2') {
@@ -218,7 +218,7 @@ class KrkController extends Controller
                 return $arrayName = array(
                     'status' => 'success',
                     'pesan' => 'Berhasil Disimpan!',
-                    'krk_id' => $i->id
+                    'krk_id' => $i->krk->id
                 );
 
             } elseif($i->status == '0' || $i->status == '2') {
@@ -501,7 +501,6 @@ class KrkController extends Controller
     {
         $data = Krk::find($id);
         return $data;
-
     }
 
     private function err($pesan) 

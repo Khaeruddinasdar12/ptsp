@@ -128,6 +128,7 @@
                 <th>Jenis Izin</th>
                 <th>Nama</th>
                 <th>NIK</th>
+                <th>Waktu Terbit</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -137,10 +138,11 @@
               <tr>
                 <td>{{ $no++; }}</td>
                 <td>{{ $datas->no_tiket }}</td>
-                <td>{{ $datas->no_rekomendasi }}</td>
+                <td>@if($datas->jenis_izin == 'sip') {{$datas->sip->no_rekomendasi}} @elseif($datas->jenis_izin == 'sik') {{$datas->sik->no_rekomendasi}} @elseif($datas->jenis_izin == 'krk') {{$datas->krk->no_rekomendasi}} @else {{$datas->pendidikan->no_rekomendasi}} @endif</td>
                 <td>{{ $datas->jenis_izin }}</td>
                 <td>{{ $datas->user->name}} </td>
                 <td>{{ $datas->user->nik}}</td>
+                <td>{{ $datas->updated_at}}</td>
                 <td><a href="" class="btn btn-outline-secondary btn-sm"><i class="fa fa-eye"></i></a></td>
               </tr>
               @endforeach

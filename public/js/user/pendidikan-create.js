@@ -193,21 +193,21 @@ $('#ktp').submit(function(e) {
   // END UPLOAD FOTO
 
     // UPLOAD IMB
-  $('#imb').submit(function(e) {
-    e.preventDefault();
-    var request = new FormData(this);
-    var endpoint= route4;
-    $.ajax({
-      url: endpoint,
-      method: "POST",
-      data: request,
-      contentType: false,
-      cache: false,
-      processData: false,
-      beforeSend: function(){
-        $('#loader').attr("style", "");
-      },
-      success:function(data) {
+    $('#imb').submit(function(e) {
+      e.preventDefault();
+      var request = new FormData(this);
+      var endpoint= route4;
+      $.ajax({
+        url: endpoint,
+        method: "POST",
+        data: request,
+        contentType: false,
+        cache: false,
+        processData: false,
+        beforeSend: function(){
+          $('#loader').attr("style", "");
+        },
+        success:function(data) {
         // document.getElementById('akta').reset();
         if(data.status == 'success') {
           reload(pendidikan_id, 'reload-imb', 'imb');
@@ -226,8 +226,8 @@ $('#ktp').submit(function(e) {
         }
       } 
     }); 
-    return false;
-  });
+      return false;
+    });
   // END UPLOAD IMB
 
   // UPLOAD AKTA
@@ -514,6 +514,7 @@ $('#ktp').submit(function(e) {
       success:function(data) {
         // document.getElementById('izin_lama').reset();
         if(data.status == 'success') {
+          alert('izin_lama');
           reload(pendidikan_id, 'reload-izin_lama', 'izin_lama');
         }
         berhasil(data.status, data.pesan);
@@ -573,7 +574,8 @@ $('#ktp').submit(function(e) {
   // END UPLOAD BERKAS PENDUKUNG
 
    // mereload tombol preview upload file
-   function reload(id, load, field) {
+
+  function reload(id, load, field) {
     $('#'+load).empty();
     $.ajax({
       'url': '../pendidikan-reload/' + id,

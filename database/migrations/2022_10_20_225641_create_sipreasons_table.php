@@ -24,8 +24,10 @@ class CreateSipreasonsTable extends Migration
             $table->string('akhir_str')->nullable();
             $table->string('alamat')->nullable();
             $table->string('rekomendasi_op')->nullable();
+            $table->string('konsultan')->nullable();
 
             $table->string('nama_praktek1')->nullable();
+            $table->string('jejaring1')->nullable();
             $table->string('jalan1')->nullable();
             $table->string('kelurahan1')->nullable();
             $table->string('jadwal1')->nullable();
@@ -45,6 +47,8 @@ class CreateSipreasonsTable extends Migration
             $table->string('str')->nullable();
             $table->string('rekomendasi_org')->nullable();
             $table->string('surat_keterangan')->nullable();
+
+            $table->string('berkas_jejaring1')->nullable();
             $table->string('surat_persetujuan')->nullable();
             $table->string('berkas_pendukung')->nullable();
             $table->timestamps();

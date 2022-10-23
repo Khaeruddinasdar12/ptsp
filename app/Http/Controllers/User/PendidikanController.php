@@ -65,12 +65,28 @@ class PendidikanController extends Controller
 				return redirect()->back()->with('success','Alamat diperbarui');
 			}
 
+			if($request->key == 'nama_yayasan') {
+				$validasi = $this->validate($request, [
+					'revisi' => 'required|string',
+				],$message,$attribute);
+				$data = Pendidikan::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
+				return redirect()->back()->with('success','Nama Yayasan diperbarui');
+			}
+
 			if($request->key == 'nama_pendidikan') {
 				$validasi = $this->validate($request, [
 					'revisi' => 'required|string',
 				],$message,$attribute);
 				$data = Pendidikan::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
 				return redirect()->back()->with('success','Nama pendidikan diperbarui');
+			}
+
+			if($request->key == 'jenis_program') {
+				$validasi = $this->validate($request, [
+					'revisi' => 'required|string',
+				],$message,$attribute);
+				$data = Pendidikan::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
+				return redirect()->back()->with('success','Jenis program diperbarui');
 			}
 
 			if($request->key == 'kelurahan') {
@@ -89,12 +105,20 @@ class PendidikanController extends Controller
 				return redirect()->back()->with('success','Jalan diperbarui');
 			}
 
-			if($request->key == 'nama_pendidikan') {
+			if($request->key == 'no_npsn') {
 				$validasi = $this->validate($request, [
 					'revisi' => 'required|string',
 				],$message,$attribute);
 				$data = Pendidikan::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
-				return redirect()->back()->with('success','Nama pendidikan diperbarui');
+				return redirect()->back()->with('success','No NPSN diperbarui');
+			}
+
+			if($request->key == 'kode_pos') {
+				$validasi = $this->validate($request, [
+					'revisi' => 'required|string',
+				],$message,$attribute);
+				$data = Pendidikan::where('perizinan_id', $id)->update(array($request->key => $request->revisi));
+				return redirect()->back()->with('success','Kode pos diperbarui');
 			}
 
 			// BERKAS - FILE
@@ -136,6 +160,25 @@ class PendidikanController extends Controller
 					}
 					return redirect()->back()->with('error','Pas foto tidak diproses');
 				} // end upload foto
+
+				// upload IMB
+				if($request->key == 'imb') {
+					$imb = $request->file('imb'); 
+					if ($imb) {
+						$validasi = $this->validate($request, [
+							'imb' => 'mimes:jpeg,png,jpg|max:1024',
+						],$message,$attribute);
+						$pdd = Pendidikan::where('perizinan_id', $id)->first();
+						if ($pdd->imb && file_exists(storage_path('app/public/' . $pdd->imb))) {
+							\Storage::delete('public/' . $pdd->imb);
+						}
+						$path = $imb->store('pendidikan', 'public');
+						$pdd->imb = $path;
+						$pdd->save();
+						return redirect()->back()->with('success','IMB diperbarui');
+					}
+					return redirect()->back()->with('error','IMB tidak diproses');
+				} // end upload IMB
 
 				// upload akta
 				if($request->key == 'akta') {
@@ -357,7 +400,7 @@ class PendidikanController extends Controller
 					return $arrayName = array(
 						'status' => 'success',
 						'pesan' => 'Berhasil Disimpan!',
-						'pendidikan_id' => $i->id
+						'pendidikan_id' => $i->pendidikan->id
 					);
 
 				} elseif($i->status == '0' || $i->status == '2') {
@@ -443,7 +486,7 @@ class PendidikanController extends Controller
 				return $arrayName = array(
 					'status' => 'success',
 					'pesan' => 'Berhasil Disimpan!',
-					'pendidikan_id' => $i->id
+					'pendidikan_id' => $i->pendidikan->id
 				);
 
 			} elseif($i->status == '0' || $i->status == '2') {
@@ -516,7 +559,7 @@ class PendidikanController extends Controller
 				return $arrayName = array(
 					'status' => 'success',
 					'pesan' => 'Berhasil Disimpan!',
-					'pendidikan_id' => $i->id
+					'pendidikan_id' => $i->pendidikan->id
 				);
 
 			} elseif($i->status == '0' || $i->status == '2') {

@@ -63,9 +63,9 @@
       </div>
       <div class="row align-items-center">
         <div class="col-12 kt-align-right">
-          <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modal-verifikasi">
+    <!--       <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modal-verifikasi">
             <i class="fa fa-eye"></i> Preview Sertifikat
-          </button>
+          </button> -->
           <button type="button" class="btn btn-success btn-sm" id="verif" onclick="verifikasi()" title="Terima Berkas">
             <i class="fa fa-check"></i> Terbitkan Sertifikat
           </button>
@@ -81,6 +81,9 @@
 
         <div class="col-md-12">
           <p>Jenis Perizinan : <b>{{ $data->sik->subizin->nama }}</b></p>
+        </div>
+        <div class="col-md-12">
+          <p>No. Rekomendasi : <b>{{ $data->sik->no_rekomendasi }}</b></p>
         </div>
       </div>
 
@@ -189,21 +192,21 @@
             </tr>
 
             <!-- OPSIONAL -->
-            @if($data->sik->berkas_pendukung)
+   
             <tr>
               <td>{{$no = $no+1}}</td>
               <td>Surat Keterangan Keluasan</td>
               <td><a href="{{ asset('storage/'.$data->sik->surat_keluasan) }}" target="_blank">Lihat Berkas</a></td>
             </tr>
-            @endif
 
-            @if($data->sik->berkas_pendukung)
+
+ 
             <tr>
               <td>{{$no = $no+1}}</td>
               <td>Berkas Pendukung</td>
               <td><a href="{{ asset('storage/'.$data->sik->berkas_pendukung) }}" target="_blank">Lihat Berkas</a></td>
             </tr>
-            @endif
+
           </tbody>
         </table>
       </div>

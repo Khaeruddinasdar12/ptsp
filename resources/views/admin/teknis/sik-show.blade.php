@@ -94,7 +94,7 @@
             <tr>
               <td>{{$no}}</td>
               <td valign="center">Nama Sesuai STR</td>
-              <td>{{ $data->sik->nama }}</td>
+              <td>{{ $data->sik->gelar_awal }} {{ $data->sik->nama }} {{ $data->sik->gelar_akhir }}</td>
               <td>
                 @if($data->sik->reason && $data->sik->reason->nama =='1') {!! $terima !!}
                 @elseif($data->sik->reason && $data->sik->reason->nama == '') {!! $belumperiksa !!}
@@ -353,7 +353,7 @@
           </tr>
 
           <!-- OPSIONAL -->
-          @if($data->sik->surat_keluasan)
+
           <tr>
             <td>{{$no = $no+1}}</td>
             <td>Surat Keterangan Keluasan</td>
@@ -369,9 +369,8 @@
               <button class="btn btn-outline-success btn-sm" onclick="ceklis('surat_keluasan', 'Surat Keterangan Keluasan')" id="ceklis"><i class="fa fa-check"></i></button>
             </td>
           </tr>
-          @endif
 
-          @if($data->sik->berkas_pendukung)
+
           <tr>
             <td>{{$no = $no+1}}</td>
             <td>Berkas Pendukung</td>
@@ -387,7 +386,7 @@
               <button class="btn btn-outline-success btn-sm" onclick="ceklis('berkas_pendukung', 'Berkas Pendukung')" id="ceklis"><i class="fa fa-check"></i></button>
             </td>
           </tr>
-          @endif
+
         </tbody>
       </table>
     </div>

@@ -27,10 +27,12 @@ class CreateSipsTable extends Migration
             $table->date('akhir_str')->nullable();
             $table->string('no_rekomendasi')->nullable();
             $table->string('rekomendasi_op')->nullable();
+            $table->string('konsultan')->nullable();
             $table->string('alamat')->nullable();
             $table->bigInteger('subizin_id')->unsigned()->nullable();
 
             $table->string('nama_praktek1')->nullable();
+            $table->string('jejaring1')->nullable();
             $table->string('jalan1')->nullable();
             $table->string('kelurahan1')->nullable();
             $table->string('hari_buka1')->nullable();
@@ -61,6 +63,7 @@ class CreateSipsTable extends Migration
             $table->string('surat_keterangan')->nullable();
             
             // Opsional
+            $table->string('berkas_jejaring1')->nullable(); 
             $table->string('surat_persetujuan')->nullable(); 
             $table->string('berkas_pendukung')->nullable();
 

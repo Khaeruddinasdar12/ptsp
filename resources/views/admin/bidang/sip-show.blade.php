@@ -105,6 +105,23 @@
                 <button class="btn btn-outline-success btn-sm" onclick="ceklis('nama', 'Nama')" id="ceklis"><i class="fa fa-check"></i></button>
               </td>
             </tr>
+
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Konsultan</td>
+              <td>{{ $data->sip->konsultan }}</td>
+              <td>
+                @if($data->sip->reason && $data->sip->reason->konsultan =='1') {!! $terima !!}
+                @elseif($data->sip->reason && $data->sip->reason->konsultan == '') {!! $belumperiksa !!}
+                @elseif($data->sip->reason && $data->sip->reason->konsultan != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              <td>@if($data->sip->reason && $data->sip->reason->konsultan != '1') {{$data->sip->reason->konsultan}} @endif</td>
+              <td><button class="btn btn-outline-danger btn-sm" onclick="reason('konsultan', 'Konsultan')"><i class="fa fa-times"></i></button>&nbsp;
+                <button class="btn btn-outline-success btn-sm" onclick="ceklis('konsultan', 'Konsultan')" id="ceklis"><i class="fa fa-check"></i></button>
+              </td>
+            </tr>
+
             <tr>
               <td>{{$no = $no+1}}</td>
               <td>Tempat Lahir</td>
@@ -227,6 +244,21 @@
             </tr>
             <tr>
               <td>{{$no = $no+1}}</td>
+              <td>Jejaring</td>
+              <td>{{ $data->sip->jejaring1 }}</td>
+              <td>
+                @if($data->sip->reason && $data->sip->reason->jejaring1 =='1') {!! $terima !!}
+                @elseif($data->sip->reason && $data->sip->reason->jejaring1 == '') {!! $belumperiksa !!}
+                @elseif($data->sip->reason && $data->sip->reason->jejaring1 != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              <td>@if($data->sip->reason && $data->sip->reason->jejaring1 != '1') {{$data->sip->reason->jejaring1}} @endif</td>
+              <td><button class="btn btn-outline-danger btn-sm" onclick="reason('jejaring1', 'Jejaring')"><i class="fa fa-times"></i></button>&nbsp;
+                <button class="btn btn-outline-success btn-sm" onclick="ceklis('jejaring1', 'Jejaring')" id="ceklis"><i class="fa fa-check"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
               <td>Jalan 1</td>
               <td>{{ $data->sip->jalan1 }}</td>
               <td>
@@ -322,7 +354,7 @@
               </td>
             </tr>
 
-            @if($data->sip->subizin_id == '7')
+            @if($data->sip->subizin_id == '7') 
             <tr>
               <td>{{$no = $no+1}}</td>
               <td>Jadwal Praktek 2</td>
@@ -489,7 +521,22 @@
           </tr>
 
           <!-- OPSIONAL -->
-          @if($data->sip->surat_persetujuan)
+          <tr>
+            <td>{{$no = $no+1}}</td>
+            <td>SK Jejaring</td>
+            <td><a href="{{ asset('storage/'.$data->sip->berkas_jejaring1) }}" target="_blank">Lihat Berkas</a></td>
+            <td>
+              @if($data->sip->reason && $data->sip->reason->berkas_jejaring1 =='1') {!! $terima !!}
+              @elseif($data->sip->reason && $data->sip->reason->berkas_jejaring1 == '') {!! $belumperiksa !!}
+              @elseif($data->sip->reason && $data->sip->reason->berkas_jejaring1 != '1') {!! $tolak !!}
+              @else {!! $belumperiksa !!} @endif
+            </td>
+            <td>@if($data->sip->reason && $data->sip->reason->berkas_jejaring1 != '1') {{$data->sip->reason->berkas_jejaring1}} @endif</td>
+            <td><button class="btn btn-outline-danger btn-sm" onclick="reason('berkas_jejaring1', 'Surat Persetujuan Pimpinan Instansi')"><i class="fa fa-times"></i></button>&nbsp;
+              <button class="btn btn-outline-success btn-sm" onclick="ceklis('berkas_jejaring1', 'Surat Persetujuan Pimpinan Instansi')" id="ceklis"><i class="fa fa-check"></i></button>
+            </td>
+          </tr>
+
           <tr>
             <td>{{$no = $no+1}}</td>
             <td>Surat Persetujuan Pimpinan Instansi</td>
@@ -505,9 +552,7 @@
               <button class="btn btn-outline-success btn-sm" onclick="ceklis('surat_persetujuan', 'Surat Persetujuan Pimpinan Instansi')" id="ceklis"><i class="fa fa-check"></i></button>
             </td>
           </tr>
-          @endif
 
-          @if($data->sip->berkas_pendukung)
           <tr>
             <td>{{$no = $no+1}}</td>
             <td>Berkas Pendukung</td>
@@ -523,7 +568,6 @@
               <button class="btn btn-outline-success btn-sm" onclick="ceklis('berkas_pendukung', 'Berkas Pendukung')" id="ceklis"><i class="fa fa-check"></i></button>
             </td>
           </tr>
-          @endif
         </tbody>
       </table>
     </div>

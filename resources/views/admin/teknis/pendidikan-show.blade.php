@@ -159,10 +159,27 @@
                 <button class="btn btn-outline-success btn-sm" onclick="ceklis('nama_pendidikan', 'Nama Pendidikan')" id="ceklis"><i class="fa fa-check"></i></button>
               </td>
             </tr>
-            @if($data->pendidikan->no_npsn)
+            @if($data->pendidikan->subizin->nama == 'Program Pendidikan Kursus Dan Pelatihan')
             <tr>
               <td>{{$no = $no+1}}</td>
-              <td>No. NPSN</td>
+              <td>Jenis Program</td>
+              <td>{{ $data->pendidikan->jenis_program }}</td>
+              <td>
+                @if($data->pendidikan->reason && $data->pendidikan->reason->jenis_program =='1') {!! $terima !!}
+                @elseif($data->pendidikan->reason && $data->pendidikan->reason->jenis_program == '') {!! $belumperiksa !!}
+                @elseif($data->pendidikan->reason && $data->pendidikan->reason->jenis_program != '1') {!! $tolak !!}
+                @else {!! $belumperiksa !!} @endif
+              </td>
+              <td>@if($data->pendidikan->reason && $data->pendidikan->reason->jenis_program != '1') {{$data->pendidikan->reason->jenis_program}} @endif</td>
+              <td><button class="btn btn-outline-danger btn-sm" onclick="reason('jenis_program', 'Jenis Program')"><i class="fa fa-times"></i></button>&nbsp;
+                <button class="btn btn-outline-success btn-sm" onclick="ceklis('jenis_program', 'Jenis Program')" id="ceklis"><i class="fa fa-check"></i></button>
+              </td>
+            </tr>
+            @endif
+         
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>No. NPSN (Perpanjangan)</td>
               <td>{{ $data->pendidikan->no_npsn }}</td>
               <td>
                 @if($data->pendidikan->reason && $data->pendidikan->reason->no_npsn =='1') {!! $terima !!}
@@ -175,7 +192,7 @@
                 <button class="btn btn-outline-success btn-sm" onclick="ceklis('no_npsn', 'No NPSN')" id="ceklis"><i class="fa fa-check"></i></button>
               </td>
             </tr>
-            @endif
+ 
             <tr>
               <td>{{$no = $no+1}}</td>
               <td>Kecamatan & Kelurahan Praktek</td>
@@ -363,7 +380,7 @@
           </tr>
 
           <!-- OPSIONAL -->
-          @if($data->pendidikan->npsn)
+   
           <tr>
             <td>{{$no = $no+1}}</td>
             <td>NPSN (Perpanjangan)</td>
@@ -379,9 +396,7 @@
               <button class="btn btn-outline-success btn-sm" onclick="ceklis('npsn', 'NPSN (Perpanjangan)')" id="ceklis"><i class="fa fa-check"></i></button>
             </td>
           </tr>
-          @endif
 
-          @if($data->pendidikan->izin_lama)
           <tr>
             <td>{{$no = $no+1}}</td>
             <td>Izin Lama (Perpanjangan)</td>
@@ -397,9 +412,7 @@
               <button class="btn btn-outline-success btn-sm" onclick="ceklis('izin_lama', 'Izin Lama (Perpanjangan)')" id="ceklis"><i class="fa fa-check"></i></button>
             </td>
           </tr>
-          @endif
-
-          @if($data->pendidikan->berkas_pendukung)
+   
           <tr>
             <td>{{$no = $no+1}}</td>
             <td>Berkas Pendukung</td>
@@ -415,7 +428,7 @@
               <button class="btn btn-outline-success btn-sm" onclick="ceklis('berkas_pendukung', 'Berkas Pendukung')" id="ceklis"><i class="fa fa-check"></i></button>
             </td>
           </tr>
-          @endif
+      
           
         </tbody>
       </table>

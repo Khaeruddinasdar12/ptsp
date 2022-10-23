@@ -89,6 +89,9 @@
           <p>Kategori : <b>{{ $data->pendidikan->subizin->kategori }}</b></p>
         </div>
         @endif
+        <div class="col-md-12">
+          <p>No. Rekomendasi : <b>{{ $data->pendidikan->no_rekomendasi }}</b></p>
+        </div>
       </div>
 
       <div class="table-responsive">
@@ -127,6 +130,18 @@
               <td>{{$no = $no+1}}</td>
               <td>Nama Pendidikan </td>
               <td>{{ $data->pendidikan->nama_pendidikan }}</td>
+            </tr>
+            @if($data->pendidikan->subizin->nama == 'Program Pendidikan Kursus Dan Pelatihan')
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Jenis Program </td>
+              <td>{{ $data->pendidikan->jenis_program }}</td>
+            </tr>
+            @endif
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>No NPSN (Perpanjangan)</td>
+              <td>{{ $data->pendidikan->no_npsn }}</td>
             </tr>
             <tr>
               <td>{{$no = $no+1}}</td>
@@ -191,29 +206,28 @@
             </tr>
 
             <!-- OPSIONAL -->
-            @if($data->pendidikan->npsn)
+  
             <tr>
               <td>{{$no = $no+1}}</td>
               <td>NPSN (Perpanjangan)</td>
               <td><a href="{{ asset('storage/'.$data->pendidikan->npsn) }}" target="_blank">Lihat Berkas</a></td>
             </tr>
-            @endif
 
-            @if($data->pendidikan->izin_lama)
+
             <tr>
               <td>{{$no = $no+1}}</td>
               <td>Izin Lama</td>
               <td><a href="{{ asset('storage/'.$data->pendidikan->izin_lama) }}" target="_blank">Lihat Berkas</a></td>
             </tr>
-            @endif
 
-            @if($data->pendidikan->berkas_pendukung)
+
+
             <tr>
               <td>{{$no = $no+1}}</td>
               <td>Berkas Pendukung</td>
               <td><a href="{{ asset('storage/'.$data->pendidikan->berkas_pendukung) }}" target="_blank">Lihat Berkas</a></td>
             </tr>
-            @endif
+  
           </tbody>
         </table>
       </div>

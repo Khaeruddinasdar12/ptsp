@@ -68,7 +68,7 @@ class SikController extends Controller
 				return $arrayName = array(
 					'status' => 'success',
 					'pesan' => 'Berhasil Menyimpan!',
-					'sik_id' => $i->id
+					'sik_id' => $i->sik->id
 				);
 
 			} elseif($i->status == '0' || $i->status == '2') {
@@ -149,7 +149,7 @@ class SikController extends Controller
 				return $arrayName = array(
 					'status' => 'success',
 					'pesan' => 'Berhasil Menyimpan!',
-					'sik_id' => $i->id
+					'sik_id' => $i->sik->id
 				);
 
 			} elseif($i->status == '0' || $i->status == '2') {
@@ -225,7 +225,7 @@ class SikController extends Controller
 				return $arrayName = array(
 					'status' => 'success',
 					'pesan' => 'Berhasil Menyimpan!',
-					'sik_id' => $i->id
+					'sik_id' => $i->sik->id
 				);
 
 			} elseif($i->status == '0' || $i->status == '2') {
@@ -807,6 +807,22 @@ class SikController extends Controller
 			} // end upload Berkas Pendukung
 
 			// TEXT
+			if($request->key == 'nama') {
+				$validasi = $this->validate($request, [
+					'nama' => 'required|string',
+					'gelar_awal' => 'required|string',
+					'gelar_akhir' => 'required|string',
+
+				],$message,$attribute);
+				$data = Sik::where('perizinan_id', $id)->update(array(
+					'nama' => $request->nama,
+					'gelar_awal' => $request->gelar_awal,
+					'gelar_akhir' => $request->gelar_akhir,
+
+				));
+				return redirect()->back()->with('success',$attribute[$request->key].' diperbarui');
+			}
+
 			$validasi = $this->validate($request, [
 				'revisi' => 'required|string',
 			],$message,$attribute);
