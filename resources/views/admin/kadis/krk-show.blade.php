@@ -111,7 +111,7 @@
             <tr>
               <td>{{$no}}</td>
               <td valign="center">Nama Pemohon</td>
-              <td>{{ $data->krk->gelar_awal }} {{ $data->krk->nama }} {{ $data->krk->gelar_akhir }}</td>
+              <td>{{ $data->krk->gelar_awal }} {{ $data->krk->nama }}, {{ $data->krk->gelar_akhir }}</td>
             </tr>
             <tr>
               <td>{{$no = $no+1}}</td>
@@ -186,13 +186,16 @@
             </tr>
 
             <!-- OPSIONAL -->
-            @if($data->krk->berkas_pendukung)
+            
             <tr>
               <td>{{$no = $no+1}}</td>
               <td>Berkas Pendukung</td>
+              @if($data->krk->berkas_pendukung)
               <td><a href="{{ asset('storage/'.$data->krk->berkas_pendukung) }}" target="_blank">Lihat Berkas</a></td>
+              @else
+              <td class="text-danger">Tidak Ada Berkas</td>
+              @endif
             </tr>
-            @endif
 
             <!-- Diisi Oleh Tim Teknis -->
             <tr>

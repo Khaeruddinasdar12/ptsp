@@ -107,7 +107,7 @@
             <tr>
               <td>{{$no}}</td>
               <td valign="center">Nama Sesuai STR</td>
-              <td>{{ $data->sik->gelar_awal }} {{ $data->sik->nama }} {{ $data->sik->gelar_akhir }}</td>
+              <td>{{ $data->sik->gelar_awal }} {{ $data->sik->nama }}, {{ $data->sik->gelar_akhir }}</td>
             </tr>
             <tr>
               <td>{{$no = $no+1}}</td>
@@ -196,15 +196,21 @@
             <tr>
               <td>{{$no = $no+1}}</td>
               <td>Surat Keterangan Keluasan</td>
+              @if($data->sik->surat_keluasan)
               <td><a href="{{ asset('storage/'.$data->sik->surat_keluasan) }}" target="_blank">Lihat Berkas</a></td>
+              @else
+              <td class="text-danger">Tidak Ada Berkas</td>
+              @endif
             </tr>
-
-
  
             <tr>
               <td>{{$no = $no+1}}</td>
               <td>Berkas Pendukung</td>
+              @if($data->sik->berkas_pendukung)
               <td><a href="{{ asset('storage/'.$data->sik->berkas_pendukung) }}" target="_blank">Lihat Berkas</a></td>
+              @else
+              <td class="text-danger">Tidak Ada Berkas</td>
+              @endif
             </tr>
 
           </tbody>

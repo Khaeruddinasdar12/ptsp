@@ -98,7 +98,7 @@
             <tr>
               <td>{{$no}}</td>
               <td valign="center">Nama Sesuai STR</td>
-              <td>{{ $data->sip->gelar_awal }} {{ $data->sip->nama }} {{ $data->sip->gelar_akhir }}</td>
+              <td>{{ $data->sip->gelar_awal }} {{ $data->sip->nama }}, {{ $data->sip->gelar_akhir }}</td>
             </tr>
             <tr>
               <td>{{$no = $no+1}}</td>
@@ -254,19 +254,31 @@
             <tr>
               <td>{{$no = $no+1}}</td>
               <td>SK Jejaring</td>
+              @if($data->sip->berkas_jejaring1)
               <td><a href="{{ asset('storage/'.$data->sip->berkas_jejaring1) }}" target="_blank">Lihat Berkas</a></td>
+              @else
+              <td class="text-danger">Tidak Ada Berkas</td>
+              @endif
             </tr>
 
             <tr>
               <td>{{$no = $no+1}}</td>
               <td>Surat Persetujuan Pimpinan Instansi</td>
+              @if($data->sip->surat_persetujuan)
               <td><a href="{{ asset('storage/'.$data->sip->surat_persetujuan) }}" target="_blank">Lihat Berkas</a></td>
+              @else
+              <td class="text-danger">Tidak Ada Berkas</td>
+              @endif
             </tr>
         
             <tr>
               <td>{{$no = $no+1}}</td>
               <td>Berkas Pendukung</td>
+              @if($data->sip->berkas_pendukung)
               <td><a href="{{ asset('storage/'.$data->sip->berkas_pendukung) }}" target="_blank">Lihat Berkas</a></td>
+              @else
+              <td class="text-danger">Tidak Ada Berkas</td>
+              @endif
             </tr>
         
           </tbody>

@@ -92,7 +92,7 @@
             <tr>
               <td>{{$no}}</td>
               <td valign="center">Nama Sesuai STR</td>
-              <td>{{ $data->sip->gelar_awal }} {{ $data->sip->nama }} {{ $data->sip->gelar_akhir }}</td>
+              <td>{{ $data->sip->gelar_awal }} {{ $data->sip->nama }}, {{ $data->sip->gelar_akhir }}</td>
               <td>
                 @if($data->sip->reason && $data->sip->reason->nama == '1') {!! $terima !!}
                 @elseif($data->sip->reason && $data->sip->reason->nama == '') {!! $belumperiksa !!}
@@ -521,10 +521,15 @@
           </tr>
 
           <!-- OPSIONAL -->
+          
           <tr>
             <td>{{$no = $no+1}}</td>
             <td>SK Jejaring</td>
+            @if($data->sip->berkas_jejaring1)
             <td><a href="{{ asset('storage/'.$data->sip->berkas_jejaring1) }}" target="_blank">Lihat Berkas</a></td>
+            @else
+            <td class="text-danger">Tidak Ada Berkas</td>
+            @endif
             <td>
               @if($data->sip->reason && $data->sip->reason->berkas_jejaring1 =='1') {!! $terima !!}
               @elseif($data->sip->reason && $data->sip->reason->berkas_jejaring1 == '') {!! $belumperiksa !!}
@@ -540,7 +545,11 @@
           <tr>
             <td>{{$no = $no+1}}</td>
             <td>Surat Persetujuan Pimpinan Instansi</td>
+            @if($data->sip->surat_persetujuan)
             <td><a href="{{ asset('storage/'.$data->sip->surat_persetujuan) }}" target="_blank">Lihat Berkas</a></td>
+            @else
+            <td class="text-danger">Tidak Ada Berkas</td>
+            @endif
             <td>
               @if($data->sip->reason && $data->sip->reason->surat_persetujuan =='1') {!! $terima !!}
               @elseif($data->sip->reason && $data->sip->reason->surat_persetujuan == '') {!! $belumperiksa !!}
@@ -556,7 +565,11 @@
           <tr>
             <td>{{$no = $no+1}}</td>
             <td>Berkas Pendukung</td>
+            @if($data->sip->berkas_pendukung)
             <td><a href="{{ asset('storage/'.$data->sip->berkas_pendukung) }}" target="_blank">Lihat Berkas</a></td>
+            @else
+            <td class="text-danger">Tidak Ada Berkas</td>
+            @endif
             <td>
               @if($data->sip->reason && $data->sip->reason->berkas_pendukung =='1') {!! $terima !!}
               @elseif($data->sip->reason && $data->sip->reason->berkas_pendukung == '') {!! $belumperiksa !!}

@@ -114,7 +114,7 @@
             <tr>
               <td>{{$no}}</td>
               <td valign="center">Nama Penanggung Jawab</td>
-              <td>{{ $data->pendidikan->gelar_awal }} {{ $data->pendidikan->nama }} {{ $data->pendidikan->gelar_akhir }}</td>
+              <td>{{ $data->pendidikan->gelar_awal }} {{ $data->pendidikan->nama }}, {{ $data->pendidikan->gelar_akhir }}</td>
             </tr>
             <tr>
               <td>{{$no = $no+1}}</td>
@@ -210,22 +210,31 @@
             <tr>
               <td>{{$no = $no+1}}</td>
               <td>NPSN (Perpanjangan)</td>
+              @if($data->pendidikan->npsn)
               <td><a href="{{ asset('storage/'.$data->pendidikan->npsn) }}" target="_blank">Lihat Berkas</a></td>
+              @else
+              <td class="text-danger">Tidak Ada Berkas</td>
+              @endif
             </tr>
-
 
             <tr>
               <td>{{$no = $no+1}}</td>
               <td>Izin Lama</td>
+              @if($data->pendidikan->izin_lama)
               <td><a href="{{ asset('storage/'.$data->pendidikan->izin_lama) }}" target="_blank">Lihat Berkas</a></td>
+              @else
+              <td class="text-danger">Tidak Ada Berkas</td>
+              @endif
             </tr>
-
-
 
             <tr>
               <td>{{$no = $no+1}}</td>
               <td>Berkas Pendukung</td>
+              @if($data->pendidikan->berkas_pendukung)
               <td><a href="{{ asset('storage/'.$data->pendidikan->berkas_pendukung) }}" target="_blank">Lihat Berkas</a></td>
+              @else
+              <td class="text-danger">Tidak Ada Berkas</td>
+              @endif
             </tr>
   
           </tbody>

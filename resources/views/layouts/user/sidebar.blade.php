@@ -16,7 +16,7 @@
       data-ktmenu-dropdown-timeout="500">
       <ul class="kt-menu__nav ">
 
-        <li class="kt-menu__item" aria-haspopup="true">
+        <li class="kt-menu__item {{ (request()->is('home') ? 'kt-menu__item--active kt-menu__item--open' : '') }}" aria-haspopup="true">
           <a href="{{route('home')}}" class="kt-menu__link ">
             <span class="kt-menu__link-icon">
               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"

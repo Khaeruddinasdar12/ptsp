@@ -94,7 +94,7 @@ class KadisController extends Controller
 					$kecamatan3 = $data->sip->klh3->kecamatan;
 				}
 
-				$nama = $data->sip->gelar_awal.' '.$data->sip->nama.' '.$data->sip->gelar_akhir;
+				$nama = $data->sip->gelar_awal.' '.$data->sip->nama.', '.$data->sip->gelar_akhir;
 				$data_view = [
 					'pas_foto'=> $data->sip->foto,
 					'barcode' => $data->no_tiket.'.png',
@@ -140,7 +140,7 @@ class KadisController extends Controller
 				$urut = $data->sik->latest()->first();
 				$no_surat = '503/'.$urut->id.'/SIK.'.$kode.'/DPM-PTSP/'.$bulan.'/'.$tahun;
 				$dasar_hukum = $data->sik->subizin->dasar_hukum;
-				$nama = $data->sik->gelar_awal.' '.$data->sik->nama.' '.$data->sik->gelar_akhir;
+				$nama = $data->sik->gelar_awal.' '.$data->sik->nama.', '.$data->sik->gelar_akhir;
 				$data_view = [
 					'pas_foto'=> $data->sik->foto,
 					'barcode' => $data->no_tiket.'.png',
@@ -182,7 +182,7 @@ class KadisController extends Controller
 				$jenis_izin = $data->pendidikan->subizin->nama;
 				$urut = $data->pendidikan->latest()->first();
 				$no_surat = '503/'.$urut->id.'/'.$kode.'/DPM-PTSP/'.$bulan.'/'.$tahun;
-				$nama = $data->pendidikan->gelar_awal.' '.$data->pendidikan->nama.' '.$data->pendidikan->gelar_akhir;
+				$nama = $data->pendidikan->gelar_awal.' '.$data->pendidikan->nama.', '.$data->pendidikan->gelar_akhir;
 				$data_view = [
 					'barcode' => $data->no_tiket.'.png',
 					'no_surat' => $no_surat,
@@ -207,7 +207,7 @@ class KadisController extends Controller
 			} elseif($data->jenis_izin == 'krk') {
 				$urut = $data->krk->latest()->first();
 				$no_surat = '650/'.$urut->id.'/DPMPTSP/'.$bulan.'/'.$tahun;
-				$nama = $data->krk->gelar_awal.' '.$data->krk->nama.' '.$data->krk->gelar_akhir;
+				$nama = $data->krk->gelar_awal.' '.$data->krk->nama.', '.$data->krk->gelar_akhir;
 				$data_view = [
 					'barcode' => $data->no_tiket.'.png',
 					'no_surat' => $no_surat,

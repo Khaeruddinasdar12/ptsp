@@ -96,7 +96,7 @@
             <tr>
               <td>{{$no}}</td>
               <td valign="center">Nama Sesuai STR</td>
-              <td>{{ $data->sik->gelar_awal }} {{ $data->sik->nama }} {{ $data->sik->gelar_akhir }}</td>
+              <td>{{ $data->sik->gelar_awal }} {{ $data->sik->nama }}, {{ $data->sik->gelar_akhir }}</td>
               <td>
                 @if($data->sik->reason && $data->sik->reason->nama =='1') {!! $terima !!}
                 @elseif($data->sik->reason && $data->sik->reason->nama == '') {!! $belumperiksa !!}
@@ -359,7 +359,11 @@
           <tr>
             <td>{{$no = $no+1}}</td>
             <td>Surat Keterangan Keluasan</td>
+            @if($data->sik->surat_keluasan)
             <td><a href="{{ asset('storage/'.$data->sik->surat_keluasan) }}" target="_blank">Lihat Berkas</a></td>
+            @else
+            <td class="text-danger">Tidak Ada Berkas</td>
+            @endif
             <td>
               @if($data->sik->reason && $data->sik->reason->surat_keluasan =='1') {!! $terima !!}
               @elseif($data->sik->reason && $data->sik->reason->surat_keluasan == '') {!! $belumperiksa !!}
@@ -377,7 +381,11 @@
           <tr>
             <td>{{$no = $no+1}}</td>
             <td>Berkas Pendukung</td>
+            @if($data->sik->berkas_pendukung)
             <td><a href="{{ asset('storage/'.$data->sik->berkas_pendukung) }}" target="_blank">Lihat Berkas</a></td>
+            @else
+            <td class="text-danger">Tidak Ada Berkas</td>
+            @endif
             <td>
               @if($data->sik->reason && $data->sik->reason->berkas_pendukung =='1') {!! $terima !!}
               @elseif($data->sik->reason && $data->sik->reason->berkas_pendukung == '') {!! $belumperiksa !!}

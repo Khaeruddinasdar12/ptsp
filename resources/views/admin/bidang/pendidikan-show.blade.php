@@ -101,7 +101,7 @@
             <tr>
               <td>{{$no}}</td>
               <td valign="center">Nama Penanggung Jawab</td>
-              <td>{{ $data->pendidikan->gelar_awal }} {{ $data->pendidikan->nama }} {{ $data->pendidikan->gelar_akhir }}</td>
+              <td>{{ $data->pendidikan->gelar_awal }} {{ $data->pendidikan->nama }}, {{ $data->pendidikan->gelar_akhir }}</td>
               <td>
                 @if($data->pendidikan->reason && $data->pendidikan->reason->nama =='1') {!! $terima !!}
                 @elseif($data->pendidikan->reason && $data->pendidikan->reason->nama == '') {!! $belumperiksa !!}
@@ -385,7 +385,11 @@
           <tr>
             <td>{{$no = $no+1}}</td>
             <td>NPSN (Perpanjangan)</td>
+            @if($data->pendidikan->npsn)
             <td><a href="{{ asset('storage/'.$data->pendidikan->npsn) }}" target="_blank">Lihat Berkas</a></td>
+            @else
+            <td class="text-danger">Tidak Ada Berkas</td>
+            @endif
             <td>
               @if($data->pendidikan->reason && $data->pendidikan->reason->npsn =='1') {!! $terima !!}
               @elseif($data->pendidikan->reason && $data->pendidikan->reason->npsn == '') {!! $belumperiksa !!}
@@ -401,7 +405,11 @@
           <tr>
             <td>{{$no = $no+1}}</td>
             <td>Izin Lama (Perpanjangan)</td>
+            @if($data->pendidikan->izin_lama)
             <td><a href="{{ asset('storage/'.$data->pendidikan->izin_lama) }}" target="_blank">Lihat Berkas</a></td>
+            @else
+            <td class="text-danger">Tidak Ada Berkas</td>
+            @endif
             <td>
               @if($data->pendidikan->reason && $data->pendidikan->reason->izin_lama =='1') {!! $terima !!}
               @elseif($data->pendidikan->reason && $data->pendidikan->reason->izin_lama == '') {!! $belumperiksa !!}
@@ -417,7 +425,11 @@
           <tr>
             <td>{{$no = $no+1}}</td>
             <td>Berkas Pendukung</td>
+            @if($data->pendidikan->berkas_pendukung)
             <td><a href="{{ asset('storage/'.$data->pendidikan->berkas_pendukung) }}" target="_blank">Lihat Berkas</a></td>
+            @else
+            <td class="text-danger">Tidak Ada Berkas</td>
+            @endif
             <td>
               @if($data->pendidikan->reason && $data->pendidikan->reason->berkas_pendukung =='1') {!! $terima !!}
               @elseif($data->pendidikan->reason && $data->pendidikan->reason->berkas_pendukung == '') {!! $belumperiksa !!}
