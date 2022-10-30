@@ -3,7 +3,7 @@
 @section('title', 'Manage User')
 
 @section('page_style')
-<link href="{{ asset('plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css">
+<!-- <link href="{{ asset('plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css"> -->
 @endsection
 
 @section('subheader')
@@ -80,7 +80,7 @@
                   <td>{{ $datas->nik }}</td>
                   <td>{{ $datas->email}} </td>
                   @if(Auth::guard('admin')->user()->role == 'superadmin')
-                  <td></td>
+                  <td><a href="{{route('superadmin.user.edit', ['id' => $datas->id])}}" class="btn btn-outline-info btn-sm"><i class="fa fa-eye"></i></a></td>
                   @endif
                 </tr>
                 @endforeach
@@ -151,7 +151,7 @@
 @endsection
 
 @section('page_script')
-<script src="{{ asset('plugins/custom/datatables/datatables.bundle.js') }}"></script>
+<!-- <script src="{{ asset('plugins/custom/datatables/datatables.bundle.js') }}"></script> -->
 <script>
   $(document).ready(function () {
     fill_datatable();

@@ -437,6 +437,11 @@ class TeknisByController extends Controller
 				if ($data->pendidikan->subizin->nama == 'Program Pendidikan Kursus Dan Pelatihan' && $dt->jenis_program != '1') {
 					return $err;
 				}
+
+				if($data->pendidikan->no_berita_acara == '') { return $this->err('Nomor Berita Acara'); }
+				if($data->pendidikan->berita_acara == '') { return $this->err('Berkas Berita Acara'); }
+				if($data->pendidikan->gambar1 == '') { return $this->err('Lampiran Gambar 1'); }
+				if($data->pendidikan->gambar2 == '') { return $this->err('Lampiran Gambar 2'); }
 				// $dt->delete();
 				$kode =  $data->pendidikan->subizin->kode; //kode SUBIZIN
 				$no_kode = $data->pendidikan->latest()->first();//Nomor Kode Surat
@@ -578,4 +583,144 @@ class TeknisByController extends Controller
 		}
 		
 	}
+
+	// BERITA ACARA
+	public function bastore(Request $request, $id) 
+	{
+		$message = [];
+		$attribute = [
+			'no_berita_acara' => 'Nomor Berita Acara',
+			'berita_acara' => 'Berkas Berita Acara',
+			'gambar1' => 'Lampiran Gambar 1',
+			'gambar2' => 'Lampiran Gambar 2',
+			'gambar3' => 'Lampiran Gambar 3',
+		];
+
+		if($request->key == 'no_berita_acara') {
+			$validasi = $this->validate($request, [
+				'berita_acara' => 'mimes:pdf|max:1024',
+			],$message,$attribute);
+			$pdd = Pendidikan::findOrFail($id);
+			$pdd->no_berita_acara = $request->no_berita_acara;
+			$pdd->save();
+			return $arrayName = array(
+				'status' => 'success',
+				'pesan' => 'No Berita Acara disimpan!'
+			);
+		}
+
+		// upload Berita Acara 
+		if($request->key == 'berita_acara') {
+			$berita_acara = $request->file('berita_acara'); 
+			if ($berita_acara) {
+				$validasi = $this->validate($request, [
+					'berita_acara' => 'mimes:pdf|max:1024',
+				],$message,$attribute);
+				$pdd = Pendidikan::findOrFail($id);
+				if ($pdd->berita_acara && file_exists(storage_path('app/public/' . $pdd->berita_acara))) {
+					\Storage::delete('public/' . $pdd->berita_acara);
+				}
+				$path = $berita_acara->store('pendidikan', 'public');
+				$pdd->berita_acara = $path;
+				$pdd->save();
+				return $arrayName = array(
+					'status' => 'success',
+					'pesan' => 'Berita Acara disimpan!'
+				);
+			}
+			return $arrayName = array(
+				'status' => 'error',
+				'pesan' => 'Berita Acara wajib diisi!',
+			);	
+		} // end upload Berita Acara
+
+		// upload Lampiran Gambar 1
+		if($request->key == 'gambar1') {
+			$gambar1 = $request->file('gambar1'); 
+			if ($gambar1) {
+				$validasi = $this->validate($request, [
+					'gambar1' => 'mimes:jpeg,png,jpg|max:1024',
+				],$message,$attribute);
+				$pdd = Pendidikan::findOrFail($id);
+				if ($pdd->gambar1 && file_exists(storage_path('app/public/' . $pdd->gambar1))) {
+					\Storage::delete('public/' . $pdd->gambar1);
+				}
+				$path = $gambar1->store('pendidikan', 'public');
+				$pdd->gambar1 = $path;
+				$pdd->save();
+				return $arrayName = array(
+					'status' => 'success',
+					'pesan' => 'Lampiran gambar 1 disimpan!'
+				);
+			}
+			return $arrayName = array(
+				'status' => 'error',
+				'pesan' => 'Lampiran gambar 1 wajib diisi!',
+			);	
+		} // end upload Lampiran Gambar 1
+
+		// upload Lampiran Gambar 2
+		if($request->key == 'gambar2') {
+			$gambar2 = $request->file('gambar2'); 
+			if ($gambar2) {
+				$validasi = $this->validate($request, [
+					'gambar2' => 'mimes:jpeg,png,jpg|max:1024',
+				],$message,$attribute);
+				$pdd = Pendidikan::findOrFail($id);
+				if ($pdd->gambar2 && file_exists(storage_path('app/public/' . $pdd->gambar2))) {
+					\Storage::delete('public/' . $pdd->gambar2);
+				}
+				$path = $gambar2->store('pendidikan', 'public');
+				$pdd->gambar2 = $path;
+				$pdd->save();
+				return $arrayName = array(
+					'status' => 'success',
+					'pesan' => 'Lampiran gambar 2 disimpan!'
+				);
+			}
+			return $arrayName = array(
+				'status' => 'error',
+				'pesan' => 'Lampiran gambar 2 wajib diisi!',
+			);	
+		} // end upload Lampiran Gambar 2
+
+		// upload Lampiran Gambar 3
+		if($request->key == 'gambar3') {
+			$gambar3 = $request->file('gambar3'); 
+			if ($gambar3) {
+				$validasi = $this->validate($request, [
+					'gambar3' => 'mimes:jpeg,png,jpg|max:1024',
+				],$message,$attribute);
+				$pdd = Pendidikan::findOrFail($id);
+				if ($pdd->gambar3 && file_exists(storage_path('app/public/' . $pdd->gambar3))) {
+					\Storage::delete('public/' . $pdd->gambar3);
+				}
+				$path = $gambar3->store('pendidikan', 'public');
+				$pdd->gambar3 = $path;
+				$pdd->save();
+				return $arrayName = array(
+					'status' => 'success',
+					'pesan' => 'Lampiran gambar 3 disimpan!'
+				);
+			}
+			return $arrayName = array(
+				'status' => 'error',
+				'pesan' => 'Lampiran gambar 3 wajib diisi!',
+			);	
+		} // end upload Lampiran Gambar 3
+	}
+
+	public function reload($id)
+	{
+		$data = Pendidikan::find($id);
+		return $data;
+	} 
+
+	private function err($pesan) 
+	{	
+		return $err = array(
+			'status' => 'error',
+			'pesan' => 'Mohon mengisi '.$pesan
+		);
+	} 
 }

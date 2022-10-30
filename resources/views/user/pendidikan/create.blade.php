@@ -3,7 +3,7 @@
 @section('title', 'Buat Izin Pendidikan')
 
 @section('subheader')
-<link href="{{ asset('css/pages/wizard/wizard-1.css') }} " rel="stylesheet" type="text/css" />
+<!-- <link href="{{ asset('css/pages/wizard/wizard-1.css') }} " rel="stylesheet" type="text/css" /> -->
 <h3 class="kt-subheader__title">
   Perizinan
 </h3>

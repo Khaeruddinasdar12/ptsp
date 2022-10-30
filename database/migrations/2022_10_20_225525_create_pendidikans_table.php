@@ -31,7 +31,17 @@ class CreatePendidikansTable extends Migration
             $table->string('kode_pos')->nullable();
             $table->string('jenis_program')->nullable();
             $table->string('surat_permohonan')->nullable();
-            // $table->string('rekomendasi_disdik')->nullable();
+            
+
+            // 
+            $table->string('no_berita_acara')->nullable();
+            $table->string('berita_acara')->nullable();  
+            $table->string('gambar1')->nullable();  
+            $table->string('gambar2')->nullable();  
+            $table->string('gambar3')->nullable();   
+            // 
+
+
             $table->string('imb')->nullable();
             $table->string('ktp')->nullable();
             $table->string('pas_foto')->nullable();

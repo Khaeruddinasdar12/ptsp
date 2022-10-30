@@ -176,7 +176,7 @@
               </td>
             </tr>
             @endif
-         
+
             <tr>
               <td>{{$no = $no+1}}</td>
               <td>No. NPSN (Perpanjangan)</td>
@@ -192,7 +192,7 @@
                 <button class="btn btn-outline-success btn-sm" onclick="ceklis('no_npsn', 'No NPSN')" id="ceklis"><i class="fa fa-check"></i></button>
               </td>
             </tr>
- 
+
             <tr>
               <td>{{$no = $no+1}}</td>
               <td>Kecamatan & Kelurahan Praktek</td>
@@ -380,7 +380,7 @@
           </tr>
 
           <!-- OPSIONAL -->
-   
+
           <tr>
             <td>{{$no = $no+1}}</td>
             <td>NPSN (Perpanjangan)</td>
@@ -420,7 +420,7 @@
               <button class="btn btn-outline-success btn-sm" onclick="ceklis('izin_lama', 'Izin Lama (Perpanjangan)')" id="ceklis"><i class="fa fa-check"></i></button>
             </td>
           </tr>
-   
+
           <tr>
             <td>{{$no = $no+1}}</td>
             <td>Berkas Pendukung</td>
@@ -440,10 +440,115 @@
               <button class="btn btn-outline-success btn-sm" onclick="ceklis('berkas_pendukung', 'Berkas Pendukung')" id="ceklis"><i class="fa fa-check"></i></button>
             </td>
           </tr>
-      
+
           
         </tbody>
       </table>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="container">
+          <h5>Data Berita Acara</h5>
+
+          <div class="form-group row">
+            <label class="col-lg-3 col-form-label">Nomor Berita Acara *</label>
+            <div class="col-lg-9">
+              <form method="POST" action="" id="no_berita_acara">
+                <div class="input-group">
+                  @csrf
+                  <input type="text" class="form-control" name="no_berita_acara" value="@if($data->pendidikan->no_berita_acara) {{$data->pendidikan->no_berita_acara}} @else @endif">
+                  <input type="hidden" name="key" value="no_berita_acara">
+                  <button type="submit" class="btn btn-outline-secondary">Simpan
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-lg-3 col-form-label">Berita Acara: (pdf) max 1MB*</label>
+            <div class="col-lg-9">
+              <form action="" method="POST" id="berita_acara">
+                <div class="input-group">
+                  @csrf
+                  <input type="file" name="berita_acara" id="file-berita_acara" style="display:none;" accept="application/pdf">
+                  <label for="file-berita_acara" class="form-control" id="label-berita_acara">@if($data->pendidikan->berita_acara)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
+                  <input type="hidden" class="form-control" name="key" value="berita_acara" >
+                  <button type="submit" class="btn btn-outline-secondary">Simpan
+                  </button>
+                </div>
+              </form>
+              <div id="reload-berita_acara">
+                @if($data->pendidikan->berita_acara)
+                <a href="{{ asset('storage/'.$data->pendidikan->berita_acara) }}" target="_blank">Lihat berkas</a>
+                @endif
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-lg-3 col-form-label">Lampiran Gambar 1: (pdf) max 1MB*</label>
+            <div class="col-lg-9">
+              <form action="" method="POST" id="gambar1">
+                <div class="input-group">
+                  @csrf
+                  <input type="file" name="gambar1" id="file-gambar1" style="display:none;" accept="image/jpeg,image/jpg,image/png">
+                  <label for="file-gambar1" class="form-control" id="label-gambar1">@if($data->pendidikan->gambar1)Berkas Telah Diupload - Klik untuk mengubah  @else Choose File @endif </label>
+                  <input type="hidden" class="form-control" name="key" value="gambar1" >
+                  <button type="submit" class="btn btn-outline-secondary">Simpan
+                  </button>
+                </div>
+              </form>
+              <div id="reload-gambar1">
+                @if($data->pendidikan->gambar1)
+                <a href="{{ asset('storage/'.$data->pendidikan->gambar1) }}" target="_blank">Lihat berkas</a>
+                @endif
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-lg-3 col-form-label">Lampiran Gambar 2: (pdf) max 1MB*</label>
+            <div class="col-lg-9">
+              <form action="" method="POST" id="gambar2">
+                <div class="input-group">
+                  @csrf
+                  <input type="file" name="gambar2" id="file-gambar2" style="display:none;" accept="image/jpeg,image/jpg,image/png">
+                  <label for="file-gambar2" class="form-control" id="label-gambar2">@if($data->pendidikan->gambar2)Berkas Telah Diupload - Klik untuk mengubah @else Choose File @endif</label>
+                  <input type="hidden" class="form-control" name="key" value="gambar2" >
+                  <button type="submit" class="btn btn-outline-secondary">Simpan
+                  </button>
+                </div>
+              </form>
+              <div id="reload-gambar2">
+                @if($data->pendidikan->gambar2)
+                <a href="{{ asset('storage/'.$data->pendidikan->gambar2) }}" target="_blank">Lihat berkas</a>
+                @endif
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-lg-3 col-form-label">Lampiran Gambar 3: (pdf) max 1MB*</label>
+            <div class="col-lg-9">
+              <form action="" method="POST" id="gambar3">
+                <div class="input-group">
+                  @csrf
+                  <input type="file" name="gambar3" id="file-gambar3" style="display:none;" accept="image/jpeg,image/jpg,image/png">
+                  <label for="file-gambar3" class="form-control" id="label-gambar3">@if($data->pendidikan->gambar3)Berkas Telah Diupload - Klik untuk mengubah  @else Choose File @endif</label>
+                  <input type="hidden" class="form-control" name="key" value="gambar3" >
+                  <button type="submit" class="btn btn-outline-secondary">Simpan
+                  </button>
+                </div>
+              </form>
+              <div id="reload-gambar3">
+                @if($data->pendidikan->gambar3)
+                <a href="{{ asset('storage/'.$data->pendidikan->gambar2) }}" target="_blank">Lihat berkas</a>
+                @endif
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
     <br>
     <div class="row align-items-center">
@@ -493,7 +598,18 @@
   <!-- End Modal -->
   @endsection
 
+
+
+
   @section('page_script')
+  <script type="text/javascript">
+    const bastore= "{{ route('bastore.teknis', ['id' => $data->pendidikan->id]) }}";
+  </script>
+
+  <script type="text/javascript">
+    pendidikan_id = '{!! $data->pendidikan->id !!}';
+  </script>
+  <script type="text/javascript" src="{{asset('js/admin/pendidikan.js')}}"></script>
 
   <script type="text/javascript">
 // $('#loader').modal("show");

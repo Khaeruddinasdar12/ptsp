@@ -39,7 +39,7 @@
                                     @enderror
                                 </div>
                                 <div class="input-group">
-                                    <input class="form-control" type="password" placeholder="Password" name="password" required>
+                                    <input class="form-control" type="password" placeholder="Password" name="password" required id="showpassword">
                                     @error('email')
                                     <div id="password-error" class="error invalid-feedback">
                                         {{ $message }}</div>
@@ -48,8 +48,7 @@
                                 <div class="row kt-login__extra">
                                     <div class="col">
                                         <label class="kt-checkbox">
-                                            <input type="checkbox" name="remember" id="remember" 
-                                                {{ old('remember') ? 'checked' : '' }}> Remember Me
+                                            <input type="checkbox" name="remember" onclick="viewpassword()"> Tampilkan Password
                                             <span></span>
                                         </label>
                                     </div>
@@ -71,6 +70,16 @@
 @endsection
 
 @section('vendor-js')
+<script>
+    function viewpassword() {
+        var x = document.getElementById("showpassword");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>
 <script src="{{ asset('js/pages/custom/login/login-general.js') }}" type="text/javascript">
 </script>
 @endsection

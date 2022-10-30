@@ -141,7 +141,9 @@ Route::middleware('auth:admin')->prefix('admin')->namespace('Admin')->group(func
 	Route::put('perizinan-teknis/reason/{id}/{jenis}', 'TeknisByController@reason')->name('reason.teknis');
 	Route::put('perizinan-teknis/ceklis/{id}', 'TeknisByController@ceklis')->name('ceklis.teknis');
 
-	Route::post('perizinan-teknis/store-data/{id}', 'TeknisByController@storedata')->name('storedata.teknis');
+	Route::post('perizinan-teknis/store-data/{id}', 'TeknisByController@storedata')->name('storedata.teknis'); // KRK
+	Route::post('perizinan-teknis/store-data-pendidikan/{id}', 'TeknisByController@bastore')->name('bastore.teknis'); // Berita Acara PENDIDIKAN
+	Route::get('perizinan-teknis/pendidikan-reload/{id}', 'TeknisByController@reload')->name('pendidikan.reload.teknis'); //reload file create
 
 	// KADIS
 	Route::get('perizinan-kadis', 'KadisController@index')->name('perizinan.kadis.index');
@@ -155,4 +157,7 @@ Route::middleware('auth:admin')->prefix('admin')->namespace('Admin')->group(func
 	Route::get('setting', 'SettingController@index')->name('setting.index');
 	Route::post('store-subizin', 'SettingController@storesub')->name('subizin.store'); // store sub izin
 	Route::delete('delete-subizin/{id}', 'SettingController@deletesub')->name('subizin.delete'); // delete sub izin
+
+	Route::get('manage-user/{id}/edit', 'SettingController@edit')->name('superadmin.user.edit');
+	Route::put('manage-user/{id}/edit', 'SettingController@update')->name('superadmin.user.update');
 });

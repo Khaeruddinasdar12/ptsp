@@ -236,6 +236,38 @@
               <td class="text-danger">Tidak Ada Berkas</td>
               @endif
             </tr>
+
+
+            <!-- Diisi Oleh Tim Teknis -->
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Nomor Berita Acara </td>
+              <td>{{$data->pendidikan->no_berita_acara}}</td>
+            </tr>
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Berkas Berita Acara</td>
+              <td><a href="{{ asset('storage/'.$data->pendidikan->berita_acara) }}" target="_blank">Lihat Berkas</a></td>
+            </tr>  
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Lampiran Gambar 1</td>
+              <td><a href="{{ asset('storage/'.$data->pendidikan->gambar1) }}" target="_blank">Lihat Berkas</a></td>
+            </tr>  
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Lampiran Gambar 2</td>
+              <td><a href="{{ asset('storage/'.$data->pendidikan->gambar2) }}" target="_blank">Lihat Berkas</a></td>
+            </tr>  
+            <tr>
+              <td>{{$no = $no+1}}</td>
+              <td>Lampiran Gambar 3</td>
+              @if($data->pendidikan->gambar3)
+              <td><a href="{{ asset('storage/'.$data->pendidikan->gambar3) }}" target="_blank">Lihat Berkas</a></td>
+              @else
+              <td class="text-danger">Tidak Ada Berkas</td>
+              @endif
+            </tr>  
   
           </tbody>
         </table>

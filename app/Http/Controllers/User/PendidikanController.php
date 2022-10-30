@@ -946,6 +946,7 @@ class PendidikanController extends Controller
 					if($cek->nama_pendidikan == '') { return $this->err('Nama Pendidikan'); }
 					if($cek->jalan == '') { return $this->err('Jalan'); }
 					if($cek->ktp == '') { return $this->err('KTP'); }
+					if($cek->imb == '') { return $this->err('IMB'); }
 					if($cek->pas_foto == '') { return $this->err('Foto'); }
 					if($cek->akta == '') { return $this->err('Akta'); }
 					if($cek->struktur_organisasi == '') { return $this->err('Struktur Organiasasi'); }
