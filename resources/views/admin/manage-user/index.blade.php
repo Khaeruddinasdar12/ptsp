@@ -66,7 +66,7 @@
                   <th>Nama</th>
                   <th>NIK</th>
                   <th>Email</th>
-                  @if(Auth::guard('admin')->user()->role == 'superadmin')
+                  @if(Auth::guard('admin')->user()->role == 'superadmin' || Auth::guard('admin')->user()->role == 'admin')
                   <th>Actions</th>
                   @endif
                 </tr>
@@ -79,7 +79,7 @@
                   <td>{{ $datas->name }}</td>
                   <td>{{ $datas->nik }}</td>
                   <td>{{ $datas->email}} </td>
-                  @if(Auth::guard('admin')->user()->role == 'superadmin')
+                  @if(Auth::guard('admin')->user()->role == 'superadmin' || Auth::guard('admin')->user()->role == 'admin')
                   <td><a href="{{route('superadmin.user.edit', ['id' => $datas->id])}}" class="btn btn-outline-info btn-sm"><i class="fa fa-eye"></i></a></td>
                   @endif
                 </tr>

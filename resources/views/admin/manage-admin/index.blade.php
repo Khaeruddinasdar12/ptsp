@@ -139,6 +139,7 @@
               <option value="bidang" @if(old('role') == 'bidang') selected @endif>Bidang</option>
               <option value="teknis" @if(old('role') == 'teknis') selected @endif>Teknis</option>
               <option value="kadis" @if(old('role') == 'kadis') selected @endif>Kadis</option>
+              <option value="admin" @if(old('role') == 'admin') selected @endif>Admin</option>
             </select>
           </div>
 

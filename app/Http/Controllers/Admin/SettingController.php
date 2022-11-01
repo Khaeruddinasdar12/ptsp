@@ -60,8 +60,10 @@ class SettingController extends Controller
 
     public function edit($id) //show
     {
-        if (Auth::guard('admin')->user()->role != 'superadmin') {
-            return redirect()->route('error')->with('not_found','Kamu Tidak Memiliki Superadmin');
+        // return Auth::guard('admin')->user()->role;
+        $role = Auth::guard('admin')->user()->role;
+        if ($role != 'admin' && $role != 'superadmin') {
+            return redirect()->route('error')->with('not_found','Kamu Tidak Memiliki Akses Superadmin');
         }
 
         $data = User::findOrFail($id);
@@ -70,7 +72,8 @@ class SettingController extends Controller
 
     public function update(Request $request, $id) //update password
     {
-        if (Auth::guard('admin')->user()->role != 'superadmin') {
+        $role = Auth::guard('admin')->user()->role;
+        if ($role != 'superadmin' && $role != 'admin') {
             return redirect()->route('error')->with('not_found','Kamu Tidak Memiliki Superadmin');
         }
         $rules = [

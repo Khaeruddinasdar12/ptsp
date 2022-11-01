@@ -14,7 +14,7 @@ class CreateAdminsTable extends Migration
             $table->string('email')->unique();
             $table->string('nik')->unique();
             $table->string('password');
-            $table->enum('role',['bidang','teknis','kadis','superadmin']);
+            $table->enum('role',['bidang','teknis','kadis','superadmin','admin']);
             $table->rememberToken();
             $table->timestamps();
         });

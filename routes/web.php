@@ -40,6 +40,9 @@ Route::namespace('User')->group(function(){
 	Route::post('keluhan', 'KeluhanController@store')->name('keluhan.store');
 	Route::delete('keluhan/{id}/delete', 'KeluhanController@destroy')->name('keluhan.delete');
 
+	Route::get('edit-profile', 'DashboardController@edit')->name('edit.profile');
+	Route::put('update-profile', 'DashboardController@update')->name('update.profile');
+
 	// =====SIP=====
 	Route::get('perizinan/surat-izin-praktik/create', 'SipController@create')->name('sip.create');
 	Route::post('perizinan/izin-praktik/tab1', 'SipController@tab1')->name('sip.tab1');

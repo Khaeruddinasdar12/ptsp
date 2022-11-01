@@ -72,6 +72,7 @@
                   <tr>
                     <th>No.</th>
                     <th>Nama Sub Izin</th>
+                    <th>Kategori</th>
                     <th>Jenis Izin</th>
                     <th>Action</th>
                   </tr>
@@ -82,6 +83,7 @@
                   <tr>
                     <td>{{$no++;}}</td>
                     <td>{{$datas->nama}}</td>
+                    <td>{{$datas->kategori}}</td>
                     <td>{{$datas->jenis}}</td>
                     <td><button href="{{route('keluhan.delete', ['id' => $datas->id]) }}" class="btn btn-outline-info btn-sm" id="hapus" onclick="hapus()" title="edit">
                       <i class="fa fa-edit"></i>

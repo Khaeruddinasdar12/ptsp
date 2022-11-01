@@ -39,5 +39,13 @@ class AdminSeeder extends Seeder
             'role' => 'superadmin',
             'nik' => '7308090408990004',
         ]);
+
+        DB::table('admins')->insert([
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt(12345678),
+            'role' => 'admin',
+            'nik' => '7308090408990005',
+        ]);
     }
 }

@@ -32,6 +32,7 @@
 
         <div class="kt-notification">
           <div class="kt-notification__custom kt-space-between justify-content-center">
+            <a href="{{route('edit.profile')}}" class="btn btn-outline-secondary btn-md btn-bold">Profile</a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST">
               @csrf
               <button type="submit" class="btn btn-danger btn-md btn-bold" onclick="return confirm('Keluar dari admin panel ?');">Sign Out</button>
